@@ -47,18 +47,18 @@ namespace Scenes.Battle.Feature.CameraControl
         
         private void SetCombatMode()
         {
-            _mainCamera.DOOrthoSize(6.5f, 0.5f)
+            _mainCamera.DOOrthoSize(4.0f, 0.5f)
                 .SetEase(Ease.InOutSine)
                 .SetUpdate(UpdateType.Late, isIndependentUpdate: false);
             
-            _mainCamera.transform.DOMoveY(3.3f, 0.5f)
+            _mainCamera.transform.DOMoveX(1.5f, 0.5f)
                 .SetEase(Ease.InOutSine)
                 .SetUpdate(UpdateType.Late, isIndependentUpdate: false);
         }
 
         private void SetMaintenanceMode()
         {
-            _mainCamera.DOOrthoSize(5f, 0.5f)
+            _mainCamera.DOOrthoSize(3.3f, 0.5f)
                 .SetEase(Ease.InOutSine)
                 .SetUpdate(UpdateType.Late, isIndependentUpdate: false);
             
