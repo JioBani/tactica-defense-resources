@@ -81,7 +81,7 @@ namespace Scenes.Battle.Feature.Markets
 
         private void OnRoundStart()
         {
-            Gold.Value += 5;
+            Gold.Value += GetRoundStartIncome();
             RerollSlots();
         }
         
@@ -170,7 +170,6 @@ namespace Scenes.Battle.Feature.Markets
         {
             defenderManager.RemoveDefender(defender);
             Gold.Value += defender.UnitLoadOutData.Unit.Cost;
-            Gold.Value += GetRoundStartIncome();
         }
         
         private int GetRoundStartIncome()
