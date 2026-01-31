@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(python reorganize.py:*)",
+      "Bash(dir:*)"
+    ]
+  }
+}

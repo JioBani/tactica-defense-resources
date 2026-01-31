@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>소환 터미널 UI 데모</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* ==================== 스마트폰 프레임 ==================== */
+        .phone-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            max-height: 932px;
+            margin: 0 auto;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        }
+
+        /* 데스크톱에서 볼 때 스마트폰처럼 보이게 */
+        @media (min-width: 768px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #1a1a1a;
+            }
+
+            .phone-frame {
+                border-radius: 40px;
+                border: 12px solid #222;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            }
+
+            /* 노치 (다이나믹 아일랜드 스타일) */
+            .phone-frame::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 150px;
+                height: 30px;
+                background: #222;
+                border-radius: 0 0 20px 20px;
+                z-index: 1000;
+            }
+        }
+
+        /* ==================== 게임 화면 ==================== */
+        .game-screen {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(180deg, #1a2332 0%, #2a1a32 100%);
+        }
+
+        /* 배경 전장 (블러 처리) */
+        .battlefield-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(231, 76, 60, 0.1) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+
+        /* 간단한 전장 요소들 (배경용) */
+        .lane-overlay {
+            position: absolute;
+            top: 15%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0 20px;
+            opacity: 0.3;
+        }
+
+        .lane-line {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        /* 상단 HUD */
+        .top-hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 50px 20px 20px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            z-index: 10;
+        }
+
+        .wave-info {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #e74c3c;
+            border-radius: 20px;
+            padding: 8px 20px;
+            display: inline-block;
+            margin: 0 auto;
+            width: fit-content;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .wave-text {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* ==================== 소환 터미널 ==================== */
+        .summon-terminal {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(15, 15, 20, 0.98) 0%, rgba(10, 10, 15, 0.99) 100%);
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .summon-terminal.minimized {
+            transform: translateY(calc(100% - 60px));
+        }
+
+        /* 터미널 핸들 */
+        .terminal-handle {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .handle-bar {
+            width: 50px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        /* 터미널 헤더 */
+        .terminal-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 자원 표시 */
+        .resources {
+            display: flex;
+            gap: 12px;
+        }
+
+        .resource-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 80px;
+        }
+
+        .resource-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .resource-value {
+            color: #ffd700;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* 액션 버튼들 */
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(74, 144, 226, 0.3);
+            border: 2px solid #4a90e2;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.9);
+            background: rgba(74, 144, 226, 0.5);
+        }
+
+        .action-btn.refresh {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            border: none;
+        }
+
+        .action-btn.lock {
+            background: rgba(149, 165, 166, 0.3);
+            border-color: #95a5a6;
+        }
+
+        .action-btn.expand {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            border: none;
+        }
+
+        /* 버튼 비용 표시 */
+        .btn-cost {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 6px;
+            padding: 2px 4px;
+            font-size: 9px;
+            color: #ffd700;
+            font-weight: bold;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* 소환 슬롯 컨테이너 */
+        .slots-container {
+            padding: 0 15px 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .slots-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slots-wrapper {
+            display: flex;
+            gap: 12px;
+            padding: 5px 0;
+        }
+
+        /* 소환 슬롯 */
+        .summon-slot {
+            min-width: 110px;
+            width: 110px;
+            background: linear-gradient(145deg, rgba(40, 40, 50, 0.9), rgba(30, 30, 40, 0.9));
+            border: 2px solid rgba(100, 100, 120, 0.5);
+            border-radius: 16px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .summon-slot:active {
+            transform: scale(0.95);
+        }
+
+        .summon-slot.locked {
+            border-color: #f39c12;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .summon-slot.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 14px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        /* 유닛 아바타 */
+        .unit-avatar {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 10px;
+            background: radial-gradient(circle at 30% 30%, #667eea, #357abd);
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .unit-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+
+        /* 유닛 정보 */
+        .unit-name {
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unit-synergies {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .synergy-tag {
+            background: rgba(74, 144, 226, 0.25);
+            border: 1px solid rgba(74, 144, 226, 0.5);
+            border-radius: 4px;
+            padding: 2px 5px;
+            font-size: 8px;
+            color: #4a90e2;
+        }
+
+        .unit-tier {
+            text-align: center;
+            color: #ffd700;
+            font-size: 10px;
+            margin-bottom: 8px;
+        }
+
+        .unit-cost {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 5px 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        /* 터미널 하단 정보 */
+        .terminal-footer {
+            padding: 15px 20px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .deployment-info {
+            display: flex;
+            gap: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .info-value {
+            font-size: 12px;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        /* 웨이브 시작 버튼 */
+        .start-wave-btn {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+            z-index: 50;
+            transition: all 0.2s;
+        }
+
+        .start-wave-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        /* 좌측 시너지 표시 */
+        .synergy-panel {
+            position: absolute;
+            top: 100px;
+            left: 15px;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .synergy-item {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            padding: 8px;
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .synergy-item.active {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.2);
+        }
+
+        .synergy-emoji {
+            font-size: 20px;
+        }
+
+        .synergy-count {
+            font-size: 9px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* 애니메이션 */
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .summon-terminal {
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 펄스 애니메이션 (주목 효과) */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(39, 174, 96, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(39, 174, 96, 0.8);
+            }
+        }
+
+        .start-wave-btn {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* 설명 오버레이 */
+        .description-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .description-overlay.active {
+            display: flex;
+        }
+
+        .description-content {
+            background: rgba(20, 20, 30, 0.95);
+            border: 2px solid #4a90e2;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .description-title {
+            font-size: 20px;
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .description-text {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .close-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* 도움말 버튼 */
+        .help-btn {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #4a90e2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="game-screen">
+            <!-- 배경 전장 -->
+            <div class="battlefield-bg"></div>
+            <div class="lane-overlay">
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+            </div>
+
+            <!-- 상단 HUD -->
+            <div class="top-hud">
+                <div class="wave-info">
+                    <div class="wave-text">웨이브 5 / 20</div>
+                </div>
+            </div>
+
+            <!-- 좌측 시너지 표시 -->
+            <div class="synergy-panel">
+                <div class="synergy-item active">
+                    <div class="synergy-emoji">⚙️</div>
+                    <div class="synergy-count">3/6</div>
+                </div>
+                <div class="synergy-item active">
+                    <div class="synergy-emoji">⚔️</div>
+                    <div class="synergy-count">2/4</div>
+                </div>
+                <div class="synergy-item">
+                    <div class="synergy-emoji">🔮</div>
+                    <div class="synergy-count">1/3</div>
+                </div>
+            </div>
+
+            <!-- 도움말 버튼 -->
+            <div class="help-btn" onclick="toggleDescription()">
+                ℹ️
+            </div>
+
+            <!-- 웨이브 시작 버튼 -->
+            <button class="start-wave-btn">
+                ▶ 웨이브 시작
+            </button>
+
+            <!-- ==================== 소환 터미널 ==================== -->
+            <div class="summon-terminal" id="terminal">
+                <!-- 핸들 -->
+                <div class="terminal-handle" onclick="toggleTerminal()">
+                    <div class="handle-bar"></div>
+                </div>
+
+                <!-- 헤더 -->
+                <div class="terminal-header">
+                    <!-- 자원 표시 -->
+                    <div class="resources">
+                        <div class="resource-box">
+                            <div class="resource-icon">💎</div>
+                            <div class="resource-value">125</div>
+                        </div>
+                        <div class="resource-box">
+                            <div class="resource-icon">📈</div>
+                            <div class="resource-value">+15</div>
+                        </div>
+                    </div>
+
+                    <!-- 액션 버튼들 -->
+                    <div class="header-actions">
+                        <div class="action-btn refresh" style="position: relative;">
+                            🔄
+                            <span class="btn-cost">2G</span>
+                        </div>
+                        <div class="action-btn lock" id="lockBtn" onclick="toggleLock()">
+                            🔓
+                        </div>
+                        <div class="action-btn expand" style="position: relative;">
+                            📈
+                            <span class="btn-cost">4G</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 소환 슬롯들 -->
+                <div class="slots-container">
+                    <div class="slots-wrapper">
+                        <!-- 슬롯 1 -->
+                        <div class="summon-slot">
+                            <div class="unit-avatar">🤖</div>
+                            <div class="unit-name">기계병 알파</div>
+                            <div class="unit-synergies">
+                                <span class="synergy-tag">⚙️ 기계</span>
+                                <span class="synergy-tag">🛡️ 방어</span>
+                            </div>
+                            <div class="unit-tier">⭐ 1티어</div>
+                            <div class="unit-cost">💎 3</div>
+                        </div>
+
+                        <!-- 슬롯 2 (잠금) -->
+                        <div class="summon-slot locked">
+                            <div class="unit-avatar">⚔️</div>
+                            <div class="unit-name">강습 전사</div>
+                            <div class="unit-synergies">
+                                <span class="synergy-tag">⚔️ 전사</span>
+                                <span class="synergy-tag">⚡ 강습</span>
+                            </div>
+                            <div class="unit-tier">⭐ 2티어</div>
+                            <div class="unit-cost">💎 3</div>
+                        </div>
+
+                        <!-- 슬롯 3 -->
+                        <div class="summon-slot">
+                            <div class="unit-avatar" style="background: radial-gradient(circle at 30% 30%, #e74c3c, #c0392b);">🛡️</div>
+                            <div class="unit-name">중장 방패병</div>
+                            <div class="unit-synergies">
+                                <span class="synergy-tag">⚔️ 전사</span>
+                                <span class="synergy-tag">🛡️ 방어</span>
+                            </div>
+                            <div class="unit-tier">⭐ 1티어</div>
+                            <div class="unit-cost">💎 3</div>
+                        </div>
+
+                        <!-- 슬롯 4 -->
+                        <div class="summon-slot">
+                            <div class="unit-avatar" style="background: radial-gradient(circle at 30% 30%, #9b59b6, #6c3483);">🔮</div>
+                            <div class="unit-name">화염 마법사</div>
+                            <div class="unit-synergies">
+                                <span class="synergy-tag">🔮 마법</span>
+                                <span class="synergy-tag">🔥 화염</span>
+                            </div>
+                            <div class="unit-tier">⭐⭐ 3티어</div>
+                            <div class="unit-cost">💎 3</div>
+                        </div>
+
+                        <!-- 슬롯 5 -->
+                        <div class="summon-slot">
+                            <div class="unit-avatar" style="background: radial-gradient(circle at 30% 30%, #27ae60, #229954);">🏹</div>
+                            <div class="unit-name">견습 궁수</div>
+                            <div class="unit-synergies">
+                                <span class="synergy-tag">🏹 사수</span>
+                            </div>
+                            <div class="unit-tier">⭐ 1티어</div>
+                            <div class="unit-cost">💎 3</div>
+                        </div>
+
+                        <!-- 슬롯 6 -->
+                        <div class="summon-slot">
+                            <div class="unit-avatar" style="background: radial-gradient(circle at 30% 30%, #f39c12, #e67e22);">⚡</div>
+                            <div class="unit-name">번개술사</div>
+                            <div class="unit-synergies">
+                                <span class="synergy-tag">🔮 마법</span>
+                                <span class="synergy-tag">⚡ 강습</span>
+                            </div>
+                            <div class="unit-tier">⭐ 2티어</div>
+                            <div class="unit-cost">💎 3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 터미널 하단 -->
+                <div class="terminal-footer">
+                    <div class="deployment-info">
+                        <div class="info-item">
+                            <span class="info-label">배치:</span>
+                            <span class="info-value">5/8</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">대기:</span>
+                            <span class="info-value">3/8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 설명 오버레이 -->
+            <div class="description-overlay" id="descOverlay">
+                <div class="description-content">
+                    <div class="description-title">📱 소환 터미널 UI 데모</div>
+
+                    <div class="description-text">
+                        <strong>🎮 이 화면은 무엇인가요?</strong><br>
+                        스마트폰에서 플레이할 때 보이는 <strong>소환 터미널</strong>의 UI 레이아웃 데모입니다.
+                    </div>
+
+                    <div class="description-text">
+                        <strong>📐 주요 구성 요소:</strong><br>
+                        • <strong>상단 자원 표시</strong>: 현재 마나(💎 125)와 다음 수입(📈 +15)<br>
+                        • <strong>재스캔 버튼</strong>: 2G로 유닛 목록 새로고침<br>
+                        • <strong>잠금 버튼</strong>: 현재 목록 고정<br>
+                        • <strong>배치 확장</strong>: 4G로 배치 상한 증가<br>
+                        • <strong>소환 슬롯</strong>: 가로 스크롤 가능한 유닛 카드들<br>
+                        • <strong>하단 정보</strong>: 배치 현황 (5/8), 대기열 (3/8)
+                    </div>
+
+                    <div class="description-text">
+                        <strong>💡 인터랙션:</strong><br>
+                        • 핸들 바를 터치하면 터미널 접기/펼치기<br>
+                        • 유닛 카드를 탭하면 소환 (마나 차감)<br>
+                        • 좌우 스와이프로 더 많은 유닛 확인<br>
+                        • 잠금 버튼으로 원하는 유닛 고정
+                    </div>
+
+                    <div class="description-text">
+                        <strong>🎯 디자인 특징:</strong><br>
+                        • 스마트폰 세로 모드 최적화<br>
+                        • 한손으로 조작 가능한 레이아웃<br>
+                        • 전장을 가리지 않는 하단 배치<br>
+                        • 슬라이드 제스처로 빠른 접기/펼치기
+                    </div>
+
+                    <button class="close-btn" onclick="toggleDescription()">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 터미널 토글
+        function toggleTerminal() {
+            const terminal = document.getElementById('terminal');
+            terminal.classList.toggle('minimized');
+        }
+
+        // 잠금 토글
+        function toggleLock() {
+            const lockBtn = document.getElementById('lockBtn');
+            const isLocked = lockBtn.textContent === '🔒';
+            lockBtn.textContent = isLocked ? '🔓' : '🔒';
+
+            // 모든 슬롯 잠금 토글
+            const slots = document.querySelectorAll('.summon-slot');
+            slots.forEach(slot => {
+                if (!isLocked) {
+                    slot.classList.add('locked');
+                } else {
+                    slot.classList.remove('locked');
+                }
+            });
+        }
+
+        // 설명 토글
+        function toggleDescription() {
+            const overlay = document.getElementById('descOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        // 슬롯 클릭 시 피드백
+        document.querySelectorAll('.summon-slot').forEach(slot => {
+            slot.addEventListener('click', function() {
+                if (!this.classList.contains('locked')) {
+                    // 간단한 피드백
+                    this.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                }
+            });
+        });
+
+        // 자동으로 설명 표시 (최초 1회)
+        setTimeout(() => {
+            toggleDescription();
+        }, 500);
+    </script>
+</body>
+</html>
