@@ -62,7 +62,7 @@ namespace Scenes.Battle.Feature.CameraControl
                 .SetEase(Ease.InOutSine)
                 .SetUpdate(UpdateType.Late, isIndependentUpdate: false);
             
-            _mainCamera.transform.DOMoveY(0f, 0.5f)
+            _mainCamera.transform.DOMoveX(0f, 0.5f)
                 .SetEase(Ease.InOutSine)
                 .SetUpdate(UpdateType.Late, isIndependentUpdate: false);
         }
