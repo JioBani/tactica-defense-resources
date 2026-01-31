@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=1.0, user-scalable=no">
+    <title>택티카 디펜스 - 전장</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 1200px;
+            height: 480px;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+            position: relative;
+            background: #000;
+        }
+
+        /* ==================== SCENE 영역 ==================== */
+        #game-scene {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(90deg,
+                #2a3a4a 0%,
+                #3a3a2a 50%,
+                #4a2a2a 100%
+            );
+            overflow: hidden;
+        }
+
+        /* 4개의 레인 배경 */
+        .battle-lanes {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 15px 40px 100px;
+            gap: 5px;
+        }
+
+        .lane {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(90deg,
+                rgba(100, 150, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0.05) 20%,
+                rgba(255, 255, 255, 0.03) 80%,
+                rgba(255, 100, 100, 0.15) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 레일 위 그리드 가이드 */
+        .lane-grid {
+            position: absolute;
+            left: 100px;
+            right: 15px;
+            top: 0;
+            bottom: 0;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            padding: 8px;
+        }
+
+        .grid-slot {
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .grid-slot:hover {
+            background: rgba(100, 150, 255, 0.2);
+            border-color: rgba(100, 150, 255, 0.5);
+        }
+
+        /* 소환술사 (레인 왼쪽) */
+        .summoner {
+            position: absolute;
+            left: 12px;
+            width: 75px;
+            height: 75px;
+            background: radial-gradient(circle, #9b59b6, #6c3483);
+            border: 3px solid rgba(255, 215, 0, 0.8);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            z-index: 10;
+        }
+
+        .summoner-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-radius: 50%;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .summoner-name {
+            font-size: 10px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        /* 소환수 유닛 */
+        .unit-scene {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle, #4a90e2, #2c5aa0);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            z-index: 5;
+        }
+
+        /* 적 유닛 */
+        .enemy-scene {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #e74c3c, #a02c2c);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 100, 100, 0.7);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            z-index: 5;
+        }
+
+        /* 유닛/적 스타일 (위치는 JS로 동적 배치) */
+
+        /* 대기 소환수 벤치 */
+        .bench-scene {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 8;
+        }
+
+        .bench-unit-scene {
+            width: 65px;
+            height: 65px;
+            background: rgba(40, 40, 40, 0.85);
+            border: 2px solid rgba(100, 100, 100, 0.6);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .bench-unit-scene.has-unit {
+            background: rgba(60, 60, 60, 0.9);
+            border-color: rgba(74, 144, 226, 0.8);
+        }
+
+        .bench-unit-avatar {
+            width: 42px;
+            height: 42px;
+            background: radial-gradient(circle, #4a90e2, #2c5aa0);
+            border-radius: 50%;
+            margin-bottom: 3px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bench-unit-star {
+            font-size: 9px;
+            color: #ffd700;
+        }
+
+        /* ==================== UI CANVAS 영역 ==================== */
+        #ui-canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        #ui-canvas * {
+            pointer-events: auto;
+        }
+
+        /* 상단 HUD (간소화) */
+        .top-hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 35px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            z-index: 101;
+        }
+
+        /* 웨이브 정보 (상단 중앙) */
+        .wave-indicator {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 6px 20px;
+            border-radius: 15px;
+            border: 2px solid #e74c3c;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* 좌측 시너지 아이콘 영역 */
+        .synergy-icons {
+            position: absolute;
+            top: 45px;
+            left: 10px;
+            width: 75px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 102;
+        }
+
+        .synergy-icon-item {
+            background: rgba(0, 0, 0, 0.75);
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .synergy-icon-item.active {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.2);
+        }
+
+        .synergy-icon-item.inactive {
+            opacity: 0.4;
+            border-color: #666;
+        }
+
+        .synergy-emoji {
+            font-size: 20px;
+        }
+
+        .synergy-count {
+            font-size: 9px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* 시너지 상세 버튼 */
+        .synergy-detail-btn {
+            position: absolute;
+            top: 45px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.75);
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            z-index: 103;
+            margin-top: 200px;
+        }
+
+        .synergy-detail-btn:active {
+            background: rgba(74, 144, 226, 0.5);
+        }
+
+        /* 시너지 패널 (좌측에서 슬라이드) */
+        .synergy-panel {
+            position: absolute;
+            top: 45px;
+            left: -280px;
+            width: 270px;
+            max-height: 380px;
+            background: rgba(15, 15, 15, 0.97);
+            border: 2px solid #4a90e2;
+            border-radius: 12px;
+            padding: 15px;
+            transition: left 0.3s ease;
+            z-index: 104;
+            overflow-y: auto;
+        }
+
+        .synergy-panel.active {
+            left: 90px;
+        }
+
+        .panel-title {
+            font-size: 14px;
+            color: #4a90e2;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .synergy-item {
+            background: rgba(50, 50, 50, 0.8);
+            padding: 8px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            border-left: 3px solid #4a90e2;
+        }
+
+        .synergy-name {
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .synergy-progress {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 2px;
+        }
+
+        /* 우측 상단 버튼 그룹 */
+        .top-right-actions {
+            position: absolute;
+            top: 45px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 103;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.75);
+            border: 2px solid #666;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .action-btn:active {
+            background: rgba(100, 100, 100, 0.5);
+        }
+
+        /* 하단 소환 터미널 (중앙 정렬, 컴팩트) */
+        .shop-panel {
+            position: absolute;
+            bottom: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 200px;
+            background: rgba(15, 15, 15, 0.98);
+            border: 3px solid #4a90e2;
+            border-radius: 20px;
+            transition: bottom 0.3s ease;
+            z-index: 105;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shop-panel.active {
+            bottom: 75px;
+        }
+
+        /* 드래그 핸들 */
+        .shop-handle {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 30px;
+            background: rgba(15, 15, 15, 0.98);
+            border: 3px solid #4a90e2;
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* 상점 헤더 */
+        .shop-header {
+            height: 45px;
+            background: rgba(30, 30, 30, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 17px 17px 0 0;
+        }
+
+        .shop-left {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .shop-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .shop-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-small.secondary {
+            background: #666;
+        }
+
+        .btn-small.expand {
+            background: #e67e22;
+        }
+
+        .btn-small:active {
+            opacity: 0.7;
+        }
+
+        /* 상점 슬롯 */
+        .shop-slots {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shop-slot {
+            width: 110px;
+            height: 120px;
+            background: rgba(50, 50, 50, 0.8);
+            border: 2px solid #666;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .shop-slot:active {
+            background: rgba(74, 144, 226, 0.3);
+            border-color: #4a90e2;
+        }
+
+        .shop-unit-avatar {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #4a90e2, #2c5aa0);
+            border-radius: 50%;
+            margin-bottom: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .shop-unit-name {
+            font-size: 11px;
+            color: white;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .shop-unit-cost {
+            font-size: 10px;
+            color: #ffd700;
+        }
+
+        /* 웨이브 시작 버튼 */
+        .start-wave-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 106;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .start-wave-btn:active {
+            transform: scale(0.95);
+            background: #229954;
+        }
+
+        /* 상점 열기 버튼 */
+        .open-shop-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 200px;
+            width: 55px;
+            height: 55px;
+            background: rgba(74, 144, 226, 0.9);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 106;
+        }
+
+        .open-shop-btn:active {
+            background: rgba(74, 144, 226, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== GAME SCENE ==================== -->
+    <div id="game-scene">
+        <!-- 4개의 전투 레인 -->
+        <div class="battle-lanes">
+            <!-- Lane 1 -->
+            <div class="lane">
+                <div class="summoner">
+                    <div class="summoner-icon">🔧</div>
+                    <div class="summoner-name">기계술사</div>
+                </div>
+                <div class="lane-grid">
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                </div>
+            </div>
+
+            <!-- Lane 2 -->
+            <div class="lane">
+                <div class="summoner">
+                    <div class="summoner-icon">⚔️</div>
+                    <div class="summoner-name">전사술사</div>
+                </div>
+                <div class="lane-grid">
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                </div>
+            </div>
+
+            <!-- Lane 3 -->
+            <div class="lane">
+                <div class="summoner">
+                    <div class="summoner-icon">🔮</div>
+                    <div class="summoner-name">마법술사</div>
+                </div>
+                <div class="lane-grid">
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                </div>
+            </div>
+
+            <!-- Lane 4 -->
+            <div class="lane">
+                <div class="summoner">
+                    <div class="summoner-icon">🏹</div>
+                    <div class="summoner-name">궁수술사</div>
+                </div>
+                <div class="lane-grid">
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                    <div class="grid-slot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 아군 소환수들 (JS로 동적 배치) -->
+        <div id="units-container"></div>
+
+        <!-- 적들 (JS로 동적 배치) -->
+        <div id="enemies-container"></div>
+
+        <!-- 대기 소환수 벤치 -->
+        <div class="bench-scene">
+            <div class="bench-unit-scene has-unit">
+                <div class="bench-unit-avatar">🤖</div>
+                <div class="bench-unit-star">★★</div>
+            </div>
+            <div class="bench-unit-scene has-unit">
+                <div class="bench-unit-avatar">⚔️</div>
+                <div class="bench-unit-star">★</div>
+            </div>
+            <div class="bench-unit-scene has-unit">
+                <div class="bench-unit-avatar">🔮</div>
+                <div class="bench-unit-star">★★★</div>
+            </div>
+            <div class="bench-unit-scene"></div>
+            <div class="bench-unit-scene"></div>
+            <div class="bench-unit-scene"></div>
+            <div class="bench-unit-scene"></div>
+            <div class="bench-unit-scene"></div>
+        </div>
+    </div>
+
+    <!-- ==================== UI CANVAS ==================== -->
+    <div id="ui-canvas">
+        <!-- 상단 HUD -->
+        <div class="top-hud">
+            <div class="wave-indicator">
+                웨이브 5 / 20
+            </div>
+        </div>
+
+        <!-- 좌측 시너지 아이콘 -->
+        <div class="synergy-icons">
+            <div class="synergy-icon-item active">
+                <div class="synergy-emoji">⚙️</div>
+                <div class="synergy-count">3/6</div>
+            </div>
+            <div class="synergy-icon-item active">
+                <div class="synergy-emoji">⚔️</div>
+                <div class="synergy-count">2/4</div>
+            </div>
+            <div class="synergy-icon-item inactive">
+                <div class="synergy-emoji">🔮</div>
+                <div class="synergy-count">1/3</div>
+            </div>
+        </div>
+
+        <!-- 시너지 상세 버튼 -->
+        <button class="synergy-detail-btn" onclick="toggleSynergy()">
+            📋
+        </button>
+
+        <!-- 시너지 패널 -->
+        <div class="synergy-panel" id="synergyPanel">
+            <div class="panel-title">활성 시너지</div>
+
+            <div class="synergy-item">
+                <div class="synergy-name">⚙️ 기계 계열</div>
+                <div class="synergy-progress">3/6 활성 - 공격력 +15%</div>
+            </div>
+
+            <div class="synergy-item">
+                <div class="synergy-name">⚔️ 강습 전술</div>
+                <div class="synergy-progress">2/4 활성 - 공격속도 +10%</div>
+            </div>
+
+            <div class="synergy-item" style="opacity: 0.5;">
+                <div class="synergy-name">🔮 마법 계열</div>
+                <div class="synergy-progress">1/3 미활성</div>
+            </div>
+
+            <div class="panel-title" style="margin-top: 15px; color: #27ae60;">전술 지원</div>
+
+            <div class="synergy-item" style="border-left-color: #27ae60;">
+                <div class="synergy-name">💎 초기 마나 강화</div>
+                <div class="synergy-progress">시작 마나 +20</div>
+            </div>
+
+            <div class="synergy-item" style="border-left-color: #27ae60;">
+                <div class="synergy-name">🎯 배치 슬롯 확장</div>
+                <div class="synergy-progress">배치 한계 +2</div>
+            </div>
+        </div>
+
+        <!-- 우측 상단 액션 버튼 -->
+        <div class="top-right-actions">
+            <button class="action-btn" onclick="alert('설정')">⚙️</button>
+            <button class="action-btn" onclick="alert('일시정지')">⏸️</button>
+        </div>
+
+        <!-- 상점 열기 버튼 -->
+        <!-- <button class="open-shop-btn" onclick="toggleShop()">
+            🛒
+        </button> -->
+
+        <!-- 웨이브 시작 버튼 -->
+        <button class="start-wave-btn">
+            ▶ 웨이브 시작
+        </button>
+
+        <!-- 하단 소환 터미널 -->
+        <div class="shop-panel" id="shopPanel">
+            <div class="shop-handle" onclick="toggleShop()">
+                ▼
+            </div>
+
+            <div class="shop-header">
+                <div class="shop-left">
+                    <div class="shop-stat">
+                        <div class="stat-icon" style="background: #ffd700;"></div>
+                        <div class="stat-value">125</div>
+                    </div>
+                    <div class="shop-stat">
+                        <div class="stat-icon" style="background: #e67e22;"></div>
+                        <div class="stat-value">5/8</div>
+                    </div>
+                </div>
+
+                <div class="shop-actions">
+                    <button class="btn-small">갱신 2G</button>
+                    <button class="btn-small secondary">잠금</button>
+                    <button class="btn-small expand">확장 4G</button>
+                </div>
+            </div>
+
+            <div class="shop-slots">
+                <div class="shop-slot">
+                    <div class="shop-unit-avatar">🤖</div>
+                    <div class="shop-unit-name">기계병 A</div>
+                    <div class="shop-unit-cost">⭐ 1티어</div>
+                </div>
+                <div class="shop-slot">
+                    <div class="shop-unit-avatar">⚔️</div>
+                    <div class="shop-unit-name">강습병 B</div>
+                    <div class="shop-unit-cost">⭐ 2티어</div>
+                </div>
+                <div class="shop-slot">
+                    <div class="shop-unit-avatar">🛡️</div>
+                    <div class="shop-unit-name">방어병 C</div>
+                    <div class="shop-unit-cost">⭐ 1티어</div>
+                </div>
+                <div class="shop-slot">
+                    <div class="shop-unit-avatar">🔮</div>
+                    <div class="shop-unit-name">마법사 D</div>
+                    <div class="shop-unit-cost">⭐ 3티어</div>
+                </div>
+                <div class="shop-slot">
+                    <div class="shop-unit-avatar">🏹</div>
+                    <div class="shop-unit-name">궁수 E</div>
+                    <div class="shop-unit-cost">⭐ 2티어</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleShop() {
+            const panel = document.getElementById('shopPanel');
+            panel.classList.toggle('active');
+
+            const handle = document.querySelector('.shop-handle');
+            if (panel.classList.contains('active')) {
+                handle.innerHTML = '▼';
+            } else {
+                handle.innerHTML = '▲';
+            }
+        }
+
+        function toggleSynergy() {
+            const panel = document.getElementById('synergyPanel');
+            panel.classList.toggle('active');
+        }
+
+        // ==================== 그리드 기반 유닛 배치 시스템 ====================
+
+        // 그리드 슬롯의 중앙 위치를 계산하는 함수
+        function getGridSlotCenter(laneIndex, slotIndex, objectSize) {
+            // 레인별 Y 좌표 (레인 인덱스: 0~3)
+            const laneYPositions = [60, 160, 260, 360];
+
+            // 그리드 슬롯 X 좌표 계산
+            // 각 레인의 그리드는 .lane-grid로 CSS Grid가 적용되어 있음
+            const lanes = document.querySelectorAll('.lane');
+            const targetLane = lanes[laneIndex];
+            const gridSlots = targetLane.querySelectorAll('.grid-slot');
+            const targetSlot = gridSlots[slotIndex];
+
+            // 슬롯의 실제 위치 가져오기
+            const slotRect = targetSlot.getBoundingClientRect();
+            const sceneRect = document.getElementById('game-scene').getBoundingClientRect();
+
+            // Scene 기준 상대 좌표 계산 (오브젝트 크기의 절반을 빼서 정중앙 배치)
+            const x = slotRect.left - sceneRect.left + slotRect.width / 2 - objectSize / 2;
+            const y = laneYPositions[laneIndex];
+
+            return { x, y };
+        }
+
+        // 유닛을 배치하는 함수
+        function placeUnit(emoji, laneIndex, slotIndex, isEnemy = false) {
+            const container = isEnemy ?
+                document.getElementById('enemies-container') :
+                document.getElementById('units-container');
+
+            const unit = document.createElement('div');
+            unit.className = isEnemy ? 'enemy-scene' : 'unit-scene';
+            unit.textContent = emoji;
+
+            // 유닛/적 크기 (CSS에서 정의된 크기)
+            const unitSize = isEnemy ? 50 : 55;
+
+            const pos = getGridSlotCenter(laneIndex, slotIndex, unitSize);
+            unit.style.position = 'absolute';
+            unit.style.left = `${pos.x}px`;
+            unit.style.top = `${pos.y}px`;
+
+            container.appendChild(unit);
+        }
+
+        // 초기 유닛 배치
+        function initializeUnits() {
+            // 아군 유닛 배치 (레인 인덱스, 슬롯 인덱스)
+            placeUnit('🤖', 0, 0);  // Lane 1, Slot 1
+            placeUnit('⚙️', 0, 1);  // Lane 1, Slot 3
+
+            placeUnit('🛡️', 1, 0);  // Lane 2, Slot 4
+            placeUnit('🗡️', 1, 1);  // Lane 2, Slot 2
+
+            placeUnit('✨', 2, 0);  // Lane 3, Slot 3
+
+            placeUnit('🏹', 3, 0);  // Lane 4, Slot 1
+            placeUnit('🎯', 3, 1);  // Lane 4, Slot 4
+
+            // 적 유닛 배치
+            placeUnit('👾', 0, 8, true);  // Lane 1, Slot 8
+
+            placeUnit('👹', 1, 7, true);  // Lane 2, Slot 7
+            placeUnit('👺', 1, 9, true);  // Lane 2, Slot 9
+
+            placeUnit('🐉', 2, 8, true);  // Lane 3, Slot 8
+
+            placeUnit('👿', 3, 7, true);  // Lane 4, Slot 7
+        }
+
+        // 페이지 로드 시 유닛 배치
+        window.addEventListener('load', () => {
+            // DOM이 완전히 로드된 후 약간의 지연을 두고 배치 (그리드 렌더링 완료 대기)
+            setTimeout(initializeUnits, 100);
+        });
+    </script>
+</body>
+</html>
