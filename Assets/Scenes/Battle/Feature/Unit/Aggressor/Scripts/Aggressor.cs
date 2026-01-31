@@ -22,7 +22,7 @@ namespace Scenes.Battle.Feature.Aggressors
 
         private void OnEnable()
         {
-            _rigidbody2d.linearVelocity = Vector2.down * 1f;
+            _rigidbody2d.linearVelocity = Vector2.left * 1f;
         }
 
         private void OnDisable()
