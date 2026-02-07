@@ -1,5 +1,7 @@
 using Common.Scripts.GlobalEventBus;
+using Common.Scripts.TaskQueue;
 using Common.Scripts.SceneDataManager;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Scenes.Battle.Feature.Events.RoundEvents;
 using UnityEngine;
@@ -12,6 +14,8 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
         [SerializeField] GameObject battleWinPanel;
 
         private const float ShowAnimationDuration = 0.5f;
+
+        private UniTaskCompletionSource _confirmClickSource;
 
         private void OnEnable()
         {
@@ -31,7 +35,17 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
 
         private void OnBattleWin(OnBattleWinEventDto _)
         {
-            ShowPanel();
+            EnqueueShowPanel();
+        }
+
+        private void EnqueueShowPanel()
+        {
+            GlobalTaskQueue.Enqueue(TaskQueueChannel.BattleUi, new QueuedTask(async () =>
+            {
+                _confirmClickSource = new UniTaskCompletionSource();
+                ShowPanel();
+                await _confirmClickSource.Task;
+            }));
         }
 
         private void ShowPanel()
@@ -47,6 +61,8 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
         /// </summary>
         public void OnConfirmButtonClick()
         {
+            _confirmClickSource?.TrySetResult();
+            GlobalTaskQueue.Clear(TaskQueueChannel.BattleUi);
             SceneDataManager.Instance.ClearAll();
             SceneManager.LoadScene("BattleFront");
         }
