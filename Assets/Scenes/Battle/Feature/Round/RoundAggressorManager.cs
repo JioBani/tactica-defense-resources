@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Common.Data.Rounds;
+using Common.Data.Battlefields;
 using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.RepeatX;
@@ -118,10 +118,10 @@ namespace Scenes.Battle.Feature.Rounds
             _roundContext = new CancellationTokenSource();
             
             // 현재 라운드 정보 조회 (각 엔트리에는 지연시간, 수량, 유닛 로드아웃 포함)
-            RoundInfoData roundInfo = RoundManager.Instance.GetCurrentRoundData();
-            
+            RoundData roundData = RoundManager.Instance.GetCurrentRoundData();
+
             // 각 스폰 엔트리별로 비동기 예약 실행 (완료를 기다리지 않음)
-            foreach (var entry in roundInfo.spawnEntries)
+            foreach (var entry in roundData.spawnEntries)
             {
                 var handle = GenerateAggressors(entry).ToHandle(); // ← 한 번만 변환
                 _aggressorTaskHandles.Add(handle);
@@ -134,7 +134,7 @@ namespace Scenes.Battle.Feature.Rounds
         /// 2) 취소되었는지 확인
         /// 3) count 만큼 유닛 생성
         /// </summary>
-        private async UniTask GenerateAggressors(RoundInfoData.SpawnEntry entry)
+        private async UniTask GenerateAggressors(SpawnEntry entry)
         {
             try
             {
@@ -145,9 +145,9 @@ namespace Scenes.Battle.Feature.Rounds
 
                 // 대기 중 취소되었으면 바로 종료
                 if (token.IsCancellationRequested) return;
-                
+
                 // 해당 엔트리의 수량만큼 유닛 생성
-                RepeatX.Times(entry.count, _ => GenerateAggressor(entry.unitLoadOutData));
+                RepeatX.Times(entry.count, _ => GenerateAggressor(entry.aggressor));
             }
             catch (OperationCanceledException)
             {

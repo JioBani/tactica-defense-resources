@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Data.Rounds;
+using Common.Data.Battlefields;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.CameraControl;
 using Scenes.Battle.Feature.Rounds.Phases;
@@ -76,16 +76,16 @@ namespace Scenes.Battle.Feature.Rounds.Ui
         /// </summary>
         void SetRoundInfo()
         {
-            RoundInfoData roundInfoData = RoundManager.Instance.GetCurrentRoundData();
+            RoundData roundData = RoundManager.Instance.GetCurrentRoundData();
 
             roundText.text = $"{RoundManager.Instance.RoundIndex} 라운드";
-            
-            Dictionary<string, int> enemyInfos = roundInfoData.spawnEntries
-                .GroupBy(spawn => spawn.unitLoadOutData.Unit.DisplayName)
+
+            Dictionary<string, int> enemyInfos = roundData.spawnEntries
+                .GroupBy(spawn => spawn.aggressor.Unit.DisplayName)
                 .ToDictionary(group => group.Key, group => group.Sum(s => s.count));
-            
+
             roundInfoText.text = String.Empty;
-            
+
             foreach (var pair in enemyInfos)
             {
                 roundInfoText.text += $"{pair.Key} x {pair.Value}, ";

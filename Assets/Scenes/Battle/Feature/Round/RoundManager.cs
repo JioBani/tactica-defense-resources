@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
-using Common.Scripts.SceneSingleton;
-using Common.Data.Rounds;
+using Common.Data.Battlefields;
 using Common.Scripts.GlobalEventBus;
+using Common.Scripts.SceneDataManager;
 using Common.Scripts.StateBase;
 using Cysharp.Threading.Tasks;
 using Scenes.Battle.Feature.Events;
@@ -46,8 +45,11 @@ namespace Scenes.Battle.Feature.Rounds
                 return _instance;
             }
         }
-        
-        public List<RoundInfoData> rounds;
+
+        /// <summary>
+        /// 현재 전장 데이터 (SceneDataManager에서 가져옴)
+        /// </summary>
+        public BattlefieldData Battlefield => SceneDataManager.Instance.selectedBattlefield.Get();
 
         protected override void Awake()
         {
@@ -152,9 +154,9 @@ namespace Scenes.Battle.Feature.Rounds
             StartStateBase(PhaseType.Maintenance);
         }
 
-        public RoundInfoData GetCurrentRoundData()
+        public RoundData GetCurrentRoundData()
         {
-            return rounds[RoundIndex];
+            return Battlefield.Rounds[RoundIndex];
         }
 
         public void SetReady()

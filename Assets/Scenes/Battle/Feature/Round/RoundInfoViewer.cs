@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Data.Rounds;
+using Common.Data.Battlefields;
 using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.ObjectPool;
 using Common.Scripts.StateBase;
@@ -18,7 +17,7 @@ namespace Scenes.Battle.Feature.Rounds
         [SerializeField] private UnitGenerator unitGenerator;
         [SerializeField] private AggressorSideSellManager  aggressorSideSellManager;
 
-        private RoundInfoData _currentRoundInfo;
+        private RoundData _currentRoundData;
         private readonly List<AggressorSample> _samples = new ();
 
         private void Awake()
@@ -56,15 +55,15 @@ namespace Scenes.Battle.Feature.Rounds
 
         void ShowRoundInfo()
         {
-            _currentRoundInfo = RoundManager.Instance.GetCurrentRoundData();
-            
+            _currentRoundData = RoundManager.Instance.GetCurrentRoundData();
+
             // 유닛 ID 로 그룹화 해서 하나의 유닛당 하나씩만 미리보기 소환
-            Dictionary<int, UnitLoadOutData> enemyInfos = _currentRoundInfo.spawnEntries
-                .GroupBy(spawn => spawn.unitLoadOutData.Unit.ID)
-                .ToDictionary(group => group.Key, group => group.First().unitLoadOutData);
-            
-            Dictionary<int, int> aggressorCounts = _currentRoundInfo.spawnEntries
-                .GroupBy(spawn => spawn.unitLoadOutData.Unit.ID)
+            Dictionary<int, UnitLoadOutData> enemyInfos = _currentRoundData.spawnEntries
+                .GroupBy(spawn => spawn.aggressor.Unit.ID)
+                .ToDictionary(group => group.Key, group => group.First().aggressor);
+
+            Dictionary<int, int> aggressorCounts = _currentRoundData.spawnEntries
+                .GroupBy(spawn => spawn.aggressor.Unit.ID)
                 .ToDictionary(group => group.Key, group => group.Sum(e => e.count));
             
             foreach (var pair in enemyInfos)
