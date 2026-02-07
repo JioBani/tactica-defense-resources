@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3c6a1ffec5cf948872c16a8fcc7f73, type: 3}
+  m_Name: BattlefieldData
+  m_EditorClassIdentifier: 
+  battlefrontName: "\uD55C\uBC18\uB3C4 \uC804\uC5ED"
+  battlefieldType: 0
+  battlefieldName: "\uAC1C\uC131 \uBC29\uC5B4\uC804"
+  battlefieldId: 1
+  battlefieldIndex: 1
+  maxRoundCount: 5
+  rounds:
+  - roundIndex: 1
+    spawnEntries:
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 2
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 2
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 4
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 10
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 4
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 20
+  - roundIndex: 2
+    spawnEntries:
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 2
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 2
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 4
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 10
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 4
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 20
+  - roundIndex: 0
+    spawnEntries:
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 2
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 2
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 4
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 10
+    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
+      count: 4
+      spawnTime:
+        hours: 0
+        minutes: 0
+        seconds: 20
+  reward:
+    gold: 0
+    experience: 0
