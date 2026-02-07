@@ -56,14 +56,6 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
                     int currentRound = RoundManager.Instance.RoundIndex;
                     ShowPhasePanel($"라운드 {currentRound} 클리어!");
                     break;
-
-                case PhaseType.BattleLose:
-                    ShowPhasePanel("패배");
-                    break;
-
-                case PhaseType.BattleWin:
-                    ShowPhasePanel("승리!");
-                    break;
             }
         }
 
