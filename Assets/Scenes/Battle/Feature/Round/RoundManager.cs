@@ -102,11 +102,12 @@ namespace Scenes.Battle.Feature.Rounds
                     WaitAndTransitionToMaintenance().Forget();
                     break;
 
+                case PhaseType.GameWin:
+                    GlobalEventBus.Publish(new OnGameWinEventDto());
+                    break;
+
                 case PhaseType.GameOver:
-                    GlobalEventBus.Publish(
-                        new OnGameOverEventDto()
-                    );
-                    Debug.Log("Game Over");
+                    GlobalEventBus.Publish(new OnGameOverEventDto());
                     break;
             }
         }
@@ -216,7 +217,8 @@ namespace Scenes.Battle.Feature.Rounds
         }
 
         /// <summary>
-        /// End 페이즈 진입 시 3초 대기 후 Maintenance 페이즈로 전환
+        /// End 페이즈 진입 시 3초 대기 후 다음 페이즈로 전환
+        /// 마지막 라운드면 GameWin, 아니면 Maintenance
         /// </summary>
         private async UniTaskVoid WaitAndTransitionToMaintenance()
         {
@@ -230,10 +232,11 @@ namespace Scenes.Battle.Feature.Rounds
                 // 설정된 시간만큼 대기
                 await UniTask.Delay(TimeSpan.FromSeconds(endPhaseDuration), cancellationToken: _endPhaseCts.Token);
 
-                // Maintenance 페이즈로 전환
                 if (CurrentState == PhaseType.End)
                 {
-                    RequestStateChange(PhaseType.Maintenance);
+                    // 마지막 라운드면 GameWin, 아니면 Maintenance
+                    bool isLastRound = RoundIndex >= Battlefield.Rounds.Count - 1;
+                    RequestStateChange(isLastRound ? PhaseType.GameWin : PhaseType.Maintenance);
                 }
             }
             catch (OperationCanceledException)

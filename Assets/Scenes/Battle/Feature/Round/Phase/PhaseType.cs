@@ -6,6 +6,7 @@
         Ready, // 전투 준비
         Combat, // 전투
         End, // 전투 종료
-        GameOver
+        GameWin,
+        GameOver,
     }
 }
