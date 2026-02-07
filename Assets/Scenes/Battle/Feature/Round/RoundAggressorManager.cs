@@ -128,11 +128,13 @@ namespace Scenes.Battle.Feature.Rounds
             }
         }
 
+        private const int MaxSpawnCountPerEntry = 4;
+
         /// <summary>
         /// 단일 스폰 엔트리를 처리한다.
         /// 1) 지정된 지연시간만큼 대기
         /// 2) 취소되었는지 확인
-        /// 3) count 만큼 유닛 생성
+        /// 3) count 만큼 유닛 생성 (최대 4명까지)
         /// </summary>
         private async UniTask GenerateAggressors(SpawnEntry entry)
         {
@@ -146,8 +148,16 @@ namespace Scenes.Battle.Feature.Rounds
                 // 대기 중 취소되었으면 바로 종료
                 if (token.IsCancellationRequested) return;
 
-                // 해당 엔트리의 수량만큼 유닛 생성
-                RepeatX.Times(entry.count, _ => GenerateAggressor(entry.aggressor));
+                // 최대 4명까지만 등장
+                int spawnCount = Math.Min(entry.count, MaxSpawnCountPerEntry);
+
+                // 스폰포인트를 셔플하여 겹치지 않게 분배
+                var shuffledSpawnPoints = GetShuffledSpawnPointIndices(spawnCount);
+
+                for (int i = 0; i < spawnCount; i++)
+                {
+                    GenerateAggressor(entry.aggressor, shuffledSpawnPoints[i]);
+                }
             }
             catch (OperationCanceledException)
             {
@@ -155,18 +165,34 @@ namespace Scenes.Battle.Feature.Rounds
             }
         }
 
-        private void GenerateAggressor(UnitLoadOutData unitLoadOutData)
+        /// <summary>
+        /// 스폰포인트 인덱스를 셔플하여 겹치지 않게 반환
+        /// </summary>
+        private List<int> GetShuffledSpawnPointIndices(int count)
+        {
+            var indices = Enumerable.Range(0, spawnPoints.Count).ToList();
+
+            // Fisher-Yates 셔플
+            for (int i = indices.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (indices[i], indices[j]) = (indices[j], indices[i]);
+            }
+
+            // 필요한 개수만큼 반환 (스폰포인트 수보다 많으면 전체 반환)
+            return indices.Take(Math.Min(count, indices.Count)).ToList();
+        }
+
+        private void GenerateAggressor(UnitLoadOutData unitLoadOutData, int spawnPointIndex)
         {
             Units.Unit unit = unitGenerator.GenerateAggressor(unitLoadOutData);
-            
-            int spawnPointIndex = Random.Range(0, spawnPoints.Count - 1);
 
             unit.transform.position = new Vector3(
                 spawnPoints[spawnPointIndex].position.x,
                 spawnPoints[spawnPointIndex].position.y,
                 unit.transform.position.z
             );
-            
+
             _aggressors.Add(unit);
         }
 
