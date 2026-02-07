@@ -66,17 +66,18 @@ namespace Scenes.Battle.Feature.Units.ActionStates
 
         private void OnEnable()
         {
-            GlobalEventBus.Subscribe<OnGameOverEventDto>(OnGameOver);
+            GlobalEventBus.Subscribe<OnBattleLoseEventDto>(OnBattleEnd);
+            GlobalEventBus.Subscribe<OnBattleWinEventDto>(OnBattleEnd);
             StartStateBase(canMove ? ActionStateType.Move :  ActionStateType.Idle);
-            //StartStateBase(canMove ? ActionStateType.Move :  ActionStateType.Freeze);
         }
 
         private void OnDisable()
         {
-            GlobalEventBus.Unsubscribe<OnGameOverEventDto>(OnGameOver);
+            GlobalEventBus.Unsubscribe<OnBattleLoseEventDto>(OnBattleEnd);
+            GlobalEventBus.Unsubscribe<OnBattleWinEventDto>(OnBattleEnd);
         }
 
-        private void OnGameOver(OnGameOverEventDto _)
+        private void OnBattleEnd<T>(T _) where T : struct
         {
             RequestStateChange(ActionStateType.Freeze);
         }

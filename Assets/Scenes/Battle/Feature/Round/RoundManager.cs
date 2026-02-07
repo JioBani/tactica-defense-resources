@@ -102,12 +102,12 @@ namespace Scenes.Battle.Feature.Rounds
                     WaitAndTransitionToMaintenance().Forget();
                     break;
 
-                case PhaseType.GameWin:
-                    GlobalEventBus.Publish(new OnGameWinEventDto());
+                case PhaseType.BattleWin:
+                    GlobalEventBus.Publish(new OnBattleWinEventDto());
                     break;
 
-                case PhaseType.GameOver:
-                    GlobalEventBus.Publish(new OnGameOverEventDto());
+                case PhaseType.BattleLose:
+                    GlobalEventBus.Publish(new OnBattleLoseEventDto());
                     break;
             }
         }
@@ -138,8 +138,8 @@ namespace Scenes.Battle.Feature.Rounds
                 case PhaseType.Combat:
                     break;
 
-                case PhaseType.GameOver:
-                    // GameOver는 전환 없음
+                case PhaseType.BattleLose:
+                    // BattleLose는 전환 없음
                     break;
 
                 case PhaseType.End:
@@ -183,10 +183,10 @@ namespace Scenes.Battle.Feature.Rounds
             }
         }
 
-        // 생명수정 파괴시 게임 종료 페이즈 전환
+        // 생명수정 파괴시 패배 페이즈 전환
         private void OnLifeCrystalDestroy(OnLifeCrystalDestroyEventDto _)
         {
-            RequestStateChange(PhaseType.GameOver);
+            RequestStateChange(PhaseType.BattleLose);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Scenes.Battle.Feature.Rounds
 
         /// <summary>
         /// End 페이즈 진입 시 3초 대기 후 다음 페이즈로 전환
-        /// 마지막 라운드면 GameWin, 아니면 Maintenance
+        /// 마지막 라운드면 BattleWin, 아니면 Maintenance
         /// </summary>
         private async UniTaskVoid WaitAndTransitionToMaintenance()
         {
@@ -234,9 +234,9 @@ namespace Scenes.Battle.Feature.Rounds
 
                 if (CurrentState == PhaseType.End)
                 {
-                    // 마지막 라운드면 GameWin, 아니면 Maintenance
+                    // 마지막 라운드면 BattleWin, 아니면 Maintenance
                     bool isLastRound = RoundIndex >= Battlefield.Rounds.Count - 1;
-                    RequestStateChange(isLastRound ? PhaseType.GameWin : PhaseType.Maintenance);
+                    RequestStateChange(isLastRound ? PhaseType.BattleWin : PhaseType.Maintenance);
                 }
             }
             catch (OperationCanceledException)

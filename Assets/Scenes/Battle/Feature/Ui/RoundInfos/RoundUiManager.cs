@@ -57,8 +57,12 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
                     ShowPhasePanel($"라운드 {currentRound} 클리어!");
                     break;
 
-                case PhaseType.GameOver:
-                    ShowPhasePanel("게임 오버");
+                case PhaseType.BattleLose:
+                    ShowPhasePanel("패배");
+                    break;
+
+                case PhaseType.BattleWin:
+                    ShowPhasePanel("승리!");
                     break;
             }
         }
@@ -74,7 +78,8 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
             {
                 case PhaseType.Ready:
                 case PhaseType.End:
-                case PhaseType.GameOver:
+                case PhaseType.BattleLose:
+                case PhaseType.BattleWin:
                     HidePhasePanel();
                     break;
             }
