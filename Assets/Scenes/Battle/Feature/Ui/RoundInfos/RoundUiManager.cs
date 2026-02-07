@@ -1,5 +1,7 @@
 using System;
+using Common.Scripts.Extensions;
 using Common.Scripts.StateBase;
+using Common.Scripts.TaskQueue;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Scenes.Battle.Feature.Rounds;
@@ -14,8 +16,9 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
         [SerializeField] private GameObject roundPanel;
         [SerializeField] private TextMeshProUGUI phaseText;
 
-        private const float ShowAnimationDuration = 0.5f; // 패널 등장 애니메이션 시간
-        private const float HideAnimationDuration = 0.3f; // 패널 사라짐 애니메이션 시간
+        private const float ShowAnimationDuration = 0.5f;
+        private const float HideAnimationDuration = 0.3f;
+        private const float DisplayDuration = 2f;
 
         private void Awake()
         {
@@ -40,8 +43,7 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
             switch (phaseType)
             {
                 case PhaseType.Maintenance:
-                    ShowPhasePanel("정비하세요!");
-                    AutoHideAfterDelay(2f).Forget();
+                    EnqueueShowAndHide("정비하세요!");
                     break;
 
                 case PhaseType.Ready:
@@ -54,7 +56,7 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
 
                 case PhaseType.End:
                     int currentRound = RoundManager.Instance.RoundIndex;
-                    ShowPhasePanel($"라운드 {currentRound} 클리어!");
+                    EnqueueShowAndHide($"라운드 {currentRound} 클리어!");
                     break;
             }
         }
@@ -104,25 +106,37 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
         }
 
         /// <summary>
-        /// 지정된 시간(초) 후에 패널을 자동으로 숨김
-        /// 등장 애니메이션이 완료된 후부터 시간을 카운트합니다.
+        /// TaskQueue를 통해 패널 표시 후 숨김 동작을 큐에 추가
         /// </summary>
-        private async UniTaskVoid AutoHideAfterDelay(float delaySeconds)
+        private void EnqueueShowAndHide(string message)
         {
-            try
+            GlobalTaskQueue.Enqueue(TaskQueueChannel.BattleUi, new QueuedTask(async () =>
             {
-                // 등장 애니메이션이 완료될 때까지 대기
-                await UniTask.Delay(TimeSpan.FromSeconds(ShowAnimationDuration), cancellationToken: this.GetCancellationTokenOnDestroy());
+                await ShowAndHidePanelAsync(message);
+            }));
+        }
 
-                // 지정된 시간만큼 추가 대기
-                await UniTask.Delay(TimeSpan.FromSeconds(delaySeconds), cancellationToken: this.GetCancellationTokenOnDestroy());
+        private async UniTask ShowAndHidePanelAsync(string message)
+        {
+            phaseText.text = message;
+            roundPanel.transform.DOComplete();
+            roundPanel.transform.localScale = Vector3.one * 0.5f;
+            roundPanel.SetActive(true);
 
-                HidePhasePanel();
-            }
-            catch (OperationCanceledException)
-            {
-                // 취소된 경우 아무 작업도 하지 않음
-            }
+            // 등장 애니메이션
+            await roundPanel.transform.DOScale(Vector3.one, ShowAnimationDuration)
+                .SetEase(Ease.OutBack)
+                .ToUniTask();
+
+            // 표시 시간 대기
+            await UniTask.Delay(TimeSpan.FromSeconds(DisplayDuration));
+
+            // 숨김 애니메이션
+            await roundPanel.transform.DOScale(Vector3.one * 0.5f, HideAnimationDuration)
+                .SetEase(Ease.InBack)
+                .ToUniTask();
+
+            roundPanel.SetActive(false);
         }
     }
 }
