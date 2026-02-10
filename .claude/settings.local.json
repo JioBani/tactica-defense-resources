@@ -2,7 +2,21 @@
   "permissions": {
     "allow": [
       "Bash(git commit:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(dir:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for f in \"$CLAUDE_PROJECT_DIR\"/.claude/docs/*.md; do [ -f \"$f\" ] && echo \"=== $(basename \"$f\") ===\" && cat \"$f\" && echo; done"
+          }
+        ]
+      }
     ]
   }
 }
