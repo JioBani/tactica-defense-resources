@@ -30,7 +30,10 @@ namespace Scenes.Battle.Feature.Rounds
 
         private CancellationTokenSource _endPhaseCts;
         private CancellationTokenSource _readyPhaseCts;
-        
+        private CancellationTokenSource _roundLoseCts;
+
+        private bool _isRetry;
+
         public static RoundManager Instance
         {
             get
@@ -70,19 +73,21 @@ namespace Scenes.Battle.Feature.Rounds
         {
             // 침략자 모두 처치 이벤트 구독
             GlobalEventBus.Subscribe<RoundAggressorCompletedEventDto>(OnAggressorAllCompleted);
-            
-            // 생명수정 파괴 이벤트 구독
-            GlobalEventBus.Subscribe<OnLifeCrystalDestroyEventDto>(OnLifeCrystalDestroy);
+
+            // 라운드 실패 이벤트 구독
+            GlobalEventBus.Subscribe<OnRoundLoseEventDto>(OnRoundLose);
         }
 
         private void OnDisable()
         {
             GlobalEventBus.Unsubscribe<RoundAggressorCompletedEventDto>(OnAggressorAllCompleted);
-            GlobalEventBus.Unsubscribe<OnLifeCrystalDestroyEventDto>(OnLifeCrystalDestroy);
+            GlobalEventBus.Unsubscribe<OnRoundLoseEventDto>(OnRoundLose);
             _endPhaseCts?.Cancel();
             _endPhaseCts?.Dispose();
             _readyPhaseCts?.Cancel();
             _readyPhaseCts?.Dispose();
+            _roundLoseCts?.Cancel();
+            _roundLoseCts?.Dispose();
         }
 
         // IStateListener 명시적 구현
@@ -91,7 +96,14 @@ namespace Scenes.Battle.Feature.Rounds
             switch (phaseType)
             {
                 case PhaseType.Maintenance:
-                    IncrementRoundIndex();
+                    if (_isRetry)
+                    {
+                        _isRetry = false;
+                    }
+                    else
+                    {
+                        IncrementRoundIndex();
+                    }
                     break;
 
                 case PhaseType.Ready:
@@ -100,6 +112,12 @@ namespace Scenes.Battle.Feature.Rounds
 
                 case PhaseType.End:
                     WaitAndTransitionToMaintenance().Forget();
+                    break;
+
+                case PhaseType.RoundLose:
+                    lifeCrystalManager.IncrementFailCount();
+                    _isRetry = true;
+                    WaitAndTransitionAfterRoundLose().Forget();
                     break;
 
                 case PhaseType.BattleWin:
@@ -121,10 +139,10 @@ namespace Scenes.Battle.Feature.Rounds
         {
             // Exit 단계에서는 특별한 동작 없음
         }
-        
+
         protected override PhaseType CheckStateTransition(PhaseType currentPhase)
         {
-            // 우선순위 2: 각 Phase별 전환 조건 체크
+            // 각 Phase별 전환 조건 체크
             switch (currentPhase)
             {
                 case PhaseType.Maintenance:
@@ -138,6 +156,10 @@ namespace Scenes.Battle.Feature.Rounds
                 case PhaseType.Combat:
                     break;
 
+                case PhaseType.RoundLose:
+                    // RoundLose는 UniTask로 자동 전환
+                    break;
+
                 case PhaseType.BattleLose:
                     // BattleLose는 전환 없음
                     break;
@@ -149,7 +171,7 @@ namespace Scenes.Battle.Feature.Rounds
 
             return currentPhase;
         }
-        
+
         public void StartRound()
         {
             StartStateBase(PhaseType.Maintenance);
@@ -183,10 +205,13 @@ namespace Scenes.Battle.Feature.Rounds
             }
         }
 
-        // 생명수정 파괴시 패배 페이즈 전환
-        private void OnLifeCrystalDestroy(OnLifeCrystalDestroyEventDto _)
+        // 침략자가 왼쪽 끝에 도달하여 라운드 실패
+        private void OnRoundLose(OnRoundLoseEventDto _)
         {
-            RequestStateChange(PhaseType.BattleLose);
+            if (CurrentState == PhaseType.Combat)
+            {
+                RequestStateChange(PhaseType.RoundLose);
+            }
         }
 
         /// <summary>
@@ -244,7 +269,32 @@ namespace Scenes.Battle.Feature.Rounds
                 // 취소된 경우 아무 작업도 하지 않음
             }
         }
+
+        /// <summary>
+        /// RoundLose 페이즈 진입 시 대기 후 다음 페이즈로 전환
+        /// 임무 실패(3회)면 BattleLose, 아니면 Maintenance(재도전)
+        /// </summary>
+        private async UniTaskVoid WaitAndTransitionAfterRoundLose()
+        {
+            _roundLoseCts?.Cancel();
+            _roundLoseCts?.Dispose();
+            _roundLoseCts = new CancellationTokenSource();
+
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(endPhaseDuration), cancellationToken: _roundLoseCts.Token);
+
+                if (CurrentState == PhaseType.RoundLose)
+                {
+                    RequestStateChange(lifeCrystalManager.IsMissionFailed
+                        ? PhaseType.BattleLose
+                        : PhaseType.Maintenance);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // 취소된 경우 아무 작업도 하지 않음
+            }
+        }
     }
 }
-
-
