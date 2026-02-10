@@ -5,6 +5,7 @@ using System.Threading;
 using Common.Data.Battlefields;
 using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.GlobalEventBus;
+using Common.Scripts.ObjectPool;
 using Common.Scripts.RepeatX;
 using Common.Scripts.StateBase;
 using Common.Scripts.UniTaskHandles;
@@ -51,6 +52,11 @@ namespace Scenes.Battle.Feature.Rounds
             {
                 OnRoundEnter();
             }
+
+            if (phaseType == PhaseType.RoundLose)
+            {
+                DeSpawnAllAggressors();
+            }
         }
 
         void IStateListener<PhaseType>.OnStateRun(PhaseType phaseType)
@@ -60,7 +66,7 @@ namespace Scenes.Battle.Feature.Rounds
 
         void IStateListener<PhaseType>.OnStateExit(PhaseType phaseType)
         {
-            if (phaseType == PhaseType.Combat)
+            if (phaseType == PhaseType.Combat || phaseType == PhaseType.RoundLose)
             {
                 OnRoundEnd();
             }
@@ -102,9 +108,25 @@ namespace Scenes.Battle.Feature.Rounds
         private void OnRoundEnd()
         {
             RoundAggressorState = RoundAggressorState.Waiting;
-            
+
             _aggressors.Clear();
             CancelGeneration();
+        }
+
+        /// <summary>
+        /// 라운드 실패 시 남은 침략자를 모두 DeSpawn 처리
+        /// </summary>
+        private void DeSpawnAllAggressors()
+        {
+            CancelGeneration();
+
+            foreach (var aggressor in _aggressors)
+            {
+                if (aggressor.gameObject.activeInHierarchy)
+                {
+                    aggressor.GetComponent<Poolable>().DeSpawn();
+                }
+            }
         }
         
         /// <summary>
