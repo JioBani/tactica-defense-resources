@@ -60,9 +60,9 @@ namespace Scenes.Battle.Feature.Aggressors
         }
 
         /// <summary>
-        /// 생명 수정 위험 지역에 진입한 경우
+        /// 방어선에 도달한 경우
         /// </summary>
-        public void OnEnterLifeCrystalContactZone()
+        public void OnEnterDefenseLine()
         {
             poolable.DeSpawn();
         }
