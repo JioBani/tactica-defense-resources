@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scenes.Battle.Feature.Ui.RoundInfos
 {
-    public class GameOverUiManager : MonoBehaviour
+    public class BattleLoseUiManager : MonoBehaviour
     {
         [SerializeField] GameObject gameOverPanel;
 

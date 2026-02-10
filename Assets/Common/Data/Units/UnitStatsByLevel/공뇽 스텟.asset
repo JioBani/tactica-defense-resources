@@ -49,9 +49,9 @@ MonoBehaviour:
     additionalPerExtraStar: 0
   moveSpeed:
     baseValuesByStar:
-    - 3
-    - 3
-    - 3
+    - 100
+    - 100
+    - 100
     additionalPerExtraStar: 0
   criticalChance:
     baseValuesByStar: []
