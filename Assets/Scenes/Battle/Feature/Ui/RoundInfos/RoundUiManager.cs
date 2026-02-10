@@ -58,6 +58,10 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
                     int currentRound = RoundManager.Instance.RoundIndex;
                     EnqueueShowAndHide($"라운드 {currentRound} 클리어!");
                     break;
+
+                case PhaseType.RoundLose:
+                    EnqueueShowAndHide("라운드 실패!");
+                    break;
             }
         }
 
@@ -72,6 +76,7 @@ namespace Scenes.Battle.Feature.Ui.RoundInfos
             {
                 case PhaseType.Ready:
                 case PhaseType.End:
+                case PhaseType.RoundLose:
                 case PhaseType.BattleLose:
                 case PhaseType.BattleWin:
                     HidePhasePanel();
