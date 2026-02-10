@@ -2,12 +2,12 @@ using System;
 using System.Threading;
 using Common.Data.Battlefields;
 using Common.Scripts.GlobalEventBus;
+using Common.Scripts.Rxs;
 using Common.Scripts.SceneDataManager;
 using Common.Scripts.StateBase;
 using Cysharp.Threading.Tasks;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Events.RoundEvents;
-using Scenes.Battle.Feature.LifeCrystals;
 using Scenes.Battle.Feature.Rounds.Phases;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
@@ -22,11 +22,18 @@ namespace Scenes.Battle.Feature.Rounds
         public int RoundIndex { get; private set; } = 0;
         [SerializeField] private RoundAggressorManager roundAggressorManager;
         [SerializeField] private DefenderManager defenderManager;
-        [SerializeField] private LifeCrystalManager lifeCrystalManager;
 
         [Header("Phase Transition Times")]
         [SerializeField] private float readyPhaseDuration = 3f;
         [SerializeField] private float endPhaseDuration = 3f;
+
+        public const int MaxFailCount = 2;
+
+        public RxValue<int> RoundFailCount { get; private set; } = new RxValue<int>(0);
+
+        public int RemainingFailCount => MaxFailCount - RoundFailCount.Value;
+
+        public bool IsMissionFailed => RoundFailCount.Value >= MaxFailCount;
 
         private CancellationTokenSource _endPhaseCts;
         private CancellationTokenSource _readyPhaseCts;
@@ -71,6 +78,8 @@ namespace Scenes.Battle.Feature.Rounds
 
         private void OnEnable()
         {
+            RoundFailCount.Value = 0;
+            
             // 침략자 모두 처치 이벤트 구독
             GlobalEventBus.Subscribe<RoundAggressorCompletedEventDto>(OnAggressorAllCompleted);
 
@@ -115,7 +124,7 @@ namespace Scenes.Battle.Feature.Rounds
                     break;
 
                 case PhaseType.RoundLose:
-                    lifeCrystalManager.IncrementFailCount();
+                    RoundFailCount.Value++;
                     _isRetry = true;
                     WaitAndTransitionAfterRoundLose().Forget();
                     break;
@@ -286,7 +295,7 @@ namespace Scenes.Battle.Feature.Rounds
 
                 if (CurrentState == PhaseType.RoundLose)
                 {
-                    RequestStateChange(lifeCrystalManager.IsMissionFailed
+                    RequestStateChange(IsMissionFailed
                         ? PhaseType.BattleLose
                         : PhaseType.Maintenance);
                 }
