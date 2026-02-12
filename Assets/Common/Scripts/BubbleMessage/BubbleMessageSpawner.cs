@@ -9,21 +9,17 @@ namespace Common.Scripts.BubbleMessage
         [SerializeField] private BubbleMessageConfig config;
         [SerializeField] private GameObject bubbleMessagePrefab;
 
-        [Header("Parents")]
-        [SerializeField] private Transform worldSpaceParent;
         [SerializeField] private RectTransform screenSpaceParent;
+        [SerializeField] private Camera mainCamera;
 
         public void SpawnAtWorld(string text, Vector3 worldPosition,
             BubbleMessageParams param = default)
         {
-            GameObject go = ObjectPooler.Instance.Spawn(
-                bubbleMessagePrefab,
-                worldSpaceParent,
-                worldPosition
+            Vector2 screenPoint = mainCamera.WorldToScreenPoint(worldPosition);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                screenSpaceParent, screenPoint, null, out var anchoredPosition
             );
-
-            var bubble = go.GetComponent<BubbleMessage>();
-            bubble.Play(text, config, param);
+            SpawnAtScreen(text, anchoredPosition, param);
         }
 
         public void SpawnAtScreen(string text, Vector2 anchoredPosition,

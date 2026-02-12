@@ -1,10 +1,10 @@
 using System;
+using Common.Scripts.BubbleMessage;
 using Common.Scripts.Draggable;
 using Common.Scripts.InspectorDescriptionAttributes;
 using Scenes.Battle.Feature.Markets;
 using Scenes.Battle.Feature.Rounds;
 using Scenes.Battle.Feature.Rounds.Phases;
-using Scenes.Battle.Feature.Ui;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
 
@@ -38,7 +38,10 @@ namespace Scenes.Battle.Feature.Sells
 
             if (MarketManager.Instance.IsDefenderLimitExceeded())
             {
-                AlertManager.Instance.Alert("수호자 배치 한계를 초과했습니다. 레벨업 해서 배치 한계를 늘려보세요.");
+                BubbleMessageSpawner.Instance.SpawnAtWorld(
+                    "배치 한계 초과!",
+                    draggable.transform.position
+                );
                 return false;
             }
 

@@ -3273,8 +3273,8 @@ MonoBehaviour:
   _dontDestroyOnLoad: 1
   config: {fileID: 11400000, guid: 6beb83bb6c2893345aec3ce57d5687a4, type: 2}
   bubbleMessagePrefab: {fileID: 7257087092003051280, guid: 99e0dca0448855745b7348fbf0952717, type: 3}
-  worldSpaceParent: {fileID: 189211357}
   screenSpaceParent: {fileID: 1976546784}
+  mainCamera: {fileID: 1007864557}
 --- !u!1 &513231045
 GameObject:
   m_ObjectHideFlags: 0
