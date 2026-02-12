@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2846b74d8178b4ba77e54d39f36556, type: 3}
+  m_Name: BubbleMessageConfig
+  m_EditorClassIdentifier: 
+  duration: 2
+  floatDistance: 20
+  moveEase: 9
+  fadeEase: 8
+  fadeStartRatio: 0.3
+  defaultColor: {r: 0, g: 0, b: 0, a: 1}
+  defaultFontSize: 14
