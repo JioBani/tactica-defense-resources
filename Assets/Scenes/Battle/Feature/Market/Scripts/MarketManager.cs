@@ -23,7 +23,8 @@ namespace Scenes.Battle.Feature.Markets
         [SerializeField] private DefenderManager defenderManager;
         [SerializeField] private List<UnitLoadOutData> appearUnits;
         public RxValue<int> Mana = new RxValue<int>(0);
-        [SerializeField] private EconomyConfig economyConfig;
+        [SerializeField] private ManaIncomeConfig manaIncomeConfig;
+        [SerializeField] private PlacementConfig placementConfig;
 
         public readonly RxValue<int> DefenderPlacementLimit = new RxValue<int>(0);
         public readonly RxValue<int> Level = new RxValue<int>(1);
@@ -45,7 +46,7 @@ namespace Scenes.Battle.Feature.Markets
             // IStateListener 등록
 
             // TOOD: RoundManager 에 게임 시작 상태를 만들고 그곳에 콜백 등록
-            DefenderPlacementLimit.Value = 3;
+            DefenderPlacementLimit.Value = placementConfig.initialPlacementLimit;
         }
 
         private void OnEnable()
@@ -175,11 +176,11 @@ namespace Scenes.Battle.Feature.Markets
         private int GetRoundStartIncome()
         {
             int roundIndex = RoundManager.Instance.RoundIndex;
-            int income = economyConfig.GetBaseMana(roundIndex);
+            int income = manaIncomeConfig.GetBaseMana(roundIndex);
 
             // 이자
-            int steps = Mathf.Min(Mana.Value / economyConfig.manaPerInterestStep, economyConfig.maxInterest);
-            income += steps * economyConfig.interestPerStep;
+            int steps = Mathf.Min(Mana.Value / manaIncomeConfig.manaPerInterestStep, manaIncomeConfig.maxInterest);
+            income += steps * manaIncomeConfig.interestPerStep;
 
             // 연승 보너스
             // if (winStreak > 0 && winStreak < winStreakBonusByCount.Length)

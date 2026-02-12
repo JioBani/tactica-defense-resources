@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Common.Data.Configs
 {
-    [CreateAssetMenu(menuName = "GameConfig/EconomyConfig")]
-    public class EconomyConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "GameConfig/ManaIncomeConfig")]
+    public class ManaIncomeConfig : ScriptableObject
     {
         [Header("기본 수입")]
         [Tooltip("인덱스 = 라운드 번호, 값 = 해당 라운드 기본 지급 마나")]
@@ -47,4 +47,3 @@ namespace Common.Data.Configs
         }
     }
 }
-
