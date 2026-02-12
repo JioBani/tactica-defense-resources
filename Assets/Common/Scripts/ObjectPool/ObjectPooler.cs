@@ -24,6 +24,32 @@ namespace Common.Scripts.ObjectPool
         
         public GameObject Spawn(GameObject prefab, Transform parent, Vector2? position = null)
         {
+            GameObject target = SpawnFromPool(prefab, parent);
+
+            if (position.HasValue)
+            {
+                target.transform.position = position.Value;
+            }
+
+            target.SetActive(true);
+
+            return target;
+        }
+
+        public GameObject SpawnUI(GameObject prefab, RectTransform parent, Vector2 anchoredPosition)
+        {
+            GameObject target = SpawnFromPool(prefab, parent);
+
+            var rt = target.GetComponent<RectTransform>();
+            rt.anchoredPosition = anchoredPosition;
+
+            target.SetActive(true);
+
+            return target;
+        }
+
+        private GameObject SpawnFromPool(GameObject prefab, Transform parent)
+        {
             string poolId = prefab.name + prefab.GetInstanceID();
 
             bool isExists = poolingObjects.TryGetValue(poolId, out var pool);
@@ -36,10 +62,10 @@ namespace Common.Scripts.ObjectPool
 
                 pool = new Pair(newPool.transform, new List<GameObject>());
                 newPool.transform.SetParent(poolParent);
-                
+
                 poolingObjects.Add(poolId, pool);
             }
-            
+
             GameObject target = pool.objects.Find(poolable => !poolable.activeSelf);
 
             if (target == null)
@@ -51,16 +77,9 @@ namespace Common.Scripts.ObjectPool
 
                 pool.objects.Add(target);
             }
-            
+
             target.transform.SetParent(parent);
-            
-            if (position.HasValue)
-            {
-                target.transform.position = position.Value;
-            }
-            
-            target.SetActive(true);
-            
+
             return target;
         }
 
