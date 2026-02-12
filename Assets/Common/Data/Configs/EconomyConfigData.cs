@@ -6,20 +6,30 @@ namespace Common.Data.Configs
     public class EconomyConfig : ScriptableObject
     {
         [Header("기본 수입")]
-        public int baseGoldPerRound = 5;
+        [Tooltip("인덱스 = 라운드 번호, 값 = 해당 라운드 기본 지급 골드")]
+        public int[] baseGoldPerRound;
 
         [Header("이자 관련")]
         public int goldPerInterestStep = 10;   // 10골드당 이자
         public int interestPerStep = 1;        // 10골드당 1골드
-        public int maxInterest = 5;            // 최대 5골드
+        public int maxInterest = 3;            // 최대 3골드
 
         [Header("연승/연패 보너스")]
         public int[] winStreakBonusByCount;    // 인덱스 = 연승길이
         public int[] loseStreakBonusByCount;   // 인덱스 = 연패길이
 
-        public int GetRoundStartIncome(int currentGold, int winStreak, int loseStreak)
+        public int GetBaseGold(int roundIndex)
         {
-            int income = baseGoldPerRound;
+            if (baseGoldPerRound == null || baseGoldPerRound.Length == 0)
+                return 0;
+
+            int index = Mathf.Clamp(roundIndex, 0, baseGoldPerRound.Length - 1);
+            return baseGoldPerRound[index];
+        }
+
+        public int GetRoundStartIncome(int roundIndex, int currentGold, int winStreak, int loseStreak)
+        {
+            int income = GetBaseGold(roundIndex);
 
             // 이자
             int steps = Mathf.Min(currentGold / goldPerInterestStep, maxInterest);

@@ -174,7 +174,8 @@ namespace Scenes.Battle.Feature.Markets
         
         private int GetRoundStartIncome()
         {
-            int income = economyConfig.baseGoldPerRound;
+            int roundIndex = RoundManager.Instance.RoundIndex;
+            int income = economyConfig.GetBaseGold(roundIndex);
 
             // 이자
             int steps = Mathf.Min(Gold.Value / economyConfig.goldPerInterestStep, economyConfig.maxInterest);
