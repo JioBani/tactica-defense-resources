@@ -158,11 +158,10 @@ namespace Scenes.Battle.Feature.Markets
 
             if (BuySomething(entry.cost, "마나가 부족합니다."))
             {
-                Level.Value += 1;
                 DefenderPlacementLimit.Value = entry.placementLimit;
                 _levelUpIndex++;
-
                 LevelUpMana.Value = IsMaxLevel() ? 0 : placementConfig.levelUpTable[_levelUpIndex].cost;
+                Level.Value += 1;
 
                 return true;
             }

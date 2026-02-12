@@ -9,6 +9,8 @@ namespace Scenes.Battle.Feature.Ui.Markets
     {
         [SerializeField] private MarketManager marketManager;
         [SerializeField] private TextMeshProUGUI manaText;
+        [SerializeField] private TextMeshProUGUI levelUpCostText;
+        [SerializeField] private GameObject levelUpButton;
         [SerializeField] private RectTransform marketPanel;
         [SerializeField] private float slideDuration = 0.3f;
         [SerializeField] private TextMeshProUGUI toggleText;
@@ -27,11 +29,14 @@ namespace Scenes.Battle.Feature.Ui.Markets
         private void OnEnable()
         {
             marketManager.Mana.OnChange += OnManaChange;
+            marketManager.Level.OnChange += OnLevelChange;
+            OnLevelChange(marketManager.Level.Value);
         }
 
         private void OnDisable()
         {
             marketManager.Mana.OnChange -= OnManaChange;
+            marketManager.Level.OnChange -= OnLevelChange;
         }
 
         public void OnClickLevelUp()
@@ -42,6 +47,20 @@ namespace Scenes.Battle.Feature.Ui.Markets
         private void OnManaChange(int mana)
         {
             manaText.text = $"{mana} MANA";
+        }
+
+        private void OnLevelChange(int level)
+        {
+            if (marketManager.IsMaxLevel())
+            {
+                levelUpCostText.text = "MAX";
+                levelUpButton.SetActive(false);
+            }
+            else
+            {
+                levelUpCostText.text = $"배치 증가\n({marketManager.LevelUpMana.Value})";
+                levelUpButton.SetActive(true);
+            }
         }
 
         public void OnClickReroll()
