@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e5c740e91875a42a90a791ec7b8430, type: 3}
   m_Name: EconomyConfig
   m_EditorClassIdentifier: 
-  baseGoldPerRound:
+  baseManaPerRound:
   - 0
   - 1
   - 2
@@ -44,7 +44,7 @@ MonoBehaviour:
   - 10
   - 10
   - 10
-  goldPerInterestStep: 10
+  manaPerInterestStep: 10
   interestPerStep: 1
   maxInterest: 3
   winStreakBonusByCount: 

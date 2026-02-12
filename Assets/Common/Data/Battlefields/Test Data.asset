@@ -36,5 +36,5 @@ MonoBehaviour:
         minutes: 0
         seconds: 1
   reward:
-    gold: 0
+    mana: 0
     experience: 0
