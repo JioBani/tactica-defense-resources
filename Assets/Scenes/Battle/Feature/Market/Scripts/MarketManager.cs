@@ -22,19 +22,19 @@ namespace Scenes.Battle.Feature.Markets
         [SerializeField] private DefenderSellZone sellZone;
         [SerializeField] private DefenderManager defenderManager;
         [SerializeField] private List<UnitLoadOutData> appearUnits;
-        public RxValue<int> Gold = new RxValue<int>(0);
+        public RxValue<int> Mana = new RxValue<int>(0);
         [SerializeField] private EconomyConfig economyConfig;
 
         public readonly RxValue<int> DefenderPlacementLimit = new RxValue<int>(0);
         public readonly RxValue<int> Level = new RxValue<int>(1);
-        public readonly RxValue<int> LevelUpGold = new RxValue<int>(5);
-        public readonly RxValue<int> RerollGold = new RxValue<int>(2);
+        public readonly RxValue<int> LevelUpMana = new RxValue<int>(5);
+        public readonly RxValue<int> RerollMana = new RxValue<int>(2);
 
         MarketUnitRoller _roller;
         public MarketUnitRoller Roller => _roller;
 
         public Action<List<UnitLoadOutData>> OnSlotRerolled;
-        public Action<OnGoldNotEnoughDto> OnGoldNotEnough;
+        public Action<OnManaNotEnoughDto> OnManaNotEnough;
 
         protected override void OnAwakeSingleton()
         {
@@ -81,25 +81,25 @@ namespace Scenes.Battle.Feature.Markets
 
         private void OnRoundStart()
         {
-            Gold.Value += GetRoundStartIncome();
+            Mana.Value += GetRoundStartIncome();
             RerollSlots();
         }
-        
-        private bool BuySomething(int gold, string notEnoughGoldMessage = null)
+
+        private bool BuySomething(int mana, string notEnoughManaMessage = null)
         {
-            if (gold > Gold.Value)
+            if (mana > Mana.Value)
             {
                 // TODO: UI에 표시
-                OnGoldNotEnough?.Invoke(new OnGoldNotEnoughDto());
-                if (notEnoughGoldMessage != null)
+                OnManaNotEnough?.Invoke(new OnManaNotEnoughDto());
+                if (notEnoughManaMessage != null)
                 {
-                    AlertManager.Instance.Alert(notEnoughGoldMessage);
+                    AlertManager.Instance.Alert(notEnoughManaMessage);
                 }
                 return false;
             }
             else
             {
-                Gold.Value -= gold;
+                Mana.Value -= mana;
                 return true;
             }
         }
@@ -113,7 +113,7 @@ namespace Scenes.Battle.Feature.Markets
 
         public void Reroll()
         {
-            if (BuySomething(RerollGold.Value, "골드가 부족합니다."))
+            if (BuySomething(RerollMana.Value, "마나가 부족합니다."))
             {
                 RerollSlots();
             }
@@ -121,7 +121,7 @@ namespace Scenes.Battle.Feature.Markets
 
         public bool BuyDefender(UnitLoadOutData unit)
         {
-            if (BuySomething(unit.Unit.Cost, "골드가 부족합니다."))
+            if (BuySomething(unit.Unit.Cost, "마나가 부족합니다."))
             {
                 defenderManager.GenerateDefender(unit);
                 return true;
@@ -139,7 +139,7 @@ namespace Scenes.Battle.Feature.Markets
 
         public bool LevelUp()
         {
-            if (BuySomething(LevelUpGold.Value, "골드가 부족합니다."))
+            if (BuySomething(LevelUpMana.Value, "마나가 부족합니다."))
             {
                 Level.Value += 1;
                 DefenderPlacementLimit.Value += 1; // 레벨업시 수호자 배치 상한 상승
@@ -150,7 +150,7 @@ namespace Scenes.Battle.Feature.Markets
                 return false;
             }
         }
-        
+
         private void OnDefenderDrag(OnDefenderDragEventDto dto)
         {
             if (dto.state == DragState.DragStart)
@@ -169,16 +169,16 @@ namespace Scenes.Battle.Feature.Markets
         public void Sell(Defender defender)
         {
             defenderManager.RemoveDefender(defender);
-            Gold.Value += defender.UnitLoadOutData.Unit.Cost;
+            Mana.Value += defender.UnitLoadOutData.Unit.Cost;
         }
-        
+
         private int GetRoundStartIncome()
         {
             int roundIndex = RoundManager.Instance.RoundIndex;
-            int income = economyConfig.GetBaseGold(roundIndex);
+            int income = economyConfig.GetBaseMana(roundIndex);
 
             // 이자
-            int steps = Mathf.Min(Gold.Value / economyConfig.goldPerInterestStep, economyConfig.maxInterest);
+            int steps = Mathf.Min(Mana.Value / economyConfig.manaPerInterestStep, economyConfig.maxInterest);
             income += steps * economyConfig.interestPerStep;
 
             // 연승 보너스

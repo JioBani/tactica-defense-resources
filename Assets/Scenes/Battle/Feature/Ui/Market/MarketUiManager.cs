@@ -8,7 +8,7 @@ namespace Scenes.Battle.Feature.Ui.Markets
     public class MarketUiManager : MonoBehaviour
     {
         [SerializeField] private MarketManager marketManager;
-        [SerializeField] private TextMeshProUGUI goldText;
+        [SerializeField] private TextMeshProUGUI manaText;
         [SerializeField] private RectTransform marketPanel;
         [SerializeField] private float slideDuration = 0.3f;
         [SerializeField] private TextMeshProUGUI toggleText;
@@ -26,12 +26,12 @@ namespace Scenes.Battle.Feature.Ui.Markets
 
         private void OnEnable()
         {
-            marketManager.Gold.OnChange += OnGoldChange;
+            marketManager.Mana.OnChange += OnManaChange;
         }
 
         private void OnDisable()
         {
-            marketManager.Gold.OnChange -= OnGoldChange;
+            marketManager.Mana.OnChange -= OnManaChange;
         }
 
         public void OnClickLevelUp()
@@ -39,9 +39,9 @@ namespace Scenes.Battle.Feature.Ui.Markets
             marketManager.LevelUp();
         }
 
-        private void OnGoldChange(int gold)
+        private void OnManaChange(int mana)
         {
-            goldText.text = $"{gold} GOLD";
+            manaText.text = $"{mana} MANA";
         }
 
         public void OnClickReroll()

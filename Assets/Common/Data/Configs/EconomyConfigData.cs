@@ -6,33 +6,33 @@ namespace Common.Data.Configs
     public class EconomyConfig : ScriptableObject
     {
         [Header("기본 수입")]
-        [Tooltip("인덱스 = 라운드 번호, 값 = 해당 라운드 기본 지급 골드")]
-        public int[] baseGoldPerRound;
+        [Tooltip("인덱스 = 라운드 번호, 값 = 해당 라운드 기본 지급 마나")]
+        public int[] baseManaPerRound;
 
         [Header("이자 관련")]
-        public int goldPerInterestStep = 10;   // 10골드당 이자
-        public int interestPerStep = 1;        // 10골드당 1골드
-        public int maxInterest = 3;            // 최대 3골드
+        public int manaPerInterestStep = 10;   // 10마나당 이자
+        public int interestPerStep = 1;        // 10마나당 1마나
+        public int maxInterest = 3;            // 최대 3마나
 
         [Header("연승/연패 보너스")]
         public int[] winStreakBonusByCount;    // 인덱스 = 연승길이
         public int[] loseStreakBonusByCount;   // 인덱스 = 연패길이
 
-        public int GetBaseGold(int roundIndex)
+        public int GetBaseMana(int roundIndex)
         {
-            if (baseGoldPerRound == null || baseGoldPerRound.Length == 0)
+            if (baseManaPerRound == null || baseManaPerRound.Length == 0)
                 return 0;
 
-            int index = Mathf.Clamp(roundIndex, 0, baseGoldPerRound.Length - 1);
-            return baseGoldPerRound[index];
+            int index = Mathf.Clamp(roundIndex, 0, baseManaPerRound.Length - 1);
+            return baseManaPerRound[index];
         }
 
-        public int GetRoundStartIncome(int roundIndex, int currentGold, int winStreak, int loseStreak)
+        public int GetRoundStartIncome(int roundIndex, int currentMana, int winStreak, int loseStreak)
         {
-            int income = GetBaseGold(roundIndex);
+            int income = GetBaseMana(roundIndex);
 
             // 이자
-            int steps = Mathf.Min(currentGold / goldPerInterestStep, maxInterest);
+            int steps = Mathf.Min(currentMana / manaPerInterestStep, maxInterest);
             income += steps * interestPerStep;
 
             // 연승 보너스

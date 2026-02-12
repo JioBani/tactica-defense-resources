@@ -79,8 +79,8 @@ namespace Common.Data.Battlefields
     [Serializable]
     public class RewardData
     {
-        [Tooltip("골드 보상")]
-        public int gold;
+        [Tooltip("마나 보상")]
+        public int mana;
 
         [Tooltip("경험치 보상")]
         public int experience;

@@ -1,7 +1,7 @@
 ﻿namespace Scenes.Battle.Feature.Markets
 {
-    public struct OnGoldNotEnoughDto
+    public struct OnManaNotEnoughDto
     {
-        
+
     }
 }
