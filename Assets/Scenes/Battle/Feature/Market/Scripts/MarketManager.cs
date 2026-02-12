@@ -28,8 +28,10 @@ namespace Scenes.Battle.Feature.Markets
 
         public readonly RxValue<int> DefenderPlacementLimit = new RxValue<int>(0);
         public readonly RxValue<int> Level = new RxValue<int>(1);
-        public readonly RxValue<int> LevelUpMana = new RxValue<int>(5);
+        public readonly RxValue<int> LevelUpMana = new RxValue<int>(0);
         public readonly RxValue<int> RerollMana = new RxValue<int>(2);
+
+        int _levelUpIndex;
 
         MarketUnitRoller _roller;
         public MarketUnitRoller Roller => _roller;
@@ -43,10 +45,15 @@ namespace Scenes.Battle.Feature.Markets
 
             _roller = new MarketUnitRoller(appearUnits);
 
-            // IStateListener 등록
-
             // TOOD: RoundManager 에 게임 시작 상태를 만들고 그곳에 콜백 등록
+            if (placementConfig == null)
+                throw new NullReferenceException("[MarketManager] PlacementConfig가 할당되지 않았습니다.");
+            if (placementConfig.levelUpTable.Length == 0)
+                throw new InvalidOperationException("[MarketManager] PlacementConfig.levelUpTable이 비어있습니다.");
+
             DefenderPlacementLimit.Value = placementConfig.initialPlacementLimit;
+            _levelUpIndex = 0;
+            LevelUpMana.Value = placementConfig.levelUpTable[0].cost;
         }
 
         private void OnEnable()
@@ -138,18 +145,29 @@ namespace Scenes.Battle.Feature.Markets
             return defenderManager.GetPlacementCount(Placement.BattleArea) >= DefenderPlacementLimit.Value;
         }
 
+        public bool IsMaxLevel()
+        {
+            return _levelUpIndex >= placementConfig.levelUpTable.Length;
+        }
+
         public bool LevelUp()
         {
-            if (BuySomething(LevelUpMana.Value, "마나가 부족합니다."))
+            if (IsMaxLevel()) return false;
+
+            var entry = placementConfig.levelUpTable[_levelUpIndex];
+
+            if (BuySomething(entry.cost, "마나가 부족합니다."))
             {
                 Level.Value += 1;
-                DefenderPlacementLimit.Value += 1; // 레벨업시 수호자 배치 상한 상승
+                DefenderPlacementLimit.Value = entry.placementLimit;
+                _levelUpIndex++;
+
+                LevelUpMana.Value = IsMaxLevel() ? 0 : placementConfig.levelUpTable[_levelUpIndex].cost;
+
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void OnDefenderDrag(OnDefenderDragEventDto dto)
