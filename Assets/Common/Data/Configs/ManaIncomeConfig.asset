@@ -12,38 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad235d7f3a331b4488bd6db22f1878cf, type: 3}
   m_Name: ManaIncomeConfig
   m_EditorClassIdentifier: 
-  baseManaPerRound:
-  - 0
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
-  - 11
-  - 12
-  - 13
-  - 14
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
-  - 15
+  baseManaPerRound: 0000000032000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f000000
   manaPerInterestStep: 10
   interestPerStep: 1
   maxInterest: 3

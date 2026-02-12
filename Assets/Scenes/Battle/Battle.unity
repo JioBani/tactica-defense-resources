@@ -7335,7 +7335,7 @@ GameObject:
   - component: {fileID: 1041871074}
   - component: {fileID: 1041871075}
   m_Layer: 0
-  m_Name: MarketManager
+  m_Name: "\uBC30\uCE58 \uC99D\uAC00 \uBC84\uD2BC \uD14D\uC2A4\uD2B8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7394,6 +7394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   marketManager: {fileID: 1041871074}
   manaText: {fileID: 534867291}
+  levelUpCostText: {fileID: 1440850142}
+  levelUpButton: {fileID: 1556034531}
   marketPanel: {fileID: 1548314845}
   slideDuration: 0.3
   toggleText: {fileID: 139035395}
