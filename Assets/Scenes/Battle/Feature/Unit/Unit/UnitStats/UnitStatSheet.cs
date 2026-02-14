@@ -1,51 +1,70 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Common.Data.Units.UnitStatsByLevel;
+using UnityEngine;
 
-// 별 레벨에 따라 다시 계산 필요한 경우 설계가 변경되는지 확인 필요
 namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
 {
-    /// <summary>
-    /// 유닛의 런타임 스탯 묶음(옵저버블).
-    /// - 생성자에서 UnitStatsByLevelData와 star(기본 1)를 받아 초기화
-    /// - 별 변화 시 ApplyStar(star)로 재적용 가능
-    /// - enum으로 스탯 접근: Get(UnitStatKind)
-    /// </summary>
     public class UnitStatSheet
     {
-        // 원본 데이터(별 단계별 기본값)
         private UnitStatsByLevelData _data;
 
-        // 개별 스탯(옵저버블)
-        public readonly UnitStats<float> MaxHealth = new();
-        public readonly UnitStats<float> Health = new();
-        public readonly UnitStats<float> PhysicalAttack = new();
-        public readonly UnitStats<float> MagicAttack = new();
-        public readonly UnitStats<float> PhysicalDefense = new();
-        public readonly UnitStats<float> MagicDefense = new();
-        public readonly UnitStats<float> AttackSpeed = new();
-        public readonly UnitStats<float> AttackRange = new();
-        public readonly UnitStats<float> MoveSpeed = new();
+        // ── 14종 능력치 (수정자 지원) ──
+        public readonly UnitStat MaxHealth = new();
+        public readonly UnitStat PhysicalAttack = new();
+        public readonly UnitStat MagicAttack = new();
+        public readonly UnitStat PhysicalDefense = new(StatCalculationMode.SeparatedMultiplicative);
+        public readonly UnitStat MagicDefense = new(StatCalculationMode.SeparatedMultiplicative);
+        public readonly UnitStat AttackSpeed = new();
+        public readonly UnitStat AttackRange = new();
+        public readonly UnitStat MoveSpeed = new();
+        public readonly UnitStat CriticalChance = new();
+        public readonly UnitStat CriticalDamageMultiplier = new();
+        public readonly UnitStat CooldownReduction = new();
+        public readonly UnitStat StatusResistance = new();
+        public readonly UnitStat DamageDealtIncrease = new();
+        public readonly UnitStat DamageReduction = new();
 
-        public readonly UnitStats<float> CriticalChance = new();
-        public readonly UnitStats<float> CriticalDamageMultiplier = new();
-        public readonly UnitStats<float> CooldownReduction = new();
-        public readonly UnitStats<float> StatusResistance = new();
-        public readonly UnitStats<float> DamageDealtIncrease = new();
-        public readonly UnitStats<float> DamageReduction = new();
+        // ── 현재 체력 (런타임 값, 수정자 대상 아님) ──
+        private float _health;
+
+        public float Health
+        {
+            get => _health;
+            set
+            {
+                float clamped = Mathf.Clamp(value, 0f, MaxHealth.CurrentValue);
+                if (Mathf.Approximately(_health, clamped)) return;
+                _health = clamped;
+                OnHealthChange?.Invoke(_health);
+            }
+        }
+
+        public event Action<float> OnHealthChange;
 
         public void Init(UnitStatsByLevelData data, int star = 1)
         {
             _data = data;
-            foreach (var stat in Enumerate())
+
+            foreach (var (kind, stat) in Enumerate())
             {
-                stat.stat.SetInitValue(data.GetStat(stat.kind , 0));
+                stat.ClearModifiers();
+                stat.SetBaseValue(data.GetStat(kind, star));
             }
+
+            // 현재 체력 = 최대 체력
+            _health = MaxHealth.CurrentValue;
+
+            // MaxHealth 변경 시 현재 체력 상한 보정
+            MaxHealth.OnChange += OnMaxHealthChanged;
         }
 
-        /// <summary>
-        /// enum으로 해당 스탯(UnitStats<float>)을 얻는다.
-        /// </summary>
-        public UnitStats<float> Get(UnitStatKind kind) => kind switch
+        private void OnMaxHealthChanged(float newMax)
+        {
+            if (_health > newMax) Health = newMax;
+        }
+
+        public UnitStat Get(UnitStatKind kind) => kind switch
         {
             UnitStatKind.MaxHealth                => MaxHealth,
             UnitStatKind.PhysicalAttack           => PhysicalAttack,
@@ -64,13 +83,9 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
             _ => null
         };
 
-        /// <summary>
-        /// 모든 스탯을 열거(편의).
-        /// </summary>
-        public IEnumerable<(UnitStatKind kind, UnitStats<float> stat)> Enumerate()
+        public IEnumerable<(UnitStatKind kind, UnitStat stat)> Enumerate()
         {
             yield return (UnitStatKind.MaxHealth,                MaxHealth);
-            yield return (UnitStatKind.MaxHealth,                Health);
             yield return (UnitStatKind.PhysicalAttack,           PhysicalAttack);
             yield return (UnitStatKind.MagicAttack,              MagicAttack);
             yield return (UnitStatKind.PhysicalDefense,          PhysicalDefense);

@@ -19,7 +19,7 @@ namespace Scenes.Battle.Feature.Units.ActionStates
         protected override ActionStateType CheckStateTransition(ActionStateType currentState)
         {
             // 우선순위 1: 체력이 0 이하면 무조건 Downed 상태로 전환
-            if (self.StatSheet.Health.CurrentValue <= 0)
+            if (self.StatSheet.Health <= 0)
             {
                 return ActionStateType.Downed;
             }
