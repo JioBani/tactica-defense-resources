@@ -24,6 +24,7 @@ namespace Common.Data.Units.UnitStatsByLevel
         [InspectorName("스킬 쿨타임 감소")]       CooldownReduction,
         [InspectorName("상태저항력")]            StatusResistance,
         [InspectorName("입히는 피해 증가")]       DamageDealtIncrease,
+        [InspectorName("받는 피해 감소")]         DamageReduction,
     }
 
     // ──────────────────────────────────────────────────────────────
@@ -99,6 +100,10 @@ namespace Common.Data.Units.UnitStatsByLevel
         [SerializeField] private StarStatRecord damageDealtIncrease;
         public StarStatRecord DamageDealtIncrease => damageDealtIncrease;
 
+        [InspectorHint("받는 피해 감소", InspectorHintPlacement.Right, 100)]
+        [SerializeField] private StarStatRecord damageReduction;
+        public StarStatRecord DamageReduction => damageReduction;
+
         // enum으로 조회 (필요 시)
         public float GetStat(UnitStatKind kind, int star) => kind switch
         {
@@ -115,6 +120,7 @@ namespace Common.Data.Units.UnitStatsByLevel
             UnitStatKind.CooldownReduction        => cooldownReduction.GetValue(star),
             UnitStatKind.StatusResistance         => statusResistance.GetValue(star),
             UnitStatKind.DamageDealtIncrease      => damageDealtIncrease.GetValue(star),
+            UnitStatKind.DamageReduction          => damageReduction.GetValue(star),
             _ => 0f
         };
     }

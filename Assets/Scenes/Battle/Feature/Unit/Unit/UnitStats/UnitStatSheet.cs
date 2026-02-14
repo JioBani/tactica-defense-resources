@@ -31,6 +31,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         public readonly UnitStats<float> CooldownReduction = new();
         public readonly UnitStats<float> StatusResistance = new();
         public readonly UnitStats<float> DamageDealtIncrease = new();
+        public readonly UnitStats<float> DamageReduction = new();
 
         public void Init(UnitStatsByLevelData data, int star = 1)
         {
@@ -59,6 +60,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
             UnitStatKind.CooldownReduction        => CooldownReduction,
             UnitStatKind.StatusResistance         => StatusResistance,
             UnitStatKind.DamageDealtIncrease      => DamageDealtIncrease,
+            UnitStatKind.DamageReduction          => DamageReduction,
             _ => null
         };
 
@@ -81,6 +83,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
             yield return (UnitStatKind.CooldownReduction,        CooldownReduction);
             yield return (UnitStatKind.StatusResistance,         StatusResistance);
             yield return (UnitStatKind.DamageDealtIncrease,      DamageDealtIncrease);
+            yield return (UnitStatKind.DamageReduction,          DamageReduction);
         }
     }
 }
