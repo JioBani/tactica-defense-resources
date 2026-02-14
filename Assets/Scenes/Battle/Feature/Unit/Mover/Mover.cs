@@ -30,6 +30,10 @@ namespace Scenes.Battle.Feature.Units
         private void OnMoveSpeedChanged(float value)
         {
             speed = value;
+            if (actionStateController.CurrentState == ActionStateType.Move)
+            {
+                _rigidbody2D.linearVelocity = Vector2.down * speed;
+            }
         }
 
         private void Move()
