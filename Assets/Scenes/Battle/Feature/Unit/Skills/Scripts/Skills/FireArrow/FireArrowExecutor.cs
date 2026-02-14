@@ -1,7 +1,7 @@
 ﻿using Scenes.Battle.Feature.Unit.Skills.Castables;
 using Scenes.Battle.Feature.Units.Attackables;
 using Scenes.Battle.Feature.Units.Attackers;
-using UnityEngine;
+using Scenes.Battle.Feature.Units.Damage;
 
 namespace Scenes.Battle.Feature.Unit.Skills.Executables
 {
@@ -18,7 +18,13 @@ namespace Scenes.Battle.Feature.Unit.Skills.Executables
 
         protected override void Executing()
         {
-            Debug.Log("Executing FireArrow");
+            float damage = DamageCalculator.Calculate(
+                _attacker.Unit.StatSheet,
+                _victim.Unit.StatSheet,
+                DamageType.Magical,
+                skillCoefficient: 1.5f
+            );
+            _victim.Hit(damage);
             EndExecute();
         }
 
