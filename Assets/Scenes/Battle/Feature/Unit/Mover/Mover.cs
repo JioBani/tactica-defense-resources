@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Common.Data.Units.UnitStatsByLevel;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.Units.ActionStates;
 using UnityEngine;
@@ -26,7 +23,13 @@ namespace Scenes.Battle.Feature.Units
 
         private void SetSpeed(Feature.Units.Unit unit)
         {
-            speed = unit.UnitLoadOutData.Stats.GetStat(UnitStatKind.MoveSpeed, 0);
+            speed = unit.StatSheet.MoveSpeed.CurrentValue;
+            unit.StatSheet.MoveSpeed.OnChange += OnMoveSpeedChanged;
+        }
+
+        private void OnMoveSpeedChanged(float value)
+        {
+            speed = value;
         }
 
         private void Move()
@@ -64,6 +67,7 @@ namespace Scenes.Battle.Feature.Units
         private void OnDestroy()
         {
             unit.OnSpawnEvent -= SetSpeed;
+            unit.StatSheet.MoveSpeed.OnChange -= OnMoveSpeedChanged;
             actionStateController.UnregisterListener(this);
         }
     }

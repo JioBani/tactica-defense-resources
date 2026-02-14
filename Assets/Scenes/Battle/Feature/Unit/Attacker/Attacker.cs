@@ -1,5 +1,4 @@
 using System;
-using Common.Data.Units.UnitStatsByLevel;
 using Common.Scripts.DynamicRepeater;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.Units.ActionStates;
@@ -44,17 +43,29 @@ namespace Scenes.Battle.Feature.Units.Attackers
 
         // Update는 더 이상 필요 없음 - 상태 전환 로직이 ActionStateController로 이동
 
-        //TODO: 동적 스탯 변경을 적용하기
         private void SetStats(Unit unit)
         {
-            _circleCollider2D.radius = unit.UnitLoadOutData.Stats.GetStat(UnitStatKind.AttackRange, 0);
-            attackSpeed = unit.UnitLoadOutData.Stats.GetStat(UnitStatKind.AttackSpeed, 0);
-            
+            _circleCollider2D.radius = unit.StatSheet.AttackRange.CurrentValue;
+            attackSpeed = unit.StatSheet.AttackSpeed.CurrentValue;
+
+            unit.StatSheet.AttackRange.OnChange += OnAttackRangeChanged;
+            unit.StatSheet.AttackSpeed.OnChange += OnAttackSpeedChanged;
+
             _attackRepeater?.Dispose();
             _attackRepeater = new DynamicRepeater(
-                intervalNow: () => TimeSpan.FromSeconds(1 / attackSpeed), 
+                intervalNow: () => TimeSpan.FromSeconds(1 / attackSpeed),
                 job : async () => Attack()
             );
+        }
+
+        private void OnAttackRangeChanged(float value)
+        {
+            _circleCollider2D.radius = value;
+        }
+
+        private void OnAttackSpeedChanged(float value)
+        {
+            attackSpeed = value;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -89,6 +100,8 @@ namespace Scenes.Battle.Feature.Units.Attackers
         private void OnDestroy()
         {
             unit.OnSpawnEvent -= SetStats;
+            unit.StatSheet.AttackRange.OnChange -= OnAttackRangeChanged;
+            unit.StatSheet.AttackSpeed.OnChange -= OnAttackSpeedChanged;
             _attackRepeater?.Dispose();
             actionStateController.UnregisterListener(this);
         }
