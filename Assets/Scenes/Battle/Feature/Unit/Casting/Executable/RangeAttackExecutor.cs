@@ -1,6 +1,7 @@
 ﻿using Scenes.Battle.Feature.Unit.Skills.Castables;
 using Scenes.Battle.Feature.Units.Attackables;
 using Scenes.Battle.Feature.Units.Attackers;
+using Scenes.Battle.Feature.Units.Damage;
 
 namespace Scenes.Battle.Feature.Unit.Skills.Executables
 {
@@ -17,7 +18,12 @@ namespace Scenes.Battle.Feature.Unit.Skills.Executables
 
         protected override void Executing()
         {
-            _victim.Hit( _attacker.Unit.StatSheet.PhysicalAttack.CurrentValue);
+            float damage = DamageCalculator.Calculate(
+                _attacker.Unit.StatSheet,
+                _victim.Unit.StatSheet,
+                DamageType.Physical
+            );
+            _victim.Hit(damage);
         }
 
         protected override void EndExecuting()
