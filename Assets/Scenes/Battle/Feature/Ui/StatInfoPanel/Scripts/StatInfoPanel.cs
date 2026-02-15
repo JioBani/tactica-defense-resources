@@ -25,7 +25,13 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
         [SerializeField] private Transform statGrid;
         [SerializeField] private Transform subStatGrid;
 
+        [Header("Positioning")]
+        [SerializeField] private float positionOffsetX = 10f;
+
         private readonly List<StatCell> _spawnedCells = new();
+
+        private RectTransform _rectTransform;
+        private RectTransform _canvasRect;
 
         // 상단 그리드에 표시할 스탯 (목업 기준)
         private static readonly UnitStatKind[] MainStats =
@@ -53,6 +59,9 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         private void Awake()
         {
+            _rectTransform = GetComponent<RectTransform>();
+            _canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+
             closeButton.onClick.AddListener(Hide);
             GlobalEventBus.Subscribe<OnObjectSelectedEvent>(OnObjectSelected);
             gameObject.SetActive(false);
@@ -67,10 +76,10 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
         private void OnObjectSelected(OnObjectSelectedEvent evt)
         {
             if (evt.SelectedObject.TryGetComponent<Units.Unit>(out var unit))
-                Show(unit);
+                Show(unit, evt.ScreenPosition);
         }
 
-        public void Show(Units.Unit unit)
+        public void Show(Units.Unit unit, Vector2 screenPosition)
         {
             gameObject.SetActive(true);
 
@@ -82,12 +91,41 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
             UpdateStars(1);
 
             BindStats(unit.StatSheet);
+            PositionAt(screenPosition);
         }
 
         public void Hide()
         {
             ClearCells();
             gameObject.SetActive(false);
+        }
+
+        private void PositionAt(Vector2 screenPosition)
+        {
+            // 레이아웃을 즉시 재계산하여 패널 높이를 확정
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+
+            // 스크린 좌표 → Canvas 로컬 좌표 변환
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                _canvasRect, screenPosition, null, out var localPos);
+
+            // anchor (0,0) 기준 오프셋 보정: Canvas 로컬 좌표 → 좌하단 기준 좌표
+            var canvasRect = _canvasRect.rect;
+            var anchorOffset = new Vector2(
+                canvasRect.width * _canvasRect.pivot.x,
+                canvasRect.height * _canvasRect.pivot.y);
+            var pos = localPos + anchorOffset;
+
+            // 클릭 지점 오른쪽에 배치
+            pos.x += positionOffsetX;
+
+            // 하단 잘림 보정: 패널 하단이 화면 밖이면 위로 밀어올림
+            float panelHeight = _rectTransform.rect.height;
+            float panelBottom = pos.y - panelHeight;
+            if (panelBottom < 0f)
+                pos.y = panelHeight;
+
+            _rectTransform.anchoredPosition = pos;
         }
 
         private void BindStats(UnitStatSheet statSheet)
