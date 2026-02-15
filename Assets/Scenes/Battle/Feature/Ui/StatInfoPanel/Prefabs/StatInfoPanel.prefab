@@ -675,6 +675,7 @@ GameObject:
   - component: {fileID: 514667864750220260}
   - component: {fileID: 4154172368649227576}
   - component: {fileID: 6136714483370329549}
+  - component: {fileID: 5357187123571205880}
   m_Layer: 5
   m_Name: StatInfoPanel
   m_TagString: Untagged
@@ -783,6 +784,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &5357187123571205880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023466005156066516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ea6552102ac8c4c91f4309bd2a5c3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 3791318136148873604}
+  starImages:
+  - {fileID: 3019891722448691678}
+  - {fileID: 9206632400621019828}
+  - {fileID: 4356506363726275447}
+  closeButton: {fileID: 937917413719784574}
+  illustrationImage: {fileID: 5254537218885781587}
+  statCellPrefab: {fileID: 1442470680946538958, guid: 3490bfa12d949364894c906b92d368db, type: 3}
+  statGrid: {fileID: 1967101927428920686}
+  subStatGrid: {fileID: 1425727792126825155}
 --- !u!1 &5752410077645116676
 GameObject:
   m_ObjectHideFlags: 0

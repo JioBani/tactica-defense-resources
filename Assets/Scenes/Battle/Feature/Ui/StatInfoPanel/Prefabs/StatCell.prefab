@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8677507938752172466}
   - component: {fileID: 5071547773374142585}
+  - component: {fileID: 1442470680946538958}
   m_Layer: 5
   m_Name: StatCell
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -800, y: -360}
+  m_AnchoredPosition: {x: -1200, y: -540}
   m_SizeDelta: {x: 50, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5071547773374142585
@@ -46,6 +47,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057386218725173377}
   m_CullTransparentMesh: 1
+--- !u!114 &1442470680946538958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057386218725173377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 675fd1da5e2b5344eba3ab3125bd8b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statLabel: {fileID: 2047934247817119414}
+  statValue: {fileID: 8996750291092232556}
 --- !u!1 &5959251102309622954
 GameObject:
   m_ObjectHideFlags: 0
