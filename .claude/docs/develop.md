@@ -7,6 +7,9 @@
 - 스크립트 내용 편집: Claude 기본 도구(`Read`/`Edit`/`Write`)를 사용한다.
 - 편집 후 MCP `refresh_unity` + `read_console`로 컴파일 결과를 확인한다.
 
+### UI 기본 폰트
+- TextMeshPro 사용 시 기본 폰트는 **Maplestory Bold SDF** (`Assets/TextMesh Pro/Fonts/Maplestory Bold/Maplestory Bold SDF.asset`)를 사용한다.
+
 ### Unity Editor 조작: MCP 우선 사용
 GameObject, 컴포넌트, 에셋, 씬 등 Unity Editor 조작은 반드시 MCP 도구를 우선 사용한다.
 

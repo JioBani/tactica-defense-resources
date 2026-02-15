@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatInfoPanel Mockup — TACD-191</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* ── 게임 화면 시뮬레이션 ── */
+  .game-screen {
+    width: 960px;
+    height: 540px;
+    background: #2d2d44;
+    position: relative;
+    border: 2px solid #444;
+    overflow: hidden;
+  }
+
+  .game-screen::after {
+    content: '전장 화면 (배경)';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #555;
+    font-size: 24px;
+  }
+
+  /* ── 패널 ── */
+  .stat-info-panel {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 320px;
+    background: #0d1330;
+    border: 3px solid #2a3a6a;
+    border-radius: 6px;
+    color: #e0e0e0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── 헤더 (유닛 이름 + 성급 + 닫기 버튼) ── */
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #152050;
+    border-bottom: 2px solid #2a3a6a;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .close-btn {
+    width: 22px;
+    height: 22px;
+    background: #8b1a1a;
+    border: 2px solid #c0392b;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .name-star-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .unit-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .star-container {
+    display: flex;
+    gap: 1px;
+  }
+
+  .star {
+    font-size: 14px;
+    color: #f1c40f;
+  }
+
+  .star.empty {
+    color: #333;
+  }
+
+  /* ── 본문: 일러스트 + 스탯 그리드 ── */
+  .panel-body {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .illustration {
+    width: 80px;
+    height: 80px;
+    background: #1a2050;
+    border: 3px solid #3a4a8a;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #556;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* ── 스탯 그리드 (2열) ── */
+  .stat-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 8px;
+  }
+
+  .stat-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 4px;
+    border-radius: 2px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: #8899bb;
+    white-space: nowrap;
+  }
+
+  .stat-value {
+    font-size: 12px;
+    font-weight: bold;
+    color: #e8e8e8;
+    text-align: right;
+    margin-left: 4px;
+  }
+
+  /* ── 하단 스탯 (일러스트 아래 전체 폭) ── */
+  .stat-full-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 8px;
+    padding: 0 10px 10px 10px;
+  }
+
+  .separator {
+    height: 1px;
+    background: #2a3a6a;
+    margin: 0 10px 6px 10px;
+  }
+
+  /* ── 범례 ── */
+  .legend {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #666;
+    font-size: 11px;
+  }
+</style>
+</head>
+<body>
+
+<div class="game-screen">
+
+  <div class="stat-info-panel">
+
+    <!-- 헤더: (이름 + 성급) + X 버튼(우측) -->
+    <div class="panel-header">
+      <div class="name-star-group">
+        <div class="unit-name">화염 궁수</div>
+        <div class="star-container">
+          <span class="star">&#9733;</span>
+          <span class="star empty">&#9733;</span>
+          <span class="star empty">&#9733;</span>
+        </div>
+      </div>
+      <button class="close-btn">X</button>
+    </div>
+
+    <!-- 본문: 일러스트(좌) + 주요 스탯 그리드(우) -->
+    <div class="panel-body">
+      <div class="illustration">일러스트</div>
+      <div class="stat-grid">
+        <div class="stat-cell">
+          <span class="stat-label">체력</span>
+          <span class="stat-value">500</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">물리공격</span>
+          <span class="stat-value">85</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">물리방어</span>
+          <span class="stat-value">15%</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">마법공격</span>
+          <span class="stat-value">0</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">마법방어</span>
+          <span class="stat-value">10%</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">공격속도</span>
+          <span class="stat-value">1.2</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">쿨타임 감소</span>
+          <span class="stat-value">0%</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-label">사거리</span>
+          <span class="stat-value">4.0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <!-- 하단: 추가 스탯 (전체 폭 2열) -->
+    <div class="stat-full-grid">
+      <div class="stat-cell">
+        <span class="stat-label">이동속도</span>
+        <span class="stat-value">2.0</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-label">치명타 확률</span>
+        <span class="stat-value">25%</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-label">치명타 배율</span>
+        <span class="stat-value">1.5x</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-label">상태저항력</span>
+        <span class="stat-value">0%</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-label">피해 증가</span>
+        <span class="stat-value">0%</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-label">피해 감소</span>
+        <span class="stat-value">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">TACD-191 StatInfoPanel 목업</div>
+</div>
+
+</body>
+</html>
