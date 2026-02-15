@@ -150,6 +150,20 @@ namespace Tests.Editor
             Assert.AreEqual("0.80", UnitStatKind.AttackSpeed.FormatStatValue(0.8f));
         }
 
+        // ── FormatStatValue: 배수 표시 스탯 (치명타 피해 배수) ──
+
+        [Test]
+        public void FormatStatValue_CriticalDamageMultiplier_FormatsAsMultiplier()
+        {
+            Assert.AreEqual("1.5x", UnitStatKind.CriticalDamageMultiplier.FormatStatValue(1.5f));
+        }
+
+        [Test]
+        public void FormatStatValue_CriticalDamageMultiplier_DefaultValue()
+        {
+            Assert.AreEqual("1.0x", UnitStatKind.CriticalDamageMultiplier.FormatStatValue(1f));
+        }
+
         // ── FormatStatValue: 정수 표시 스탯 ──
 
         [Test]

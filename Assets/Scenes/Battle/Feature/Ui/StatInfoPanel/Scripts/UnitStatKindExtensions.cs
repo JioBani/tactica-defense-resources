@@ -33,6 +33,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
                 UnitStatKind.DamageDealtIncrease or
                 UnitStatKind.DamageReduction => $"{value * 100f:F0}%",
                 UnitStatKind.AttackSpeed => $"{value:F2}",
+                UnitStatKind.CriticalDamageMultiplier => $"{value:F1}x",
                 _ => $"{value:F0}"
             };
         }
