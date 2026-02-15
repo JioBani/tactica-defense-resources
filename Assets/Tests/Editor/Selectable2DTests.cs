@@ -48,6 +48,29 @@ namespace Tests.Editor
             }
         }
 
+        [Test]
+        public void LeftClick_PublishesEventWithScreenPosition()
+        {
+            OnObjectSelectedEvent? received = null;
+            void Handler(OnObjectSelectedEvent evt) => received = evt;
+            GlobalEventBus.Subscribe<OnObjectSelectedEvent>(Handler);
+
+            try
+            {
+                var clickPos = new Vector2(200f, 150f);
+                var eventData = new PointerEventData(null)
+                    { button = PointerEventData.InputButton.Left, position = clickPos };
+                _selectable.OnPointerClick(eventData);
+
+                Assert.IsTrue(received.HasValue);
+                Assert.AreEqual(clickPos, received.Value.ScreenPosition);
+            }
+            finally
+            {
+                GlobalEventBus.Unsubscribe<OnObjectSelectedEvent>(Handler);
+            }
+        }
+
         // ── Non-left clicks ──
 
         [Test]
