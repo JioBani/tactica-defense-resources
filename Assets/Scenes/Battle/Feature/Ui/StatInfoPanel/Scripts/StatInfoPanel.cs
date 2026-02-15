@@ -30,9 +30,11 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         private readonly List<StatCell> _spawnedCells = new();
 
+        private Camera _camera;
         private RectTransform _rectTransform;
         private RectTransform _canvasRect;
         private Units.Unit _currentUnit;
+        private int _showFrame;
 
         // 상단 그리드에 표시할 스탯 (목업 기준)
         private static readonly UnitStatKind[] MainStats =
@@ -60,6 +62,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         private void Awake()
         {
+            _camera = Camera.main;
             _rectTransform = GetComponent<RectTransform>();
             _canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
 
@@ -85,12 +88,13 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
                 return;
             }
 
-            Show(unit, evt.ScreenPosition);
+            Show(unit);
         }
 
-        public void Show(Units.Unit unit, Vector2 screenPosition)
+        public void Show(Units.Unit unit)
         {
             _currentUnit = unit;
+            _showFrame = Time.frameCount;
             gameObject.SetActive(true);
 
             var def = unit.UnitLoadOutData.Unit;
@@ -101,7 +105,9 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
             UpdateStars(1);
 
             BindStats(unit.StatSheet);
-            PositionAt(screenPosition);
+
+            var screenPos = (Vector2)_camera.WorldToScreenPoint(unit.transform.position);
+            PositionAt(screenPos);
         }
 
         public void Hide()
@@ -109,6 +115,16 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
             _currentUnit = null;
             ClearCells();
             gameObject.SetActive(false);
+        }
+
+        private void LateUpdate()
+        {
+            if (!Input.GetMouseButtonUp(0)) return;
+            if (Time.frameCount == _showFrame) return;
+            if (RectTransformUtility.RectangleContainsScreenPoint(_rectTransform, Input.mousePosition))
+                return;
+
+            Hide();
         }
 
         private void PositionAt(Vector2 screenPosition)
@@ -127,7 +143,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
                 canvasRect.height * _canvasRect.pivot.y);
             var pos = localPos + anchorOffset;
 
-            // 클릭 지점 오른쪽에 배치
+            // 유닛 위치 오른쪽에 배치
             pos.x += positionOffsetX;
 
             // 하단 잘림 보정: 패널 하단이 화면 밖이면 위로 밀어올림
