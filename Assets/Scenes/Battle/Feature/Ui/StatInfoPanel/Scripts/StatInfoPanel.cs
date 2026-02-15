@@ -32,6 +32,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         private RectTransform _rectTransform;
         private RectTransform _canvasRect;
+        private Units.Unit _currentUnit;
 
         // 상단 그리드에 표시할 스탯 (목업 기준)
         private static readonly UnitStatKind[] MainStats =
@@ -75,12 +76,21 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         private void OnObjectSelected(OnObjectSelectedEvent evt)
         {
-            if (evt.SelectedObject.TryGetComponent<Units.Unit>(out var unit))
-                Show(unit, evt.ScreenPosition);
+            if (!evt.SelectedObject.TryGetComponent<Units.Unit>(out var unit))
+                return;
+
+            if (_currentUnit == unit && gameObject.activeSelf)
+            {
+                Hide();
+                return;
+            }
+
+            Show(unit, evt.ScreenPosition);
         }
 
         public void Show(Units.Unit unit, Vector2 screenPosition)
         {
+            _currentUnit = unit;
             gameObject.SetActive(true);
 
             var def = unit.UnitLoadOutData.Unit;
@@ -96,6 +106,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         public void Hide()
         {
+            _currentUnit = null;
             ClearCells();
             gameObject.SetActive(false);
         }
