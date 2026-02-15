@@ -9,7 +9,7 @@ namespace Common.Scripts.Selectable
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Left) return;
-            GlobalEventBus.GlobalEventBus.Publish(new OnObjectSelectedEvent(gameObject));
+            GlobalEventBus.GlobalEventBus.Publish(new OnObjectSelectedEvent(gameObject, eventData.position));
         }
     }
 }
