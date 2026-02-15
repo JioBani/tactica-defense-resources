@@ -12,8 +12,8 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
         public void Bind(UnitStatKind kind, UnitStat stat)
         {
-            statLabel.text = UnitStatKindHelper.GetDisplayName(kind);
-            statValue.text = UnitStatKindHelper.FormatStatValue(kind, stat.CurrentValue);
+            statLabel.text = kind.GetDisplayName();
+            statValue.text = kind.FormatStatValue(stat.CurrentValue);
         }
     }
 }
