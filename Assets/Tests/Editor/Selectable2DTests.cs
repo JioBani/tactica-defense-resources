@@ -59,7 +59,7 @@ namespace Tests.Editor
             {
                 var clickPos = new Vector2(200f, 150f);
                 var eventData = new PointerEventData(null)
-                    { button = PointerEventData.InputButton.Left, position = clickPos };
+                    { button = PointerEventData.InputButton.Left, pressPosition = clickPos, position = clickPos };
                 _selectable.OnPointerClick(eventData);
 
                 Assert.IsTrue(received.HasValue);
@@ -108,6 +108,61 @@ namespace Tests.Editor
                 _selectable.OnPointerClick(eventData);
 
                 Assert.IsFalse(received);
+            }
+            finally
+            {
+                GlobalEventBus.Unsubscribe<OnObjectSelectedEvent>(Handler);
+            }
+        }
+
+        // ── Drag guard ──
+
+        [Test]
+        public void DragThenRelease_DoesNotPublishEvent()
+        {
+            bool received = false;
+            void Handler(OnObjectSelectedEvent evt) => received = true;
+            GlobalEventBus.Subscribe<OnObjectSelectedEvent>(Handler);
+
+            try
+            {
+                // pressPosition과 position 차이가 임계값(10px)을 초과
+                var eventData = new PointerEventData(null)
+                {
+                    button = PointerEventData.InputButton.Left,
+                    pressPosition = new Vector2(100f, 100f),
+                    position = new Vector2(200f, 200f)
+                };
+                _selectable.OnPointerClick(eventData);
+
+                Assert.IsFalse(received, "Event should not be published after drag");
+            }
+            finally
+            {
+                GlobalEventBus.Unsubscribe<OnObjectSelectedEvent>(Handler);
+            }
+        }
+
+        [Test]
+        public void SmallMovement_StillPublishesEvent()
+        {
+            OnObjectSelectedEvent? received = null;
+            void Handler(OnObjectSelectedEvent evt) => received = evt;
+            GlobalEventBus.Subscribe<OnObjectSelectedEvent>(Handler);
+
+            try
+            {
+                // pressPosition과 position 차이가 임계값(10px) 이내
+                var eventData = new PointerEventData(null)
+                {
+                    button = PointerEventData.InputButton.Left,
+                    pressPosition = new Vector2(100f, 100f),
+                    position = new Vector2(105f, 103f)
+                };
+                _selectable.OnPointerClick(eventData);
+
+                Assert.IsTrue(received.HasValue, "Event should be published for small movement");
+                Assert.AreEqual(_go, received.Value.SelectedObject);
             }
             finally
             {
