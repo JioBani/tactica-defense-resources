@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Common.Data.Units.UnitStatsByLevel;
 using Common.Scripts.GlobalEventBus;
-using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Units;
 using Scenes.Battle.Feature.Units.UnitStats;
 using Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets;
@@ -55,22 +54,20 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
         private void Awake()
         {
             closeButton.onClick.AddListener(Hide);
-            GlobalEventBus.Subscribe<OnUnitSelectedEvent>(OnUnitSelected);
+            GlobalEventBus.Subscribe<OnObjectSelectedEvent>(OnObjectSelected);
             gameObject.SetActive(false);
         }
 
         private void OnDestroy()
         {
             closeButton.onClick.RemoveListener(Hide);
-            GlobalEventBus.Unsubscribe<OnUnitSelectedEvent>(OnUnitSelected);
+            GlobalEventBus.Unsubscribe<OnObjectSelectedEvent>(OnObjectSelected);
         }
 
-        private void OnUnitSelected(OnUnitSelectedEvent evt)
+        private void OnObjectSelected(OnObjectSelectedEvent evt)
         {
-            if (evt.Unit != null)
-                Show(evt.Unit);
-            else
-                Hide();
+            if (evt.SelectedObject.TryGetComponent<Units.Unit>(out var unit))
+                Show(unit);
         }
 
         public void Show(Units.Unit unit)
