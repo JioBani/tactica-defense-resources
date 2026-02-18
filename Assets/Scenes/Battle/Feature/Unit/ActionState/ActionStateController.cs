@@ -44,9 +44,8 @@ namespace Scenes.Battle.Feature.Units.ActionStates
                     break;
 
                 case ActionStateType.Attack:
-                    // Attack -> Move: 타겟이 없거나 타겟이 Downed 상태면 이동
-                    if (!attacker.Victim ||
-                        attacker.Victim.Unit.ActionStateController.CurrentState == ActionStateType.Downed)
+                    // Attack -> Idle/Move: 타겟이 없으면 복귀 (다운 타겟은 Attacker가 자체 해제)
+                    if (!attacker.Victim)
                     {
                         return canMove ? ActionStateType.Move : ActionStateType.Idle;
                     }

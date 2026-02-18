@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Common.Scripts.DynamicRepeater;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.Units.ActionStates;
@@ -27,6 +28,7 @@ namespace Scenes.Battle.Feature.Units.Attackers
 
         private DynamicRepeater _attackRepeater;
         private AttackContextDto _attackContextDto;
+        private readonly List<Victim> _victimsInRange = new();
 
         private AttackCast _attackCast;
 
@@ -70,30 +72,49 @@ namespace Scenes.Battle.Feature.Units.Attackers
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (_victim == null && other.CompareTag("Victim"))
-            {
-                Victim newVictim = other.GetComponent<Victim>();
+            if (!other.CompareTag("Victim")) return;
 
-                if (
-                    newVictim.Unit.fraction != Unit.fraction && 
-                    newVictim.Unit.ActionStateController.CurrentState != ActionStateType.Downed
-                )
-                {
-                    _victim = newVictim;
-                    OnTargetEnter?.Invoke(_victim);
-                }
+            Victim newVictim = other.GetComponent<Victim>();
+            if (newVictim.Unit.fraction == Unit.fraction) return;
+
+            _victimsInRange.Add(newVictim);
+
+            if (_victim == null)
+            {
+                TryAcquireTarget();
             }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (
-                _victim != null && 
-                other.CompareTag("Victim") && 
-                _victim == other.GetComponent<Victim>()
-            )
+            if (!other.CompareTag("Victim")) return;
+
+            Victim exitVictim = other.GetComponent<Victim>();
+            _victimsInRange.Remove(exitVictim);
+
+            if (_victim == exitVictim)
             {
-                ReleaseVictim();
+                _victim = null;
+                OnTargetExit?.Invoke(exitVictim);
+                TryAcquireTarget();
+            }
+        }
+
+        private void TryAcquireTarget()
+        {
+            for (int i = _victimsInRange.Count - 1; i >= 0; i--)
+            {
+                var candidate = _victimsInRange[i];
+                if (candidate == null ||
+                    candidate.Unit.ActionStateController.CurrentState == ActionStateType.Downed)
+                {
+                    _victimsInRange.RemoveAt(i);
+                    continue;
+                }
+
+                _victim = candidate;
+                OnTargetEnter?.Invoke(_victim);
+                return;
             }
         }
 
@@ -103,6 +124,7 @@ namespace Scenes.Battle.Feature.Units.Attackers
             unit.StatSheet.AttackRange.OnChange -= OnAttackRangeChanged;
             unit.StatSheet.AttackSpeed.OnChange -= OnAttackSpeedChanged;
             _attackRepeater?.Dispose();
+            _victimsInRange.Clear();
             actionStateController.UnregisterListener(this);
         }
 
@@ -117,7 +139,14 @@ namespace Scenes.Battle.Feature.Units.Attackers
 
         void IStateListener<ActionStateType>.OnStateRun(ActionStateType stateType)
         {
-            // Run 단계에서는 특별한 동작 없음
+            if (stateType == ActionStateType.Attack && _victim != null &&
+                _victim.Unit.ActionStateController.CurrentState == ActionStateType.Downed)
+            {
+                Victim downedVictim = _victim;
+                _victim = null;
+                OnTargetExit?.Invoke(downedVictim);
+                TryAcquireTarget();
+            }
         }
 
         void IStateListener<ActionStateType>.OnStateExit(ActionStateType stateType)
@@ -156,11 +185,5 @@ namespace Scenes.Battle.Feature.Units.Attackers
             }
         }
 
-        private void ReleaseVictim()
-        {
-            Victim exitVictim = _victim;
-            _victim = null;
-            OnTargetExit?.Invoke(exitVictim);
-        }
     }
 }
