@@ -28,6 +28,7 @@ namespace Scenes.Battle.Feature.Units.Attackers
 
         private DynamicRepeater _attackRepeater;
         private AttackContextDto _attackContextDto;
+        /// <summary>사거리 내에 있는 적 Victim 목록. 타겟 소실 시 재탐색에 사용한다.</summary>
         private readonly List<Victim> _victimsInRange = new();
 
         private AttackCast _attackCast;
@@ -100,6 +101,10 @@ namespace Scenes.Battle.Feature.Units.Attackers
             }
         }
 
+        /// <summary>
+        /// 사거리 내 적 목록에서 유효한 타겟을 찾아 _victim으로 설정한다.
+        /// 순회 중 파괴되었거나 다운된 엔트리는 목록에서 제거한다.
+        /// </summary>
         private void TryAcquireTarget()
         {
             for (int i = _victimsInRange.Count - 1; i >= 0; i--)
