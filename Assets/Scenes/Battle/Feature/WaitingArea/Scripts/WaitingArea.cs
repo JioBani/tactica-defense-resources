@@ -1,6 +1,7 @@
-using System;
-using System.Collections.Generic;
+using Common.Scripts.BubbleMessage;
 using Common.Scripts.Draggable;
+using Scenes.Battle.Feature.Rounds;
+using Scenes.Battle.Feature.Rounds.Phases;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
 
@@ -23,8 +24,16 @@ namespace Scenes.Battle.Feature.Rounds.WaitingArea
             dropZone.AddRule(this);
         }
 
-        public bool CanAccept(Draggable2D _, DropZone2D before, DropZone2D after)
+        public bool CanAccept(Draggable2D draggable, DropZone2D before, DropZone2D after)
         {
+            if (RoundManager.Instance.CurrentState != PhaseType.Maintenance)
+            {
+                BubbleMessageSpawner.Instance.SpawnAtWorld(
+                    "전투 중에는 이동할 수 없습니다!",
+                    draggable.transform.position
+                );
+                return false;
+            }
             return true;
         }
 

@@ -6,8 +6,6 @@ using Scenes.Battle.Feature.Markets;
 using Scenes.Battle.Feature.Rounds;
 using Scenes.Battle.Feature.Rounds.Phases;
 using Scenes.Battle.Feature.Unit.Defenders;
-using UnityEngine;
-
 namespace Scenes.Battle.Feature.Sells
 {
     
@@ -26,17 +24,21 @@ namespace Scenes.Battle.Feature.Sells
         {
             if (RoundManager.Instance.CurrentState != PhaseType.Maintenance)
             {
-                Debug.Log("수호자는 준비 상태에서만 배치 할 수 있습니다.");
+                BubbleMessageSpawner.Instance.SpawnAtWorld(
+                    "전투 중에는 배치할 수 없습니다!",
+                    draggable.transform.position
+                );
                 return false;
             }
 
             if (!draggable.TryGetComponent<Defender>(out var defender))
             {
-                Debug.Log("Is not defender.");
                 return false;
             }
 
-            if (MarketManager.Instance.IsDefenderLimitExceeded())
+            bool wouldIncreaseBattleCount = WouldIncreaseBattleCount(before, occupant);
+
+            if (wouldIncreaseBattleCount && MarketManager.Instance.IsDefenderLimitExceeded())
             {
                 BubbleMessageSpawner.Instance.SpawnAtWorld(
                     "배치 한계 초과!",
@@ -56,6 +58,17 @@ namespace Scenes.Battle.Feature.Sells
 
         public void OnDragOut(Draggable2D item, DropZone2D zone)
         {
+        }
+
+        /// <summary>
+        /// 이 배치가 전장 인원을 증가시키는지 판별한다.
+        /// 전장→전장 이동이나 스왑은 인원 변동이 없으므로 false를 반환한다.
+        /// </summary>
+        public static bool WouldIncreaseBattleCount(DropZone2D before, Draggable2D currentOccupant)
+        {
+            bool isFromBattleArea = before is DefenderSideSell;
+            bool isTargetOccupied = currentOccupant != null;
+            return !isFromBattleArea && !isTargetOccupied;
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Scenes.Battle.Feature.Unit.Defenders
 
         private void OnDisable()
         {
-            draggable.OnDragEnd -= NotifyDragStart;
-            draggable.OnDragEnd += NotifyDragEnd;
+            draggable.OnDragStart -= NotifyDragStart;
+            draggable.OnDragEnd -= NotifyDragEnd;
         }
 
         //TODO: DefenerDragger 로 Dragger2D 상속해서 만드는게 나을듯
