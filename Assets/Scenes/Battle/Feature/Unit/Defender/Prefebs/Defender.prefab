@@ -124,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 4865092755452814107}
   attacker: {fileID: 725602850310981760}
+  actionStateController: {fileID: 5538008670736061362}
 --- !u!114 &5538008670736061362 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1071765619771846872, guid: 55f271110f86e19488c6665236798e12, type: 3}
