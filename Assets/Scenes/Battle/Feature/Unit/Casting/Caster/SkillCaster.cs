@@ -7,15 +7,18 @@ using Scenes.Battle.Feature.Unit.Skills;
 using Scenes.Battle.Feature.Unit.Skills.Castables;
 using Scenes.Battle.Feature.Unit.Skills.Executables;
 using Scenes.Battle.Feature.Unit.Skills.Skills;
+using Scenes.Battle.Feature.Units.ActionStates;
 using Scenes.Battle.Feature.Units.Attackers;
 using UnityEngine;
 
 namespace Scenes.Battle.Feature.Unit.Castables
 {
-    public class SkillCaster : MonoBehaviour, IStateListener<PhaseType>
+    public class SkillCaster : MonoBehaviour, IStateListener<PhaseType>, IStateListener<ActionStateType>
     {
         [SerializeField] private Units.Unit unit; // 이 스킬 실행기를 가진 유닛 참조
         [SerializeField] private Attacker attacker; // 공격자(타겟을 가진 컴포넌트)
+        /// <summary>다운 상태 진입 시 스킬 차단을 위한 상태 머신 참조</summary>
+        [SerializeField] private Units.ActionStates.ActionStateController actionStateController;
         private SkillDefinitionData _skillData; // 스킬 정의 데이터
         private float _coolTime; // 스킬의 쿨타임(초)
         private Timer _skillTimer; // 쿨타임 타이머
@@ -29,6 +32,7 @@ namespace Scenes.Battle.Feature.Unit.Castables
 
             // IStateListener 등록
             RoundManager.Instance.RegisterListener(this);
+            actionStateController.RegisterListener(this);
         }
 
         private void OnEnable()
@@ -68,8 +72,26 @@ namespace Scenes.Battle.Feature.Unit.Castables
         private void OnDestroy()
         {
             RoundManager.Instance.UnregisterListener(this);
+            actionStateController.UnregisterListener(this);
         }
-        
+
+        // IStateListener<ActionStateType> 명시적 구현
+        /// <summary>
+        /// 유닛이 Downed 상태에 진입하면 스킬 사용을 차단하고 타이머를 정지한다.
+        /// </summary>
+        void IStateListener<ActionStateType>.OnStateEnter(ActionStateType stateType)
+        {
+            if (stateType == ActionStateType.Downed)
+            {
+                _isSkillReady = false;
+                _skillTimer?.Stop();
+            }
+        }
+
+        void IStateListener<ActionStateType>.OnStateRun(ActionStateType stateType) { }
+
+        void IStateListener<ActionStateType>.OnStateExit(ActionStateType stateType) { }
+
         private void Update()
         {
             if (_isSkillReady && _skill.CanCast())
