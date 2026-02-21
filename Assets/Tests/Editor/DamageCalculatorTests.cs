@@ -124,5 +124,63 @@ namespace Tests.Editor
             float result = DamageCalculator.Calculate(_attacker, _victim, DamageType.Physical, isCritical: false);
             Assert.AreEqual(0f, result);
         }
+
+        // ── baseDamage overload 테스트 ──
+
+        [Test]
+        public void BaseDamageOverload_NoCrit_NoDef()
+        {
+            // 200 그대로 반환
+            float result = DamageCalculator.Calculate(200f, _attacker, _victim, DamageType.Physical, isCritical: false);
+            Assert.AreEqual(200f, result);
+        }
+
+        [Test]
+        public void BaseDamageOverload_WithCrit()
+        {
+            // 200 * 1.5(치명타) = 300
+            float result = DamageCalculator.Calculate(200f, _attacker, _victim, DamageType.Physical, isCritical: true);
+            Assert.AreEqual(300f, result);
+        }
+
+        [Test]
+        public void BaseDamageOverload_WithDefense()
+        {
+            // 200 * (1 - 0.3) = 140
+            _victim.PhysicalDefense.SetBaseValue(0.3f);
+            float result = DamageCalculator.Calculate(200f, _attacker, _victim, DamageType.Physical, isCritical: false);
+            Assert.AreEqual(140f, result);
+        }
+
+        [Test]
+        public void BaseDamageOverload_MagicDefense()
+        {
+            // 200 * (1 - 0.25) = 150
+            _victim.MagicDefense.SetBaseValue(0.25f);
+            float result = DamageCalculator.Calculate(200f, _attacker, _victim, DamageType.Magical, isCritical: false);
+            Assert.AreEqual(150f, result);
+        }
+
+        [Test]
+        public void BaseDamageOverload_FullPipeline()
+        {
+            // 200 * 1.5(crit) * (1-0.3)(def) * (1+0.2)(inc) * (1-0.1)(red)
+            // = 200 * 1.5 * 0.7 * 1.2 * 0.9 = 226.8 → floor = 226
+            _victim.PhysicalDefense.SetBaseValue(0.3f);
+            _attacker.DamageDealtIncrease.SetBaseValue(0.2f);
+            _victim.DamageReduction.SetBaseValue(0.1f);
+
+            float result = DamageCalculator.Calculate(200f, _attacker, _victim, DamageType.Physical, isCritical: true);
+            Assert.AreEqual(226f, result);
+        }
+
+        [Test]
+        public void BaseDamageOverload_MinimumZero()
+        {
+            // 방어력 100% 이상 → 최소 0
+            _victim.PhysicalDefense.SetBaseValue(1.5f);
+            float result = DamageCalculator.Calculate(200f, _attacker, _victim, DamageType.Physical, isCritical: false);
+            Assert.AreEqual(0f, result);
+        }
     }
 }
