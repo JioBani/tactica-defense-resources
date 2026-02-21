@@ -45,6 +45,7 @@ namespace Scenes.Battle.Feature.Unit.Castables
         {
             // 이벤트 해제 정리
             unit.OnSpawnEvent -= OnSpawn;
+            unit.StatSheet.CooldownReduction.OnChange -= OnCooldownReductionChanged;
         }
 
         // IStateListener 명시적 구현
@@ -110,9 +111,11 @@ namespace Scenes.Battle.Feature.Unit.Castables
         {
             // 스킬 데이터와 인스턴스 초기화, 타이머 생성
             _skillData = unit.UnitLoadOutData.Skill;
-            _coolTime = _skillData.CoolTime;
+            _coolTime = _skillData.CoolTime * (1f - Mathf.Clamp01(unit.StatSheet.CooldownReduction.CurrentValue));
 
             _skillTimer = TimerManager.Instance.Make(_coolTime, SetSkillReady);
+
+            unit.StatSheet.CooldownReduction.OnChange += OnCooldownReductionChanged;
             
             _skill = SkillFactory.Instance.CreateSkill(new SkillCreateContext(
                 data : unit.UnitLoadOutData.Skill,
@@ -135,6 +138,15 @@ namespace Scenes.Battle.Feature.Unit.Castables
         {
             // 전투 종료 시 타이머 정지(스킬 비활성화 등 추가 로직 필요 시 여기에 추가)
             _skillTimer.Stop();
+        }
+
+        /// <summary>
+        /// 쿨타임 감소 스탯 변경 시 유효 쿨타임을 재계산하여 타이머에 반영한다.
+        /// </summary>
+        private void OnCooldownReductionChanged(float newReduction)
+        {
+            _coolTime = _skillData.CoolTime * (1f - Mathf.Clamp01(newReduction));
+            _skillTimer.SetMaxTime(_coolTime);
         }
 
         // 스킬 타임아웃에 따라 스킬 사용 가능여부 변경
