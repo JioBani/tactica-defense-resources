@@ -1,4 +1,5 @@
-﻿using Common.Scripts.BubbleMessage;
+using Common.Data.Skills.SkillDefinitions;
+using Common.Scripts.BubbleMessage;
 using Scenes.Battle.Feature.Projectiles;
 using Scenes.Battle.Feature.Unit.Skills.Executables;
 using Scenes.Battle.Feature.Unit.Skills.Skills;
@@ -8,9 +9,13 @@ namespace Scenes.Battle.Feature.Unit.Skills.Castables
 {
     public class FireArrow : SkillCast
     {
-        private Attacker _attacker;
-        public FireArrow(Attacker attacker)
+        /// <summary>스킬 정의 데이터 (계수 등 SO에서 읽어온 데이터)</summary>
+        private readonly SkillDefinitionData _data;
+        private readonly Attacker _attacker;
+
+        public FireArrow(SkillDefinitionData data, Attacker attacker)
         {
+            _data = data;
             _attacker = attacker;
         }
 
@@ -21,7 +26,7 @@ namespace Scenes.Battle.Feature.Unit.Skills.Castables
 
         public override Executable Casting()
         {
-            FireArrowExecutor executor = new FireArrowExecutor(this, _attacker, _attacker.Victim);
+            var executor = new FireArrowExecutor(this, _data, _attacker, _attacker.Victim);
 
             var projectile = ProjectileGenerator.Instance.Generate();
 
@@ -31,7 +36,7 @@ namespace Scenes.Battle.Feature.Unit.Skills.Castables
 
             BubbleMessageSpawner.Instance.SpawnAtWorld("불화살", _attacker.transform.position);
 
-            return new FireArrowExecutor(this, _attacker, _attacker.Victim);
+            return executor;
         }
     }
 }
