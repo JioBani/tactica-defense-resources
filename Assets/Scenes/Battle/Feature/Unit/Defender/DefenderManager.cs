@@ -22,6 +22,10 @@ namespace Scenes.Battle.Feature.Unit.Defenders
     {
         [SerializeField] private UnitGenerator unitGenerator;
         private List<Defender> units = new List<Defender>();
+
+        /// <summary>현재 존재하는 모든 디펜더 목록. 합성 탐지 등 외부 조회용.</summary>
+        public IReadOnlyList<Defender> Defenders => units;
+
         public Action<Defender, Placement> OnPlacementChange;
         public Action<Defender, DefenderChanges> OnDefenderChange;
 

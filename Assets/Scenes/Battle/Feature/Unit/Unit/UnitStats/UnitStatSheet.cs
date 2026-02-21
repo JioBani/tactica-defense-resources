@@ -9,6 +9,9 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
     {
         private UnitStatsByLevelData _data;
 
+        /// <summary>현재 성급. 합성(승급) 시 증가한다.</summary>
+        public int Star { get; private set; } = 1;
+
         // ── 14종 능력치 (수정자 지원) ──
         public readonly UnitStat MaxHealth = new();
         public readonly UnitStat PhysicalAttack = new();
@@ -45,6 +48,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         public void Init(UnitStatsByLevelData data, int star = 1)
         {
             _data = data;
+            Star = star;
 
             foreach (var (kind, stat) in Enumerate())
             {
@@ -99,6 +103,15 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
             yield return (UnitStatKind.StatusResistance,         StatusResistance);
             yield return (UnitStatKind.DamageDealtIncrease,      DamageDealtIncrease);
             yield return (UnitStatKind.DamageReduction,          DamageReduction);
+        }
+
+        /// <summary>
+        /// 성급을 1 올리고 스탯을 재초기화한다. 합성(승급) 시 사용한다.
+        /// </summary>
+        public void UpgradeStar()
+        {
+            Star++;
+            Init(_data, Star);
         }
     }
 }
