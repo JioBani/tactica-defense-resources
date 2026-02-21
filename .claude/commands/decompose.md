@@ -4,7 +4,7 @@
 
 ## 참조 문서
 
-먼저 `.claude/work/decompose/$ARGUMENTS/` 디렉토리에 기존 기록 파일이 있는지 확인한다.
+먼저 `Claude/work/decompose/$ARGUMENTS/` 디렉토리에 기존 기록 파일이 있는지 확인한다.
 - 파일이 있으면: 기록 파일을 읽고, 마지막 진행 상태부터 이어서 수행한다.
 - 파일이 없으면: 아래 참조 문서를 읽고 처음부터 수행한다.
 
@@ -26,7 +26,7 @@
 단계별 결과를 아래 파일에 기록하며 진행한다:
 
 ```
-.claude/work/decompose/{에픽 티켓 번호}/
+Claude/work/decompose/{에픽 티켓 번호}/
 ├── 분해결과.md                    # Phase A: Epic → Task 결과
 ├── {Task 티켓 번호}.md            # Phase B: Task Sub-task 분해 (Jira 등록 후 생성)
 ├── {Task 티켓 번호}.md

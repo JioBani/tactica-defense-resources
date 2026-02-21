@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatica Defence — 작업 대시보드</title>
+    <style>
+        @font-face {
+            font-family: '365오후2시';
+            src: url('../365오후2시.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #FFF7CD;
+            --surface: #FFFDF2;
+            --surface-hover: #FFEFB8;
+            --border: #FDC3A1;
+            --text: #5C3322;
+            --text-dim: #A07858;
+            --accent: #F57799;
+            --success: #FB9B8F;
+            --warning: #FDC3A1;
+            --danger: #E05570;
+            --in-progress: #F57799;
+            --pending: #FFE4CC;
+            --pixel-shadow: #E8AD8A;
+        }
+
+        body {
+            font-family: '365오후2시', monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            image-rendering: pixelated;
+        }
+
+        .pixel-box {
+            border: 3px solid var(--border);
+            box-shadow:
+                3px 3px 0 var(--pixel-shadow),
+                inset 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .petals-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+        .petal {
+            position: absolute;
+            top: -20px;
+            width: 8px;
+            height: 8px;
+            background: #FB9B8F;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+        .petal:nth-child(odd) {
+            width: 6px; height: 6px;
+            background: #FDC3A1;
+            opacity: 0.5;
+        }
+        .petal:nth-child(3n) {
+            width: 4px; height: 4px;
+            background: #F57799;
+            opacity: 0.35;
+        }
+        @keyframes fall {
+            0%   { transform: translateY(0) translateX(0); }
+            25%  { transform: translateY(25vh) translateX(15px); }
+            50%  { transform: translateY(50vh) translateX(-10px); }
+            75%  { transform: translateY(75vh) translateX(20px); }
+            100% { transform: translateY(105vh) translateX(5px); }
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 3px solid var(--border);
+            background: var(--surface);
+            box-shadow: 0 3px 0 var(--pixel-shadow);
+        }
+        .topbar h1 {
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        .topbar h1 span { color: var(--accent); }
+        .topbar h1::before { content: ">> "; color: var(--border); }
+        .topbar .updated {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .layout {
+            display: flex;
+            height: calc(100vh - 57px);
+            position: relative;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            border-right: 3px solid var(--border);
+            background: var(--surface);
+            overflow-y: auto;
+            padding: 12px 0;
+        }
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 8px 16px 6px;
+            letter-spacing: 2px;
+        }
+        .sidebar-title::before { content: "[ "; }
+        .sidebar-title::after { content: " ]"; }
+        .sidebar {
+            transition: width 0.25s ease, min-width 0.25s ease;
+        }
+        .sidebar.drawer-closed {
+            width: 0;
+            min-width: 0;
+            padding: 0;
+            overflow: hidden;
+            border-right: none;
+        }
+        .drawer-handle {
+            position: absolute;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 48px;
+            background: var(--surface);
+            border: 3px solid var(--border);
+            border-left: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--accent);
+            z-index: 10;
+            box-shadow: 3px 3px 0 var(--pixel-shadow);
+            transition: left 0.25s ease;
+        }
+        .drawer-handle:hover { background: var(--surface-hover); }
+        .sidebar.drawer-closed ~ .drawer-handle {
+            left: 0;
+            border-left: 3px solid var(--border);
+        }
+        .ticket-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 16px;
+            border: none;
+            background: none;
+            color: var(--text);
+            font-family: '365오후2시', monospace;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.1s;
+        }
+        .ticket-btn:hover { background: var(--surface-hover); }
+        .ticket-btn.active {
+            background: rgba(245,119,153,0.12);
+            border-left: 4px solid var(--accent);
+        }
+        .ticket-btn .badge {
+            font-size: 12px;
+            font-weight: 400;
+            padding: 2px 6px;
+            border-radius: 0;
+            border: 2px solid;
+            white-space: nowrap;
+            font-family: '365오후2시', monospace;
+        }
+        .badge-active {
+            background: rgba(245,119,153,0.15);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .badge-done {
+            background: rgba(251,155,143,0.15);
+            color: var(--success);
+            border-color: var(--success);
+        }
+        .ticket-btn .ticket-id {
+            font-weight: 400;
+            color: var(--text-dim);
+            font-size: 13px;
+            min-width: 72px;
+        }
+        .ticket-btn .ticket-title {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .ticket-btn .mini-progress {
+            width: 40px;
+            height: 6px;
+            background: var(--pending);
+            border-radius: 0;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .ticket-btn .mini-progress-fill {
+            height: 100%;
+            border-radius: 0;
+            transition: width 0.3s;
+        }
+
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 40px;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(245,119,153,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 10% 80%, rgba(253,195,161,0.08) 0%, transparent 40%),
+                var(--bg);
+        }
+        .main-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-dim);
+            font-size: 15px;
+        }
+
+        .ticket-header {
+            margin-bottom: 28px;
+        }
+        .ticket-header h2 {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+        .ticket-header h2 .tid { color: var(--accent); }
+        .ticket-header .subtitle {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+        .ticket-header .subtitle::before { content: "~ "; color: var(--border); }
+
+        .workflow {
+            background: var(--surface);
+            border: 3px solid var(--border);
+            border-radius: 0;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0 var(--pixel-shadow);
+        }
+        .workflow .section-title {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .steps {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            position: relative;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 400;
+            border: 3px solid var(--border);
+            background: var(--bg);
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            transition: all 0.2s;
+            box-shadow: 2px 2px 0 var(--pixel-shadow);
+        }
+        .step.completed .step-circle {
+            background: var(--success);
+            border-color: #E88878;
+            color: #fff;
+        }
+        .step.current .step-circle {
+            background: var(--in-progress);
+            border-color: #D85A78;
+            color: #fff;
+            box-shadow: 2px 2px 0 var(--pixel-shadow), 0 0 12px rgba(245,119,153,0.3);
+        }
+        .step-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-align: center;
+            white-space: nowrap;
+        }
+        .step.completed .step-label,
+        .step.current .step-label { color: var(--text); }
+
+        .step-connector {
+            position: absolute;
+            top: 16px;
+            left: calc(50% + 20px);
+            right: calc(-50% + 20px);
+            height: 3px;
+            background: var(--border);
+            z-index: 0;
+        }
+        .step:last-child .step-connector { display: none; }
+        .step.completed .step-connector { background: var(--success); }
+
+        .definition {
+            background: var(--surface);
+            border: 3px solid var(--border);
+            border-radius: 0;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0 var(--pixel-shadow);
+        }
+        .definition .section-title {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .definition p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+        .definition .completion-criteria {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 2px dashed var(--border);
+        }
+        .definition .completion-criteria li {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            margin-left: 16px;
+            margin-bottom: 4px;
+        }
+        .definition .completion-criteria li::marker { content: "> "; color: var(--accent); }
+
+        .checklist {
+            background: var(--surface);
+            border: 3px solid var(--border);
+            border-radius: 0;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0 var(--pixel-shadow);
+        }
+        .checklist-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .checklist-header .section-title {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .checklist-header .progress-info {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+        .checklist-header .progress-info strong {
+            color: var(--accent);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--pending);
+            border-radius: 0;
+            border: 2px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--success) 0px,
+                var(--success) 8px,
+                var(--in-progress) 8px,
+                var(--in-progress) 10px
+            );
+            transition: width 0.4s ease;
+        }
+
+        .checklist-section {
+            margin-bottom: 16px;
+        }
+        .checklist-section:last-child { margin-bottom: 0; }
+        .checklist-section-title {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px dashed var(--border);
+        }
+        .checklist-section-title::before { content: "-- "; color: var(--border); }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 6px 4px;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .check-item:hover { background: var(--surface-hover); }
+        .check-icon {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            margin-top: 1px;
+            border: 2px solid var(--border);
+        }
+        .check-icon.completed {
+            background: var(--success);
+            border-color: #E88878;
+            color: #fff;
+        }
+        .check-icon.in-progress {
+            background: var(--in-progress);
+            border-color: #D85A78;
+            color: #fff;
+        }
+        .check-icon.pending {
+            border: 2px solid var(--pending);
+            background: none;
+        }
+        .check-item.completed .check-text { color: var(--text-dim); }
+        .check-item.in-progress .check-text { color: var(--accent); }
+
+        /* ── Collapsible Sections ── */
+        .section-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+        .section-toggle:hover { opacity: 0.8; }
+        .section-toggle .toggle-arrow {
+            display: inline-block;
+            transition: transform 0.2s;
+            font-size: 12px;
+            color: var(--accent);
+        }
+        .section-toggle .toggle-arrow::after { content: "▼"; }
+        .collapsed .section-toggle .toggle-arrow::after { content: "▶"; }
+        .section-body {
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.2s ease;
+            max-height: 2000px;
+            opacity: 1;
+        }
+        .collapsed .section-body {
+            max-height: 0;
+            opacity: 0;
+        }
+        .collapsed .progress-bar { display: none; }
+        .collapsed .checklist-header { margin-bottom: 0; }
+
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 0;
+            border: 2px solid var(--bg);
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="petals-container" id="petals"></div>
+    <div class="topbar">
+        <h1><span>Tatica Defence</span> &mdash; 작업 대시보드</h1>
+        <div class="updated" id="updatedAt"></div>
+    </div>
+    <div class="layout">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-title">Tickets</div>
+            <div id="ticketList"></div>
+        </nav>
+        <div class="drawer-handle" id="drawerHandle" onclick="toggleDrawer()">◀</div>
+        <main class="main" id="mainContent">
+            <div class="main-empty">좌측에서 티켓을 선택하세요</div>
+        </main>
+    </div>
+
+    <script>
+    const DATA = {
+  "activeTicket": "TACD-219",
+  "updatedAt": "2026-02-21 22:41",
+  "tickets": [
+    {
+      "id": "TACD-219",
+      "title": "스킬 정의 데이터 확장 구조 제작",
+      "stage": 3,
+      "summary": "개별 스킬이 고유 데이터(스킬 계수, 데미지 타입 등)를 ScriptableObject에서 정의할 수 있는 구조를 만들고, SkillDefinitionData에 맞는 스킬 인스턴스가 생성되도록 팩토리 구조를 개선한다.",
+      "completionCriteria": [
+        "개별 스킬의 고유 수치(스킬 계수, 데미지 타입)를 코드 수정 없이 ScriptableObject에서 설정할 수 있다",
+        "SkillDefinitionData에 따라 올바른 스킬 인스턴스가 생성된다",
+        "기존 FireArrow 스킬이 확장된 구조에서 동일하게 동작한다"
+      ],
+      "checklist": []
+    },
+    {
+      "id": "TACD-215",
+      "title": "HP 0 → 다운/비활성화, 침략자 무시 통과",
+      "stage": 6,
+      "summary": "SkillCaster에 ActionStateType Downed 감시 로직을 추가하여 다운 시 스킬을 중지시킨다.",
+      "completionCriteria": [
+        "HP 0 도달 시 다운 상태로 전이하고 비활성화된다",
+        "침략자가 다운된 유닛을 무시하고 통과한다"
+      ],
+      "checklist": [
+        {"text": "SkillCaster.cs — IStateListener&lt;ActionStateType&gt; 추가 및 Downed 진입 시 스킬 차단", "status": "completed", "section": "구현 항목"},
+        {"text": "Unity 컴파일 확인 (refresh_unity + read_console) — 에러 없음", "status": "completed", "section": "검증 항목"},
+        {"text": "기존 EditMode 테스트 전체 통과 — 77/77 Passed", "status": "completed", "section": "검증 항목"}
+      ]
+    },
+    {
+      "id": "TACD-216",
+      "title": "유닛의 HP 변화가 체력바에 실시간 반영된다",
+      "stage": 3,
+      "summary": "이미 구현 완료되었으므로 추가 작업 없이 완료 처리한다.",
+      "completionCriteria": [
+        "HP 변화 시 체력바가 즉시 갱신된다"
+      ],
+      "checklist": []
+    },
+    {
+      "id": "TACD-214",
+      "title": "유닛이 데미지를 받으면 HP가 감소한다",
+      "stage": 3,
+      "summary": "이미 구현 완료되었으므로 추가 작업 없이 완료 처리한다.",
+      "completionCriteria": [
+        "유닛이 데미지를 받으면 HP가 정상적으로 감소한다"
+      ],
+      "checklist": []
+    },
+    {
+      "id": "TACD-213",
+      "title": "적 감지 → 공격 전이, 대상 소실 → 대기 복귀",
+      "stage": 6,
+      "summary": "유닛이 사거리 내에 적을 감지하면 공격 상태로 전이하고, 대상이 소실되면 대기로 복귀하거나 새 타겟을 탐색한다.",
+      "completionCriteria": [
+        "적 감지 시 Idle/Move → Attack 전이 정상 동작",
+        "타겟이 다운되면 _victim이 해제되고 Idle/Move로 복귀",
+        "타겟 소실 후 사거리 내 다른 적이 있으면 자동으로 새 타겟 획득",
+        "Idle ↔ Attack 무한 루프 없음",
+        "유닛 테스트 통과"
+      ],
+      "checklist": [
+        {"text": "Attacker.cs — _victimsInRange 리스트 추가 및 OnTriggerEnter2D/Exit2D 개선", "status": "completed", "section": "구현 항목"},
+        {"text": "Attacker.cs — TryAcquireTarget() 메서드 추가", "status": "completed", "section": "구현 항목"},
+        {"text": "Attacker.cs — OnStateRun(Attack)에서 다운 타겟 감지 및 해제", "status": "completed", "section": "구현 항목"},
+        {"text": "ActionStateController.cs — Attack 전환 조건 단순화", "status": "completed", "section": "구현 항목"},
+        {"text": "Unity 컴파일 확인 — 에러 없음", "status": "completed", "section": "검증 항목"},
+        {"text": "기존 EditMode 테스트 전체 통과 — 77/77 Passed", "status": "completed", "section": "검증 항목"}
+      ]
+    },
+    {
+      "id": "TACD-212",
+      "title": "유닛 생성 시 스탯/상태 초기화 처리",
+      "stage": 6,
+      "summary": "유닛이 생성될 때 스탯, 행동 상태, 컴포넌트를 초기화한다.",
+      "completionCriteria": [
+        "유닛 생성 시 스탯이 UnitLoadOutData와 일치하게 설정된다",
+        "Defender는 Idle, Aggressor는 Move 상태로 진입한다",
+        "위 동작을 검증하는 유닛 테스트가 통과한다"
+      ],
+      "checklist": [
+        {"text": "UnitStatSheetTests.cs 생성 (테스트 데이터 헬퍼 + 5개 테스트 케이스)", "status": "completed", "section": "구현 항목"},
+        {"text": "Unity 컴파일 확인 (refresh_unity + read_console)", "status": "completed", "section": "검증 항목"},
+        {"text": "EditMode 테스트 실행 및 통과 확인 — 5/5 Passed", "status": "completed", "section": "검증 항목"}
+      ]
+    },
+    {
+      "id": "TACD-200",
+      "title": "[전장 - 소환수] 배치/이동/스왑",
+      "stage": 6,
+      "summary": "소환수(Defender)의 배치/이동/스왑 시스템을 구현한다. 대기석과 전장 간 드래그&드롭 기반의 배치 조작을 완성하고, 배치 제한 규칙을 적용한다.",
+      "completionCriteria": [
+        "대기석 소환수를 빈 전장 셀로 드래그하면 배치된다",
+        "전장 소환수를 대기석으로 드래그하면 회수된다",
+        "전장 내 이동/스왑이 정상 동작한다",
+        "배치 상한 도달 시 배치가 차단된다",
+        "전투 중 모든 배치/이동/스왑이 차단된다"
+      ],
+      "checklist": [
+        {"text": "Defender.cs OnDisable 이벤트 구독 해제 버그 수정", "status": "completed", "section": "구현"},
+        {"text": "DefenderSideSell.cs 배치 상한 체크 로직 개선", "status": "completed", "section": "구현"},
+        {"text": "WaitingArea.cs 전투 중 이동 차단 추가", "status": "completed", "section": "구현"},
+        {"text": "DefenderSideSellTests.cs 유닛 테스트 작성", "status": "completed", "section": "테스트"},
+        {"text": "Unity 컴파일 확인", "status": "completed", "section": "테스트"},
+        {"text": "EditMode 테스트 전체 통과 (68/68)", "status": "completed", "section": "테스트"}
+      ]
+    },
+    {
+      "id": "TACD-191",
+      "title": "[전장 - 유닛] 능력치 정보 UI",
+      "stage": 6,
+      "summary": "유닛을 선택(클릭/탭)하면 해당 유닛의 능력치 패널을 표시한다. 이름, 일러스트, 성급, 14종 스탯을 아이콘 + 스탯명 + 최종값 형태로 나열한다.",
+      "completionCriteria": [
+        "StatInfoPanel UI 프리팹이 생성되어 있다",
+        "유닛 선택 시 이름, 일러스트, 성급이 표시된다",
+        "14종 스탯이 아이콘 + 스탯명 + 최종값 형태로 표시된다",
+        "X 버튼 / 빈 화면 클릭 시 패널이 닫힌다",
+        "유닛 옆 고정 위치에 패널이 표시된다"
+      ],
+      "checklist": [
+        {"text": "HTML/CSS 목업 제작", "status": "completed", "section": "TACD-197: UI 임시 디자인"},
+        {"text": "사용자 확인", "status": "completed", "section": "TACD-197: UI 임시 디자인"},
+        {"text": "StatInfoPanel 피쳐 폴더 생성", "status": "completed", "section": "TACD-192: UI 제작"},
+        {"text": "StatCell 프리팹 제작", "status": "completed", "section": "TACD-192: UI 제작"},
+        {"text": "StatInfoPanel 프리팹 — Canvas, Panel, 닫기 버튼, 유닛 정보 영역, 스탯 목록", "status": "completed", "section": "TACD-192: UI 제작"},
+        {"text": "컴파일 확인", "status": "completed", "section": "TACD-192: UI 제작"},
+        {"text": "StatInfoPanel.cs — Show(Unit), Hide(), 닫기 버튼 연결", "status": "completed", "section": "TACD-193: 유닛 정보 연결"},
+        {"text": "컴파일 확인", "status": "completed", "section": "TACD-193: 유닛 정보 연결"},
+        {"text": "UnitStatKindHelper.cs + StatCell.cs + BindStats", "status": "completed", "section": "TACD-194: 스탯 연결"},
+        {"text": "컴파일 확인", "status": "completed", "section": "TACD-194: 스탯 연결"},
+        {"text": "UnitSelector.cs + GlobalEventBus 연동 + 씬 배치", "status": "completed", "section": "TACD-196: 유닛 선택/해제"},
+        {"text": "컴파일 확인 + 테스트 실행", "status": "completed", "section": "TACD-196: 유닛 선택/해제"},
+        {"text": "유닛 위치 기반 패널 배치 + 화면 밖 보정", "status": "completed", "section": "TACD-198: 패널 배치"},
+        {"text": "빈 화면 터치 시 패널 닫기", "status": "completed", "section": "빈 화면 터치 닫기"},
+        {"text": "드래그 후 클릭 이벤트 방지", "status": "completed", "section": "드래그 클릭 방지"},
+        {"text": "컴파일 확인 + 테스트 실행 (66개 전체 통과)", "status": "completed", "section": "드래그 클릭 방지"}
+      ]
+    },
+    {
+      "id": "TACD-122",
+      "title": "[전장 - 유닛] 스탯",
+      "stage": 5,
+      "summary": "유닛(소환수/침략자)의 능력치 시스템을 전면 구축한다. 능력치 목록, 스탯 구조, 수정자 시스템, 데미지 계산, 컴포넌트 연동, 능력치 UI까지 포함.",
+      "completionCriteria": [
+        "기획서 1.1에 정의된 14종 능력치가 코드에 반영되어 있다",
+        "유닛의 능력치가 기본값과 추가값으로 구분되어 동작한다",
+        "외부 효과(버프/시너지 등)가 유닛의 능력치를 변경할 수 있다",
+        "능력치 변화 시 유닛의 행동이 즉시 바뀐다",
+        "데미지 계산 공식에 따라 피해가 산출된다",
+        "스킬 효과가 시전자의 최종 능력치를 기반으로 결정된다",
+        "유닛 선택 시 능력치 정보를 확인할 수 있다"
+      ],
+      "checklist": [
+        {"text": "UnitStatKind enum에 DamageReduction 추가", "status": "completed", "section": "TACD-184: 능력치 목록"},
+        {"text": "UnitStatsByLevelData에 damageReduction 필드 추가", "status": "completed", "section": "TACD-184: 능력치 목록"},
+        {"text": "UnitStatSheet에 DamageReduction 추가", "status": "completed", "section": "TACD-184: 능력치 목록"},
+        {"text": "컴파일 확인", "status": "completed", "section": "TACD-184: 능력치 목록"},
+        {"text": "UnitStat 수정자 리스트, 계산 모드, Recalculate", "status": "completed", "section": "TACD-185: 능력치 모듈"},
+        {"text": "StatCalculationMode enum 추가", "status": "completed", "section": "TACD-185: 능력치 모듈"},
+        {"text": "Additive / SeparatedMultiplicative 계산 구현", "status": "completed", "section": "TACD-185: 능력치 모듈"},
+        {"text": "UnitStatSheet 수정 + 컴파일 확인", "status": "completed", "section": "TACD-185: 능력치 모듈"},
+        {"text": "유닛 테스트 (8개 통과)", "status": "completed", "section": "TACD-185: 능력치 모듈"},
+        {"text": "StatModifier 클래스 + enum 작성", "status": "completed", "section": "TACD-186: 수정자 시스템"},
+        {"text": "AddModifier / RemoveModifier 구현", "status": "completed", "section": "TACD-186: 수정자 시스템"},
+        {"text": "유닛 테스트 (4개 통과)", "status": "completed", "section": "TACD-186: 수정자 시스템"},
+        {"text": "Attacker/Mover OnChange 구독 동적 반영", "status": "completed", "section": "TACD-187: 컴포넌트 연동"},
+        {"text": "OnDestroy 구독 해제 + 컴파일 확인", "status": "completed", "section": "TACD-187: 컴포넌트 연동"},
+        {"text": "DamageType enum + DamageCalculator 작성", "status": "completed", "section": "TACD-188: 데미지 계산"},
+        {"text": "RangeAttackExecutor/Victim.Hit() 수정", "status": "completed", "section": "TACD-188: 데미지 계산"},
+        {"text": "유닛 테스트 (11개 통과)", "status": "completed", "section": "TACD-188: 데미지 계산"},
+        {"text": "FireArrowExecutor DamageCalculator 사용", "status": "completed", "section": "TACD-189: 스킬 스탯 참조"},
+        {"text": "컴파일 확인", "status": "completed", "section": "TACD-189: 스킬 스탯 참조"},
+        {"text": "StatInfoPanel UI 프리팹 생성", "status": "pending", "section": "TACD-190: 능력치 UI"},
+        {"text": "UnitStatSheet.Enumerate()로 스탯 순회 표시", "status": "pending", "section": "TACD-190: 능력치 UI"},
+        {"text": "유닛 선택/해제 시 패널 Show/Hide", "status": "pending", "section": "TACD-190: 능력치 UI"}
+      ]
+    }
+  ]
+};
+
+    let selectedId = DATA.activeTicket || (DATA.tickets.length > 0 ? DATA.tickets[0].id : null);
+
+    function render() {
+        document.getElementById('updatedAt').textContent = '최종 갱신: ' + DATA.updatedAt;
+        renderSidebar();
+        if (selectedId) renderMain(selectedId);
+    }
+
+    function renderSidebar() {
+        const container = document.getElementById('ticketList');
+        container.innerHTML = DATA.tickets.map(t => {
+            const pct = t.checklist.length > 0
+                ? Math.round(t.checklist.filter(c => c.status === 'completed').length / t.checklist.length * 100)
+                : 0;
+            const progressColor = pct === 100 ? 'var(--success)' : 'var(--in-progress)';
+            const isActive = t.id === selectedId;
+            const isBranch = t.id === DATA.activeTicket;
+            return `
+                <button class="ticket-btn ${isActive ? 'active' : ''}" onclick="selectTicket('${t.id}')">
+                    <span class="ticket-id">${t.id}</span>
+                    <span class="ticket-title">${t.title || '제목 없음'}</span>
+                    ${isBranch ? '<span class="badge badge-active">branch</span>' : ''}
+                    ${pct === 100 ? '<span class="badge badge-done">done</span>' : `
+                    <div class="mini-progress">
+                        <div class="mini-progress-fill" style="width:${pct}%;background:${progressColor}"></div>
+                    </div>`}
+                </button>`;
+        }).join('');
+    }
+
+    function renderMain(ticketId) {
+        selectedId = ticketId;
+        renderSidebar();
+        const t = DATA.tickets.find(x => x.id === ticketId);
+        if (!t) {
+            document.getElementById('mainContent').innerHTML = '<div class="main-empty">티켓을 찾을 수 없습니다</div>';
+            return;
+        }
+
+        const stageLabels = ['확인', '작업정의', '구현계획', '현황판', '구현', '완료'];
+        const stepsHtml = stageLabels.map((label, i) => {
+            const num = i + 1;
+            let cls = '';
+            if (num < t.stage) cls = 'completed';
+            else if (num === t.stage) cls = 'current';
+            return `
+                <div class="step ${cls}">
+                    <div class="step-circle">${num < t.stage ? '&#10003;' : num}</div>
+                    <div class="step-label">${label}</div>
+                    <div class="step-connector"></div>
+                </div>`;
+        }).join('');
+
+        const total = t.checklist.length;
+        const done = t.checklist.filter(c => c.status === 'completed').length;
+        const pct = total > 0 ? Math.round(done / total * 100) : 0;
+
+        // Group checklist by section
+        const sections = {};
+        t.checklist.forEach(item => {
+            const sec = item.section || '항목';
+            if (!sections[sec]) sections[sec] = [];
+            sections[sec].push(item);
+        });
+
+        let checklistHtml = '';
+        if (total > 0) {
+            let sectionsHtml = Object.entries(sections).map(([name, items]) => `
+                <div class="checklist-section">
+                    <div class="checklist-section-title">${name}</div>
+                    ${items.map(item => `
+                        <div class="check-item ${item.status}">
+                            <div class="check-icon ${item.status}">
+                                ${item.status === 'completed' ? '&#10003;' : item.status === 'in-progress' ? '&#9654;' : ''}
+                            </div>
+                            <span class="check-text">${item.text}</span>
+                        </div>`).join('')}
+                </div>`).join('');
+
+            checklistHtml = `
+                <div class="checklist" id="sec-checklist">
+                    <div class="checklist-header section-toggle" onclick="toggleSection('sec-checklist')">
+                        <div class="section-title">작업현황판</div>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="progress-info"><strong>${done}</strong> / ${total} (${pct}%)</div>
+                            <span class="toggle-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+                        ${sectionsHtml}
+                    </div>
+                </div>`;
+        } else {
+            checklistHtml = `
+                <div class="checklist" id="sec-checklist">
+                    <div class="checklist-header section-toggle" onclick="toggleSection('sec-checklist')">
+                        <div class="section-title">작업현황판</div>
+                        <span class="toggle-arrow"></span>
+                    </div>
+                    <div class="section-body">
+                        <div class="no-data">작업현황판이 아직 작성되지 않았습니다</div>
+                    </div>
+                </div>`;
+        }
+
+        let definitionHtml = '';
+        if (t.summary || (t.completionCriteria && t.completionCriteria.length > 0)) {
+            definitionHtml = `
+                <div class="definition" id="sec-definition">
+                    <div class="section-toggle section-title" onclick="toggleSection('sec-definition')">
+                        <span>작업정의</span>
+                        <span class="toggle-arrow"></span>
+                    </div>
+                    <div class="section-body">
+                        ${t.summary ? `<p>${t.summary}</p>` : ''}
+                        ${t.completionCriteria && t.completionCriteria.length > 0 ? `
+                        <div class="completion-criteria">
+                            <ul>${t.completionCriteria.map(c => `<li>${c}</li>`).join('')}</ul>
+                        </div>` : ''}
+                    </div>
+                </div>`;
+        }
+
+        document.getElementById('mainContent').innerHTML = `
+            <div class="ticket-header">
+                <h2><span class="tid">${t.id}</span> ${t.title || ''}</h2>
+                <div class="subtitle">Stage ${t.stage}/6 &middot; ${stageLabels[t.stage - 1] || ''}</div>
+            </div>
+            <div class="workflow" id="sec-workflow">
+                <div class="section-toggle section-title" onclick="toggleSection('sec-workflow')">
+                    <span>작업지시서 진행 상태</span>
+                    <span class="toggle-arrow"></span>
+                </div>
+                <div class="section-body">
+                    <div class="steps">${stepsHtml}</div>
+                </div>
+            </div>
+            ${definitionHtml}
+            ${checklistHtml}
+        `;
+    }
+
+    function toggleDrawer() {
+        const sidebar = document.getElementById('sidebar');
+        const handle = document.getElementById('drawerHandle');
+        sidebar.classList.toggle('drawer-closed');
+        handle.textContent = sidebar.classList.contains('drawer-closed') ? '▶' : '◀';
+    }
+
+    function toggleSection(id) {
+        document.getElementById(id).classList.toggle('collapsed');
+    }
+
+    function selectTicket(id) {
+        selectedId = id;
+        renderMain(id);
+    }
+
+    render();
+
+    // Falling sakura petals
+    (function() {
+        const container = document.getElementById('petals');
+        for (let i = 0; i < 15; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = (6 + Math.random() * 8) + 's';
+            petal.style.animationDelay = Math.random() * 10 + 's';
+            container.appendChild(petal);
+        }
+    })();
+    </script>
+</body>
+</html>
