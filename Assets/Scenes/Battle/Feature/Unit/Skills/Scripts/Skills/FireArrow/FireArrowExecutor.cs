@@ -1,4 +1,5 @@
-﻿using Scenes.Battle.Feature.Unit.Skills.Castables;
+﻿using Common.Data.Damage;
+using Scenes.Battle.Feature.Unit.Skills.Castables;
 using Scenes.Battle.Feature.Units.Attackables;
 using Scenes.Battle.Feature.Units.Attackers;
 using Scenes.Battle.Feature.Units.Damage;

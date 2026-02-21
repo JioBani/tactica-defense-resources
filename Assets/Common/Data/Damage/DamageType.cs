@@ -1,4 +1,4 @@
-namespace Scenes.Battle.Feature.Units.Damage
+namespace Common.Data.Damage
 {
     public enum DamageType
     {

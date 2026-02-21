@@ -1,3 +1,4 @@
+using Common.Data.Damage;
 using NUnit.Framework;
 using Scenes.Battle.Feature.Units.Damage;
 using Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets;
