@@ -17,7 +17,7 @@ namespace Scenes.Battle.Feature.Units
     // TODO: 기능이 많아지는 경우 분리
     public class Unit : MonoBehaviour
     {
-        [SerializeField] private HealthBar healthBar;
+        [SerializeField] protected HealthBar healthBar;
         [SerializeField] private ActionStateController actionStateController;
         public ActionStateController ActionStateController => actionStateController;
         
@@ -39,6 +39,14 @@ namespace Scenes.Battle.Feature.Units
             {
                 healthBar.Display(value / StatSheet.MaxHealth.CurrentValue);
             };
+
+            StatSheet.OnGradeChanged += OnGradeChanged;
+        }
+
+        /// <summary>성급 또는 강화 단계 변경 시 HP 바 테두리 색을 갱신한다.</summary>
+        private void OnGradeChanged(GradeChangedInfo info)
+        {
+            healthBar.SetStarGrade(info.Star);
         }
 
         
@@ -68,7 +76,8 @@ namespace Scenes.Battle.Feature.Units
             //_unitLoadOutData = unitLoadOutData;
             UnitLoadOutData = unitLoadOutData;
             StatSheet.Init(unitLoadOutData.Stats);
-            
+            healthBar.SetStarGrade(StatSheet.Star);
+
             //TEMP
             GetComponent<SpriteRenderer>().sprite = unitLoadOutData.Unit.Icon;
 

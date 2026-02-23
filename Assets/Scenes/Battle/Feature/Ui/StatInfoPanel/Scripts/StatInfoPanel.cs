@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Common.Data.Units.UnitStatsByLevel;
 using Common.Scripts.GlobalEventBus;
+using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Units;
 using Scenes.Battle.Feature.Units.UnitStats;
 using Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets;
@@ -15,6 +16,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
         [Header("Header")]
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private Image[] starImages;
+        [SerializeField] private TMP_Text reinforcementText;
         [SerializeField] private Button closeButton;
 
         [Header("Body")]
@@ -68,6 +70,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
 
             closeButton.onClick.AddListener(Hide);
             GlobalEventBus.Subscribe<OnObjectSelectedEvent>(OnObjectSelected);
+            GlobalEventBus.Subscribe<OnDefenderFusedEventDto>(OnDefenderFused);
             gameObject.SetActive(false);
         }
 
@@ -75,6 +78,7 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
         {
             closeButton.onClick.RemoveListener(Hide);
             GlobalEventBus.Unsubscribe<OnObjectSelectedEvent>(OnObjectSelected);
+            GlobalEventBus.Unsubscribe<OnDefenderFusedEventDto>(OnDefenderFused);
         }
 
         private void OnObjectSelected(OnObjectSelectedEvent evt)
@@ -97,17 +101,34 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
             _showFrame = Time.frameCount;
             gameObject.SetActive(true);
 
-            var def = unit.UnitLoadOutData.Unit;
-            nameText.text = def.DisplayName;
-            illustrationImage.sprite = def.Illustration;
-
-            // TODO: 유닛에 성급(star) 정보가 추가되면 unit.Star 등으로 교체
-            UpdateStars(1);
-
-            BindStats(unit.StatSheet);
+            SyncDisplay();
 
             var screenPos = (Vector2)_camera.WorldToScreenPoint(unit.transform.position);
             PositionAt(screenPos);
+        }
+
+        /// <summary>
+        /// _currentUnit의 데이터를 읽어 UI를 동기화한다.
+        /// Show 및 합성 이벤트 수신 시 호출된다.
+        /// </summary>
+        private void SyncDisplay()
+        {
+            var definition = _currentUnit.UnitLoadOutData.Unit;
+            nameText.text = definition.DisplayName;
+            illustrationImage.sprite = definition.Illustration;
+
+            UpdateStars(_currentUnit.StatSheet.Star);
+            UpdateReinforcement(_currentUnit.StatSheet.Reinforcement);
+
+            BindStats(_currentUnit.StatSheet);
+        }
+
+        private void OnDefenderFused(OnDefenderFusedEventDto evt)
+        {
+            if (_currentUnit == null || !gameObject.activeSelf) return;
+            if ((Units.Unit)evt.Survivor != _currentUnit) return;
+
+            SyncDisplay();
         }
 
         public void Hide()
@@ -187,6 +208,24 @@ namespace Scenes.Battle.Feature.Ui.StatInfoPanel
         {
             for (int i = 0; i < starImages.Length; i++)
                 starImages[i].gameObject.SetActive(i < count);
+        }
+
+        /// <summary>
+        /// 강화 단계를 표시한다. 0이면 숨기고, 1 이상이면 "+N강" 형식으로 표시한다.
+        /// </summary>
+        private void UpdateReinforcement(int reinforcement)
+        {
+            if (reinforcementText == null) return;
+
+            if (reinforcement > 0)
+            {
+                reinforcementText.gameObject.SetActive(true);
+                reinforcementText.text = $"+{reinforcement}강";
+            }
+            else
+            {
+                reinforcementText.gameObject.SetActive(false);
+            }
         }
     }
 }
