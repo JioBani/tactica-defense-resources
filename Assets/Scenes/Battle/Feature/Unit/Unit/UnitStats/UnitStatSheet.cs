@@ -5,6 +5,19 @@ using UnityEngine;
 
 namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
 {
+    /// <summary>성급 또는 강화 단계 변경 시 전달되는 정보.</summary>
+    public readonly struct GradeChangedInfo
+    {
+        public readonly int Star;
+        public readonly int Reinforcement;
+
+        public GradeChangedInfo(int star, int reinforcement)
+        {
+            Star = star;
+            Reinforcement = reinforcement;
+        }
+    }
+
     public class UnitStatSheet
     {
         private UnitStatsByLevelData _data;
@@ -47,6 +60,9 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         }
 
         public event Action<float> OnHealthChange;
+
+        /// <summary>성급 또는 강화 단계가 변경되었을 때 발생한다.</summary>
+        public event Action<GradeChangedInfo> OnGradeChanged;
 
         public void Init(UnitStatsByLevelData data, int star = 1, int reinforcement = 0)
         {
@@ -118,6 +134,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         {
             Star++;
             Init(_data, Star, 0);
+            OnGradeChanged?.Invoke(new GradeChangedInfo(Star, Reinforcement));
         }
 
         /// <summary>
@@ -128,6 +145,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         {
             Reinforcement += amount;
             Init(_data, Star, Reinforcement);
+            OnGradeChanged?.Invoke(new GradeChangedInfo(Star, Reinforcement));
         }
     }
 }
