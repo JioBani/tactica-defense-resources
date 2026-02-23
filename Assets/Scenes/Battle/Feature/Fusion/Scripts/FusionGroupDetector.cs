@@ -36,15 +36,16 @@ namespace Scenes.Battle.Feature.Fusion
     {
         /// <summary>
         /// 합성 가능한 그룹을 하나 찾아 인덱스 배열로 반환한다. 없으면 null.
+        /// maxStar 미만의 성급에서만 기본 합성을 허용한다. (예: maxStar=3이면 1성, 2성만 합성)
         /// </summary>
-        public int[] FindFusionGroup(IReadOnlyList<FusionCandidate> candidates)
+        public int[] FindFusionGroup(IReadOnlyList<FusionCandidate> candidates, int maxStar = int.MaxValue)
         {
             if (candidates == null || candidates.Count < 3) return null;
 
-            // (UnitDefinitionId, Star) 기준으로 그룹핑
+            // (UnitDefinitionId, Star) 기준으로 그룹핑, maxStar 미만만 허용
             var group = candidates
                 .GroupBy(c => (c.UnitDefinitionId, c.Star))
-                .FirstOrDefault(g => g.Count() >= 3);
+                .FirstOrDefault(g => g.Key.Star < maxStar && g.Count() >= 3);
 
             if (group == null) return null;
 
@@ -54,9 +55,9 @@ namespace Scenes.Battle.Feature.Fusion
         /// <summary>
         /// 합성 가능한 그룹이 존재하는지 확인한다.
         /// </summary>
-        public bool HasFusionGroup(IReadOnlyList<FusionCandidate> candidates)
+        public bool HasFusionGroup(IReadOnlyList<FusionCandidate> candidates, int maxStar = int.MaxValue)
         {
-            return FindFusionGroup(candidates) != null;
+            return FindFusionGroup(candidates, maxStar) != null;
         }
     }
 }
