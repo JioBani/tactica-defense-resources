@@ -1,23 +1,40 @@
-using System;
 using Common.Scripts.BubbleMessage;
 using Common.Scripts.Draggable;
 using Common.Scripts.InspectorDescriptionAttributes;
+using Scenes.Battle.Feature.Fusion;
 using Scenes.Battle.Feature.Markets;
 using Scenes.Battle.Feature.Rounds;
 using Scenes.Battle.Feature.Rounds.Phases;
 using Scenes.Battle.Feature.Unit.Defenders;
 namespace Scenes.Battle.Feature.Sells
 {
-    
+
     [InspectorDescription("정비 페이즈에서만 수호자 배치 가능하도록 룰 추가한 확장 Sell",InspectorMessageType.Info)]
-    
+
     public class DefenderSideSell : ExclusiveDropZone2D, IDropRule
     {
         private Defender _defender;
-        
+
         void Awake()
         {
             AddRule(this);
+        }
+
+        /// <summary>
+        /// 점유자가 있을 때 강화 합성 조건을 확인하고, 가능하면 스왑 대신 강화를 실행한다.
+        /// </summary>
+        public override void OnDrop(Draggable2D draggable, DropZone2D before)
+        {
+            if (occupant != null
+                && DefenderFusionManager.Instance != null
+                && draggable.TryGetComponent<Defender>(out var material)
+                && occupant.TryGetComponent<Defender>(out var target)
+                && DefenderFusionManager.Instance.TryEnhanceFusion(material, target))
+            {
+                return;
+            }
+
+            base.OnDrop(draggable, before);
         }
 
         public bool CanAccept(Draggable2D draggable, DropZone2D before, DropZone2D after)

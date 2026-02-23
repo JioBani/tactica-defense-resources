@@ -144,6 +144,22 @@ namespace Tests.Editor
         }
 
         [Test]
+        public void Reinforce_WithAmount2_IncrementsBy2()
+        {
+            var so = new SerializedObject(_data);
+            so.FindProperty("maxHealth").FindPropertyRelative("additionalPerExtraStar").floatValue = 10f;
+            so.ApplyModifiedProperties();
+
+            _sheet.Init(_data, star: 1, reinforcement: 0);
+            float baseStat = _sheet.MaxHealth.CurrentValue; // 100
+
+            _sheet.Reinforce(2);
+
+            Assert.AreEqual(2, _sheet.Reinforcement);
+            Assert.AreEqual(baseStat + 20f, _sheet.MaxHealth.CurrentValue, 0.01f);
+        }
+
+        [Test]
         public void UpgradeStar_ResetsReinforcement()
         {
             // 3성+2강 상태에서 UpgradeStar 호출

@@ -47,6 +47,20 @@ namespace Tests.Editor
         }
 
         [Test]
+        public void FindEnhancementPair_Star3TargetAndStar3Material_ReturnsPair()
+        {
+            var candidates = new List<FusionCandidate>
+            {
+                new FusionCandidate(unitDefinitionId: 1, star: 3, index: 0),
+                new FusionCandidate(unitDefinitionId: 1, star: 3, index: 1),
+            };
+
+            var result = _detector.FindEnhancementPair(candidates);
+
+            Assert.IsNotNull(result, "3성 재료도 강화 합성에 사용할 수 있어야 한다");
+        }
+
+        [Test]
         public void FindEnhancementPair_Star3AndStar1_ReturnsNull()
         {
             var candidates = new List<FusionCandidate>
@@ -57,7 +71,7 @@ namespace Tests.Editor
 
             var result = _detector.FindEnhancementPair(candidates);
 
-            Assert.IsNull(result, "재료가 2성이 아니면 강화 합성되지 않아야 한다");
+            Assert.IsNull(result, "재료가 2성 또는 3성이 아니면 강화 합성되지 않아야 한다");
         }
 
         [Test]
@@ -113,6 +127,26 @@ namespace Tests.Editor
             };
 
             Assert.IsFalse(_detector.HasEnhancementPair(candidates));
+        }
+
+        // ── IsMaterialStar ──
+
+        [Test]
+        public void IsMaterialStar_Star2_ReturnsTrue()
+        {
+            Assert.IsTrue(_detector.IsMaterialStar(2));
+        }
+
+        [Test]
+        public void IsMaterialStar_Star3_ReturnsTrue()
+        {
+            Assert.IsTrue(_detector.IsMaterialStar(3));
+        }
+
+        [Test]
+        public void IsMaterialStar_Star1_ReturnsFalse()
+        {
+            Assert.IsFalse(_detector.IsMaterialStar(1));
         }
     }
 }

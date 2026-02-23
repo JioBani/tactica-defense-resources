@@ -121,11 +121,12 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         }
 
         /// <summary>
-        /// 강화 단계를 1 올리고 스탯을 재초기화한다. 강화 합성 시 사용한다.
+        /// 강화 단계를 올리고 스탯을 재초기화한다. 강화 합성 시 사용한다.
+        /// 2성 재료는 +1, 3성 재료는 +2 강화를 적용한다.
         /// </summary>
-        public void Reinforce()
+        public void Reinforce(int amount = 1)
         {
-            Reinforcement++;
+            Reinforcement += amount;
             Init(_data, Star, Reinforcement);
         }
     }
