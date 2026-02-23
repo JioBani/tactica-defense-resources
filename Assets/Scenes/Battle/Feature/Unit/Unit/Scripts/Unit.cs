@@ -70,12 +70,16 @@ namespace Scenes.Battle.Feature.Units
             });
         }
 
-        // UnitGenerator 에 의해 소환되었을 때
-        public void SetSpawn(UnitLoadOutData unitLoadOutData)
+        /// <summary>
+        /// UnitGenerator에 의해 소환되었을 때 호출된다.
+        /// 성급/스탯/상태를 초기 세팅한다.
+        /// </summary>
+        /// <param name="unitLoadOutData">유닛 설정 데이터.</param>
+        /// <param name="star">초기 성급. 마켓 등장 시 결정된다.</param>
+        public void SetSpawn(UnitLoadOutData unitLoadOutData, int star = 1)
         {
-            //_unitLoadOutData = unitLoadOutData;
             UnitLoadOutData = unitLoadOutData;
-            StatSheet.Init(unitLoadOutData.Stats);
+            StatSheet.Init(unitLoadOutData.Stats, star);
             healthBar.SetStarGrade(StatSheet.Star);
 
             //TEMP

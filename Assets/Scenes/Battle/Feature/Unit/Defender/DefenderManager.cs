@@ -44,12 +44,17 @@ namespace Scenes.Battle.Feature.Unit.Defenders
             return units.Count(defender => defender.Placement == placement);
         }
 
-        public bool GenerateDefender(UnitLoadOutData unitLoadOutData)
+        /// <summary>
+        /// 소환수를 생성하고 대기석에 배치한 뒤 관리 목록에 등록한다.
+        /// </summary>
+        /// <param name="unitLoadOutData">유닛 설정 데이터.</param>
+        /// <param name="star">초기 성급. 마켓에서 결정된다.</param>
+        public bool GenerateDefender(UnitLoadOutData unitLoadOutData, int star = 1)
         {
             //TODO: 대기석이 비어있지 않는지 확인하는 것을 여기서 하는것이 맞는지 고려 필요
             if (WaitingAreaReferences.Instance.waitingAreas.Find((zone) => zone.occupant == null))
             {
-                var unit = unitGenerator.GenerateDefender(unitLoadOutData);
+                var unit = unitGenerator.GenerateDefender(unitLoadOutData, star);
                 
                 unit.MoveToWaitingArea();
 

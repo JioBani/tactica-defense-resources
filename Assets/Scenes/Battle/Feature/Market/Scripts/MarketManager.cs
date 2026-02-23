@@ -36,7 +36,7 @@ namespace Scenes.Battle.Feature.Markets
         MarketUnitRoller _roller;
         public MarketUnitRoller Roller => _roller;
 
-        public Action<List<UnitLoadOutData>> OnSlotRerolled;
+        public Action<List<MarketDefenderSlot>> OnSlotRerolled;
         public Action<OnManaNotEnoughDto> OnManaNotEnough;
 
         protected override void OnAwakeSingleton()
@@ -114,9 +114,9 @@ namespace Scenes.Battle.Feature.Markets
 
         private void RerollSlots()
         {
-            List<UnitLoadOutData> units = _roller.PickUnits(4);
+            List<MarketDefenderSlot> slots = _roller.PickUnits(4);
 
-            OnSlotRerolled?.Invoke(units);
+            OnSlotRerolled?.Invoke(slots);
         }
 
         public void Reroll()
@@ -127,11 +127,15 @@ namespace Scenes.Battle.Feature.Markets
             }
         }
 
-        public bool BuyDefender(UnitLoadOutData unit)
+        /// <summary>
+        /// 마켓 슬롯의 소환수를 구매하여 대기석에 배치한다.
+        /// </summary>
+        public bool BuyDefender(MarketDefenderSlot slot)
         {
-            if (BuySomething(unit.Unit.Cost, "마나가 부족합니다."))
+            if (BuySomething(slot.UnitLoadOutData.Unit.Cost, "마나가 부족합니다."))
             {
-                defenderManager.GenerateDefender(unit);
+                defenderManager.GenerateDefender(slot.UnitLoadOutData, slot.Star);
+                slot.MarkAsSold();
                 return true;
             }
             else

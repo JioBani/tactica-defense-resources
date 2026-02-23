@@ -14,7 +14,7 @@ namespace Scenes.Battle.Feature.Units
         
         [SerializeField] private Transform enemyField;
         
-        private Unit Generate(UnitLoadOutData data, GameObject prefab)
+        private Unit Generate(UnitLoadOutData data, GameObject prefab, int star = 1)
         {
             if (_objectPooler == null)
             {
@@ -25,18 +25,22 @@ namespace Scenes.Battle.Feature.Units
                 prefab,
                 enemyField
             );
-            
+
             var unitComponent = newUnit.GetComponent<Unit>();
-            
-            unitComponent.SetSpawn(data);
+
+            unitComponent.SetSpawn(data, star);
 
             return unitComponent;
         }
 
-        // TODO: 어떤 종류의 Unit 을 생성할것인지는 Defender Manager 등에 위임하고, Unit 만 생성하도록 수정
-        public Unit GenerateDefender(UnitLoadOutData data)
+        /// <summary>
+        /// 소환수(디펜더) 프리팹을 스폰하고 초기화한다.
+        /// </summary>
+        /// <param name="data">유닛 설정 데이터.</param>
+        /// <param name="star">초기 성급.</param>
+        public Unit GenerateDefender(UnitLoadOutData data, int star = 1)
         {
-            return Generate(data, defenderPrefab);
+            return Generate(data, defenderPrefab, star);
         }
         
         public Unit GenerateAggressor(UnitLoadOutData data)

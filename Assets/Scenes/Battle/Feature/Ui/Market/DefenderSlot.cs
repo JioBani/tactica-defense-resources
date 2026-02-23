@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Common.Data.Units.UnitLoadOuts;
 using Scenes.Battle.Feature.Unit.Defenders;
 using TMPro;
 using UnityEngine;
@@ -9,19 +7,20 @@ using UnityEngine.UI;
 namespace Scenes.Battle.Feature.Markets
 {
     /// <summary>
-    /// 상점 UI 의 수호자 구매 슬롯
+    /// 상점 UI의 소환수 구매 슬롯. 리롤 시 MarketDefenderSlot을 수신하여 표시한다.
     /// </summary>
     public class DefenderSlot : MonoBehaviour
     {
         private MarketManager _marketManager;
         [SerializeField] private DefenderManager defenderManager;
-        
+
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI purchasedText;
-        
+
         [SerializeField] private int index;
-        
-        private UnitLoadOutData _unitData;
+
+        /// <summary>현재 슬롯에 장착된 마켓 데이터 (유닛 + 성급).</summary>
+        private MarketDefenderSlot _slotData;
         private bool IsPurchased { get; set; } = false;
 
         private void Awake()
@@ -39,16 +38,16 @@ namespace Scenes.Battle.Feature.Markets
             _marketManager.OnSlotRerolled -= OnSlotRerolled;
         }
 
-        private void OnSlotRerolled(List<UnitLoadOutData> unitDataList)
+        private void OnSlotRerolled(List<MarketDefenderSlot> slotList)
         {
-            // 자신의 슬롯 번호에 해당하는 유닛 데이터 장착
-            SetUnitData(unitDataList[index]);
+            // 자신의 슬롯 번호에 해당하는 데이터 장착
+            SetSlotData(slotList[index]);
         }
 
-        private void SetUnitData(UnitLoadOutData unitData)
+        private void SetSlotData(MarketDefenderSlot slotData)
         {
-            _unitData = unitData;
-            image.sprite = unitData.Unit.Illustration;
+            _slotData = slotData;
+            image.sprite = slotData.UnitLoadOutData.Unit.Illustration;
             IsPurchased = false;
             ActivateImage();
         }
@@ -63,7 +62,7 @@ namespace Scenes.Battle.Feature.Markets
 
         private void Purchase()
         {
-            IsPurchased = MarketManager.Instance.BuyDefender(_unitData);
+            IsPurchased = MarketManager.Instance.BuyDefender(_slotData);
 
             if (IsPurchased)
             {
@@ -76,7 +75,7 @@ namespace Scenes.Battle.Feature.Markets
             image.gameObject.SetActive(false);
             purchasedText.gameObject.SetActive(true);
         }
-        
+
         private void ActivateImage()
         {
             image.gameObject.SetActive(true);

@@ -77,6 +77,9 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
                 stat.SetBaseValue(data.GetStat(kind, effectiveStar));
             }
 
+            // 중복 등록 방지: 기존 핸들러를 해제한 뒤 재등록한다
+            MaxHealth.OnChange -= OnMaxHealthChanged;
+
             // 현재 체력 = 최대 체력
             _health = MaxHealth.CurrentValue;
 

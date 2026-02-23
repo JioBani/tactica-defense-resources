@@ -44,23 +44,29 @@ namespace Scenes.Battle.Feature.Markets
             }
         }
 
-        public List<UnitLoadOutData> PickUnits(int n)
+        /// <summary>
+        /// n개의 마켓 슬롯을 뽑는다. 각 슬롯에는 유닛 데이터와 초기 성급이 포함된다.
+        /// </summary>
+        public List<MarketDefenderSlot> PickUnits(int n)
         {
             return RepeatX.Times(n, _ => PickUnit());
         }
-        
-        private UnitLoadOutData PickUnit()
+
+        private MarketDefenderSlot PickUnit()
         {
             // 1. 등장 코스트 선택
             int cost = PickCost();
-            
+
             // 2. 코스트 안에서 랜덤하게 하나 선택
             var targetList = _unitListByCost[cost];
             int length = targetList.Count;
-            
+
             int index = Random.Range(0, length - 1);
-            
-            return targetList[index];
+
+            // TODO: 배치 상한 레벨에 따른 2성/3성 등장 확률 적용
+            int star = 1;
+
+            return new MarketDefenderSlot(targetList[index], star);
         }
 
         // 확률에 따라 등장 코스트 선택
