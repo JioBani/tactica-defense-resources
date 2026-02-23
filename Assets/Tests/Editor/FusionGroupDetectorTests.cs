@@ -137,6 +137,23 @@ namespace Tests.Editor
             Assert.AreEqual(6, result.Length);
         }
 
+        // ── maxStar 제한 ──
+
+        [Test]
+        public void FindFusionGroup_ThreeStar3Units_WithMaxStar3_ReturnsNull()
+        {
+            var candidates = new List<FusionCandidate>
+            {
+                new FusionCandidate(unitDefinitionId: 1, star: 3, index: 0),
+                new FusionCandidate(unitDefinitionId: 1, star: 3, index: 1),
+                new FusionCandidate(unitDefinitionId: 1, star: 3, index: 2),
+            };
+
+            var result = _detector.FindFusionGroup(candidates, maxStar: 3);
+
+            Assert.IsNull(result, "maxStar=3이면 3성 그룹은 합성되지 않아야 한다");
+        }
+
         // ── HasFusionGroup ──
 
         [Test]

@@ -3208,6 +3208,7 @@ GameObject:
   - component: {fileID: 502835345}
   - component: {fileID: 502835346}
   - component: {fileID: 502835347}
+  - component: {fileID: 502835348}
   m_Layer: 0
   m_Name: SceneSingleton
   m_TagString: Untagged
@@ -3306,6 +3307,20 @@ MonoBehaviour:
   bubbleMessagePrefab: {fileID: 7257087092003051280, guid: 99e0dca0448855745b7348fbf0952717, type: 3}
   screenSpaceParent: {fileID: 1976546784}
   mainCamera: {fileID: 1007864557}
+--- !u!114 &502835348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502835341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfac8cf8fc94ed40866f26f388ce889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 1
+  defenderManager: {fileID: 1890914476}
 --- !u!1 &513231045
 GameObject:
   m_ObjectHideFlags: 0
@@ -12308,7 +12323,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1890914475}
   - component: {fileID: 1890914476}
-  - component: {fileID: 1890914477}
   m_Layer: 0
   m_Name: DefenderManager
   m_TagString: Untagged
@@ -12344,19 +12358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitGenerator: {fileID: 1387143021}
---- !u!114 &1890914477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890914474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbfac8cf8fc94ed40866f26f388ce889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defenderManager: {fileID: 1890914476}
 --- !u!1 &1915809061
 GameObject:
   m_ObjectHideFlags: 0

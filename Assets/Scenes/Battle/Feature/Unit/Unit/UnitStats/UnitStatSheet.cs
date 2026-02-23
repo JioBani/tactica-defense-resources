@@ -12,6 +12,9 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         /// <summary>현재 성급. 합성(승급) 시 증가한다.</summary>
         public int Star { get; private set; } = 1;
 
+        /// <summary>현재 강화 단계. 강화 합성 시 증가한다. 기본 승급 시 0으로 리셋된다.</summary>
+        public int Reinforcement { get; private set; }
+
         // ── 14종 능력치 (수정자 지원) ──
         public readonly UnitStat MaxHealth = new();
         public readonly UnitStat PhysicalAttack = new();
@@ -45,15 +48,17 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
 
         public event Action<float> OnHealthChange;
 
-        public void Init(UnitStatsByLevelData data, int star = 1)
+        public void Init(UnitStatsByLevelData data, int star = 1, int reinforcement = 0)
         {
             _data = data;
             Star = star;
+            Reinforcement = reinforcement;
 
+            int effectiveStar = star + reinforcement;
             foreach (var (kind, stat) in Enumerate())
             {
                 stat.ClearModifiers();
-                stat.SetBaseValue(data.GetStat(kind, star));
+                stat.SetBaseValue(data.GetStat(kind, effectiveStar));
             }
 
             // 현재 체력 = 최대 체력
@@ -106,12 +111,23 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         }
 
         /// <summary>
-        /// 성급을 1 올리고 스탯을 재초기화한다. 합성(승급) 시 사용한다.
+        /// 성급을 1 올리고 스탯을 재초기화한다. 기본 합성(승급) 시 사용한다.
+        /// 강화 단계는 0으로 리셋된다.
         /// </summary>
         public void UpgradeStar()
         {
             Star++;
-            Init(_data, Star);
+            Init(_data, Star, 0);
+        }
+
+        /// <summary>
+        /// 강화 단계를 올리고 스탯을 재초기화한다. 강화 합성 시 사용한다.
+        /// 2성 재료는 +1, 3성 재료는 +2 강화를 적용한다.
+        /// </summary>
+        public void Reinforce(int amount = 1)
+        {
+            Reinforcement += amount;
+            Init(_data, Star, Reinforcement);
         }
     }
 }
