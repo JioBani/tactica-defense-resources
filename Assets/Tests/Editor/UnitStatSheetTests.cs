@@ -122,5 +122,46 @@ namespace Tests.Editor
             _sheet.Health = 60f;
             Assert.AreEqual(60f, received, 0.01f);
         }
+
+        // ── Reinforce 검증 ──
+
+        [Test]
+        public void Reinforce_IncrementsReinforcementAndAppliesStats()
+        {
+            // additionalPerExtraStar = 10으로 설정 (체력 기준)
+            var so = new SerializedObject(_data);
+            so.FindProperty("maxHealth").FindPropertyRelative("additionalPerExtraStar").floatValue = 10f;
+            so.ApplyModifiedProperties();
+
+            _sheet.Init(_data, star: 1);
+            float baseStat = _sheet.MaxHealth.CurrentValue; // 100
+
+            _sheet.Init(_data, star: 1, reinforcement: 0);
+            _sheet.Reinforce();
+
+            Assert.AreEqual(1, _sheet.Reinforcement);
+            Assert.AreEqual(baseStat + 10f, _sheet.MaxHealth.CurrentValue, 0.01f);
+        }
+
+        [Test]
+        public void UpgradeStar_ResetsReinforcement()
+        {
+            // 3성+2강 상태에서 UpgradeStar 호출
+            var so = new SerializedObject(_data);
+            var list = so.FindProperty("maxHealth").FindPropertyRelative("baseValuesByStar");
+            list.arraySize = 3;
+            list.GetArrayElementAtIndex(0).floatValue = 100f;
+            list.GetArrayElementAtIndex(1).floatValue = 150f;
+            list.GetArrayElementAtIndex(2).floatValue = 200f;
+            so.ApplyModifiedProperties();
+
+            _sheet.Init(_data, star: 3, reinforcement: 2);
+            Assert.AreEqual(2, _sheet.Reinforcement);
+
+            _sheet.UpgradeStar();
+
+            Assert.AreEqual(4, _sheet.Star);
+            Assert.AreEqual(0, _sheet.Reinforcement);
+        }
     }
 }
