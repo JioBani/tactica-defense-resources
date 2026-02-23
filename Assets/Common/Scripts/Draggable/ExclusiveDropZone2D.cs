@@ -19,8 +19,11 @@ namespace Common.Scripts.Draggable
         public override void OnDragOut(Draggable2D item)
         {
             base.OnDragOut(item);
-            
-            occupant = null;
+
+            if (item == occupant)
+            {
+                occupant = null;
+            }
         }
     }
 }
