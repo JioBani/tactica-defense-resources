@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────
-// DefenderFusionManager: 동일 소환수 3개 합성(승급) 시스템.
+// DefenderFusionManager: 소환수 합성(승급) 및 강화 합성 시스템.
 // 정비 페이즈에서만 합성을 실행하고, 전투 중에는 불가 안내를 표시한다.
+// 기본 합성(동일 3개→승급)과 강화 합성(3성+2성→강화)을 연쇄 처리한다.
 // ─────────────────────────────────────────────
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace Scenes.Battle.Feature.Fusion
         [SerializeField] private DefenderManager defenderManager;
 
         private readonly FusionGroupDetector _detector = new FusionGroupDetector();
+        private readonly EnhancementFusionDetector _enhancementDetector = new EnhancementFusionDetector();
+
+        /// <summary>기본 합성이 허용되는 최대 성급 (미만). 3이면 1성, 2성만 기본 합성 가능.</summary>
+        private const int MaxBasicFusionStar = 3;
+
         private bool _isMaintenancePhase;
 
         private void OnEnable()
@@ -65,7 +71,8 @@ namespace Scenes.Battle.Feature.Fusion
             {
                 // 전투 중 합성 조건 충족 시 불가 안내
                 var candidates = BuildCandidates();
-                if (_detector.HasFusionGroup(candidates))
+                if (_detector.HasFusionGroup(candidates, MaxBasicFusionStar)
+                    || _enhancementDetector.HasEnhancementPair(candidates))
                 {
                     BubbleMessageSpawner.Instance.SpawnAtWorld(
                         "전투 중에는 합성이 불가능합니다",
@@ -75,20 +82,34 @@ namespace Scenes.Battle.Feature.Fusion
             }
         }
 
-        /// <summary>합성 가능한 그룹이 없을 때까지 연쇄 합성을 실행한다.</summary>
+        /// <summary>기본 합성과 강화 합성을 연쇄 실행한다. 둘 다 불가능할 때까지 반복한다.</summary>
         private void TryExecuteFusion()
         {
             while (true)
             {
                 var candidates = BuildCandidates();
-                var groupIndices = _detector.FindFusionGroup(candidates);
-                if (groupIndices == null) break;
 
-                ExecuteFusion(groupIndices);
+                // 기본 합성 우선 탐지 (maxStar 제한)
+                var groupIndices = _detector.FindFusionGroup(candidates, MaxBasicFusionStar);
+                if (groupIndices != null)
+                {
+                    ExecuteFusion(groupIndices);
+                    continue;
+                }
+
+                // 강화 합성 탐지
+                var enhancementResult = _enhancementDetector.FindEnhancementPair(candidates);
+                if (enhancementResult != null)
+                {
+                    ExecuteEnhancement(enhancementResult.Value);
+                    continue;
+                }
+
+                break;
             }
         }
 
-        /// <summary>합성 1회 실행: 그룹 내에서 승급 대상을 실시간 위치로 선정하고, 나머지 제거.</summary>
+        /// <summary>기본 합성 1회 실행: 그룹 내에서 승급 대상을 실시간 위치로 선정하고, 나머지 제거.</summary>
         private void ExecuteFusion(int[] groupIndices)
         {
             var defenders = defenderManager.Defenders;
@@ -118,6 +139,31 @@ namespace Scenes.Battle.Feature.Fusion
             BubbleMessageSpawner.Instance.SpawnAtWorld(
                 $"★{newStar} 승급!",
                 survivor.transform.position
+            );
+        }
+
+        /// <summary>강화 합성 1회 실행: 2성 재료를 소모하고 3성+ 타겟을 강화한다.</summary>
+        private void ExecuteEnhancement(EnhancementFusionResult result)
+        {
+            var defenders = defenderManager.Defenders;
+            Defender target = defenders[result.TargetIndex];
+            Defender material = defenders[result.MaterialIndex];
+
+            // 재료 제거
+            defenderManager.RemoveDefender(material);
+
+            // 강화
+            target.StatSheet.Reinforce();
+            int star = target.StatSheet.Star;
+            int reinforcement = target.StatSheet.Reinforcement;
+
+            // 합성 완료 이벤트 발행
+            GlobalEventBus.Publish(new OnDefenderFusedEventDto(target, star));
+
+            // 버블 메시지로 강화 결과 표시
+            BubbleMessageSpawner.Instance.SpawnAtWorld(
+                $"★{star}+{reinforcement}강 강화!",
+                target.transform.position
             );
         }
 
