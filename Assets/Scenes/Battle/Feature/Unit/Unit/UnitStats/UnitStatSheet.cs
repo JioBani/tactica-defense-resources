@@ -130,6 +130,14 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         }
 
         /// <summary>
+        /// 현재 체력을 최대 체력으로 회복한다. 라운드 종료 시 사용한다.
+        /// </summary>
+        public void RecoverFullHealth()
+        {
+            Health = MaxHealth.CurrentValue;
+        }
+
+        /// <summary>
         /// 성급을 1 올리고 스탯을 재초기화한다. 기본 합성(승급) 시 사용한다.
         /// 강화 단계는 0으로 리셋된다.
         /// </summary>
