@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using Common.Scripts.GlobalEventBus;
+﻿// ─────────────────────────────────────────────
+// ActionStateController: 유닛의 행동 상태(Idle/Move/Attack/Downed/Freeze/Waiting) 전환을 관리한다.
+// - 상태 전환 조건과 Phase 연동은 이 클래스 내부에서만 작성한다.
+// - 상태 변화에 따른 동작(HP 회복, 외형 변경 등)은 외부에서 IStateListener<ActionStateType>를 구독하여 처리한다.
+// ─────────────────────────────────────────────
 using Common.Scripts.StateBase;
-using Scenes.Battle.Feature.Events.RoundEvents;
+using Scenes.Battle.Feature.Rounds;
+using Scenes.Battle.Feature.Rounds.Phases;
 using Scenes.Battle.Feature.Units.ActionStates;
 using Scenes.Battle.Feature.Units.Attackers;
-using Scenes.Battle.Feature.Units.Attackables;
 using UnityEngine;
 
 namespace Scenes.Battle.Feature.Units.ActionStates
 {
-    public class ActionStateController : StateBaseController<ActionStateType>
+    public class ActionStateController : StateBaseController<ActionStateType>, IStateListener<PhaseType>
     {
         [SerializeField] private Unit self;
         [SerializeField] private Attacker attacker;
@@ -18,8 +20,9 @@ namespace Scenes.Battle.Feature.Units.ActionStates
 
         protected override ActionStateType CheckStateTransition(ActionStateType currentState)
         {
-            // 우선순위 1: 체력이 0 이하면 무조건 Downed 상태로 전환
-            if (self.StatSheet.Health <= 0)
+            // 우선순위 1: 전투 중(Idle/Move/Attack) 체력이 0 이하면 Downed 전환
+            if (self.StatSheet.Health <= 0
+                && currentState is ActionStateType.Idle or ActionStateType.Move or ActionStateType.Attack)
             {
                 return ActionStateType.Downed;
             }
@@ -58,6 +61,10 @@ namespace Scenes.Battle.Feature.Units.ActionStates
                 case ActionStateType.Freeze:
                     // Freeze 상태는 전환 없음
                     break;
+
+                case ActionStateType.Waiting:
+                    // Waiting 상태는 전환 없음
+                    break;
             }
 
             return currentState;
@@ -65,20 +72,41 @@ namespace Scenes.Battle.Feature.Units.ActionStates
 
         private void OnEnable()
         {
-            GlobalEventBus.Subscribe<OnBattleLoseEventDto>(OnBattleEnd);
-            GlobalEventBus.Subscribe<OnBattleWinEventDto>(OnBattleEnd);
-            StartStateBase(canMove ? ActionStateType.Move :  ActionStateType.Idle);
+            RoundManager.Instance.RegisterListener(this);
+            StartStateBase(canMove ? ActionStateType.Move : ActionStateType.Idle);
         }
 
         private void OnDisable()
         {
-            GlobalEventBus.Unsubscribe<OnBattleLoseEventDto>(OnBattleEnd);
-            GlobalEventBus.Unsubscribe<OnBattleWinEventDto>(OnBattleEnd);
+            RoundManager.Instance.UnregisterListener(this);
         }
 
-        private void OnBattleEnd<T>(T _) where T : struct
+        // ── IStateListener<PhaseType> ──
+
+        /// <summary>
+        /// Phase 전환에 따라 ActionState를 변경한다.
+        /// End/RoundLose/BattleWin/BattleLose → Freeze, Maintenance → Waiting, Combat → Idle/Move
+        /// </summary>
+        void IStateListener<PhaseType>.OnStateEnter(PhaseType phaseType)
         {
-            RequestStateChange(ActionStateType.Freeze);
+            switch (phaseType)
+            {
+                case PhaseType.End:
+                case PhaseType.RoundLose:
+                case PhaseType.BattleWin:
+                case PhaseType.BattleLose:
+                    RequestStateChange(ActionStateType.Freeze);
+                    break;
+                case PhaseType.Maintenance:
+                    RequestStateChange(ActionStateType.Waiting);
+                    break;
+                case PhaseType.Combat:
+                    RequestStateChange(canMove ? ActionStateType.Move : ActionStateType.Idle);
+                    break;
+            }
         }
+
+        void IStateListener<PhaseType>.OnStateRun(PhaseType phaseType) { }
+        void IStateListener<PhaseType>.OnStateExit(PhaseType phaseType) { }
     }
 }

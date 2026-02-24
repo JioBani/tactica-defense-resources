@@ -5,14 +5,12 @@ using Common.Scripts.DynamicRepeater;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.Events;
-using Scenes.Battle.Feature.Rounds;
-using Scenes.Battle.Feature.Rounds.Phases;
-using Scenes.Battle.Feature.Unit.Skills.Contexts;
+using Scenes.Battle.Feature.Units.ActionStates;
 using UnityEngine;
 
 namespace Scenes.Battle.Feature.Unit.Defenders
 {
-    public class Defender : Units.Unit, IStateListener<PhaseType>
+    public class Defender : Units.Unit, IStateListener<ActionStateType>
     {
         [SerializeField] private Draggable2D draggable;
         public Placement Placement { get; private set; }
@@ -21,29 +19,29 @@ namespace Scenes.Battle.Feature.Unit.Defenders
         {
             draggable.OnDragStart += NotifyDragStart;
             draggable.OnDragEnd += NotifyDragEnd;
-            RoundManager.Instance.RegisterListener(this);
+            ActionStateController.RegisterListener(this);
         }
 
         private void OnDisable()
         {
             draggable.OnDragStart -= NotifyDragStart;
             draggable.OnDragEnd -= NotifyDragEnd;
-            RoundManager.Instance.UnregisterListener(this);
+            ActionStateController.UnregisterListener(this);
         }
 
-        // ── IStateListener<PhaseType> ──
+        // ── IStateListener<ActionStateType> ──
 
-        void IStateListener<PhaseType>.OnStateEnter(PhaseType phaseType)
+        /// <summary>Waiting 진입 시 HP를 전부 회복한다.</summary>
+        void IStateListener<ActionStateType>.OnStateEnter(ActionStateType stateType)
         {
-            if (phaseType == PhaseType.Maintenance)
+            if (stateType == ActionStateType.Waiting)
             {
-                // 라운드 종료 후 Maintenance 진입 시 HP를 전부 회복한다.
                 StatSheet.RecoverFullHealth();
             }
         }
 
-        void IStateListener<PhaseType>.OnStateRun(PhaseType phaseType) { }
-        void IStateListener<PhaseType>.OnStateExit(PhaseType phaseType) { }
+        void IStateListener<ActionStateType>.OnStateRun(ActionStateType stateType) { }
+        void IStateListener<ActionStateType>.OnStateExit(ActionStateType stateType) { }
 
         //TODO: DefenerDragger 로 Dragger2D 상속해서 만드는게 나을듯
         private void NotifyDragStart()
