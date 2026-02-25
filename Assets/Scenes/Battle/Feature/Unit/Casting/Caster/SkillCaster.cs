@@ -129,15 +129,27 @@ namespace Scenes.Battle.Feature.Unit.Castables
 
         private void OnEnterCombat()
         {
-            // 전투 시작 시 스킬을 사용 가능으로 만들고 타이머 시작
-            _isSkillReady = true;
+            // Start()가 OnTimeOutChange 콜백을 발사하여 _isSkillReady를 false로 설정하므로,
+            // Start() 호출 후 _isSkillReady를 true로 오버라이드하여 즉시 사용 가능하게 한다.
             _skillTimer.Start();
+            _isSkillReady = true;
         }
 
         private void OnExitCombat()
         {
-            // 전투 종료 시 타이머 정지(스킬 비활성화 등 추가 로직 필요 시 여기에 추가)
+            ResetCooldown();
+        }
+
+        /// <summary>
+        /// 스킬 쿨다운을 초기화하여 즉시 사용 가능 상태로 만든다.
+        /// 라운드 종료 시 호출된다. (기획서 2.1.1: 라운드 간 상태 관리)
+        /// </summary>
+        public void ResetCooldown()
+        {
+            // Stop()이 OnTimeOutChange 콜백을 발사하여 _isSkillReady를 false로 설정하므로,
+            // Stop() 호출 후 _isSkillReady를 true로 오버라이드한다.
             _skillTimer.Stop();
+            _isSkillReady = true;
         }
 
         /// <summary>
