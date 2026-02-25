@@ -7,38 +7,30 @@ namespace Scenes.Battle.Feature.Units
     public class Mover : MonoBehaviour, IStateListener<ActionStateType>
     {
         [SerializeField] private ActionStateController actionStateController;
-        [SerializeField] private float speed;
         [SerializeField] private Feature.Units.Unit unit;
 
         private Rigidbody2D _rigidbody2D;
 
         private void Awake()
         {
-            unit.OnSpawnEvent += SetSpeed;
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            unit.StatSheet.MoveSpeed.OnChange += OnMoveSpeedChanged;
 
             // IStateListener 등록
             actionStateController.RegisterListener(this);
         }
 
-        private void SetSpeed(Feature.Units.Unit unit)
-        {
-            speed = unit.StatSheet.MoveSpeed.CurrentValue;
-            unit.StatSheet.MoveSpeed.OnChange += OnMoveSpeedChanged;
-        }
-
         private void OnMoveSpeedChanged(float value)
         {
-            speed = value;
             if (actionStateController.CurrentState == ActionStateType.Move)
             {
-                _rigidbody2D.linearVelocity = Vector2.down * speed;
+                Move();
             }
         }
 
         private void Move()
         {
-            _rigidbody2D.linearVelocity = Vector2.down * speed;
+            _rigidbody2D.linearVelocity = Vector2.left * unit.StatSheet.MoveSpeed.CurrentValue;
         }
 
         private void Stop()
@@ -70,7 +62,6 @@ namespace Scenes.Battle.Feature.Units
 
         private void OnDestroy()
         {
-            unit.OnSpawnEvent -= SetSpeed;
             unit.StatSheet.MoveSpeed.OnChange -= OnMoveSpeedChanged;
             actionStateController.UnregisterListener(this);
         }
