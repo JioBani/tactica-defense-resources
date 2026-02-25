@@ -9,12 +9,12 @@ namespace Scenes.Battle.Feature.Units.Attackables
 
         public void Hit(AttackContext context)
         {
-            unit.StatSheet.Health -= context.damage;
+            unit.StatSheet.SetCurrentHealth(unit.StatSheet.Health.Value - context.damage);
         }
 
         public void Hit(float damage)
         {
-            unit.StatSheet.Health -= damage;
+            unit.StatSheet.SetCurrentHealth(unit.StatSheet.Health.Value - damage);
         }
     }
 }

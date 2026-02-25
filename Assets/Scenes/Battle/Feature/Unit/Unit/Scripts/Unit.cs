@@ -35,7 +35,7 @@ namespace Scenes.Battle.Feature.Units
         {
             Draggable = GetComponent<Draggable2D>();
 
-            StatSheet.OnHealthChange += (value) =>
+            StatSheet.Health.OnChange += (value) =>
             {
                 healthBar.Display(value / StatSheet.MaxHealth.CurrentValue);
             };

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Common.Data.Units.UnitStatsByLevel;
+using Common.Scripts.Rxs;
 using UnityEngine;
 
 namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
@@ -45,21 +46,15 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         public readonly UnitStat DamageReduction = new();
 
         // ── 현재 체력 (런타임 값, 수정자 대상 아님) ──
-        private float _health;
+        public readonly RxValue<float> Health = new(0f);
 
-        public float Health
+        /// <summary>
+        /// 현재 체력을 설정한다. 0 ~ MaxHealth 범위로 clamp된다.
+        /// </summary>
+        public void SetCurrentHealth(float value)
         {
-            get => _health;
-            set
-            {
-                float clamped = Mathf.Clamp(value, 0f, MaxHealth.CurrentValue);
-                if (Mathf.Approximately(_health, clamped)) return;
-                _health = clamped;
-                OnHealthChange?.Invoke(_health);
-            }
+            Health.Value = Mathf.Clamp(value, 0f, MaxHealth.CurrentValue);
         }
-
-        public event Action<float> OnHealthChange;
 
         /// <summary>성급 또는 강화 단계가 변경되었을 때 발생한다.</summary>
         public event Action<GradeChangedInfo> OnGradeChanged;
@@ -81,7 +76,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
             MaxHealth.OnChange -= OnMaxHealthChanged;
 
             // 현재 체력 = 최대 체력
-            _health = MaxHealth.CurrentValue;
+            SetCurrentHealth(MaxHealth.CurrentValue);
 
             // MaxHealth 변경 시 현재 체력 상한 보정
             MaxHealth.OnChange += OnMaxHealthChanged;
@@ -89,7 +84,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
 
         private void OnMaxHealthChanged(float newMax)
         {
-            if (_health > newMax) Health = newMax;
+            if (Health.Value > newMax) SetCurrentHealth(newMax);
         }
 
         public UnitStat Get(UnitStatKind kind) => kind switch
@@ -134,7 +129,7 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
         /// </summary>
         public void RecoverFullHealth()
         {
-            Health = MaxHealth.CurrentValue;
+            SetCurrentHealth(MaxHealth.CurrentValue);
         }
 
         /// <summary>

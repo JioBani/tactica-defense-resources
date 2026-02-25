@@ -82,7 +82,7 @@ namespace Tests.Editor
         {
             _sheet.Init(_data);
 
-            Assert.AreEqual(_sheet.MaxHealth.CurrentValue, _sheet.Health, 0.01f);
+            Assert.AreEqual(_sheet.MaxHealth.CurrentValue, _sheet.Health.Value, 0.01f);
         }
 
         [Test]
@@ -104,11 +104,11 @@ namespace Tests.Editor
         {
             _sheet.Init(_data); // MaxHealth = 100
 
-            _sheet.Health = 999f;
-            Assert.AreEqual(100f, _sheet.Health, 0.01f);
+            _sheet.SetCurrentHealth(999f);
+            Assert.AreEqual(100f, _sheet.Health.Value, 0.01f);
 
-            _sheet.Health = -50f;
-            Assert.AreEqual(0f, _sheet.Health, 0.01f);
+            _sheet.SetCurrentHealth(-50f);
+            Assert.AreEqual(0f, _sheet.Health.Value, 0.01f);
         }
 
         [Test]
@@ -117,9 +117,9 @@ namespace Tests.Editor
             _sheet.Init(_data); // Health = 100
 
             float received = -1f;
-            _sheet.OnHealthChange += v => received = v;
+            _sheet.Health.OnChange += v => received = v;
 
-            _sheet.Health = 60f;
+            _sheet.SetCurrentHealth(60f);
             Assert.AreEqual(60f, received, 0.01f);
         }
 
@@ -196,7 +196,7 @@ namespace Tests.Editor
 
             Assert.AreEqual(2, _sheet.Star);
             Assert.AreEqual(150f, _sheet.MaxHealth.CurrentValue, 0.01f);
-            Assert.AreEqual(150f, _sheet.Health, 0.01f);
+            Assert.AreEqual(150f, _sheet.Health.Value, 0.01f);
         }
 
         [Test]
@@ -218,21 +218,21 @@ namespace Tests.Editor
         public void RecoverFullHealth_RestoresHealthToMax()
         {
             _sheet.Init(_data); // MaxHealth = 100, Health = 100
-            _sheet.Health = 30f;
+            _sheet.SetCurrentHealth(30f);
 
             _sheet.RecoverFullHealth();
 
-            Assert.AreEqual(100f, _sheet.Health, 0.01f);
+            Assert.AreEqual(100f, _sheet.Health.Value, 0.01f);
         }
 
         [Test]
         public void RecoverFullHealth_FiresOnHealthChangeEvent()
         {
             _sheet.Init(_data); // Health = 100
-            _sheet.Health = 30f;
+            _sheet.SetCurrentHealth(30f);
 
             float received = -1f;
-            _sheet.OnHealthChange += v => received = v;
+            _sheet.Health.OnChange += v => received = v;
 
             _sheet.RecoverFullHealth();
             Assert.AreEqual(100f, received, 0.01f);
@@ -244,7 +244,7 @@ namespace Tests.Editor
             _sheet.Init(_data); // Health = 100 = MaxHealth
 
             bool fired = false;
-            _sheet.OnHealthChange += _ => fired = true;
+            _sheet.Health.OnChange += _ => fired = true;
 
             _sheet.RecoverFullHealth();
             Assert.IsFalse(fired);
@@ -261,7 +261,7 @@ namespace Tests.Editor
             _sheet.Init(_data);
 
             // Health를 MaxHealth 이하로 설정
-            _sheet.Health = 80f;
+            _sheet.SetCurrentHealth(80f);
 
             // MaxHealth를 50으로 낮추는 수정자 추가 → OnMaxHealthChanged가 Health를 clamp해야 함
             _sheet.MaxHealth.AddModifier(new StatModifier("test", StatModifierType.Flat, -50f));
@@ -270,10 +270,10 @@ namespace Tests.Editor
             // 핸들러가 중복이면 여러 번 실행되지만, 결과적으로 clamp 값은 동일하므로
             // Health 이벤트 발생 횟수로 검증한다
             int healthChangeCount = 0;
-            _sheet.OnHealthChange += _ => healthChangeCount++;
+            _sheet.Health.OnChange += _ => healthChangeCount++;
 
-            _sheet.Health = 60f; // 50으로 clamp됨
-            Assert.AreEqual(50f, _sheet.Health, 0.01f);
+            _sheet.SetCurrentHealth(60f); // 50으로 clamp됨
+            Assert.AreEqual(50f, _sheet.Health.Value, 0.01f);
         }
     }
 }

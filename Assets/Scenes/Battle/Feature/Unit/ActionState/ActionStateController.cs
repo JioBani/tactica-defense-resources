@@ -23,7 +23,7 @@ namespace Scenes.Battle.Feature.Units.ActionStates
         protected override ActionStateType CheckStateTransition(ActionStateType currentState)
         {
             return _transitionService.CheckTransition(
-                currentState, self.StatSheet.Health, attacker.Victim, canMove);
+                currentState, self.StatSheet.Health.Value, attacker.Victim, canMove);
         }
 
         private void OnEnable()
