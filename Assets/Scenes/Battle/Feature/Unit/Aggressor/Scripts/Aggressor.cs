@@ -20,11 +20,6 @@ namespace Scenes.Battle.Feature.Aggressors
             actionStateController.RegisterListener(this);
         }
 
-        private void OnEnable()
-        {
-            _rigidbody2d.linearVelocity = Vector2.zero;
-        }
-
         private void OnDisable()
         {
             _rigidbody2d.linearVelocity = Vector2.zero;
