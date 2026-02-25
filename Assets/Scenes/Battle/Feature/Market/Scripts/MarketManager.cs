@@ -4,6 +4,7 @@ using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.Draggable;
 using Common.Scripts.GlobalEventBus;
 using Common.Data.Configs;
+using Common.Scripts.BubbleMessage;
 using Common.Scripts.Rxs;
 using Common.Scripts.SceneSingleton;
 using Common.Scripts.StateBase;
@@ -101,7 +102,13 @@ namespace Scenes.Battle.Feature.Markets
                 OnManaNotEnough?.Invoke(new OnManaNotEnoughDto());
                 if (notEnoughManaMessage != null)
                 {
-                    AlertManager.Instance.Alert(notEnoughManaMessage);
+                    BubbleMessageSpawner.Instance.SpawnAtScreen(
+                        "마나가 부족합니다.",
+                        Vector2.zero,
+                        new BubbleMessageParams(
+                            fontSize: 20    
+                        )
+                    );
                 }
                 return false;
             }

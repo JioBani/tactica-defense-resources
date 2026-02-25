@@ -24,13 +24,13 @@ namespace Common.Scripts.BubbleMessage
         public void Play(string text, BubbleMessageConfig config, BubbleMessageParams param)
         {
             messageText.text = text;
-            messageText.color = param.color ?? config.defaultColor;
-            messageText.fontSize = param.fontSize ?? config.defaultFontSize;
+            messageText.color = param.Color ?? config.defaultColor;
+            messageText.fontSize = param.FontSize ?? config.defaultFontSize;
 
             canvasGroup.alpha = 1f;
 
-            float duration = param.duration ?? config.duration;
-            float floatDist = param.floatDistance ?? config.floatDistance;
+            float duration = param.Duration ?? config.duration;
+            float floatDist = param.FloatDistance ?? config.floatDistance;
             float fadeDelay = duration * config.fadeStartRatio;
             float fadeDuration = duration - fadeDelay;
 
