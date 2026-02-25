@@ -11,6 +11,9 @@ using Scenes.Battle.Feature.Units.ActionStates;
 using Scenes.Battle.Feature.Units.Attackers;
 using UnityEngine;
 
+// ─────────────────────────────────────────────
+// SkillCaster: 유닛의 스킬 쿨다운 관리 및 캐스트 실행을 담당한다.
+// ─────────────────────────────────────────────
 namespace Scenes.Battle.Feature.Unit.Castables
 {
     public class SkillCaster : MonoBehaviour, IStateListener<PhaseType>, IStateListener<ActionStateType>
