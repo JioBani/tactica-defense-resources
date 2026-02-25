@@ -212,6 +212,44 @@ namespace Tests.Editor
             Assert.AreEqual(1, _sheet.Reinforcement);
         }
 
+        // ── RecoverFullHealth 검증 ──
+
+        [Test]
+        public void RecoverFullHealth_RestoresHealthToMax()
+        {
+            _sheet.Init(_data); // MaxHealth = 100, Health = 100
+            _sheet.Health = 30f;
+
+            _sheet.RecoverFullHealth();
+
+            Assert.AreEqual(100f, _sheet.Health, 0.01f);
+        }
+
+        [Test]
+        public void RecoverFullHealth_FiresOnHealthChangeEvent()
+        {
+            _sheet.Init(_data); // Health = 100
+            _sheet.Health = 30f;
+
+            float received = -1f;
+            _sheet.OnHealthChange += v => received = v;
+
+            _sheet.RecoverFullHealth();
+            Assert.AreEqual(100f, received, 0.01f);
+        }
+
+        [Test]
+        public void RecoverFullHealth_WhenAlreadyFull_DoesNotFireEvent()
+        {
+            _sheet.Init(_data); // Health = 100 = MaxHealth
+
+            bool fired = false;
+            _sheet.OnHealthChange += _ => fired = true;
+
+            _sheet.RecoverFullHealth();
+            Assert.IsFalse(fired);
+        }
+
         // ── 이벤트 중복 등록 검증 ──
 
         [Test]

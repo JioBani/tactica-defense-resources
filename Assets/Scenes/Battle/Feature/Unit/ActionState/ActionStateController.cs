@@ -18,56 +18,12 @@ namespace Scenes.Battle.Feature.Units.ActionStates
         [SerializeField] private Attacker attacker;
         [SerializeField] private bool canMove;
 
+        private readonly ActionStateTransitionService _transitionService = new();
+
         protected override ActionStateType CheckStateTransition(ActionStateType currentState)
         {
-            // 우선순위 1: 전투 중(Idle/Move/Attack) 체력이 0 이하면 Downed 전환
-            if (self.StatSheet.Health <= 0
-                && currentState is ActionStateType.Idle or ActionStateType.Move or ActionStateType.Attack)
-            {
-                return ActionStateType.Downed;
-            }
-
-            // 우선순위 2: 각 상태별 전환 조건 체크
-            switch (currentState)
-            {
-                case ActionStateType.Idle:
-                    // Idle -> Attack: 타겟이 있으면 공격
-                    if (attacker.Victim)
-                    {
-                        return ActionStateType.Attack;
-                    }
-                    break;
-
-                case ActionStateType.Move:
-                    // Move -> Attack: 타겟이 있으면 공격
-                    if (attacker.Victim)
-                    {
-                        return ActionStateType.Attack;
-                    }
-                    break;
-
-                case ActionStateType.Attack:
-                    // Attack -> Idle/Move: 타겟이 없으면 복귀 (다운 타겟은 Attacker가 자체 해제)
-                    if (!attacker.Victim)
-                    {
-                        return canMove ? ActionStateType.Move : ActionStateType.Idle;
-                    }
-                    break;
-
-                case ActionStateType.Downed:
-                    // Downed 상태는 전환 없음
-                    break;
-
-                case ActionStateType.Freeze:
-                    // Freeze 상태는 전환 없음
-                    break;
-
-                case ActionStateType.Waiting:
-                    // Waiting 상태는 전환 없음
-                    break;
-            }
-
-            return currentState;
+            return _transitionService.CheckTransition(
+                currentState, self.StatSheet.Health, attacker.Victim, canMove);
         }
 
         private void OnEnable()
@@ -89,21 +45,8 @@ namespace Scenes.Battle.Feature.Units.ActionStates
         /// </summary>
         void IStateListener<PhaseType>.OnStateEnter(PhaseType phaseType)
         {
-            switch (phaseType)
-            {
-                case PhaseType.End:
-                case PhaseType.RoundLose:
-                case PhaseType.BattleWin:
-                case PhaseType.BattleLose:
-                    RequestStateChange(ActionStateType.Freeze);
-                    break;
-                case PhaseType.Maintenance:
-                    RequestStateChange(ActionStateType.Waiting);
-                    break;
-                case PhaseType.Combat:
-                    RequestStateChange(canMove ? ActionStateType.Move : ActionStateType.Idle);
-                    break;
-            }
+            var target = _transitionService.ResolvePhaseTransition(phaseType, canMove);
+            if (target.HasValue) RequestStateChange(target.Value);
         }
 
         void IStateListener<PhaseType>.OnStateRun(PhaseType phaseType) { }
