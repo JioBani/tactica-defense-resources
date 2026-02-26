@@ -3,6 +3,11 @@ using Scenes.Battle.Feature.Markets;
 using TMPro;
 using UnityEngine;
 
+// ─────────────────────────────────────────────
+// MarketUiManager: 소환터미널 UI를 관리한다.
+// 마나 표시, 배치 상한 증가 버튼, 재스캔 버튼, 스캔 잠금 버튼, 터미널 열기/닫기.
+// 비즈니스 로직은 MarketManager가 담당한다.
+// ─────────────────────────────────────────────
 namespace Scenes.Battle.Feature.Ui.Markets
 {
     public class MarketUiManager : MonoBehaviour
@@ -11,6 +16,7 @@ namespace Scenes.Battle.Feature.Ui.Markets
         [SerializeField] private TextMeshProUGUI manaText;
         [SerializeField] private TextMeshProUGUI levelUpCostText;
         [SerializeField] private GameObject levelUpButton;
+        [SerializeField] private TextMeshProUGUI scanLockText;
         [SerializeField] private RectTransform marketPanel;
         [SerializeField] private float slideDuration = 0.3f;
         [SerializeField] private TextMeshProUGUI toggleText;
@@ -30,6 +36,7 @@ namespace Scenes.Battle.Feature.Ui.Markets
         {
             marketManager.Mana.OnChange += OnManaChange;
             marketManager.Level.OnChange += OnLevelChange;
+            marketManager.IsScanLocked.OnChange += OnScanLockChange;
             OnLevelChange(marketManager.Level.Value);
         }
 
@@ -37,6 +44,7 @@ namespace Scenes.Battle.Feature.Ui.Markets
         {
             marketManager.Mana.OnChange -= OnManaChange;
             marketManager.Level.OnChange -= OnLevelChange;
+            marketManager.IsScanLocked.OnChange -= OnScanLockChange;
         }
 
         public void OnClickLevelUp()
@@ -66,6 +74,17 @@ namespace Scenes.Battle.Feature.Ui.Markets
         public void OnClickReroll()
         {
             marketManager.Reroll();
+        }
+
+        /// <summary>스캔 잠금 버튼 클릭 핸들러.</summary>
+        public void OnClickScanLock()
+        {
+            marketManager.ToggleScanLock();
+        }
+
+        private void OnScanLockChange(bool isLocked)
+        {
+            scanLockText.text = isLocked ? "잠금 해제" : "스캔 잠금";
         }
 
         public void OnClickToggle()

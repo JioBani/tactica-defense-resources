@@ -15,6 +15,11 @@ using Scenes.Battle.Feature.Ui;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
 
+// ─────────────────────────────────────────────
+// MarketManager: 소환터미널의 경제 로직을 관리한다.
+// 마나, 스캔(리롤), 스캔 잠금, 소환수 구매, 배치 상한 증가.
+// UI 표시는 MarketUiManager가 담당한다.
+// ─────────────────────────────────────────────
 namespace Scenes.Battle.Feature.Markets
 {
     public class MarketManager : SceneSingleton<MarketManager>, IStateListener<PhaseType>
@@ -31,6 +36,9 @@ namespace Scenes.Battle.Feature.Markets
         public readonly RxValue<int> Level = new RxValue<int>(1);
         public readonly RxValue<int> LevelUpMana = new RxValue<int>(0);
         public readonly RxValue<int> RerollMana = new RxValue<int>(2);
+
+        /// <summary>스캔 잠금 상태. true이면 라운드 시작 시 자동 재스캔을 스킵한다.</summary>
+        public readonly RxValue<bool> IsScanLocked = new RxValue<bool>(false);
 
         int _levelUpIndex;
 
@@ -91,7 +99,15 @@ namespace Scenes.Battle.Feature.Markets
         private void OnRoundStart()
         {
             Mana.Value += GetRoundStartIncome();
-            RerollSlots();
+
+            if (IsScanLocked.Value)
+            {
+                IsScanLocked.Value = false;
+            }
+            else
+            {
+                RerollSlots();
+            }
         }
 
         private bool BuySomething(int mana, string notEnoughManaMessage = null)
@@ -124,6 +140,12 @@ namespace Scenes.Battle.Feature.Markets
             List<MarketDefenderSlot> slots = _roller.PickUnits(4);
 
             OnSlotRerolled?.Invoke(slots);
+        }
+
+        /// <summary>스캔 잠금 상태를 토글한다.</summary>
+        public void ToggleScanLock()
+        {
+            IsScanLocked.Value = !IsScanLocked.Value;
         }
 
         public void Reroll()
