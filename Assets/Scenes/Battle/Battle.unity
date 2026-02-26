@@ -7480,6 +7480,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7612ad2e3ed9fa4587eee193d3d32e2, type: 2}
   manaIncomeConfig: {fileID: 11400000, guid: 76f953e4eb0caef41a99cf6b42606c25, type: 2}
   placementConfig: {fileID: 11400000, guid: db88bc6100e80954b875c7aeaef47383, type: 2}
+  starProbabilityConfig: {fileID: 11400000, guid: 038f5071a69ffe34d9b1ba473f5f0be9, type: 2}
 --- !u!114 &1041871075
 MonoBehaviour:
   m_ObjectHideFlags: 0

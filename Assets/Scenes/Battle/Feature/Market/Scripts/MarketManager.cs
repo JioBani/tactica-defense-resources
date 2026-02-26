@@ -31,6 +31,7 @@ namespace Scenes.Battle.Feature.Markets
         public RxValue<int> Mana = new RxValue<int>(0);
         [SerializeField] private ManaIncomeConfig manaIncomeConfig;
         [SerializeField] private PlacementConfig placementConfig;
+        [SerializeField] private StarProbabilityConfig starProbabilityConfig;
 
         public readonly RxValue<int> DefenderPlacementLimit = new RxValue<int>(0);
         public readonly RxValue<int> Level = new RxValue<int>(1);
@@ -52,7 +53,7 @@ namespace Scenes.Battle.Feature.Markets
         {
             base.OnAwakeSingleton();
 
-            _roller = new MarketUnitRoller(appearUnits);
+            _roller = new MarketUnitRoller(appearUnits, starProbabilityConfig);
 
             // TOOD: RoundManager 에 게임 시작 상태를 만들고 그곳에 콜백 등록
             if (placementConfig == null)
@@ -137,7 +138,7 @@ namespace Scenes.Battle.Feature.Markets
 
         private void RerollSlots()
         {
-            List<MarketDefenderSlot> slots = _roller.PickUnits(4);
+            List<MarketDefenderSlot> slots = _roller.PickUnits(4, Level.Value);
 
             OnSlotRerolled?.Invoke(slots);
         }
