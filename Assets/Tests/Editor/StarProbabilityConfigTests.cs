@@ -126,6 +126,63 @@ namespace Tests.Editor
             }
         }
 
+        // entries가 비어있으면 FindEntry는 null을 반환해야 한다
+        [Test]
+        public void FindEntry_NoEntries_ReturnsNull()
+        {
+            var config = CreateConfig();
+
+            StarProbabilityEntry? result = config.FindEntry(5);
+
+            Assert.IsFalse(result.HasValue);
+        }
+
+        // 현재 레벨 이하에서 가장 가까운 entry를 반환해야 한다
+        [Test]
+        public void FindEntry_ReturnsClosestLowerOrEqualEntry()
+        {
+            var config = CreateConfig(
+                new StarProbabilityEntry { level = 1, twoStarRate = 0.1f, threeStarRate = 0.01f },
+                new StarProbabilityEntry { level = 4, twoStarRate = 0.2f, threeStarRate = 0.05f },
+                new StarProbabilityEntry { level = 7, twoStarRate = 0.3f, threeStarRate = 0.1f }
+            );
+
+            // 레벨 5는 level=4 entry에 매칭
+            var entry = config.FindEntry(5);
+            Assert.IsTrue(entry.HasValue);
+            Assert.AreEqual(4, entry.Value.level);
+            Assert.AreEqual(0.2f, entry.Value.twoStarRate);
+            Assert.AreEqual(0.05f, entry.Value.threeStarRate);
+        }
+
+        // 레벨이 모든 entry보다 낮으면 null을 반환해야 한다
+        [Test]
+        public void FindEntry_LevelBelowAll_ReturnsNull()
+        {
+            var config = CreateConfig(
+                new StarProbabilityEntry { level = 4, twoStarRate = 0.2f, threeStarRate = 0.05f }
+            );
+
+            StarProbabilityEntry? result = config.FindEntry(3);
+
+            Assert.IsFalse(result.HasValue);
+        }
+
+        // 정확히 일치하는 레벨의 entry를 반환해야 한다
+        [Test]
+        public void FindEntry_ExactMatch_ReturnsEntry()
+        {
+            var config = CreateConfig(
+                new StarProbabilityEntry { level = 4, twoStarRate = 0.25f, threeStarRate = 0.05f }
+            );
+
+            var entry = config.FindEntry(4);
+
+            Assert.IsTrue(entry.HasValue);
+            Assert.AreEqual(0.25f, entry.Value.twoStarRate);
+            Assert.AreEqual(0.05f, entry.Value.threeStarRate);
+        }
+
         [TearDown]
         public void TearDown()
         {

@@ -45,6 +45,7 @@ namespace Scenes.Battle.Feature.Markets
 
         MarketUnitRoller _roller;
         public MarketUnitRoller Roller => _roller;
+        public StarProbabilityConfig StarProbabilityConfig => starProbabilityConfig;
 
         public Action<List<MarketDefenderSlot>> OnSlotRerolled;
         public Action<OnManaNotEnoughDto> OnManaNotEnough;

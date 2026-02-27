@@ -54,9 +54,10 @@ namespace Common.Data.Configs
         }
 
         /// <summary>
-        /// 주어진 레벨 이하에서 가장 가까운 entry를 찾는다.
+        /// 주어진 레벨 이하에서 가장 가까운 entry를 찾아 반환한다.
+        /// UI에서 확률 표시에 사용한다.
         /// </summary>
-        private StarProbabilityEntry? FindEntry(int level)
+        public StarProbabilityEntry? FindEntry(int level)
         {
             StarProbabilityEntry? best = null;
 
