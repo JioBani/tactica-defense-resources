@@ -163,7 +163,7 @@ namespace Scenes.Battle.Feature.Markets
         /// </summary>
         public bool BuyDefender(MarketDefenderSlot slot)
         {
-            if (BuySomething(slot.UnitLoadOutData.Unit.Cost, "마나가 부족합니다."))
+            if (BuySomething(slot.UnitLoadOutData.GetCostByStar(slot.Star), "마나가 부족합니다."))
             {
                 defenderManager.GenerateDefender(slot.UnitLoadOutData, slot.Star);
                 slot.MarkAsSold();
@@ -222,7 +222,7 @@ namespace Scenes.Battle.Feature.Markets
         public void Sell(Defender defender)
         {
             defenderManager.RemoveDefender(defender);
-            Mana.Value += defender.UnitLoadOutData.Unit.Cost;
+            Mana.Value += defender.UnitLoadOutData.GetCostByStar(defender.StatSheet.Star);
         }
 
         private int GetRoundStartIncome()
