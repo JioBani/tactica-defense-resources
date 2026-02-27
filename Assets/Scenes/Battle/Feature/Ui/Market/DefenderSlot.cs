@@ -16,6 +16,8 @@ namespace Scenes.Battle.Feature.Markets
 
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI purchasedText;
+        [SerializeField] private TextMeshProUGUI starText;
+        [SerializeField] private TextMeshProUGUI manaText;
 
         [SerializeField] private int index;
 
@@ -48,6 +50,8 @@ namespace Scenes.Battle.Feature.Markets
         {
             _slotData = slotData;
             image.sprite = slotData.UnitLoadOutData.Unit.Illustration;
+            starText.text = new string('★', slotData.Star);
+            manaText.text = slotData.UnitLoadOutData.GetCostByStar(slotData.Star).ToString();
             IsPurchased = false;
             ActivateImage();
         }

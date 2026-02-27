@@ -26,5 +26,17 @@ namespace Common.Data.Units.UnitLoadOuts
         [Tooltip("유닛 스탯 데이터")]
         [SerializeField] private UnitStatsByLevelData stats;
         public UnitStatsByLevelData  Stats => stats;
+
+        [Header("성급별 소환 비용")]
+        [Tooltip("성급별 마나 소비량. 인덱스 = 성급 (0성은 미사용)")]
+        [SerializeField] private int[] costByStar = { 0, 1, 3, 9 };
+
+        /// <summary>해당 성급의 소환 비용을 반환한다. 범위 밖이면 1성 비용을 반환한다.</summary>
+        public int GetCostByStar(int star)
+        {
+            if (star < 0 || star >= costByStar.Length)
+                return costByStar[1];
+            return costByStar[star];
+        }
     }
 }
