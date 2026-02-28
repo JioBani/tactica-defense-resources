@@ -1,3 +1,6 @@
+// ─────────────────────────────────────────────
+// SwitchViewManager: 카메라 전환 버튼 UI와 라운드 정보 표시를 관리한다.
+// ─────────────────────────────────────────────
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +10,7 @@ using Scenes.Battle.Feature.CameraControl;
 using Scenes.Battle.Feature.Rounds.Phases;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scenes.Battle.Feature.Rounds.Ui
 {
@@ -18,6 +22,9 @@ namespace Scenes.Battle.Feature.Rounds.Ui
         [SerializeField] private TextMeshProUGUI roundText;
         [SerializeField] private TextMeshProUGUI roundInfoText;
         [SerializeField] private CameraControlManager cameraControlManager;
+
+        /// <summary>카메라 전환 버튼. 전투 페이즈에서는 비활성화된다.</summary>
+        [SerializeField] private Button cameraToggleButton;
 
         public Action<bool> switchViewEvent;
 
@@ -32,7 +39,14 @@ namespace Scenes.Battle.Feature.Rounds.Ui
         {
             if (phaseType == PhaseType.Maintenance)
             {
+                cameraToggleButton.interactable = true;
                 SetRoundInfo();
+            }
+
+            if (phaseType == PhaseType.Ready || phaseType == PhaseType.Combat)
+            {
+                ResetPreviewState();
+                cameraToggleButton.interactable = false;
             }
         }
 
@@ -69,6 +83,17 @@ namespace Scenes.Battle.Feature.Rounds.Ui
             }
             
             switchViewEvent?.Invoke(isEnemySideView);
+        }
+
+        /// <summary>프리뷰 상태를 초기화한다. 카메라 이동은 CameraControlManager가 처리한다.</summary>
+        private void ResetPreviewState()
+        {
+            if (!isEnemySideView) return;
+
+            isEnemySideView = false;
+            buttonText.text = "적 진영";
+            roundPanel.SetActive(false);
+            switchViewEvent?.Invoke(false);
         }
 
         /// <summary>
