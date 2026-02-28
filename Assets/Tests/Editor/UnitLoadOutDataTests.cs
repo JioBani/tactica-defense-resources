@@ -62,5 +62,37 @@ namespace Tests.Editor
             Assert.AreEqual(6, _loadOut.GetCostByStar(2));
             Assert.AreEqual(18, _loadOut.GetCostByStar(3));
         }
+
+        // ── GetRefundMana 테스트 ──
+
+        [Test]
+        public void GetRefundMana_1성_환원비용_반환()
+        {
+            Assert.AreEqual(1, _loadOut.GetRefundMana(1));
+        }
+
+        [Test]
+        public void GetRefundMana_2성_환원비용_반환()
+        {
+            Assert.AreEqual(2, _loadOut.GetRefundMana(2));
+        }
+
+        [Test]
+        public void GetRefundMana_3성_환원비용_반환()
+        {
+            Assert.AreEqual(8, _loadOut.GetRefundMana(3));
+        }
+
+        [Test]
+        public void GetRefundMana_3성_강화포함_환원비용_반환()
+        {
+            Assert.AreEqual(10, _loadOut.GetRefundMana(3, 2));
+        }
+
+        [Test]
+        public void GetRefundMana_범위초과_1성환원비용_반환()
+        {
+            Assert.AreEqual(1, _loadOut.GetRefundMana(99));
+        }
     }
 }

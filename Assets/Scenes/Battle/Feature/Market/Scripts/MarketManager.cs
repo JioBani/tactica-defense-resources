@@ -219,10 +219,11 @@ namespace Scenes.Battle.Feature.Markets
             }
         }
 
+        /// <summary>소환수를 환원하여 성급·강화 단계에 따른 마나를 반환한다.</summary>
         public void Sell(Defender defender)
         {
             defenderManager.RemoveDefender(defender);
-            Mana.Value += defender.UnitLoadOutData.GetCostByStar(defender.StatSheet.Star);
+            Mana.Value += defender.UnitLoadOutData.GetRefundMana(defender.StatSheet.Star, defender.StatSheet.Reinforcement);
         }
 
         private int GetRoundStartIncome()
