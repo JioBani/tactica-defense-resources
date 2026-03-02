@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common.Data.Battlefields;
-using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.ObjectPool;
 using Common.Scripts.StateBase;
+using Common.Scripts.TransformChildrenIterator;
 using Scenes.Battle.Feature.Aggressors;
 using Scenes.Battle.Feature.Rounds.Phases;
-using Scenes.Battle.Feature.Sells;
 using Scenes.Battle.Feature.Units;
 using UnityEngine;
 
@@ -15,18 +13,31 @@ namespace Scenes.Battle.Feature.Rounds
     public class RoundInfoViewer : MonoBehaviour, IStateListener<PhaseType>
     {
         [SerializeField] private UnitGenerator unitGenerator;
-        [SerializeField] private AggressorSideSellManager  aggressorSideSellManager;
 
-        private RoundData _currentRoundData;
-        private readonly List<AggressorSample> _samples = new ();
+        /// <summary>프리뷰 슬롯의 부모 오브젝트. 자식 Transform들을 슬롯으로 사용한다.</summary>
+        [SerializeField] private Transform previewSlotParent;
+
+         private readonly List<Transform> _previewSlots = new();
+        private readonly List<Feature.Units.Unit> _previewUnits = new();
 
         private void Awake()
         {
-            // IStateListener 등록
+            // 자식 Transform을 수집하고, 왼→오른(X 오름) → 위→아래(Y 내림) 순으로 정렬하여
+            // 왼쪽 열부터 위에서 아래로 채우는 배치 순서를 보장한다.
+            foreach (var child in previewSlotParent.ChildrenForward())
+            {
+                _previewSlots.Add(child);
+            }
+
+            _previewSlots.Sort((a, b) =>
+            {
+                int xCompare = a.position.x.CompareTo(b.position.x);
+                return xCompare != 0 ? xCompare : b.position.y.CompareTo(a.position.y);
+            });
+
             RoundManager.Instance.RegisterListener(this);
         }
 
-        // IStateListener 명시적 구현
         void IStateListener<PhaseType>.OnStateEnter(PhaseType phaseType)
         {
             if (phaseType == PhaseType.Maintenance)
@@ -37,7 +48,6 @@ namespace Scenes.Battle.Feature.Rounds
 
         void IStateListener<PhaseType>.OnStateRun(PhaseType phaseType)
         {
-            // Run 단계에서는 특별한 동작 없음
         }
 
         void IStateListener<PhaseType>.OnStateExit(PhaseType phaseType)
@@ -53,52 +63,56 @@ namespace Scenes.Battle.Feature.Rounds
             RoundManager.Instance.UnregisterListener(this);
         }
 
-        void ShowRoundInfo()
+        /// <summary>
+        /// 다음 웨이브의 침략자를 종류+성급 기준으로 그룹핑하여 프리뷰 Aggressor를 소환한다.
+        /// 각 Aggressor는 Freeze 상태로 배치되며, 등장 숫자가 CountText로 표시된다.
+        /// </summary>
+        private void ShowRoundInfo()
         {
-            _currentRoundData = RoundManager.Instance.GetCurrentRoundData();
+            var roundData = RoundManager.Instance.GetCurrentRoundData();
 
-            // 유닛 ID 로 그룹화 해서 하나의 유닛당 하나씩만 미리보기 소환
-            Dictionary<int, UnitLoadOutData> enemyInfos = _currentRoundData.spawnEntries
-                .GroupBy(spawn => spawn.aggressor.Unit.ID)
-                .ToDictionary(group => group.Key, group => group.First().aggressor);
-
-            Dictionary<int, int> aggressorCounts = _currentRoundData.spawnEntries
-                .GroupBy(spawn => spawn.aggressor.Unit.ID)
-                .ToDictionary(group => group.Key, group => group.Sum(e => e.count));
-            
-            foreach (var pair in enemyInfos)
-            {
-                AggressorSideSell sell = aggressorSideSellManager.GetEmptySell();
-
-                if (sell != null)
+            var grouped = roundData.spawnEntries
+                .GroupBy(entry => (entry.aggressor.Unit.ID, entry.star))
+                .Select(group => new
                 {
-                    Feature.Units.Unit unit = unitGenerator.GenerateAggressorSample(pair.Value);
+                    Aggressor = group.First().aggressor,
+                    Star = group.Key.star,
+                    Count = group.Sum(entry => entry.count)
+                });
 
-                    AggressorSample sample = unit.GetComponent<AggressorSample>();
-                    
-                    sample.SetCount(aggressorCounts[pair.Key]);
-                    
-                    sell.SetUnit(unit);
+            int slotIndex = 0;
+            foreach (var group in grouped)
+            {
+                if (slotIndex >= _previewSlots.Count) break;
 
-                    unit.transform.position = new Vector3(
-                        sell.transform.position.x,
-                        sell.transform.position.y,
-                        unit.transform.position.z
-                    );
-                    
-                    _samples.Add(sample);
-                }
+                Feature.Units.Unit unit = unitGenerator.GenerateAggressor(group.Aggressor, group.Star);
+
+                var preview = unit.GetComponent<AggressorPreview>();
+                preview.Activate(group.Count);
+
+                Transform slot = _previewSlots[slotIndex];
+                unit.transform.position = new Vector3(
+                    slot.position.x,
+                    slot.position.y,
+                    unit.transform.position.z);
+
+                _previewUnits.Add(unit);
+                slotIndex++;
             }
         }
 
-        void HideRoundInfo()
+        /// <summary>
+        /// 프리뷰 Aggressor를 모두 비활성화하고 DeSpawn한다.
+        /// </summary>
+        private void HideRoundInfo()
         {
-            foreach (var sample in _samples)
+            foreach (var unit in _previewUnits)
             {
-                sample.GetComponent<Poolable>().DeSpawn();
+                unit.GetComponent<AggressorPreview>().Deactivate();
+                unit.GetComponent<Poolable>().DeSpawn();
             }
 
-            _samples.Clear();
+            _previewUnits.Clear();
         }
     }
 }
