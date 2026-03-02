@@ -74,6 +74,10 @@ namespace Common.Data.Battlefields
 
         [Tooltip("소환 시간")]
         public SerializableTime spawnTime;
+
+        /// <summary>침략자 성급. 같은 유닛이라도 성급이 다르면 프리뷰에서 별도 항목으로 표시된다.</summary>
+        [Tooltip("침략자 성급 (1~3)")]
+        [Range(1, 3)] public int star = 1;
     }
 
     [Serializable]

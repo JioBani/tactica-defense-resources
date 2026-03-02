@@ -178,7 +178,7 @@ namespace Scenes.Battle.Feature.Rounds
 
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    GenerateAggressor(entry.aggressor, shuffledSpawnPoints[i]);
+                    GenerateAggressor(entry.aggressor, entry.star, shuffledSpawnPoints[i]);
                 }
             }
             catch (OperationCanceledException)
@@ -205,9 +205,9 @@ namespace Scenes.Battle.Feature.Rounds
             return indices.Take(Math.Min(count, indices.Count)).ToList();
         }
 
-        private void GenerateAggressor(UnitLoadOutData unitLoadOutData, int spawnPointIndex)
+        private void GenerateAggressor(UnitLoadOutData unitLoadOutData, int star, int spawnPointIndex)
         {
-            Units.Unit unit = unitGenerator.GenerateAggressor(unitLoadOutData);
+            Units.Unit unit = unitGenerator.GenerateAggressor(unitLoadOutData, star);
 
             unit.transform.position = new Vector3(
                 spawnPoints[spawnPointIndex].position.x,

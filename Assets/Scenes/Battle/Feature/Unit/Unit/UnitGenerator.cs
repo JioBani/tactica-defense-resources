@@ -43,9 +43,14 @@ namespace Scenes.Battle.Feature.Units
             return Generate(data, defenderPrefab, star);
         }
         
-        public Unit GenerateAggressor(UnitLoadOutData data)
+        /// <summary>
+        /// 침략자 프리팹을 스폰하고 초기화한다.
+        /// </summary>
+        /// <param name="data">유닛 설정 데이터.</param>
+        /// <param name="star">침략자 성급. SpawnEntry에서 전달받는다.</param>
+        public Unit GenerateAggressor(UnitLoadOutData data, int star = 1)
         {
-            return Generate(data, aggressorPrefab);
+            return Generate(data, aggressorPrefab, star);
         }
 
         public Unit GenerateAggressorSample(UnitLoadOutData data)

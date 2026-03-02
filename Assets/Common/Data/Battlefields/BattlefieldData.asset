@@ -27,18 +27,21 @@ MonoBehaviour:
         hours: 0
         minutes: 0
         seconds: 2
+      star: 1
     - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
-      count: 4
+      count: 3
       spawnTime:
         hours: 0
         minutes: 0
-        seconds: 10
+        seconds: 2
+      star: 1
     - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
-      count: 4
+      count: 2
       spawnTime:
         hours: 0
         minutes: 0
-        seconds: 20
+        seconds: 2
+      star: 2
   - roundIndex: 2
     spawnEntries:
     - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
@@ -47,18 +50,7 @@ MonoBehaviour:
         hours: 0
         minutes: 0
         seconds: 2
-    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
-      count: 4
-      spawnTime:
-        hours: 0
-        minutes: 0
-        seconds: 10
-    - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
-      count: 4
-      spawnTime:
-        hours: 0
-        minutes: 0
-        seconds: 20
+      star: 1
   - roundIndex: 0
     spawnEntries:
     - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
@@ -67,18 +59,25 @@ MonoBehaviour:
         hours: 0
         minutes: 0
         seconds: 2
+      star: 1
+  - roundIndex: 3
+    spawnEntries:
     - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
-      count: 4
+      count: 2
       spawnTime:
         hours: 0
         minutes: 0
-        seconds: 10
+        seconds: 2
+      star: 1
+  - roundIndex: 4
+    spawnEntries:
     - aggressor: {fileID: 11400000, guid: bde97786450c65e4b8a9cd0be48a788a, type: 2}
-      count: 4
+      count: 2
       spawnTime:
         hours: 0
         minutes: 0
-        seconds: 20
+        seconds: 2
+      star: 1
   reward:
     mana: 0
     experience: 0
