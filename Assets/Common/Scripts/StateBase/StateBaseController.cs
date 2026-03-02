@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using Common.Scripts.SafeIterationList;
 using UnityEngine;
 
 namespace Common.Scripts.StateBase
@@ -39,7 +39,7 @@ namespace Common.Scripts.StateBase
         [SerializeField] private T showState; // 인스펙터 노출용
 
         // IStateListener 리스너 관리
-        private readonly List<IStateListener<T>> _listeners = new();
+        private readonly SafeIterationList<IStateListener<T>> _listeners = new();
 
         protected bool DebugMode = false;
 
