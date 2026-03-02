@@ -73,12 +73,11 @@ namespace Scenes.Battle.Feature.Rounds
 
             var grouped = roundData.spawnEntries
                 .GroupBy(entry => (entry.aggressor.Unit.ID, entry.star))
-                .Select(group => new
-                {
-                    Aggressor = group.First().aggressor,
-                    Star = group.Key.star,
-                    Count = group.Sum(entry => entry.count)
-                });
+                .Select(group => (
+                    Aggressor: group.First().aggressor,
+                    Star: group.Key.star,
+                    Count: group.Sum(entry => entry.count)
+                ));
 
             int slotIndex = 0;
             foreach (var group in grouped)
