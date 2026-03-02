@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4286d6315696c2f43ad5357cc3c623a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countText: {fileID: 3833518277643488676}
 --- !u!114 &897430250021741766 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1071765619771846872, guid: 55f271110f86e19488c6665236798e12, type: 3}

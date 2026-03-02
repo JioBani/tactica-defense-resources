@@ -11,12 +11,11 @@ namespace Scenes.Battle.Feature.Aggressors
     public class AggressorPreview : MonoBehaviour
     {
         private ActionStateController _actionStateController;
-        private TextMeshPro _countText;
+        [SerializeField] private TextMeshPro countText;
 
         private void Awake()
         {
             _actionStateController = GetComponent<ActionStateController>();
-            _countText = transform.Find("CountText").GetComponent<TextMeshPro>();
         }
 
         /// <summary>
@@ -26,8 +25,8 @@ namespace Scenes.Battle.Feature.Aggressors
         public void Activate(int count)
         {
             _actionStateController.RequestStateChange(ActionStateType.Freeze);
-            _countText.gameObject.SetActive(true);
-            _countText.text = $"x {count}";
+            countText.gameObject.SetActive(true);
+            countText.text = $"x {count}";
         }
 
         /// <summary>
@@ -35,8 +34,8 @@ namespace Scenes.Battle.Feature.Aggressors
         /// </summary>
         public void Deactivate()
         {
-            _countText.gameObject.SetActive(false);
-            _countText.text = "";
+            countText.gameObject.SetActive(false);
+            countText.text = "";
         }
     }
 }
