@@ -41,6 +41,9 @@ namespace Scenes.Battle.Feature.Markets
         /// <summary>스캔 잠금 상태. true이면 라운드 시작 시 자동 재스캔을 스킵한다.</summary>
         public readonly RxValue<bool> IsScanLocked = new RxValue<bool>(false);
 
+        /// <summary>상점 이용 가능 상태. 정비 페이즈에서만 true.</summary>
+        public readonly RxValue<bool> IsMarketAvailable = new RxValue<bool>(true);
+
         int _levelUpIndex;
 
         MarketUnitRoller _roller;
@@ -95,11 +98,15 @@ namespace Scenes.Battle.Feature.Markets
 
         void IStateListener<PhaseType>.OnStateExit(PhaseType phaseType)
         {
-            // Exit 단계에서는 특별한 동작 없음
+            if (phaseType == PhaseType.Maintenance)
+            {
+                IsMarketAvailable.Value = false;
+            }
         }
 
         private void OnRoundStart()
         {
+            IsMarketAvailable.Value = true;
             Mana.Value += GetRoundStartIncome();
 
             if (IsScanLocked.Value)
@@ -147,11 +154,13 @@ namespace Scenes.Battle.Feature.Markets
         /// <summary>스캔 잠금 상태를 토글한다.</summary>
         public void ToggleScanLock()
         {
+            if (!IsMarketAvailable.Value) return;
             IsScanLocked.Value = !IsScanLocked.Value;
         }
 
         public void Reroll()
         {
+            if (!IsMarketAvailable.Value) return;
             if (BuySomething(RerollMana.Value, "마나가 부족합니다."))
             {
                 RerollSlots();
@@ -163,6 +172,7 @@ namespace Scenes.Battle.Feature.Markets
         /// </summary>
         public bool BuyDefender(MarketDefenderSlot slot)
         {
+            if (!IsMarketAvailable.Value) return false;
             if (BuySomething(slot.UnitLoadOutData.GetCostByStar(slot.Star), "마나가 부족합니다."))
             {
                 defenderManager.GenerateDefender(slot.UnitLoadOutData, slot.Star);
@@ -187,6 +197,7 @@ namespace Scenes.Battle.Feature.Markets
 
         public bool LevelUp()
         {
+            if (!IsMarketAvailable.Value) return false;
             if (IsMaxLevel()) return false;
 
             var entry = placementConfig.levelUpTable[_levelUpIndex];

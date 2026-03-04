@@ -1520,17 +1520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitGenerator: {fileID: 1387143021}
-  previewSlots:
-  - {fileID: 322064814}
-  - {fileID: 287305597}
-  - {fileID: 1449821257}
-  - {fileID: 1657741012}
-  - {fileID: 375088394}
-  - {fileID: 2016424670}
-  - {fileID: 2021751502}
-  - {fileID: 959975377}
-  - {fileID: 6579971}
-  - {fileID: 91016824}
+  previewSlotParent: {fileID: 0}
 --- !u!1 &189211356
 GameObject:
   m_ObjectHideFlags: 0
@@ -7594,6 +7584,7 @@ MonoBehaviour:
   marketPanel: {fileID: 1548314845}
   slideDuration: 0.3
   toggleText: {fileID: 139035395}
+  toggleButton: {fileID: 1696266666}
 --- !u!1001 &1054575850
 PrefabInstance:
   m_ObjectHideFlags: 0

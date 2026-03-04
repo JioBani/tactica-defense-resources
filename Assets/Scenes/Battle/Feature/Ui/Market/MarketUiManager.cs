@@ -2,6 +2,7 @@ using DG.Tweening;
 using Scenes.Battle.Feature.Markets;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 // ─────────────────────────────────────────────
 // MarketUiManager: 소환터미널 UI를 관리한다.
@@ -21,6 +22,9 @@ namespace Scenes.Battle.Feature.Ui.Markets
         [SerializeField] private float slideDuration = 0.3f;
         [SerializeField] private TextMeshProUGUI toggleText;
 
+        /// <summary>터미널 열기/닫기 버튼. 상점 비활성 시 interactable을 끈다.</summary>
+        [SerializeField] private Button toggleButton;
+
         private bool _isOpen = true;
         private float _shownX;
         private float _hiddenX;
@@ -37,6 +41,7 @@ namespace Scenes.Battle.Feature.Ui.Markets
             marketManager.Mana.OnChange += OnManaChange;
             marketManager.Level.OnChange += OnLevelChange;
             marketManager.IsScanLocked.OnChange += OnScanLockChange;
+            marketManager.IsMarketAvailable.OnChange += OnMarketAvailableChange;
             OnLevelChange(marketManager.Level.Value);
         }
 
@@ -45,6 +50,7 @@ namespace Scenes.Battle.Feature.Ui.Markets
             marketManager.Mana.OnChange -= OnManaChange;
             marketManager.Level.OnChange -= OnLevelChange;
             marketManager.IsScanLocked.OnChange -= OnScanLockChange;
+            marketManager.IsMarketAvailable.OnChange -= OnMarketAvailableChange;
         }
 
         public void OnClickLevelUp()
@@ -89,7 +95,20 @@ namespace Scenes.Battle.Feature.Ui.Markets
 
         public void OnClickToggle()
         {
-            _isOpen = !_isOpen;
+            if (!marketManager.IsMarketAvailable.Value) return;
+            SlidePanel(!_isOpen);
+        }
+
+        private void OnMarketAvailableChange(bool isAvailable)
+        {
+            SlidePanel(isAvailable);
+            toggleButton.interactable = isAvailable;
+        }
+
+        /// <summary>패널 열기/닫기 슬라이드 애니메이션을 실행한다.</summary>
+        private void SlidePanel(bool open)
+        {
+            _isOpen = open;
             float targetX = _isOpen ? _shownX : _hiddenX;
 
             _tween?.Kill();
