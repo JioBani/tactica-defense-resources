@@ -1,4 +1,5 @@
-﻿using Common.Scripts.SpritePreview;
+﻿using Common.Data.Synergies;
+using Common.Scripts.SpritePreview;
 using UnityEngine;
 
 namespace Common.Data.Units.UnitDefinitions
@@ -38,5 +39,12 @@ namespace Common.Data.Units.UnitDefinitions
         [SpritePreview(180)]
         [SerializeField] private Sprite illustration;
         public Sprite Illustration => illustration;
+
+        [Header("시너지")]
+        [Tooltip("이 유닛이 보유한 소환술사 효과")]
+        [SerializeField] private SynergyDefinitionData summonerEffect;
+
+        /// <summary>이 유닛이 보유한 소환술사 효과. 소속 소환술사에 의해 고정된다.</summary>
+        public SynergyDefinitionData SummonerEffect => summonerEffect;
     }
 }
