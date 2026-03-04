@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TACD-249 시너지 데이터 구조 v2</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --border: #0f3460;
+    --accent: #e94560;
+    --text: #eee;
+    --dim: #8899aa;
+    --green: #4ecca3;
+    --yellow: #f0c040;
+    --blue: #4ea8de;
+    --purple: #b07cd8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px;
+    line-height: 1.6;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1 { color: var(--accent); margin-bottom: 4px; font-size: 1.6rem; }
+  h2 { color: var(--green); margin: 36px 0 16px; font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  h3 { color: var(--blue); margin: 24px 0 10px; font-size: 1rem; }
+  .subtitle { color: var(--dim); margin-bottom: 32px; }
+  .diff { color: var(--yellow); font-size: 0.8rem; margin-bottom: 24px; }
+  .diff strong { color: var(--accent); }
+
+  /* ── ERD ── */
+  .erd {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    justify-content: center; margin: 24px 0;
+  }
+  .entity {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    min-width: 280px; max-width: 340px;
+    overflow: hidden;
+  }
+  .entity-header {
+    padding: 10px 16px;
+    font-weight: bold; font-size: 0.9rem;
+    text-align: center;
+  }
+  .entity-header.so      { background: var(--accent); color: #fff; }
+  .entity-header.struct   { background: var(--blue); color: #fff; }
+  .entity-header.enum     { background: var(--green); color: #1a1a2e; }
+  .entity-header.existing { background: #555; color: #fff; }
+  .entity-header.concept  { background: var(--purple); color: #fff; }
+  .entity-body { padding: 8px 16px 12px; }
+
+  .field {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 0; font-size: 0.82rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .field:last-child { border-bottom: none; }
+  .field-name { color: var(--text); }
+  .field-type { color: var(--dim); font-style: italic; text-align: right; }
+  .field-pk   { color: var(--yellow); }
+  .field-new  { color: var(--green); font-weight: bold; }
+
+  .tag {
+    display: inline-block; font-size: 0.6rem;
+    padding: 1px 5px; border-radius: 3px;
+    margin-left: 4px; vertical-align: middle;
+  }
+  .tag-pk  { background: var(--yellow); color: #1a1a2e; }
+  .tag-fk  { background: var(--accent); color: #fff; }
+  .tag-new { background: var(--green); color: #1a1a2e; }
+  .tag-v2  { background: var(--purple); color: #fff; }
+
+  .section-label {
+    font-size: 0.7rem; color: var(--dim);
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 6px 0 2px; border-top: 1px dashed rgba(255,255,255,0.1);
+    margin-top: 4px;
+  }
+
+  /* ── Relations ── */
+  .relations {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px; margin: 24px auto;
+    max-width: 750px; font-size: 0.82rem; line-height: 2.2;
+  }
+  .rel-arrow { color: var(--yellow); font-weight: bold; }
+
+  /* ── JSON ── */
+  pre {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px; overflow-x: auto;
+    font-size: 0.8rem; line-height: 1.55;
+    margin: 8px 0 16px;
+  }
+  .jk  { color: var(--blue); }
+  .js  { color: var(--green); }
+  .jn  { color: var(--yellow); }
+  .jc  { color: var(--dim); font-style: italic; }
+  .jh  { color: var(--purple); font-weight: bold; }
+  .jnew { color: var(--green); font-weight: bold; }
+
+  /* ── Table ── */
+  .dt {
+    width: 100%; border-collapse: collapse;
+    margin: 12px 0; font-size: 0.82rem;
+  }
+  .dt th { background: var(--border); padding: 8px 12px; text-align: left; }
+  .dt td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+
+  .note {
+    background: #1c2a4a;
+    border-left: 3px solid var(--yellow);
+    padding: 10px 16px; margin: 16px 0;
+    font-size: 0.82rem; border-radius: 0 6px 6px 0;
+  }
+  .note-purple {
+    background: #2a1c4a;
+    border-left: 3px solid var(--purple);
+    padding: 10px 16px; margin: 16px 0;
+    font-size: 0.82rem; border-radius: 0 6px 6px 0;
+  }
+
+  .compare { display: flex; gap: 16px; margin: 16px 0; }
+  .compare > div { flex: 1; }
+  .compare-label {
+    font-size: 0.75rem; color: var(--dim);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>TACD-249 시너지 데이터 구조 v2</h1>
+<p class="subtitle">시너지마다 구현 클래스 보유 · 티어별 상수(named constants) · 플레이스홀더 설명</p>
+<p class="diff"><strong>v1 → v2 변경점:</strong>
+  SynergyStatEffect 제거 → SynergyConstant(named constants)로 교체 /
+  description에 플레이스홀더 도입 /
+  시너지별 구현 클래스 연결 구조 추가
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>ERD</h2>
+<!-- ═══════════════════════════════════════════ -->
+
+<div class="erd">
+
+  <!-- SynergyDefinitionData -->
+  <div class="entity">
+    <div class="entity-header so">SynergyDefinitionData<br><small>ScriptableObject</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-pk">id <span class="tag tag-pk">PK</span></span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">displayName</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">description <span class="tag tag-v2">v2</span></span> <span class="field-type">string (placeholder)</span></div>
+      <div class="field"><span class="field-name">icon</span> <span class="field-type">Sprite</span></div>
+      <div class="field"><span class="field-name">synergyType</span> <span class="field-type">SynergyType</span></div>
+      <div class="field"><span class="field-name">tiers</span> <span class="field-type">SynergyTier[]</span></div>
+    </div>
+  </div>
+
+  <!-- SynergyTier -->
+  <div class="entity">
+    <div class="entity-header struct">SynergyTier<br><small>Serializable struct</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-name">requiredCount</span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">constants <span class="tag tag-v2">v2</span></span> <span class="field-type">SynergyConstant[]</span></div>
+    </div>
+  </div>
+
+  <!-- SynergyConstant (v1의 SynergyStatEffect 대체) -->
+  <div class="entity">
+    <div class="entity-header struct">SynergyConstant <span style="font-size:0.7rem;">(was SynergyStatEffect)</span><br><small>Serializable struct</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-name">name</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">value</span> <span class="field-type">float</span></div>
+    </div>
+  </div>
+
+  <!-- SynergyType -->
+  <div class="entity">
+    <div class="entity-header enum">SynergyType<br><small>enum</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-name">SummonerEffect</span> <span class="field-type">소환술사 효과</span></div>
+      <div class="field"><span class="field-name">CreatureTrait</span> <span class="field-type">소환수 특성</span></div>
+    </div>
+  </div>
+
+  <!-- ISynergyEffect (구현 클래스 인터페이스) -->
+  <div class="entity">
+    <div class="entity-header concept">ISynergyEffect<br><small>interface (런타임)</small></div>
+    <div class="entity-body">
+      <div class="section-label">methods</div>
+      <div class="field"><span class="field-name">Apply(units, tier)</span> <span class="field-type">void</span></div>
+      <div class="field"><span class="field-name">Remove(units)</span> <span class="field-type">void</span></div>
+    </div>
+  </div>
+
+  <!-- UnitDefinitionData -->
+  <div class="entity">
+    <div class="entity-header existing">UnitDefinitionData<br><small>기존 ScriptableObject</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-pk">id <span class="tag tag-pk">PK</span></span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">displayName</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">organization</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">cost</span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">icon / illustration</span> <span class="field-type">Sprite</span></div>
+      <div class="field"><span class="field-new">summonerEffect <span class="tag tag-fk">FK</span> <span class="tag tag-new">NEW</span></span> <span class="field-type">SynergyDefinitionData</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Relations -->
+<div class="relations">
+  <strong>관계</strong><br>
+  SynergyDefinitionData <span class="rel-arrow">1 ──── *</span> SynergyTier (tiers 배열로 포함)<br>
+  SynergyTier <span class="rel-arrow">1 ──── *</span> SynergyConstant (constants 배열로 포함)<br>
+  SynergyDefinitionData <span class="rel-arrow">1 ──── *</span> UnitDefinitionData (summonerEffect로 참조)<br>
+  SynergyDefinitionData <span class="rel-arrow">1 ──── 1</span> ISynergyEffect 구현 클래스 (팩토리가 매핑)<br>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>구조 흐름</h2>
+<!-- ═══════════════════════════════════════════ -->
+
+<pre style="font-size:0.78rem; line-height:1.7;">
+┌─────────────────────────────────────────────────────────────────────────┐
+│  <span class="jh">SynergyDefinitionData</span> (ScriptableObject, 에디터에서 설정)              │
+│                                                                         │
+│  displayName: "화염 술사"                                                │
+│  description: "소환수의 물리공격력이 <span class="jnew">@AttackBonus*100@</span>% 증가한다"       │
+│  tiers:                                                                 │
+│    [0] requiredCount: 2,  constants: { AttackBonus: 0.10 }              │
+│    [1] requiredCount: 4,  constants: { AttackBonus: 0.25 }              │
+│    ...                                                                  │
+└──────────────────────────┬──────────────────────────────────────────────┘
+                           │
+                   팩토리가 매핑 (SynergyDefinitionData.id → ISynergyEffect)
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  <span class="jh">FireSummonerEffect</span> : ISynergyEffect  (시너지별 구현 클래스)             │
+│                                                                         │
+│  Apply(units, tier):                                                    │
+│    float bonus = tier.Get("AttackBonus");  ← <span class="jc">상수에서 수치 읽기</span>         │
+│    foreach unit:                                                        │
+│      unit.StatSheet.PhysicalAttack.AddModifier(                         │
+│          new StatModifier(source: this, Percent, bonus));               │
+│                                                                         │
+│  Remove(units):                                                         │
+│    foreach unit:                                                        │
+│      unit.StatSheet.PhysicalAttack.RemoveModifiersBySource(this);       │
+└─────────────────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  <span class="jh">UI</span>                                                                    │
+│                                                                         │
+│  description 원본: "소환수의 물리공격력이 <span class="jnew">@AttackBonus*100@</span>% 증가한다"  │
+│                                                                         │
+│  현재 티어(2체):   "소환수의 물리공격력이 <span class="jn">10</span>% 증가한다"                  │
+│  다음 티어(4체):   "소환수의 물리공격력이 <span class="jn">25</span>% 증가한다"                  │
+└─────────────────────────────────────────────────────────────────────────┘
+</pre>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>JSON 예시</h2>
+<!-- ═══════════════════════════════════════════ -->
+
+<h3>예시 1: 스탯 보너스 시너지 — "화염 술사"</h3>
+<div class="note">구현 클래스가 상수를 읽어 스탯 수정자를 적용하는 단순한 케이스</div>
+<pre>{
+  <span class="jk">"id"</span>: <span class="jn">1</span>,
+  <span class="jk">"displayName"</span>: <span class="js">"화염 술사"</span>,
+  <span class="jk">"description"</span>: <span class="js">"소환수의 물리공격력이 <span class="jnew">@AttackBonus*100@</span>% 증가한다"</span>,
+  <span class="jk">"synergyType"</span>: <span class="js">"SummonerEffect"</span>,
+  <span class="jk">"tiers"</span>: [
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">2</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"AttackBonus"</span>, <span class="jk">"value"</span>: <span class="jn">0.10</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">4</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"AttackBonus"</span>, <span class="jk">"value"</span>: <span class="jn">0.25</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">6</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"AttackBonus"</span>, <span class="jk">"value"</span>: <span class="jn">0.40</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">8</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"AttackBonus"</span>, <span class="jk">"value"</span>: <span class="jn">0.60</span> }
+      ]
+    }
+  ]
+}</pre>
+
+<h3>예시 2: 복합 효과 시너지 — "그림자 술사"</h3>
+<div class="note">스탯 보너스 + 행동 변경이 혼합된 케이스. 구현 클래스가 상수를 읽어 분신 생성 + 데미지 감소를 동시에 처리한다.</div>
+<pre>{
+  <span class="jk">"id"</span>: <span class="jn">2</span>,
+  <span class="jk">"displayName"</span>: <span class="js">"그림자 술사"</span>,
+  <span class="jk">"description"</span>: <span class="js">"전투 시작 시 소환수의 분신을 생성한다. 분신은 원본의 <span class="jnew">@CloneHealthPercent*100@</span>% 체력을 가진다.\n소환수의 받는 피해가 <span class="jnew">@DamageReduction*100@</span>% 감소한다."</span>,
+  <span class="jk">"synergyType"</span>: <span class="js">"SummonerEffect"</span>,
+  <span class="jk">"tiers"</span>: [
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">2</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"CloneHealthPercent"</span>, <span class="jk">"value"</span>: <span class="jn">0.30</span> },
+        { <span class="jk">"name"</span>: <span class="js">"DamageReduction"</span>,    <span class="jk">"value"</span>: <span class="jn">0.05</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">4</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"CloneHealthPercent"</span>, <span class="jk">"value"</span>: <span class="jn">0.50</span> },
+        { <span class="jk">"name"</span>: <span class="js">"DamageReduction"</span>,    <span class="jk">"value"</span>: <span class="jn">0.10</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">6</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"CloneHealthPercent"</span>, <span class="jk">"value"</span>: <span class="jn">0.75</span> },
+        { <span class="jk">"name"</span>: <span class="js">"DamageReduction"</span>,    <span class="jk">"value"</span>: <span class="jn">0.15</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">8</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"CloneHealthPercent"</span>, <span class="jk">"value"</span>: <span class="jn">1.00</span> },
+        { <span class="jk">"name"</span>: <span class="js">"DamageReduction"</span>,    <span class="jk">"value"</span>: <span class="jn">0.20</span> }
+      ]
+    }
+  ]
+}
+<span class="jc">// 구현 클래스 ShadowSummonerEffect가:
+//   CloneHealthPercent → 분신 생성 로직에서 사용
+//   DamageReduction   → StatSheet.DamageReduction에 Percent 수정자로 적용</span></pre>
+
+<h3>예시 3: 소환수 특성 — "강철 피부"</h3>
+<pre>{
+  <span class="jk">"id"</span>: <span class="jn">101</span>,
+  <span class="jk">"displayName"</span>: <span class="js">"강철 피부"</span>,
+  <span class="jk">"description"</span>: <span class="js">"소환수의 물리방어력이 <span class="jnew">@PhysicalDefenseBonus@</span> 증가하고, 체력이 <span class="jnew">@MaxHealthBonus*100@</span>% 증가한다."</span>,
+  <span class="jk">"synergyType"</span>: <span class="js">"CreatureTrait"</span>,
+  <span class="jk">"tiers"</span>: [
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">2</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"PhysicalDefenseBonus"</span>, <span class="jk">"value"</span>: <span class="jn">5</span> },
+        { <span class="jk">"name"</span>: <span class="js">"MaxHealthBonus"</span>,       <span class="jk">"value"</span>: <span class="jn">0.0</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">3</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"PhysicalDefenseBonus"</span>, <span class="jk">"value"</span>: <span class="jn">10</span> },
+        { <span class="jk">"name"</span>: <span class="js">"MaxHealthBonus"</span>,       <span class="jk">"value"</span>: <span class="jn">0.05</span> }
+      ]
+    },
+    {
+      <span class="jk">"requiredCount"</span>: <span class="jn">4</span>,
+      <span class="jk">"constants"</span>: [
+        { <span class="jk">"name"</span>: <span class="js">"PhysicalDefenseBonus"</span>, <span class="jk">"value"</span>: <span class="jn">20</span> },
+        { <span class="jk">"name"</span>: <span class="js">"MaxHealthBonus"</span>,       <span class="jk">"value"</span>: <span class="jn">0.10</span> }
+      ]
+    }
+  ]
+}</pre>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>v1 → v2 비교</h2>
+<!-- ═══════════════════════════════════════════ -->
+
+<div class="compare">
+  <div>
+    <div class="compare-label" style="color:var(--accent);">v1 (초안) — SynergyStatEffect</div>
+<pre style="font-size:0.75rem;">{
+  <span class="jk">"tiers"</span>: [{
+    <span class="jk">"requiredCount"</span>: <span class="jn">2</span>,
+    <span class="jk">"statEffects"</span>: [
+      {
+        <span class="jk">"statKind"</span>: <span class="js">"PhysicalAttack"</span>,
+        <span class="jk">"modifierType"</span>: <span class="js">"Percent"</span>,
+        <span class="jk">"value"</span>: <span class="jn">0.10</span>
+      }
+    ]
+  }]
+}
+<span class="jc">// 데이터가 "어떤 스탯에 어떻게 적용"까지 정의
+// 스탯 보너스만 가능, 행동 변경 불가</span></pre>
+  </div>
+  <div>
+    <div class="compare-label" style="color:var(--green);">v2 (수정) — SynergyConstant</div>
+<pre style="font-size:0.75rem;">{
+  <span class="jk">"tiers"</span>: [{
+    <span class="jk">"requiredCount"</span>: <span class="jn">2</span>,
+    <span class="jk">"constants"</span>: [
+      {
+        <span class="jk">"name"</span>: <span class="js">"AttackBonus"</span>,
+        <span class="jk">"value"</span>: <span class="jn">0.10</span>
+      }
+    ]
+  }]
+}
+<span class="jc">// 데이터는 이름 붙은 숫자만 제공
+// 구현 클래스가 해석 → 스탯/행동 모두 가능</span></pre>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>플레이스홀더 문법</h2>
+<!-- ═══════════════════════════════════════════ -->
+
+<table class="dt">
+  <tr><th>표현</th><th>의미</th><th>예시</th></tr>
+  <tr>
+    <td><code>@Name@</code></td>
+    <td>현재 티어의 상수값을 그대로 표시</td>
+    <td><code>@PhysicalDefenseBonus@</code> → <code>5</code></td>
+  </tr>
+  <tr>
+    <td><code>@Name*N@</code></td>
+    <td>상수값에 N을 곱해서 표시</td>
+    <td><code>@AttackBonus*100@</code> → <code>10</code> (0.10 × 100)</td>
+  </tr>
+</table>
+
+<div class="note-purple">
+  <strong>향후 확장 가능:</strong>
+  <code>@Name:format@</code> (소수점 포맷), <code>@Name+N@</code> (가산) 등 필요 시 추가
+</div>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>설계 결정 사항</h2>
+<!-- ═══════════════════════════════════════════ -->
+
+<table class="dt">
+  <tr><th>결정</th><th>근거</th></tr>
+  <tr>
+    <td>SynergyStatEffect → SynergyConstant으로 교체</td>
+    <td>시너지마다 구현 클래스를 만들 예정이므로, 데이터는 이름 붙은 수치만 제공하고 해석은 코드에 위임. 스탯 보너스 + 행동 변경 모두 동일한 구조로 표현 가능</td>
+  </tr>
+  <tr>
+    <td>description에 플레이스홀더 도입</td>
+    <td>티어별 수치가 달라지므로 <code>@Name@</code>으로 참조. UI에서 현재 티어의 상수를 자동 치환하여 표시</td>
+  </tr>
+  <tr>
+    <td>ISynergyEffect 인터페이스 + 팩토리 패턴</td>
+    <td>기존 스킬 시스템(ISkill + SkillFactory)과 동일한 패턴. 시너지별 구현 클래스를 팩토리가 SynergyDefinitionData.id 기반으로 매핑</td>
+  </tr>
+  <tr>
+    <td>SynergyConstant은 name(string) + value(float)</td>
+    <td>TFT와 동일한 패턴. 의미는 구현 클래스만 알면 되므로 데이터 구조는 단순하게 유지</td>
+  </tr>
+  <tr>
+    <td>상위 티어는 하위 티어를 교체 (누적 아님)</td>
+    <td>달성한 최고 티어의 constants만 적용. 구현 클래스의 Apply/Remove가 이를 처리</td>
+  </tr>
+  <tr>
+    <td>소환수 특성은 UnitDefinitionData에 미포함</td>
+    <td>전장마다 랜덤 부여 → 런타임 매핑 (이번 작업 범위 외)</td>
+  </tr>
+</table>
+
+<div class="note">
+  <strong>열린 질문 (v1에서 유지):</strong>
+  기존 <code>organization</code> 필드(string)를 <code>summonerEffect</code>로 대체할 것인지, 별도 필드로 추가할 것인지?
+</div>
+
+</body>
+</html>

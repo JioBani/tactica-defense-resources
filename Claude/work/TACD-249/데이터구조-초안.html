@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TACD-249 시너지 데이터 구조 초안</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --border: #0f3460;
+    --accent: #e94560;
+    --text: #eee;
+    --dim: #8899aa;
+    --green: #4ecca3;
+    --yellow: #f0c040;
+    --blue: #4ea8de;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px;
+    line-height: 1.6;
+  }
+  h1 { color: var(--accent); margin-bottom: 8px; font-size: 1.6rem; }
+  h2 { color: var(--green); margin: 32px 0 16px; font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  h3 { color: var(--blue); margin: 20px 0 10px; font-size: 1rem; }
+  .subtitle { color: var(--dim); margin-bottom: 32px; }
+
+  /* ERD */
+  .erd {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .entity {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    min-width: 260px;
+    max-width: 320px;
+    overflow: hidden;
+  }
+  .entity-header {
+    padding: 10px 16px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+  .entity-header.so { background: var(--accent); color: #fff; }
+  .entity-header.struct { background: var(--blue); color: #fff; }
+  .entity-header.enum { background: var(--green); color: #1a1a2e; }
+  .entity-header.existing { background: #555; color: #fff; }
+  .entity-body { padding: 8px 16px 12px; }
+  .field {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .field:last-child { border-bottom: none; }
+  .field-name { color: var(--text); }
+  .field-type { color: var(--dim); font-style: italic; }
+  .field-pk { color: var(--yellow); }
+  .field-fk { color: var(--accent); }
+  .field-new { color: var(--green); font-weight: bold; }
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .tag-pk { background: var(--yellow); color: #1a1a2e; }
+  .tag-fk { background: var(--accent); color: #fff; }
+  .tag-new { background: var(--green); color: #1a1a2e; }
+
+  /* Relation arrows (simplified text) */
+  .relations {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px;
+    margin: 24px auto;
+    max-width: 700px;
+    font-size: 0.85rem;
+    line-height: 2;
+  }
+  .rel-arrow { color: var(--yellow); font-weight: bold; }
+
+  /* JSON */
+  .json-section { margin: 16px 0; }
+  pre {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .json-key { color: var(--blue); }
+  .json-str { color: var(--green); }
+  .json-num { color: var(--yellow); }
+  .json-comment { color: var(--dim); font-style: italic; }
+
+  .note {
+    background: #1c2a4a;
+    border-left: 3px solid var(--yellow);
+    padding: 10px 16px;
+    margin: 16px 0;
+    font-size: 0.85rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .decision-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.85rem;
+  }
+  .decision-table th {
+    background: var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  .decision-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<h1>TACD-249 시너지 데이터 구조 초안</h1>
+<p class="subtitle">소환술사 효과 · 소환수 특성 · 임계치별 효과를 정의하는 기반 데이터</p>
+
+<!-- ────────────── ERD ────────────── -->
+<h2>ERD (Entity-Relationship Diagram)</h2>
+
+<div class="erd">
+
+  <!-- SynergyDefinitionData -->
+  <div class="entity">
+    <div class="entity-header so">SynergyDefinitionData<br><small>ScriptableObject</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-pk">id <span class="tag tag-pk">PK</span></span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">displayName</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">description</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">icon</span> <span class="field-type">Sprite</span></div>
+      <div class="field"><span class="field-name">synergyType</span> <span class="field-type">SynergyType</span></div>
+      <div class="field"><span class="field-name">tiers</span> <span class="field-type">SynergyTier[]</span></div>
+    </div>
+  </div>
+
+  <!-- SynergyTier -->
+  <div class="entity">
+    <div class="entity-header struct">SynergyTier<br><small>Serializable struct</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-name">requiredCount</span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">statEffects</span> <span class="field-type">SynergyStatEffect[]</span></div>
+    </div>
+  </div>
+
+  <!-- SynergyStatEffect -->
+  <div class="entity">
+    <div class="entity-header struct">SynergyStatEffect<br><small>Serializable struct</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-name">statKind</span> <span class="field-type">UnitStatKind</span></div>
+      <div class="field"><span class="field-name">modifierType</span> <span class="field-type">StatModifierType</span></div>
+      <div class="field"><span class="field-name">value</span> <span class="field-type">float</span></div>
+    </div>
+  </div>
+
+  <!-- SynergyType -->
+  <div class="entity">
+    <div class="entity-header enum">SynergyType<br><small>enum</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-name">SummonerEffect</span> <span class="field-type">임계치 2/4/6/8</span></div>
+      <div class="field"><span class="field-name">CreatureTrait</span> <span class="field-type">임계치 2/3/4</span></div>
+    </div>
+  </div>
+
+  <!-- UnitDefinitionData (기존) -->
+  <div class="entity">
+    <div class="entity-header existing">UnitDefinitionData<br><small>기존 ScriptableObject</small></div>
+    <div class="entity-body">
+      <div class="field"><span class="field-pk">id <span class="tag tag-pk">PK</span></span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">displayName</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">description</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">organization</span> <span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">cost</span> <span class="field-type">int</span></div>
+      <div class="field"><span class="field-name">icon</span> <span class="field-type">Sprite</span></div>
+      <div class="field"><span class="field-name">illustration</span> <span class="field-type">Sprite</span></div>
+      <div class="field"><span class="field-new">summonerEffect <span class="tag tag-fk">FK</span> <span class="tag tag-new">NEW</span></span> <span class="field-type">SynergyDefinitionData</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Relations -->
+<div class="relations">
+  <strong>관계</strong><br>
+  SynergyDefinitionData <span class="rel-arrow">1 ──── *</span> SynergyTier (tiers 배열로 포함)<br>
+  SynergyTier <span class="rel-arrow">1 ──── *</span> SynergyStatEffect (statEffects 배열로 포함)<br>
+  SynergyDefinitionData <span class="rel-arrow">1 ──── *</span> UnitDefinitionData (summonerEffect로 참조)<br>
+  SynergyStatEffect <span class="rel-arrow">──ref──</span> UnitStatKind (기존 enum 참조)<br>
+  SynergyStatEffect <span class="rel-arrow">──ref──</span> StatModifierType (기존 enum 참조)
+</div>
+
+
+<!-- ────────────── JSON ────────────── -->
+<h2>JSON 예시</h2>
+
+<h3>소환술사 효과 예시: "화염 술사"</h3>
+<pre>{
+  <span class="json-key">"id"</span>: <span class="json-num">1</span>,
+  <span class="json-key">"displayName"</span>: <span class="json-str">"화염 술사"</span>,
+  <span class="json-key">"description"</span>: <span class="json-str">"화염 소환술사의 소환수들이 더 강한 공격력을 발휘한다"</span>,
+  <span class="json-key">"synergyType"</span>: <span class="json-str">"SummonerEffect"</span>,
+  <span class="json-key">"tiers"</span>: [
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">2</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalAttack"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.10</span> }
+      ]
+    },
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">4</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalAttack"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.25</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"AttackSpeed"</span>,    <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.10</span> }
+      ]
+    },
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">6</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalAttack"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.40</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"AttackSpeed"</span>,    <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.20</span> }
+      ]
+    },
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">8</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalAttack"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.60</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"AttackSpeed"</span>,    <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.30</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"CriticalChance"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Flat"</span>,    <span class="json-key">"value"</span>: <span class="json-num">0.15</span> }
+      ]
+    }
+  ]
+}</pre>
+
+<h3>소환수 특성 예시: "강철 피부"</h3>
+<pre>{
+  <span class="json-key">"id"</span>: <span class="json-num">101</span>,
+  <span class="json-key">"displayName"</span>: <span class="json-str">"강철 피부"</span>,
+  <span class="json-key">"description"</span>: <span class="json-str">"소환수의 방어력이 증가한다"</span>,
+  <span class="json-key">"synergyType"</span>: <span class="json-str">"CreatureTrait"</span>,
+  <span class="json-key">"tiers"</span>: [
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">2</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalDefense"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Flat"</span>, <span class="json-key">"value"</span>: <span class="json-num">5</span> }
+      ]
+    },
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">3</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalDefense"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Flat"</span>,    <span class="json-key">"value"</span>: <span class="json-num">10</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"MagicDefense"</span>,    <span class="json-key">"modifierType"</span>: <span class="json-str">"Flat"</span>,    <span class="json-key">"value"</span>: <span class="json-num">5</span> }
+      ]
+    },
+    {
+      <span class="json-key">"requiredCount"</span>: <span class="json-num">4</span>,
+      <span class="json-key">"statEffects"</span>: [
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"PhysicalDefense"</span>, <span class="json-key">"modifierType"</span>: <span class="json-str">"Flat"</span>,    <span class="json-key">"value"</span>: <span class="json-num">15</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"MagicDefense"</span>,    <span class="json-key">"modifierType"</span>: <span class="json-str">"Flat"</span>,    <span class="json-key">"value"</span>: <span class="json-num">10</span> },
+        { <span class="json-key">"statKind"</span>: <span class="json-str">"MaxHealth"</span>,       <span class="json-key">"modifierType"</span>: <span class="json-str">"Percent"</span>, <span class="json-key">"value"</span>: <span class="json-num">0.10</span> }
+      ]
+    }
+  ]
+}</pre>
+
+<h3>UnitDefinitionData (변경 후)</h3>
+<pre>{
+  <span class="json-key">"id"</span>: <span class="json-num">1</span>,
+  <span class="json-key">"displayName"</span>: <span class="json-str">"아무무"</span>,
+  <span class="json-key">"description"</span>: <span class="json-str">"..."</span>,
+  <span class="json-key">"organization"</span>: <span class="json-str">""</span>,
+  <span class="json-key">"cost"</span>: <span class="json-num">1</span>,
+  <span class="json-key">"icon"</span>: <span class="json-str">"(Sprite)"</span>,
+  <span class="json-key">"illustration"</span>: <span class="json-str">"(Sprite)"</span>,
+
+  <span class="json-comment">// ── NEW ──</span>
+  <span class="json-key">"summonerEffect"</span>: <span class="json-str">"→ SynergyDefinitionData (화염 술사)"</span>  <span class="json-comment">// 소환술사 효과 (고정)</span>
+
+  <span class="json-comment">// 소환수 특성은 여기에 없음 → 런타임에 랜덤 부여</span>
+}</pre>
+
+
+<!-- ────────────── 설계 결정 ────────────── -->
+<h2>설계 결정 사항</h2>
+
+<table class="decision-table">
+  <tr><th>결정</th><th>근거</th></tr>
+  <tr>
+    <td>SynergyTier.requiredCount를 데이터로 정의</td>
+    <td>소환술사 효과(2/4/6/8)와 소환수 특성(2/3/4)의 임계치가 다름. 하드코딩 대신 데이터로 유연하게 설정</td>
+  </tr>
+  <tr>
+    <td>SynergyStatEffect를 별도 직렬화 구조체로 분리</td>
+    <td>기존 StatModifier는 런타임 객체(Source 포함). 에디터에서 설정할 데이터용 구조체가 별도로 필요</td>
+  </tr>
+  <tr>
+    <td>소환수 특성은 UnitDefinitionData에 미포함</td>
+    <td>전장마다 랜덤 부여되므로 정적 데이터가 아닌 런타임 매핑으로 처리</td>
+  </tr>
+  <tr>
+    <td>상위 단계가 하위 단계를 포함하지 않고 독립 정의</td>
+    <td>각 단계의 효과가 완전히 교체되는 설계. 런타임에서 "달성한 최고 단계"만 적용하면 됨</td>
+  </tr>
+  <tr>
+    <td>행동/메카닉 변경 효과는 현재 미포함</td>
+    <td>스탯 수정자 기반만 먼저 구현. SynergyTier에 추가 필드로 확장 가능</td>
+  </tr>
+</table>
+
+<div class="note">
+  <strong>열린 질문:</strong> 기존 <code>organization</code> 필드(string)를 <code>summonerEffect</code>로 대체할 것인지, 별도 필드로 추가할 것인지?
+</div>
+
+</body>
+</html>
