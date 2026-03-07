@@ -3305,6 +3305,7 @@ GameObject:
   - component: {fileID: 502835346}
   - component: {fileID: 502835347}
   - component: {fileID: 502835348}
+  - component: {fileID: 502835349}
   m_Layer: 0
   m_Name: SceneSingleton
   m_TagString: Untagged
@@ -3416,6 +3417,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
+  defenderManager: {fileID: 1890914476}
+--- !u!114 &502835349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502835341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f999c2b07dff6944181c4f643a54d272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 1
+  allSynergies:
+  - {fileID: 11400000, guid: 8e55c63aaf2a71346ad3a6caa641ad0b, type: 2}
+  - {fileID: 11400000, guid: 4367f5e8f13b1894d8c6929fd751c848, type: 2}
+  - {fileID: 11400000, guid: 8e8e79867d2d693419ac308df02baa43, type: 2}
+  - {fileID: 11400000, guid: 647c224ab988b7e4d83b3e35bcc6b17c, type: 2}
+  - {fileID: 11400000, guid: 37c9bf0264f99d2459faf9f2bbeb9a49, type: 2}
   defenderManager: {fileID: 1890914476}
 --- !u!1 &513231045
 GameObject:
