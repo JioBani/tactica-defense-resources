@@ -8,13 +8,13 @@ using UnityEngine;
 namespace Tests.Editor
 {
     /// <summary>
-    /// SynergyState.FindActiveTier 판정 로직을 검증한다.
+    /// SynergyActivation.FindActiveTier 판정 로직을 검증한다.
     /// Recalculate(int) 호출 → ActiveTier 결과로 간접 검증한다.
     /// </summary>
-    public class SynergyStateTests
+    public class SynergyActivationTests
     {
         private SynergyDefinitionData _definition;
-        private SynergyState _state;
+        private SynergyActivation _activation;
 
         [SetUp]
         public void SetUp()
@@ -29,7 +29,7 @@ namespace Tests.Editor
             };
 
             SetTiers(_definition, tiers);
-            _state = new SynergyState(_definition);
+            _activation = new SynergyActivation(_definition);
         }
 
         [TearDown]
@@ -43,10 +43,10 @@ namespace Tests.Editor
         [Test]
         public void FindActiveTier_CountZero_ReturnsNull()
         {
-            _state.Recalculate(0);
+            _activation.Recalculate(0);
 
-            Assert.AreEqual(0, _state.Count);
-            Assert.IsNull(_state.ActiveTier);
+            Assert.AreEqual(0, _activation.Count);
+            Assert.IsNull(_activation.ActiveTier);
         }
 
         // ── 임계치 미달 → 티어 없음 ──
@@ -54,10 +54,10 @@ namespace Tests.Editor
         [Test]
         public void FindActiveTier_BelowFirstThreshold_ReturnsNull()
         {
-            _state.Recalculate(1);
+            _activation.Recalculate(1);
 
-            Assert.AreEqual(1, _state.Count);
-            Assert.IsNull(_state.ActiveTier);
+            Assert.AreEqual(1, _activation.Count);
+            Assert.IsNull(_activation.ActiveTier);
         }
 
         // ── 첫 번째 임계치 충족 → 1티어 활성 ──
@@ -65,12 +65,12 @@ namespace Tests.Editor
         [Test]
         public void FindActiveTier_MeetsFirstThreshold_ReturnsFirstTier()
         {
-            _state.Recalculate(2);
+            _activation.Recalculate(2);
 
-            Assert.AreEqual(2, _state.Count);
-            Assert.IsNotNull(_state.ActiveTier);
-            Assert.AreEqual(1, _state.ActiveTier.Value.Tier);
-            Assert.AreEqual(2, _state.ActiveTier.Value.RequiredCount);
+            Assert.AreEqual(2, _activation.Count);
+            Assert.IsNotNull(_activation.ActiveTier);
+            Assert.AreEqual(1, _activation.ActiveTier.Value.Tier);
+            Assert.AreEqual(2, _activation.ActiveTier.Value.RequiredCount);
         }
 
         // ── 상위 임계치 충족 → 상위 티어 활성 ──
@@ -78,11 +78,11 @@ namespace Tests.Editor
         [Test]
         public void FindActiveTier_MeetsSecondThreshold_ReturnsSecondTier()
         {
-            _state.Recalculate(4);
+            _activation.Recalculate(4);
 
-            Assert.IsNotNull(_state.ActiveTier);
-            Assert.AreEqual(2, _state.ActiveTier.Value.Tier);
-            Assert.AreEqual(4, _state.ActiveTier.Value.RequiredCount);
+            Assert.IsNotNull(_activation.ActiveTier);
+            Assert.AreEqual(2, _activation.ActiveTier.Value.Tier);
+            Assert.AreEqual(4, _activation.ActiveTier.Value.RequiredCount);
         }
 
         // ── 카운트 감소 → 하위 티어로 복귀 ──
@@ -90,11 +90,11 @@ namespace Tests.Editor
         [Test]
         public void FindActiveTier_CountDecreases_RevertsToLowerTier()
         {
-            _state.Recalculate(4);
-            Assert.AreEqual(2, _state.ActiveTier.Value.Tier);
+            _activation.Recalculate(4);
+            Assert.AreEqual(2, _activation.ActiveTier.Value.Tier);
 
-            _state.Recalculate(2);
-            Assert.AreEqual(1, _state.ActiveTier.Value.Tier);
+            _activation.Recalculate(2);
+            Assert.AreEqual(1, _activation.ActiveTier.Value.Tier);
         }
 
         // ── 카운트 감소로 모든 임계치 미달 → 티어 없음 ──
@@ -102,11 +102,11 @@ namespace Tests.Editor
         [Test]
         public void FindActiveTier_CountDecreasesToZero_ReturnsNull()
         {
-            _state.Recalculate(4);
-            Assert.IsNotNull(_state.ActiveTier);
+            _activation.Recalculate(4);
+            Assert.IsNotNull(_activation.ActiveTier);
 
-            _state.Recalculate(0);
-            Assert.IsNull(_state.ActiveTier);
+            _activation.Recalculate(0);
+            Assert.IsNull(_activation.ActiveTier);
         }
 
         // ── tiers가 null인 경우 → 티어 없음 ──
@@ -116,7 +116,7 @@ namespace Tests.Editor
         {
             var emptyDefinition = ScriptableObject.CreateInstance<SynergyDefinitionData>();
             // tiers 필드를 설정하지 않으면 null
-            var state = new SynergyState(emptyDefinition);
+            var state = new SynergyActivation(emptyDefinition);
 
             state.Recalculate(10);
 
@@ -132,7 +132,7 @@ namespace Tests.Editor
         {
             var emptyDefinition = ScriptableObject.CreateInstance<SynergyDefinitionData>();
             SetTiers(emptyDefinition, new List<SynergyTier>());
-            var state = new SynergyState(emptyDefinition);
+            var state = new SynergyActivation(emptyDefinition);
 
             state.Recalculate(10);
 

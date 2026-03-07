@@ -1,4 +1,5 @@
-﻿using Common.Data.Synergies;
+﻿using System.Collections.Generic;
+using Common.Data.Synergies;
 using Common.Scripts.SpritePreview;
 using UnityEngine;
 
@@ -46,5 +47,19 @@ namespace Common.Data.Units.UnitDefinitions
 
         /// <summary>이 유닛이 보유한 소환술사 효과. 소속 소환술사에 의해 고정된다.</summary>
         public SynergyDefinitionData SummonerEffect => summonerEffect;
+
+        /// <summary>
+        /// 이 유닛이 보유한 모든 시너지 목록을 반환한다.
+        /// 시너지 종류(소환술사 효과, 소환수 특성 등)를 구분하지 않는다.
+        /// </summary>
+        public IReadOnlyList<SynergyDefinitionData> Synergies
+        {
+            get
+            {
+                var list = new List<SynergyDefinitionData>();
+                if (summonerEffect != null) list.Add(summonerEffect);
+                return list;
+            }
+        }
     }
 }
