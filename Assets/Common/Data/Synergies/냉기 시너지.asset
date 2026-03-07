@@ -19,13 +19,15 @@ MonoBehaviour:
   icon: {fileID: 0}
   synergyType: 0
   tiers:
-  - requiredCount: 2
+  - tier: 1
+    requiredCount: 2
     constants:
       keys:
       - slowPercent
       values:
       - 20
-  - requiredCount: 4
+  - tier: 2
+    requiredCount: 4
     constants:
       keys:
       - slowPercent

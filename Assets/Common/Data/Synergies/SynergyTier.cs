@@ -4,10 +4,16 @@ using UnityEngine;
 
 namespace Common.Data.Synergies
 {
-    /// <summary>시너지 티어. 임계치와 해당 단계의 상수 목록을 정의한다.</summary>
+    /// <summary>시너지 티어. 단계, 임계치, 해당 단계의 상수 목록을 정의한다.</summary>
     [Serializable]
     public struct SynergyTier
     {
+        [Tooltip("티어 단계 (1, 2, 3 ...)")]
+        [SerializeField] private int tier;
+
+        /// <summary>티어 단계</summary>
+        public int Tier => tier;
+
         [Tooltip("이 티어가 활성화되기 위한 최소 유닛 수")]
         [SerializeField] private int requiredCount;
 

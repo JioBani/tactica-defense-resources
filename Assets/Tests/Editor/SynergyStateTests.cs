@@ -21,11 +21,11 @@ namespace Tests.Editor
         {
             _definition = ScriptableObject.CreateInstance<SynergyDefinitionData>();
 
-            // 리플렉션으로 tiers 설정: requiredCount 2, 4
+            // 리플렉션으로 tiers 설정: 1티어(requiredCount 2), 2티어(requiredCount 4)
             var tiers = new List<SynergyTier>
             {
-                CreateTier(2),
-                CreateTier(4),
+                CreateTier(1, 2),
+                CreateTier(2, 4),
             };
 
             SetTiers(_definition, tiers);
@@ -69,6 +69,7 @@ namespace Tests.Editor
 
             Assert.AreEqual(2, _state.Count);
             Assert.IsNotNull(_state.ActiveTier);
+            Assert.AreEqual(1, _state.ActiveTier.Value.Tier);
             Assert.AreEqual(2, _state.ActiveTier.Value.RequiredCount);
         }
 
@@ -80,6 +81,7 @@ namespace Tests.Editor
             _state.Recalculate(4);
 
             Assert.IsNotNull(_state.ActiveTier);
+            Assert.AreEqual(2, _state.ActiveTier.Value.Tier);
             Assert.AreEqual(4, _state.ActiveTier.Value.RequiredCount);
         }
 
@@ -89,10 +91,10 @@ namespace Tests.Editor
         public void FindActiveTier_CountDecreases_RevertsToLowerTier()
         {
             _state.Recalculate(4);
-            Assert.AreEqual(4, _state.ActiveTier.Value.RequiredCount);
+            Assert.AreEqual(2, _state.ActiveTier.Value.Tier);
 
             _state.Recalculate(2);
-            Assert.AreEqual(2, _state.ActiveTier.Value.RequiredCount);
+            Assert.AreEqual(1, _state.ActiveTier.Value.Tier);
         }
 
         // ── 카운트 감소로 모든 임계치 미달 → 티어 없음 ──
@@ -139,15 +141,15 @@ namespace Tests.Editor
             Object.DestroyImmediate(emptyDefinition);
         }
 
-        /// <summary>리플렉션으로 requiredCount가 설정된 SynergyTier를 생성한다.</summary>
-        private static SynergyTier CreateTier(int requiredCount)
+        /// <summary>리플렉션으로 tier와 requiredCount가 설정된 SynergyTier를 생성한다.</summary>
+        private static SynergyTier CreateTier(int tierLevel, int requiredCount)
         {
             var tier = new SynergyTier();
-            var field = typeof(SynergyTier)
-                .GetField("requiredCount", BindingFlags.NonPublic | BindingFlags.Instance);
+            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
 
             object boxed = tier;
-            field.SetValue(boxed, requiredCount);
+            typeof(SynergyTier).GetField("tier", flags).SetValue(boxed, tierLevel);
+            typeof(SynergyTier).GetField("requiredCount", flags).SetValue(boxed, requiredCount);
             return (SynergyTier)boxed;
         }
 

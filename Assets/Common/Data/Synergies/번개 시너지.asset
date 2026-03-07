@@ -19,13 +19,15 @@ MonoBehaviour:
   icon: {fileID: 0}
   synergyType: 0
   tiers:
-  - requiredCount: 3
+  - tier: 1
+    requiredCount: 3
     constants:
       keys:
       - attackSpeedBonus
       values:
       - 15
-  - requiredCount: 6
+  - tier: 2
+    requiredCount: 6
     constants:
       keys:
       - attackSpeedBonus

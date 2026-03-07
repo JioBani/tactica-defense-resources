@@ -18,7 +18,8 @@ MonoBehaviour:
   icon: {fileID: 0}
   synergyType: 0
   tiers:
-  - requiredCount: 0
+  - tier: 1
+    requiredCount: 0
     constants:
       keys:
       - damage
@@ -28,11 +29,13 @@ MonoBehaviour:
       - 10
       - 0.5
       - 10
-  - requiredCount: 0
+  - tier: 2
+    requiredCount: 0
     constants:
       keys: []
       values: []
-  - requiredCount: 0
+  - tier: 3
+    requiredCount: 0
     constants:
       keys: []
       values: []
