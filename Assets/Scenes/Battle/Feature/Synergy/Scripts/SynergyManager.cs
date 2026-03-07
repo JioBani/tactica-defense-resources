@@ -81,8 +81,8 @@ namespace Scenes.Battle.Feature.Synergy
         }
 
         /// <summary>
-        /// 디펜더를 1회 순회하며 SummonerEffect 기준으로 시너지별 그룹을 생성한다.
-        /// SummonerEffect가 null이면 스킵한다.
+        /// 디펜더를 1회 순회하며 보유 시너지별 그룹을 생성한다.
+        /// 시너지 종류(소환술사 효과, 소환수 특성 등)를 구분하지 않는다.
         /// </summary>
         private Dictionary<SynergyDefinitionData, List<Defender>> GroupBySynergy(List<Defender> defenders)
         {
@@ -90,16 +90,18 @@ namespace Scenes.Battle.Feature.Synergy
 
             foreach (var defender in defenders)
             {
-                var summonerEffect = defender.UnitLoadOutData.Unit.SummonerEffect;
-                if (summonerEffect == null) continue;
+                var synergies = defender.UnitLoadOutData.Unit.Synergies;
 
-                if (!grouped.TryGetValue(summonerEffect, out var list))
+                foreach (var synergy in synergies)
                 {
-                    list = new List<Defender>();
-                    grouped[summonerEffect] = list;
-                }
+                    if (!grouped.TryGetValue(synergy, out var list))
+                    {
+                        list = new List<Defender>();
+                        grouped[synergy] = list;
+                    }
 
-                list.Add(defender);
+                    list.Add(defender);
+                }
             }
 
             return grouped;
