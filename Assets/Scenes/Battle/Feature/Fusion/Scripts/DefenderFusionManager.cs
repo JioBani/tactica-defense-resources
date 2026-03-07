@@ -32,13 +32,13 @@ namespace Scenes.Battle.Feature.Fusion
         private void OnEnable()
         {
             RoundManager.Instance.RegisterListener(this);
-            defenderManager.OnDefenderChange += OnDefenderChange;
+            GlobalEventBus.Subscribe<OnDefenderChangedEventDto>(OnDefenderChange);
         }
 
         private void OnDisable()
         {
             RoundManager.Instance.UnregisterListener(this);
-            defenderManager.OnDefenderChange -= OnDefenderChange;
+            GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(OnDefenderChange);
         }
 
         // ── IStateListener 명시적 구현 ──
@@ -60,9 +60,9 @@ namespace Scenes.Battle.Feature.Fusion
         void IStateListener<PhaseType>.OnStateExit(PhaseType phaseType) { }
 
         /// <summary>디펜더 생성/제거 시 기본 합성 조건을 확인한다.</summary>
-        private void OnDefenderChange(Defender defender, DefenderChanges change)
+        private void OnDefenderChange(OnDefenderChangedEventDto dto)
         {
-            if (change != DefenderChanges.Spawn) return;
+            if (dto.Change != DefenderChanges.Spawn) return;
 
             if (_isMaintenancePhase)
             {
@@ -76,7 +76,7 @@ namespace Scenes.Battle.Feature.Fusion
                 {
                     BubbleMessageSpawner.Instance.SpawnAtWorld(
                         "전투 중에는 합성이 불가능합니다",
-                        defender.transform.position
+                        dto.Defender.transform.position
                     );
                 }
             }

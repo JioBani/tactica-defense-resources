@@ -1,5 +1,6 @@
-using System;
+using Common.Scripts.GlobalEventBus;
 using Common.Scripts.StateBase;
+using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Markets;
 using Scenes.Battle.Feature.Rounds;
 using Scenes.Battle.Feature.Rounds.Phases;
@@ -24,16 +25,16 @@ namespace Scenes.Battle.Feature.Ui.Markets
 
         private void OnEnable()
         {
-            MarketManager.Instance.DefenderPlacementLimit.OnChange += OnDefenderPlacementChanged;
-            defenderManager.OnPlacementChange += OnDefenderPlacementChanged;
-            defenderManager.OnDefenderChange += OnDefenderChange;
+            MarketManager.Instance.DefenderPlacementLimit.OnChange += OnDefenderPlacementLimitChanged;
+            GlobalEventBus.Subscribe<OnDefenderPlacementChangedEventDto>(OnDefenderPlacementChanged);
+            GlobalEventBus.Subscribe<OnDefenderChangedEventDto>(OnDefenderChange);
         }
 
         private void OnDisable()
         {
-            MarketManager.Instance.DefenderPlacementLimit.OnChange -= OnDefenderPlacementChanged;
-            defenderManager.OnPlacementChange -= OnDefenderPlacementChanged;
-            defenderManager.OnDefenderChange -= OnDefenderChange;
+            MarketManager.Instance.DefenderPlacementLimit.OnChange -= OnDefenderPlacementLimitChanged;
+            GlobalEventBus.Unsubscribe<OnDefenderPlacementChangedEventDto>(OnDefenderPlacementChanged);
+            GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(OnDefenderChange);
         }
 
         // IStateListener 명시적 구현
@@ -68,35 +69,29 @@ namespace Scenes.Battle.Feature.Ui.Markets
             );
         }
 
-        /// <summary>
-        /// 수호자가 배치될 때
-        /// </summary>
-        /// <param name="defender"></param>
-        /// <param name="placement"></param>
-        private void OnDefenderPlacementChanged(Defender defender, Placement placement)
+        /// <summary>수호자가 배치될 때.</summary>
+        private void OnDefenderPlacementChanged(OnDefenderPlacementChangedEventDto dto)
         {
             RefreshText(
-                defenderManager.GetPlacementCount(Placement.BattleArea), 
+                defenderManager.GetPlacementCount(Placement.BattleArea),
                 MarketManager.Instance.DefenderPlacementLimit.Value
             );
         }
 
-        /// <summary>
-        /// 수호자 배치 상한이 변경될 때
-        /// </summary>
-        /// <param name="limit"></param>
-        private void OnDefenderPlacementChanged(int limit)
+        /// <summary>수호자 배치 상한이 변경될 때.</summary>
+        private void OnDefenderPlacementLimitChanged(int limit)
         {
             RefreshText(
-                defenderManager.GetPlacementCount(Placement.BattleArea), 
+                defenderManager.GetPlacementCount(Placement.BattleArea),
                 limit
             );
         }
 
-        private void OnDefenderChange(Defender defender, DefenderChanges changes)
+        /// <summary>수호자가 생성/환원될 때.</summary>
+        private void OnDefenderChange(OnDefenderChangedEventDto dto)
         {
             RefreshText(
-                defenderManager.GetPlacementCount(Placement.BattleArea), 
+                defenderManager.GetPlacementCount(Placement.BattleArea),
                 MarketManager.Instance.DefenderPlacementLimit.Value
             );
         }

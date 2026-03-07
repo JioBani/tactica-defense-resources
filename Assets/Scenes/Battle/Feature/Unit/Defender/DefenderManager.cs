@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.GlobalEventBus;
-using Common.Scripts.SceneSingleton;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Units;
 using Scenes.Battle.Feature.Units.ActionStates;
@@ -25,19 +23,6 @@ namespace Scenes.Battle.Feature.Unit.Defenders
 
         /// <summary>현재 존재하는 모든 디펜더 목록. 합성 탐지 등 외부 조회용.</summary>
         public IReadOnlyList<Defender> Defenders => units;
-
-        public Action<Defender, Placement> OnPlacementChange;
-        public Action<Defender, DefenderChanges> OnDefenderChange;
-
-        private void OnEnable()
-        {
-            GlobalEventBus.Subscribe<OnDefenderPlacementChangedEventDto>(RecordPlacement);
-        }
-
-        private void OnDisable()
-        {
-            GlobalEventBus.Unsubscribe<OnDefenderPlacementChangedEventDto>(RecordPlacement);
-        }
 
         public int GetPlacementCount(Placement placement)
         {
@@ -62,7 +47,7 @@ namespace Scenes.Battle.Feature.Unit.Defenders
                 
                 units.Add(defender);
                 
-                OnDefenderChange.Invoke(defender, DefenderChanges.Spawn);
+                GlobalEventBus.Publish(new OnDefenderChangedEventDto(defender, DefenderChanges.Spawn));
 
                 return true;
             }
@@ -77,7 +62,7 @@ namespace Scenes.Battle.Feature.Unit.Defenders
         public void RemoveDefender(Defender defender)
         {
             units.Remove(defender);
-            OnDefenderChange?.Invoke(defender, DefenderChanges.Despawn);
+            GlobalEventBus.Publish(new OnDefenderChangedEventDto(defender, DefenderChanges.Despawn));
             unitGenerator.RemoveUnit(defender);
         }
 
@@ -86,9 +71,5 @@ namespace Scenes.Battle.Feature.Unit.Defenders
             return units.All((unit) => unit.ActionStateController.CurrentState == ActionStateType.Downed);
         }
 
-        public void RecordPlacement(OnDefenderPlacementChangedEventDto dto)
-        {
-            OnPlacementChange?.Invoke(dto.defender, dto.placement);
-        }
     }
 }
