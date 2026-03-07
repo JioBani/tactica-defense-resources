@@ -19,8 +19,12 @@ namespace Common.Scripts.SerializableDictionary
 
         private Dictionary<TKey, TValue> _dict = new();
 
-        /// <summary>키로 값을 조회한다.</summary>
-        public TValue this[TKey key] => _dict[key];
+        /// <summary>키로 값을 조회하거나 설정한다.</summary>
+        public TValue this[TKey key]
+        {
+            get => _dict[key];
+            set => _dict[key] = value;
+        }
 
         /// <summary>키로 값을 조회한다. 키가 없으면 false를 반환한다.</summary>
         public bool TryGetValue(TKey key, out TValue value) => _dict.TryGetValue(key, out value);
@@ -31,7 +35,21 @@ namespace Common.Scripts.SerializableDictionary
         /// <summary>항목 수를 반환한다.</summary>
         public int Count => _dict.Count;
 
-        public void OnBeforeSerialize() { }
+        /// <summary>모든 항목을 제거한다.</summary>
+        public void Clear() => _dict.Clear();
+
+        public void OnBeforeSerialize()
+        {
+            keys = new TKey[_dict.Count];
+            values = new TValue[_dict.Count];
+            int i = 0;
+            foreach (var kvp in _dict)
+            {
+                keys[i] = kvp.Key;
+                values[i] = kvp.Value;
+                i++;
+            }
+        }
 
         public void OnAfterDeserialize()
         {

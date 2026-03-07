@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Common.Data.Synergies;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.SceneSingleton;
+using Common.Scripts.SerializableDictionary;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
@@ -22,6 +23,10 @@ namespace Scenes.Battle.Feature.Synergy
 
         /// <summary>모든 시너지 상태 목록. UI 표시 등 외부 조회용.</summary>
         public IReadOnlyDictionary<SynergyDefinitionData, SynergyState> SynergyStates => _synergyStates;
+
+        // TODO: 디버그용. 시너지 UI 구현 후 제거한다.
+        [Header("디버그 (런타임 확인용)")]
+        [SerializeField] private SerializableDictionary<string, string> debugSynergyStatus = new();
 
         protected override void OnAwakeSingleton()
         {
@@ -71,6 +76,8 @@ namespace Scenes.Battle.Feature.Synergy
                 int uniqueCount = CountUnique(grouped.GetValueOrDefault(definition));
                 state.Recalculate(uniqueCount);
             }
+
+            UpdateDebugStatus();
         }
 
         /// <summary>
@@ -96,6 +103,20 @@ namespace Scenes.Battle.Feature.Synergy
             }
 
             return grouped;
+        }
+
+        /// <summary>디버그용: 인스펙터에 시너지 상태를 표시한다.</summary>
+        private void UpdateDebugStatus()
+        {
+            debugSynergyStatus.Clear();
+
+            foreach (var (definition, state) in _synergyStates)
+            {
+                string tierText = state.ActiveTier.HasValue
+                    ? $"Tier {state.ActiveTier.Value.Tier}"
+                    : "비활성";
+                debugSynergyStatus[definition.DisplayName] = $"{state.Count}명 → {tierText}";
+            }
         }
 
         /// <summary>
