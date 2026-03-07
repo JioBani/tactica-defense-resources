@@ -29,6 +29,20 @@ namespace Scenes.Battle.Feature.Unit.Defenders
             return units.Count(defender => defender.Placement == placement);
         }
 
+        /// <summary>BattleArea에 배치된 디펜더만 필터링하여 반환한다.</summary>
+        public List<Defender> GetBattleAreaDefenders()
+        {
+            var result = new List<Defender>();
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                if (units[i].Placement == Placement.BattleArea)
+                    result.Add(units[i]);
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 소환수를 생성하고 대기석에 배치한 뒤 관리 목록에 등록한다.
         /// </summary>

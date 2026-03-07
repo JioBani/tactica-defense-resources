@@ -51,25 +51,5 @@ namespace Common.Data.Synergies
         /// <summary>티어 목록</summary>
         public IReadOnlyList<SynergyTier> Tiers => tiers;
 
-        /// <summary>
-        /// 현재 카운트에 해당하는 최고 활성 티어를 반환한다.
-        /// 어떤 임계치도 충족하지 못하면 null을 반환한다.
-        /// </summary>
-        public SynergyTier? GetActiveTier(int count)
-        {
-            SynergyTier? result = null;
-
-            if (tiers == null) return null;
-
-            foreach (var tier in tiers)
-            {
-                if (count >= tier.RequiredCount)
-                    result = tier;
-                else
-                    break;
-            }
-
-            return result;
-        }
     }
 }
