@@ -49,15 +49,15 @@ namespace Scenes.Battle.Feature.Fusion
 
             if (group == null) return null;
 
-            return group.Select(c => c.Index).ToArray();
-        }
+                return group.Select(c => c.Index).ToArray();
+            }
 
-        /// <summary>
-        /// 합성 가능한 그룹이 존재하는지 확인한다.
-        /// </summary>
-        public bool HasFusionGroup(IReadOnlyList<FusionCandidate> candidates, int maxStar = int.MaxValue)
-        {
-            return FindFusionGroup(candidates, maxStar) != null;
-        }
+            /// <summary>
+            /// 합성 가능한 그룹이 존재하는지 확인한다.
+            /// </summary>
+            public bool HasFusionGroup(IReadOnlyList<FusionCandidate> candidates, int maxStar = int.MaxValue)
+            {
+                return FindFusionGroup(candidates, maxStar) != null;
+            }
     }
 }
