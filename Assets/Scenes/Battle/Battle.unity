@@ -1520,7 +1520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitGenerator: {fileID: 1387143021}
-  previewSlotParent: {fileID: 0}
+  previewSlotParent: {fileID: 325629262}
 --- !u!1 &189211356
 GameObject:
   m_ObjectHideFlags: 0
