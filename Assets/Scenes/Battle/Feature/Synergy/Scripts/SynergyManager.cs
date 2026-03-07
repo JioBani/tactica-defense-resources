@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────
-// SynergyManager: 시너지 갱신 트리거, Defender 그룹핑, SynergyState 관리를 담당한다.
-// 효과 적용/해제는 미구현(TODO). 소환술사 편성 시스템 구현 시 allSynergies 주입 방식을 교체한다.
+// SynergyManager: 시너지 갱신 트리거, Defender 그룹핑, SynergyActivation 관리를 담당한다.
+// 티어 변경 시 이벤트를 발행하여 SynergyController에 전파한다.
+// 소환술사 편성 시스템 구현 시 allSynergies 주입 방식을 교체한다.
 // ─────────────────────────────────────────────
 using System.Collections.Generic;
 using Common.Data.Synergies;
@@ -19,10 +20,10 @@ namespace Scenes.Battle.Feature.Synergy
         [SerializeField] private List<SynergyDefinitionData> allSynergies;
         [SerializeField] private DefenderManager defenderManager;
 
-        private readonly Dictionary<SynergyDefinitionData, SynergyState> _synergyStates = new();
+        private readonly Dictionary<SynergyDefinitionData, SynergyActivation> _synergyActivations = new();
 
         /// <summary>모든 시너지 상태 목록. UI 표시 등 외부 조회용.</summary>
-        public IReadOnlyDictionary<SynergyDefinitionData, SynergyState> SynergyStates => _synergyStates;
+        public IReadOnlyDictionary<SynergyDefinitionData, SynergyActivation> SynergyActivations => _synergyActivations;
 
         // TODO: 디버그용. 시너지 UI 구현 후 제거한다.
         [Header("디버그 (런타임 확인용)")]
@@ -30,7 +31,7 @@ namespace Scenes.Battle.Feature.Synergy
 
         protected override void OnAwakeSingleton()
         {
-            InitializeSynergyStates();
+            InitializeSynergyActivations();
         }
 
         private void OnEnable()
@@ -45,13 +46,13 @@ namespace Scenes.Battle.Feature.Synergy
             GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(OnDefenderChanged);
         }
 
-        /// <summary>allSynergies 목록으로부터 모든 SynergyState를 미리 생성한다.</summary>
-        private void InitializeSynergyStates()
+        /// <summary>allSynergies 목록으로부터 모든 SynergyActivation를 미리 생성한다.</summary>
+        private void InitializeSynergyActivations()
         {
-            foreach (var definition in allSynergies)
+            foreach (SynergyDefinitionData definition in allSynergies)
             {
                 if (definition != null)
-                    _synergyStates[definition] = new SynergyState(definition);
+                    _synergyActivations[definition] = new SynergyActivation(definition);
             }
         }
 
@@ -65,16 +66,24 @@ namespace Scenes.Battle.Feature.Synergy
             Recalculate();
         }
 
-        /// <summary>전장 디펜더를 시너지별로 그룹핑하고, 각 SynergyState의 카운트·티어를 갱신한다.</summary>
+        /// <summary>전장 디펜더를 시너지별로 그룹핑하고, 각 SynergyActivation의 카운트·티어를 갱신한다.</summary>
         private void Recalculate()
         {
-            var battleAreaDefenders = defenderManager.GetBattleAreaDefenders();
-            var grouped = GroupBySynergy(battleAreaDefenders);
+            List<Defender> battleAreaDefenders = defenderManager.GetBattleAreaDefenders();
+            Dictionary<SynergyDefinitionData, List<Defender>> grouped = GroupBySynergy(battleAreaDefenders);
 
-            foreach (var (definition, state) in _synergyStates)
+            foreach ((SynergyDefinitionData definition, SynergyActivation activation) in _synergyActivations)
             {
                 int uniqueCount = CountUnique(grouped.GetValueOrDefault(definition));
-                state.Recalculate(uniqueCount);
+                TierChangeResult result = activation.Recalculate(uniqueCount);
+
+                if (result.Changed)
+                {
+                    GlobalEventBus.Publish(new OnSynergyTierChangedEventDto(
+                        definition,
+                        result.PreviousTier,
+                        activation.ActiveTier));
+                }
             }
 
             UpdateDebugStatus();
@@ -86,15 +95,15 @@ namespace Scenes.Battle.Feature.Synergy
         /// </summary>
         private Dictionary<SynergyDefinitionData, List<Defender>> GroupBySynergy(List<Defender> defenders)
         {
-            var grouped = new Dictionary<SynergyDefinitionData, List<Defender>>();
+            Dictionary<SynergyDefinitionData, List<Defender>> grouped = new Dictionary<SynergyDefinitionData, List<Defender>>();
 
-            foreach (var defender in defenders)
+            foreach (Defender defender in defenders)
             {
-                var synergies = defender.UnitLoadOutData.Unit.Synergies;
+                IReadOnlyList<SynergyDefinitionData> synergies = defender.UnitLoadOutData.Unit.Synergies;
 
-                foreach (var synergy in synergies)
+                foreach (SynergyDefinitionData synergy in synergies)
                 {
-                    if (!grouped.TryGetValue(synergy, out var list))
+                    if (!grouped.TryGetValue(synergy, out List<Defender> list))
                     {
                         list = new List<Defender>();
                         grouped[synergy] = list;
@@ -112,12 +121,12 @@ namespace Scenes.Battle.Feature.Synergy
         {
             debugSynergyStatus.Clear();
 
-            foreach (var (definition, state) in _synergyStates)
+            foreach ((SynergyDefinitionData definition, SynergyActivation activation) in _synergyActivations)
             {
-                string tierText = state.ActiveTier.HasValue
-                    ? $"Tier {state.ActiveTier.Value.Tier}"
+                string tierText = activation.ActiveTier.HasValue
+                    ? $"Tier {activation.ActiveTier.Value.Tier}"
                     : "비활성";
-                debugSynergyStatus[definition.DisplayName] = $"{state.Count}명 → {tierText}";
+                debugSynergyStatus[definition.DisplayName] = $"{activation.Count}명 → {tierText}";
             }
         }
 
@@ -128,9 +137,9 @@ namespace Scenes.Battle.Feature.Synergy
         {
             if (defenders == null || defenders.Count == 0) return 0;
 
-            var uniqueIds = new HashSet<int>();
+            HashSet<int> uniqueIds = new HashSet<int>();
 
-            foreach (var defender in defenders)
+            foreach (Defender defender in defenders)
             {
                 uniqueIds.Add(defender.UnitLoadOutData.Unit.ID);
             }
