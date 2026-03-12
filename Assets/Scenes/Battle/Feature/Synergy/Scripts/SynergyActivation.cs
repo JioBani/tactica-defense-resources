@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.Data.Synergies;
+using Common.Scripts.Rxs;
 
 namespace Scenes.Battle.Feature.Synergy
 {
@@ -27,7 +28,7 @@ namespace Scenes.Battle.Feature.Synergy
     {
         private readonly SynergyDefinitionData _definition;
         private int _count;
-        private SynergyTier? _activeTier;
+        private readonly RxValue<SynergyTier?> _activeTier = new(null);
 
         /// <summary>이 시너지의 정의 데이터.</summary>
         public SynergyDefinitionData Definition => _definition;
@@ -35,8 +36,8 @@ namespace Scenes.Battle.Feature.Synergy
         /// <summary>현재 유니크 유닛 카운트.</summary>
         public int Count => _count;
 
-        /// <summary>현재 활성 티어. 임계치 미달 시 null.</summary>
-        public SynergyTier? ActiveTier => _activeTier;
+        /// <summary>현재 활성 티어. RxValue로 OnChange 구독이 가능하다. 임계치 미달 시 Value가 null.</summary>
+        public RxValue<SynergyTier?> ActiveTier => _activeTier;
 
         public SynergyActivation(SynergyDefinitionData definition)
         {
@@ -52,10 +53,10 @@ namespace Scenes.Battle.Feature.Synergy
         public TierChangeResult Recalculate(int uniqueCount)
         {
             _count = uniqueCount;
-            SynergyTier? previousTier = _activeTier;
-            _activeTier = FindActiveTier(_count);
+            SynergyTier? previousTier = _activeTier.Value;
+            _activeTier.Value = FindActiveTier(_count);
 
-            bool changed = previousTier?.Tier != _activeTier?.Tier;
+            bool changed = previousTier?.Tier != _activeTier.Value?.Tier;
             return new TierChangeResult(changed, previousTier);
         }
 

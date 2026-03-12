@@ -46,7 +46,7 @@ namespace Tests.Editor
             _activation.Recalculate(0);
 
             Assert.AreEqual(0, _activation.Count);
-            Assert.IsNull(_activation.ActiveTier);
+            Assert.IsNull(_activation.ActiveTier.Value);
         }
 
         // ── 임계치 미달 → 티어 없음 ──
@@ -57,7 +57,7 @@ namespace Tests.Editor
             _activation.Recalculate(1);
 
             Assert.AreEqual(1, _activation.Count);
-            Assert.IsNull(_activation.ActiveTier);
+            Assert.IsNull(_activation.ActiveTier.Value);
         }
 
         // ── 첫 번째 임계치 충족 → 1티어 활성 ──
@@ -68,9 +68,9 @@ namespace Tests.Editor
             _activation.Recalculate(2);
 
             Assert.AreEqual(2, _activation.Count);
-            Assert.IsNotNull(_activation.ActiveTier);
-            Assert.AreEqual(1, _activation.ActiveTier.Value.Tier);
-            Assert.AreEqual(2, _activation.ActiveTier.Value.RequiredCount);
+            Assert.IsNotNull(_activation.ActiveTier.Value);
+            Assert.AreEqual(1, _activation.ActiveTier.Value.Value.Tier);
+            Assert.AreEqual(2, _activation.ActiveTier.Value.Value.RequiredCount);
         }
 
         // ── 상위 임계치 충족 → 상위 티어 활성 ──
@@ -80,9 +80,9 @@ namespace Tests.Editor
         {
             _activation.Recalculate(4);
 
-            Assert.IsNotNull(_activation.ActiveTier);
-            Assert.AreEqual(2, _activation.ActiveTier.Value.Tier);
-            Assert.AreEqual(4, _activation.ActiveTier.Value.RequiredCount);
+            Assert.IsNotNull(_activation.ActiveTier.Value);
+            Assert.AreEqual(2, _activation.ActiveTier.Value.Value.Tier);
+            Assert.AreEqual(4, _activation.ActiveTier.Value.Value.RequiredCount);
         }
 
         // ── 카운트 감소 → 하위 티어로 복귀 ──
@@ -91,10 +91,10 @@ namespace Tests.Editor
         public void FindActiveTier_CountDecreases_RevertsToLowerTier()
         {
             _activation.Recalculate(4);
-            Assert.AreEqual(2, _activation.ActiveTier.Value.Tier);
+            Assert.AreEqual(2, _activation.ActiveTier.Value.Value.Tier);
 
             _activation.Recalculate(2);
-            Assert.AreEqual(1, _activation.ActiveTier.Value.Tier);
+            Assert.AreEqual(1, _activation.ActiveTier.Value.Value.Tier);
         }
 
         // ── 카운트 감소로 모든 임계치 미달 → 티어 없음 ──
@@ -103,10 +103,10 @@ namespace Tests.Editor
         public void FindActiveTier_CountDecreasesToZero_ReturnsNull()
         {
             _activation.Recalculate(4);
-            Assert.IsNotNull(_activation.ActiveTier);
+            Assert.IsNotNull(_activation.ActiveTier.Value);
 
             _activation.Recalculate(0);
-            Assert.IsNull(_activation.ActiveTier);
+            Assert.IsNull(_activation.ActiveTier.Value);
         }
 
         // ── tiers가 null인 경우 → 티어 없음 ──
@@ -120,7 +120,7 @@ namespace Tests.Editor
 
             state.Recalculate(10);
 
-            Assert.IsNull(state.ActiveTier);
+            Assert.IsNull(state.ActiveTier.Value);
 
             Object.DestroyImmediate(emptyDefinition);
         }
@@ -136,9 +136,50 @@ namespace Tests.Editor
 
             state.Recalculate(10);
 
-            Assert.IsNull(state.ActiveTier);
+            Assert.IsNull(state.ActiveTier.Value);
 
             Object.DestroyImmediate(emptyDefinition);
+        }
+
+        // ── ActiveTier RxValue: 티어 변경 시 OnChange 발행 ──
+
+        [Test]
+        public void ActiveTier_OnChange_FiredOnTierChange()
+        {
+            int fireCount = 0;
+            _activation.ActiveTier.OnChange += _ => fireCount++;
+
+            _activation.Recalculate(2); // null → 1티어
+            Assert.AreEqual(1, fireCount);
+        }
+
+        // ── ActiveTier RxValue: 동일 티어 재계산 시 OnChange 미발행 ──
+
+        [Test]
+        public void ActiveTier_OnChange_NotFiredWhenTierUnchanged()
+        {
+            _activation.Recalculate(2); // null → 1티어
+
+            int fireCount = 0;
+            _activation.ActiveTier.OnChange += _ => fireCount++;
+
+            _activation.Recalculate(3); // 1티어 유지 (카운트만 변경)
+            Assert.AreEqual(0, fireCount);
+        }
+
+        // ── ActiveTier RxValue: 비활성화 시 OnChange 발행 ──
+
+        [Test]
+        public void ActiveTier_OnChange_FiredOnDeactivation()
+        {
+            _activation.Recalculate(2); // null → 1티어
+
+            int fireCount = 0;
+            _activation.ActiveTier.OnChange += _ => fireCount++;
+
+            _activation.Recalculate(0); // 1티어 → null
+            Assert.AreEqual(1, fireCount);
+            Assert.IsNull(_activation.ActiveTier.Value);
         }
 
         /// <summary>리플렉션으로 tier와 requiredCount가 설정된 SynergyTier를 생성한다.</summary>

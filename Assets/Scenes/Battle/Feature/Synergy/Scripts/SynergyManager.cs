@@ -82,7 +82,7 @@ namespace Scenes.Battle.Feature.Synergy
                     GlobalEventBus.Publish(new OnSynergyTierChangedEventDto(
                         definition,
                         result.PreviousTier,
-                        activation.ActiveTier));
+                        activation.ActiveTier.Value));
                 }
             }
 
@@ -123,8 +123,8 @@ namespace Scenes.Battle.Feature.Synergy
 
             foreach ((SynergyDefinitionData definition, SynergyActivation activation) in _synergyActivations)
             {
-                string tierText = activation.ActiveTier.HasValue
-                    ? $"Tier {activation.ActiveTier.Value.Tier}"
+                string tierText = activation.ActiveTier.Value.HasValue
+                    ? $"Tier {activation.ActiveTier.Value.Value.Tier}"
                     : "비활성";
                 debugSynergyStatus[definition.DisplayName] = $"{activation.Count}명 → {tierText}";
             }
