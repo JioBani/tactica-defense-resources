@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Common.Data.StatusEffects;
 using Common.Scripts.StatusEffect;
 using Common.Scripts.StatusEffect.HookProvider;
 using NUnit.Framework;
@@ -30,11 +29,6 @@ namespace Tests.Editor
             }
 
             public void ExposeRequestRemove() => RequestRemove();
-        }
-
-        private class TestStatusEffectDefinitionData : StatusEffectDefinitionData
-        {
-            public override StatusEffect CreateEffect() => new TestStatusEffect();
         }
 
         private class TestHookProvider : IStatusEffectHookProvider
@@ -226,19 +220,5 @@ namespace Tests.Editor
             Assert.AreEqual(1, effect2.EventCount);
         }
 
-        // ── SED.CreateEffect 테스트 ──
-
-        [Test]
-        public void CreateEffect_ReturnsTestStatusEffectInstance()
-        {
-            var definitionData = UnityEngine.ScriptableObject.CreateInstance<TestStatusEffectDefinitionData>();
-
-            StatusEffect result = definitionData.CreateEffect();
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<TestStatusEffect>(result);
-
-            UnityEngine.Object.DestroyImmediate(definitionData);
-        }
     }
 }

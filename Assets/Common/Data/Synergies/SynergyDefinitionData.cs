@@ -13,10 +13,10 @@ namespace Common.Data.Synergies
     {
         [Header("표시 정보 (Identity)")]
         [Tooltip("시너지 ID")]
-        [SerializeField] private int id;
+        [SerializeField] private SynergyId id;
 
         /// <summary>시너지 고유 ID</summary>
-        public int Id => id;
+        public SynergyId Id => id;
 
         [Tooltip("시너지 이름")]
         [SerializeField] private string displayName;

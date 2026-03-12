@@ -11,11 +11,16 @@ using Common.Scripts.StatusEffect;
 namespace Scenes.Battle.Feature.Synergy
 {
     /// <summary>
+    /// 시너지 전용 SE의 비제네릭 기본 클래스. Factory 반환 타입으로 사용된다.
+    /// </summary>
+    public abstract class SynergyStatusEffect : StatusEffect { }
+
+    /// <summary>
     /// StatusEffect를 상속하는 시너지 전용 SE 추상 클래스.
     /// SynergyActivation.ActiveTier를 구독하여 티어 변경과 비활성화에 자체적으로 반응한다.
     /// </summary>
     /// <typeparam name="TContext">SynergyStatusEffectContext 또는 그 서브클래스.</typeparam>
-    public abstract class SynergyStatusEffect<TContext> : StatusEffect
+    public abstract class SynergyStatusEffect<TContext> : SynergyStatusEffect
         where TContext : SynergyStatusEffectContext
     {
         /// <summary>이 효과가 속한 시너지 정의 데이터.</summary>

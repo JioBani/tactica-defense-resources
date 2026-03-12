@@ -22,6 +22,7 @@ namespace Scenes.Battle.Feature.Synergy
         [SerializeField] private DefenderManager defenderManager;
 
         private readonly Dictionary<SynergyDefinitionData, SynergyActivation> _synergyActivations = new();
+        private readonly SynergyStatusEffectFactory _synergyStatusEffectFactory = new();
 
         /// <summary>모든 시너지 상태 목록. UI 표시 등 외부 조회용.</summary>
         public IReadOnlyDictionary<SynergyDefinitionData, SynergyActivation> SynergyActivations => _synergyActivations;
@@ -83,11 +84,6 @@ namespace Scenes.Battle.Feature.Synergy
                     // 비활성→활성 전환 시 대상 Defender에 SSE Apply
                     if (!result.PreviousTier.HasValue && activation.ActiveTier.Value.HasValue)
                         ApplySynergyEffects(definition, activation, grouped.GetValueOrDefault(definition));
-
-                    GlobalEventBus.Publish(new OnSynergyTierChangedEventDto(
-                        definition,
-                        result.PreviousTier,
-                        activation.ActiveTier.Value));
                 }
             }
 
@@ -111,25 +107,10 @@ namespace Scenes.Battle.Feature.Synergy
                     throw new MissingComponentException(
                         $"{defender.name}에 StatusEffectController가 없습니다.");
 
-                StatusEffect effect = CreateSynergyEffect(definition);
-                if (effect == null)
-                    throw new System.InvalidOperationException(
-                        $"시너지 '{definition.DisplayName}'의 SSE를 생성할 수 없습니다.");
-
+                SynergyStatusEffect effect = _synergyStatusEffectFactory.Create(definition.Id);
                 var context = new SynergyStatusEffectContext(activation, definition);
                 controller.Apply(effect, context);
             }
-        }
-
-        /// <summary>
-        /// SynergyDefinitionData로부터 SSE 인스턴스를 생성한다.
-        /// 구체 SSE 구현체가 없는 현재 단계에서는 null을 반환한다.
-        /// 항목 4에서 SynergyDefinitionData.CreateEffect()로 이관 예정.
-        /// </summary>
-        private StatusEffect CreateSynergyEffect(SynergyDefinitionData definition)
-        {
-            // TODO: SynergyDefinitionData.CreateEffect()로 이관
-            return null;
         }
 
         /// <summary>
