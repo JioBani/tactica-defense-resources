@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────
 // SynergyManager: 시너지 갱신 트리거, Defender 그룹핑, SynergyActivation 관리를 담당한다.
-// 티어 변경 시 이벤트를 발행하여 SynergyController에 전파한다.
+// 티어 활성화 시 대상 Defender의 StatusEffectController에 SSE를 직접 Apply한다.
 // 소환술사 편성 시스템 구현 시 allSynergies 주입 방식을 교체한다.
 // ─────────────────────────────────────────────
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using Common.Data.Synergies;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.SceneSingleton;
 using Common.Scripts.SerializableDictionary;
+using Common.Scripts.StatusEffect;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
@@ -79,6 +80,10 @@ namespace Scenes.Battle.Feature.Synergy
 
                 if (result.Changed)
                 {
+                    // 비활성→활성 전환 시 대상 Defender에 SSE Apply
+                    if (!result.PreviousTier.HasValue && activation.ActiveTier.Value.HasValue)
+                        ApplySynergyEffects(definition, activation, grouped.GetValueOrDefault(definition));
+
                     GlobalEventBus.Publish(new OnSynergyTierChangedEventDto(
                         definition,
                         result.PreviousTier,
@@ -87,6 +92,44 @@ namespace Scenes.Battle.Feature.Synergy
             }
 
             UpdateDebugStatus();
+        }
+
+        /// <summary>
+        /// 시너지가 활성화될 때, 해당 시너지를 보유한 Defender들에게 SSE를 Apply한다.
+        /// </summary>
+        private void ApplySynergyEffects(
+            SynergyDefinitionData definition,
+            SynergyActivation activation,
+            List<Defender> defenders)
+        {
+            if (defenders == null) return;
+
+            foreach (Defender defender in defenders)
+            {
+                StatusEffectController controller = defender.StatusEffectController;
+                if (controller == null)
+                    throw new MissingComponentException(
+                        $"{defender.name}에 StatusEffectController가 없습니다.");
+
+                StatusEffect effect = CreateSynergyEffect(definition);
+                if (effect == null)
+                    throw new System.InvalidOperationException(
+                        $"시너지 '{definition.DisplayName}'의 SSE를 생성할 수 없습니다.");
+
+                var context = new SynergyStatusEffectContext(activation, definition);
+                controller.Apply(effect, context);
+            }
+        }
+
+        /// <summary>
+        /// SynergyDefinitionData로부터 SSE 인스턴스를 생성한다.
+        /// 구체 SSE 구현체가 없는 현재 단계에서는 null을 반환한다.
+        /// 항목 4에서 SynergyDefinitionData.CreateEffect()로 이관 예정.
+        /// </summary>
+        private StatusEffect CreateSynergyEffect(SynergyDefinitionData definition)
+        {
+            // TODO: SynergyDefinitionData.CreateEffect()로 이관
+            return null;
         }
 
         /// <summary>

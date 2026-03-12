@@ -4,6 +4,7 @@ using Common.Scripts.Draggable;
 using Common.Scripts.DynamicRepeater;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.StateBase;
+using Common.Scripts.StatusEffect;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Units.ActionStates;
 using UnityEngine;
@@ -13,6 +14,11 @@ namespace Scenes.Battle.Feature.Unit.Defenders
     public class Defender : Units.Unit, IStateListener<ActionStateType>
     {
         [SerializeField] private Draggable2D draggable;
+        [SerializeField] private StatusEffectController statusEffectController;
+
+        /// <summary>이 Defender의 SE 관리자. 시너지 효과 등 SE를 부여받을 때 사용.</summary>
+        public StatusEffectController StatusEffectController => statusEffectController;
+
         public Placement Placement { get; private set; }
 
         private void OnEnable()
