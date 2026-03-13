@@ -3432,12 +3432,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
   allSynergies:
-  - {fileID: 11400000, guid: 8e55c63aaf2a71346ad3a6caa641ad0b, type: 2}
-  - {fileID: 11400000, guid: 4367f5e8f13b1894d8c6929fd751c848, type: 2}
-  - {fileID: 11400000, guid: 8e8e79867d2d693419ac308df02baa43, type: 2}
-  - {fileID: 11400000, guid: 647c224ab988b7e4d83b3e35bcc6b17c, type: 2}
-  - {fileID: 11400000, guid: 37c9bf0264f99d2459faf9f2bbeb9a49, type: 2}
+  - {fileID: 11400000, guid: b3cf3a899b2026849817df5d67e445b0, type: 2}
+  - {fileID: 11400000, guid: cc5b0319e53374c47845b9608ef03002, type: 2}
+  - {fileID: 11400000, guid: cce5bc8015652f54b87fb4088552140c, type: 2}
+  - {fileID: 11400000, guid: 12da7955bd4161a4fb9d7289245b6c57, type: 2}
+  - {fileID: 11400000, guid: 9729aa2bf590a684dabb79e72b2f53e1, type: 2}
   defenderManager: {fileID: 1890914476}
+  debugSynergyStatus:
+    keys: []
+    values: []
 --- !u!1 &513231045
 GameObject:
   m_ObjectHideFlags: 0

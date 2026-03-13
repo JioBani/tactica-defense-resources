@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
-  m_Name: "\uB300\uC9C0 \uC2DC\uB108\uC9C0"
-  m_EditorClassIdentifier: 
-  id: 4
-  displayName: "\uB300\uC9C0"
-  description: "\uB300\uC9C0 \uC18C\uD658\uC218\uC758 \uCCB4\uB825\uC774 @hpBonus@%
-    \uC99D\uAC00\uD55C\uB2E4."
+  m_Name: "\uB09C\uB3D9\uAFBC"
+  m_EditorClassIdentifier:
+  id: 1
+  displayName: "\uB09C\uB3D9\uAFBC"
+  description: "\uB09C\uB3D9\uAFBC\uC774 \uCCB4\uB825\uC744 @healthPercent*100@% \uC5BB\uC2B5\uB2C8\uB2E4."
   icon: {fileID: 0}
   synergyType: 0
   tiers:
@@ -23,13 +22,20 @@ MonoBehaviour:
     requiredCount: 2
     constants:
       keys:
-      - hpBonus
+      - healthPercent
       values:
-      - 20
+      - 0.25
   - tier: 2
     requiredCount: 4
     constants:
       keys:
-      - hpBonus
+      - healthPercent
       values:
-      - 40
+      - 0.4
+  - tier: 3
+    requiredCount: 6
+    constants:
+      keys:
+      - healthPercent
+      values:
+      - 0.6

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
+  m_Name: "\uBE44\uC804 \uB9C8\uBC95\uC0AC"
+  m_EditorClassIdentifier:
+  id: 2
+  displayName: "\uBE44\uC804 \uB9C8\uBC95\uC0AC"
+  description: "\uC544\uAD70\uC774 \uC8FC\uBB38\uB825 @spellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4. \uBE44\uC804 \uB9C8\uBC95\uC0AC\uB294 @arcanistSpellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4."
+  icon: {fileID: 0}
+  synergyType: 0
+  tiers:
+  - tier: 1
+    requiredCount: 2
+    constants:
+      keys:
+      - spellPower
+      - arcanistSpellPower
+      values:
+      - 15
+      - 25
+  - tier: 2
+    requiredCount: 4
+    constants:
+      keys:
+      - spellPower
+      - arcanistSpellPower
+      values:
+      - 20
+      - 50
+  - tier: 3
+    requiredCount: 6
+    constants:
+      keys:
+      - spellPower
+      - arcanistSpellPower
+      values:
+      - 35
+      - 70

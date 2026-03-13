@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
-  m_Name: "\uB0C9\uAE30 \uC2DC\uB108\uC9C0"
-  m_EditorClassIdentifier: 
-  id: 2
-  displayName: "\uB0C9\uAE30"
-  description: "\uB0C9\uAE30 \uC18C\uD658\uC218\uC758 \uACF5\uACA9\uC774 @slowPercent@%\uC758
-    \uC774\uB3D9\uC18D\uB3C4 \uAC10\uC18C\uB97C \uBD80\uC5EC\uD55C\uB2E4."
+  m_Name: "\uCD1D\uC7A1\uC774"
+  m_EditorClassIdentifier:
+  id: 5
+  displayName: "\uCD1D\uC7A1\uC774"
+  description: "\uCD1D\uC7A1\uC774\uAC00 \uACF5\uACA9\uB825 @attackPercent*100@%\uB97C \uC5BB\uC73C\uBA70, \uAE30\uBCF8 \uACF5\uACA9 4\uD68C\uB9C8\uB2E4 @bonusDamage@\uC758 \uCD94\uAC00 \uBB3C\uB9AC \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
   icon: {fileID: 0}
   synergyType: 0
   tiers:
@@ -23,13 +22,17 @@ MonoBehaviour:
     requiredCount: 2
     constants:
       keys:
-      - slowPercent
+      - attackPercent
+      - bonusDamage
       values:
-      - 20
+      - 0.22
+      - 100
   - tier: 2
     requiredCount: 4
     constants:
       keys:
-      - slowPercent
+      - attackPercent
+      - bonusDamage
       values:
-      - 40
+      - 0.4
+      - 200

@@ -10,33 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
-  m_Name: "\uBC14\uB78C \uC2DC\uB108\uC9C0"
-  m_EditorClassIdentifier: 
-  id: 5
-  displayName: "\uBC14\uB78C"
-  description: "\uBC14\uB78C \uC18C\uD658\uC218\uC758 \uC774\uB3D9\uC18D\uB3C4\uAC00
-    @moveSpeedBonus@% \uC99D\uAC00\uD55C\uB2E4."
+  m_Name: "\uD504\uB810\uC694\uB4DC"
+  m_EditorClassIdentifier:
+  id: 3
+  displayName: "\uD504\uB810\uC694\uB4DC"
+  description: "\uD504\uB810\uC694\uB4DC \uCC54\uD53C\uC5B8\uC774 \uACF5\uACA9 \uC2DC \uB300\uC0C1\uC744 3\uCD08 \uB3D9\uC548 @slowPercent*100@% \uB458\uD654\uD569\uB2C8\uB2E4."
   icon: {fileID: 0}
-  synergyType: 1
+  synergyType: 0
   tiers:
   - tier: 1
     requiredCount: 2
     constants:
       keys:
-      - moveSpeedBonus
+      - slowPercent
+      - slowDuration
       values:
-      - 10
+      - 0.2
+      - 3
   - tier: 2
     requiredCount: 4
     constants:
       keys:
-      - moveSpeedBonus
+      - slowPercent
+      - slowDuration
       values:
-      - 20
+      - 0.35
+      - 3
   - tier: 3
     requiredCount: 6
     constants:
       keys:
-      - moveSpeedBonus
+      - slowPercent
+      - slowDuration
       values:
-      - 35
+      - 0.6
+      - 3

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
+  m_Name: "\uC804\uC7C1\uAE30\uACC4"
+  m_EditorClassIdentifier:
+  id: 4
+  displayName: "\uC804\uC7C1\uAE30\uACC4"
+  description: "\uC804\uC7C1\uAE30\uACC4\uAC00 \uB0B4\uAD6C\uB825\uC744 \uC5BB\uC2B5\uB2C8\uB2E4. \uCCB4\uB825 50% \uC774\uC0C1\uC77C \uACBD\uC6B0 @highDamageReduction*100@%, \uBBF8\uB9CC\uC77C \uACBD\uC6B0 @lowDamageReduction*100@%."
+  icon: {fileID: 0}
+  synergyType: 0
+  tiers:
+  - tier: 1
+    requiredCount: 2
+    constants:
+      keys:
+      - lowDamageReduction
+      - highDamageReduction
+      - healPercent
+      values:
+      - 0.18
+      - 0.25
+      - 0.05
+  - tier: 2
+    requiredCount: 4
+    constants:
+      keys:
+      - lowDamageReduction
+      - highDamageReduction
+      - healPercent
+      values:
+      - 0.2
+      - 0.3
+      - 0.05
+  - tier: 3
+    requiredCount: 6
+    constants:
+      keys:
+      - lowDamageReduction
+      - highDamageReduction
+      - healPercent
+      values:
+      - 0.26
+      - 0.36
+      - 0.05

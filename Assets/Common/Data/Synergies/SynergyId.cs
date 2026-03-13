@@ -4,10 +4,10 @@ namespace Common.Data.Synergies
     public enum SynergyId
     {
         None = 0,
-        Fire = 1,
-        Ice = 2,
-        Lightning = 3,
-        Wind = 4,
-        Earth = 5,
+        Bruiser = 1,
+        Arcanist = 2,
+        Freljord = 3,
+        Warmonger = 4,
+        Gunslinger = 5,
     }
 }
