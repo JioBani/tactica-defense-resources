@@ -111,7 +111,7 @@ namespace Tests.Editor
         /// <summary>SSE를 SynergyStatusEffectContext와 함께 Apply한다.</summary>
         private void ApplyEffect(SynergyStatusEffect<SynergyStatusEffectContext> effect)
         {
-            var context = new SynergyStatusEffectContext(_activation, _definition);
+            var context = new SynergyStatusEffectContext(_activation, _definition, null);
             effect.OnApply(context);
         }
 

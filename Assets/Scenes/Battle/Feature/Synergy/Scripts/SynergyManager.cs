@@ -108,7 +108,7 @@ namespace Scenes.Battle.Feature.Synergy
                         $"{defender.name}에 StatusEffectController가 없습니다.");
 
                 SynergyStatusEffect effect = _synergyStatusEffectFactory.Create(definition.Id);
-                var context = new SynergyStatusEffectContext(activation, definition);
+                var context = new SynergyStatusEffectContext(activation, definition, defender);
                 controller.Apply(effect, context);
             }
         }
