@@ -18,6 +18,9 @@ namespace Common.Scripts.StatusEffect
         private readonly SafeIterationList<StatusEffect> _statusEffects = new();
         private readonly List<IStatusEffectHookProvider> _hookProviders = new();
 
+        /// <summary>인스펙터에서 현재 적용 중인 SE 목록을 확인하기 위한 디버그 리스트.</summary>
+        [SerializeField] private List<string> debugActiveEffects = new();
+
         /// <summary>
         /// SE를 부여한다. OnApply 호출 후 HookProvider에 알림한다.
         /// </summary>
@@ -26,6 +29,7 @@ namespace Common.Scripts.StatusEffect
             statusEffect.Controller = this;
             _statusEffects.Add(statusEffect);
             statusEffect.OnApply(context);
+            debugActiveEffects.Add(statusEffect.GetType().Name);
 
             foreach (var hookProvider in _hookProviders)
                 hookProvider.OnStatusEffectAdded(statusEffect);
@@ -42,6 +46,7 @@ namespace Common.Scripts.StatusEffect
                 hookProvider.OnStatusEffectRemoved(statusEffect);
 
             _statusEffects.Remove(statusEffect);
+            debugActiveEffects.Remove(statusEffect.GetType().Name);
             statusEffect.Controller = null;
         }
 
