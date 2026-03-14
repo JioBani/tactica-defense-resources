@@ -11,11 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
   m_Name: "\uBE44\uC804 \uB9C8\uBC95\uC0AC"
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   id: 2
   displayName: "\uBE44\uC804 \uB9C8\uBC95\uC0AC"
-  description: "\uC544\uAD70\uC774 \uC8FC\uBB38\uB825 @spellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4. \uBE44\uC804 \uB9C8\uBC95\uC0AC\uB294 @arcanistSpellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4."
+  description: "\uC544\uAD70\uC774 \uC8FC\uBB38\uB825 @spellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4.
+    \uBE44\uC804 \uB9C8\uBC95\uC0AC\uB294 @arcanistSpellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4."
   icon: {fileID: 0}
+  statusEffectDefinition: {fileID: 11400000, guid: 9249a9a8d5a207f469e4aabf5b89a9b4, type: 2}
   synergyType: 0
   tiers:
   - tier: 1

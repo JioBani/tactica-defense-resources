@@ -11,11 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
   m_Name: "\uB09C\uB3D9\uAFBC"
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   id: 1
   displayName: "\uB09C\uB3D9\uAFBC"
-  description: "\uB09C\uB3D9\uAFBC\uC774 \uCCB4\uB825\uC744 @healthPercent*100@% \uC5BB\uC2B5\uB2C8\uB2E4."
+  description: "\uB09C\uB3D9\uAFBC\uC774 \uCCB4\uB825\uC744 @healthPercent*100@%
+    \uC5BB\uC2B5\uB2C8\uB2E4."
   icon: {fileID: 0}
+  statusEffectDefinition: {fileID: 11400000, guid: 41697e67b8830274c86e3b03bc94c83e, type: 2}
   synergyType: 0
   tiers:
   - tier: 1

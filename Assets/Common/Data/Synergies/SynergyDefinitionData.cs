@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Data.StatusEffects;
 using Common.Scripts.SpritePreview;
 using UnityEngine;
 
@@ -37,6 +38,13 @@ namespace Common.Data.Synergies
 
         /// <summary>시너지 아이콘</summary>
         public Sprite Icon => icon;
+
+        [Header("상태 효과")]
+        [Tooltip("이 시너지가 부여하는 SE의 정의 데이터")]
+        [SerializeField] private StatusEffectDefinitionData statusEffectDefinition;
+
+        /// <summary>이 시너지가 부여하는 SE의 정의 데이터</summary>
+        public StatusEffectDefinitionData StatusEffectDefinition => statusEffectDefinition;
 
         [Header("시너지 설정")]
         [Tooltip("시너지 종류 (소환술사 효과 / 소환수 특성)")]
