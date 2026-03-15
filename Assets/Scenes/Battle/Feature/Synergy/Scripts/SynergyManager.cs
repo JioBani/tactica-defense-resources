@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────
 // SynergyManager: 시너지 갱신 트리거, Defender 그룹핑, SynergyActivation 관리를 담당한다.
-// 티어 활성화 시 대상 Defender의 StatusEffectController에 SSE를 직접 Apply한다.
+// 티어 변경 감지 시 SynergyController에 위임하여 효과 적용을 수행한다.
 // 소환술사 편성 시스템 구현 시 allSynergies 주입 방식을 교체한다.
 // ─────────────────────────────────────────────
 using System.Collections.Generic;
@@ -8,7 +8,6 @@ using Common.Data.Synergies;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.SceneSingleton;
 using Common.Scripts.SerializableDictionary;
-using Common.Scripts.StatusEffect;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
@@ -22,7 +21,7 @@ namespace Scenes.Battle.Feature.Synergy
         [SerializeField] private DefenderManager defenderManager;
 
         private readonly Dictionary<SynergyDefinitionData, SynergyActivation> _synergyActivations = new();
-        private readonly SynergyStatusEffectFactory _synergyStatusEffectFactory = new();
+        private readonly Dictionary<SynergyDefinitionData, SynergyController> _controllers = new();
 
         /// <summary>모든 시너지 상태 목록. UI 표시 등 외부 조회용.</summary>
         public IReadOnlyDictionary<SynergyDefinitionData, SynergyActivation> SynergyActivations => _synergyActivations;
@@ -48,13 +47,16 @@ namespace Scenes.Battle.Feature.Synergy
             GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(OnDefenderChanged);
         }
 
-        /// <summary>allSynergies 목록으로부터 모든 SynergyActivation를 미리 생성한다.</summary>
+        /// <summary>allSynergies 목록으로부터 모든 SynergyActivation과 SynergyController를 미리 생성한다.</summary>
         private void InitializeSynergyActivations()
         {
             foreach (SynergyDefinitionData definition in allSynergies)
             {
-                if (definition != null)
-                    _synergyActivations[definition] = new SynergyActivation(definition);
+                if (definition == null) continue;
+
+                var activation = new SynergyActivation(definition);
+                _synergyActivations[definition] = activation;
+                _controllers[definition] = SynergyControllerFactory.Instance.Create(activation);
             }
         }
 
@@ -79,38 +81,23 @@ namespace Scenes.Battle.Feature.Synergy
                 int uniqueCount = CountUnique(grouped.GetValueOrDefault(definition));
                 TierChangeResult result = activation.Recalculate(uniqueCount);
 
-                if (result.Changed)
+                if (!result.Changed) continue;
+
+                SynergyController controller = _controllers[definition];
+
+                if (!result.PreviousTier.HasValue && activation.ActiveTier.Value.HasValue)
                 {
-                    // 비활성→활성 전환 시 대상 Defender에 SSE Apply
-                    if (!result.PreviousTier.HasValue && activation.ActiveTier.Value.HasValue)
-                        ApplySynergyEffects(definition, activation, grouped.GetValueOrDefault(definition));
+                    // 비활성→활성 전환
+                    controller.OnActivated(grouped.GetValueOrDefault(definition));
+                }
+                else if (result.PreviousTier.HasValue && !activation.ActiveTier.Value.HasValue)
+                {
+                    // 활성→비활성 전환
+                    controller.OnDeactivated();
                 }
             }
 
             UpdateDebugStatus();
-        }
-
-        /// <summary>
-        /// 시너지가 활성화될 때, 해당 시너지를 보유한 Defender들에게 SSE를 Apply한다.
-        /// </summary>
-        private void ApplySynergyEffects(
-            SynergyDefinitionData definition,
-            SynergyActivation activation,
-            List<Defender> defenders)
-        {
-            if (defenders == null) return;
-
-            foreach (Defender defender in defenders)
-            {
-                StatusEffectController controller = defender.StatusEffectController;
-                if (controller == null)
-                    throw new MissingComponentException(
-                        $"{defender.name}에 StatusEffectController가 없습니다.");
-
-                SynergyStatusEffect effect = _synergyStatusEffectFactory.Create(definition.Id);
-                var context = new SynergyStatusEffectContext(activation, definition, defender);
-                controller.Apply(effect, context);
-            }
         }
 
         /// <summary>
