@@ -5,15 +5,19 @@
 // TContext 제네릭으로 확장 Context를 타입 안전하게 사용할 수 있다.
 // ─────────────────────────────────────────────
 using System;
+using Common.Data.StatusEffects;
 using Common.Data.Synergies;
 using Common.Scripts.StatusEffect;
 
 namespace Scenes.Battle.Feature.Synergy
 {
     /// <summary>
-    /// 시너지 전용 SE의 비제네릭 기본 클래스. Factory 반환 타입으로 사용된다.
+    /// 시너지 전용 SE의 비제네릭 기본 클래스. SynergyController가 생성하여 Defender에 부여한다.
     /// </summary>
-    public abstract class SynergyStatusEffect : StatusEffect { }
+    public abstract class SynergyStatusEffect : StatusEffect
+    {
+        protected SynergyStatusEffect(StatusEffectDefinitionData definition) : base(definition) { }
+    }
 
     /// <summary>
     /// StatusEffect를 상속하는 시너지 전용 SE 추상 클래스.
@@ -23,6 +27,7 @@ namespace Scenes.Battle.Feature.Synergy
     public abstract class SynergyStatusEffect<TContext> : SynergyStatusEffect
         where TContext : SynergyStatusEffectContext
     {
+        protected SynergyStatusEffect(StatusEffectDefinitionData definition) : base(definition) { }
         /// <summary>이 효과가 속한 시너지 정의 데이터.</summary>
         protected SynergyDefinitionData Definition { get; private set; }
 

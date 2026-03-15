@@ -11,6 +11,8 @@ namespace Tests.Editor
 
         private class TestStatusEffect : StatusEffect
         {
+            public TestStatusEffect() : base(null) { }
+
             public readonly List<string> CallLog = new();
 
             public override void OnApply(StatusEffectContext context)
@@ -151,11 +153,16 @@ namespace Tests.Editor
 
         private class HookImplementingEffect : StatusEffect, ITestHook
         {
+            public HookImplementingEffect() : base(null) { }
+
             public int EventCount;
             public void OnTestEvent() => EventCount++;
         }
 
-        private class NonHookEffect : StatusEffect { }
+        private class NonHookEffect : StatusEffect
+        {
+            public NonHookEffect() : base(null) { }
+        }
 
         private class TestGenericHookProvider : StatusEffectHookProvider<ITestHook>
         {

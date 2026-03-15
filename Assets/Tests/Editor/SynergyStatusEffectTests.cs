@@ -138,6 +138,8 @@ namespace Tests.Editor
         /// <summary>콜백 호출을 기록하는 테스트용 SynergyStatusEffect 구현체.</summary>
         private class RecordingSynergyStatusEffect : SynergyStatusEffect<SynergyStatusEffectContext>
         {
+            public RecordingSynergyStatusEffect() : base(null) { }
+
             public readonly List<SynergyTier> ActivatedTiers = new();
             public readonly List<SynergyTier> TierChangedTiers = new();
             public int DeactivatedCount;

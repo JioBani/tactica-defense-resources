@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────
 // BruiserSynergyStatusEffect: 난동꾼 시너지. 보유 유닛의 MaxHealth에 티어별 % 수정자를 적용한다.
 // ─────────────────────────────────────────────
+using Common.Data.StatusEffects;
 using Common.Data.Synergies;
 using Scenes.Battle.Feature.Units.UnitStats;
 
@@ -12,6 +13,7 @@ namespace Scenes.Battle.Feature.Synergy.SynergyEffects
     /// </summary>
     public class BruiserSynergyStatusEffect : SynergyStatusEffect<SynergyStatusEffectContext>
     {
+        public BruiserSynergyStatusEffect(StatusEffectDefinitionData definition) : base(definition) { }
         private const string HealthPercentKey = "healthPercent";
 
         protected override void OnSynergyActivated(SynergyTier tier)

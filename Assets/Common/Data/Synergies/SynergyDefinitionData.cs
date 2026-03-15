@@ -40,10 +40,10 @@ namespace Common.Data.Synergies
         public Sprite Icon => icon;
 
         [Header("상태 효과")]
-        [Tooltip("이 시너지가 부여하는 SE의 정의 데이터")]
+        [Tooltip("이 시너지가 부여하는 SSE의 정의 데이터")]
         [SerializeField] private StatusEffectDefinitionData statusEffectDefinition;
 
-        /// <summary>이 시너지가 부여하는 SE의 정의 데이터</summary>
+        /// <summary>이 시너지가 부여하는 SSE의 정의 데이터</summary>
         public StatusEffectDefinitionData StatusEffectDefinition => statusEffectDefinition;
 
         [Header("시너지 설정")]

@@ -60,7 +60,7 @@ namespace Tests.Editor
         public void OnSynergyActivated_AddsPercentModifierToMaxHealth()
         {
             _activation.Recalculate(2); // 1티어 활성화
-            var effect = new BruiserSynergyStatusEffect();
+            var effect = new BruiserSynergyStatusEffect(null);
             ApplyEffect(effect);
 
             float expected = BaseMaxHealth * (1f + Tier1HealthPercent);
@@ -73,7 +73,7 @@ namespace Tests.Editor
         public void OnSynergyTierChanged_UpdatesModifierValue()
         {
             _activation.Recalculate(2); // 1티어
-            var effect = new BruiserSynergyStatusEffect();
+            var effect = new BruiserSynergyStatusEffect(null);
             ApplyEffect(effect);
 
             _activation.Recalculate(4); // 2티어로 변경
@@ -88,7 +88,7 @@ namespace Tests.Editor
         public void OnSynergyDeactivated_RemovesModifier()
         {
             _activation.Recalculate(2); // 1티어
-            var effect = new BruiserSynergyStatusEffect();
+            var effect = new BruiserSynergyStatusEffect(null);
             ApplyEffect(effect);
 
             _activation.Recalculate(0); // 비활성화
@@ -102,7 +102,7 @@ namespace Tests.Editor
         public void OnRemove_RemovesModifier()
         {
             _activation.Recalculate(2); // 1티어
-            var effect = new BruiserSynergyStatusEffect();
+            var effect = new BruiserSynergyStatusEffect(null);
             ApplyEffect(effect);
 
             effect.OnRemove();
@@ -115,7 +115,7 @@ namespace Tests.Editor
         [Test]
         public void OnApply_WhenInactive_DoesNotAddModifier()
         {
-            var effect = new BruiserSynergyStatusEffect();
+            var effect = new BruiserSynergyStatusEffect(null);
             ApplyEffect(effect);
 
             Assert.AreEqual(BaseMaxHealth, _unit.StatSheet.MaxHealth.CurrentValue, 0.01f);
