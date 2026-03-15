@@ -24,7 +24,7 @@ namespace Scenes.Battle.Feature.Unit.Skills.Executables
                 _victim.Unit.StatSheet,
                 DamageType.Physical
             );
-            _victim.Hit(damage);
+            _victim.Hit(damage, _attacker);
         }
 
         protected override void EndExecuting()

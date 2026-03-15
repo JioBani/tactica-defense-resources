@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Common.Scripts.DynamicRepeater;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.Units.ActionStates;
-using Scenes.Battle.Feature.Unit.Attackers.AttackContexts;
-using Scenes.Battle.Feature.Unit.Attackers.AttackContexts.Dtos;
 using Scenes.Battle.Feature.Unit.Skills.Castables;
 using Scenes.Battle.Feature.Units.Attackables;
 using UnityEngine;
@@ -26,8 +24,10 @@ namespace Scenes.Battle.Feature.Units.Attackers
         public Action<Victim> OnTargetEnter;
         public Action<Victim> OnTargetExit;
 
+        /// <summary>공격이 대상에 적중했을 때 발생한다. HookProvider가 구독하여 SE에 전달한다.</summary>
+        public event Action<Victim> OnAttackHitEvent;
+
         private DynamicRepeater _attackRepeater;
-        private AttackContextDto _attackContextDto;
         /// <summary>사거리 내에 있는 적 Victim 목록. 타겟 소실 시 재탐색에 사용한다.</summary>
         private readonly List<Victim> _victimsInRange = new();
 
@@ -123,6 +123,9 @@ namespace Scenes.Battle.Feature.Units.Attackers
             }
         }
 
+        /// <summary>공격 적중을 알린다. Victim.Hit에서 호출된다.</summary>
+        public void NotifyAttackHit(Victim victim) => OnAttackHitEvent?.Invoke(victim);
+
         private void OnDestroy()
         {
             unit.OnSpawnEvent -= SetStats;
@@ -177,16 +180,6 @@ namespace Scenes.Battle.Feature.Units.Attackers
             if (_victim != null)
             {
                 _attackCast.Cast();
-                
-                // AttackContextDto attackContextDto = new AttackContextDto(
-                //     damage: unit.StatSheet.PhysicalAttack.CurrentValue,
-                //     attacker: this,
-                //     victim: _victim
-                // );
-                //
-                // var context = AttackContextFactory.Instance.GenerateRanged(attackContextDto);
-                //
-                // context.TryAttack();
             }
         }
 
