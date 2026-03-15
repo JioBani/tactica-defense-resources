@@ -2,8 +2,6 @@
 using Common.Data.Units.UnitStatsByLevel;
 using Common.Scripts.DynamicRepeater;
 using Common.Scripts.StateBase;
-using Scenes.Battle.Feature.Unit.Attackers.AttackContexts;
-using Scenes.Battle.Feature.Unit.Attackers.AttackContexts.Dtos;
 using Scenes.Battle.Feature.Unit.Skills.Castables;
 using Scenes.Battle.Feature.Units.ActionStates;
 using Scenes.Battle.Feature.Units.Attackables;
@@ -27,8 +25,6 @@ namespace Scenes.Battle.Feature.Unit.Skills.Caster
         public Action<Victim> OnTargetExit;
 
         private DynamicRepeater _attackRepeater;
-        private AttackContextDto _attackContextDto;
-
         private AttackCast _attackCast;
 
         private void Awake()
@@ -136,15 +132,6 @@ namespace Scenes.Battle.Feature.Unit.Skills.Caster
             if (_victim != null)
             {
                 _attackCast.Cast();
-                // AttackContextDto attackContextDto = new AttackContextDto(
-                //     damage: unit.StatSheet.PhysicalAttack.CurrentValue,
-                //     attacker: this,
-                //     victim: _victim
-                // );
-                //
-                // var context = AttackContextFactory.Instance.GenerateRanged(attackContextDto);
-                //
-                // context.TryAttack();
             }
         }
 
