@@ -4,6 +4,7 @@ using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.Draggable;
 using Common.Scripts.Enums;
 using Common.Scripts.GlobalEventBus;
+using Common.Scripts.StatusEffect;
 using Scenes.Battle.Feature.Events.RoundEvents;
 using Scenes.Battle.Feature.Units.ActionStates;
 using Scenes.Battle.Feature.Units.Attackers;
@@ -20,7 +21,12 @@ namespace Scenes.Battle.Feature.Units
         [SerializeField] protected HealthBar healthBar;
         [SerializeField] private ActionStateController actionStateController;
         public ActionStateController ActionStateController => actionStateController;
-        
+
+        [SerializeField] private StatusEffectController statusEffectController;
+
+        /// <summary>이 유닛의 SE 관리자. 시너지 효과 등 SE를 부여받을 때 사용.</summary>
+        public StatusEffectController StatusEffectController => statusEffectController;
+
         protected Draggable2D Draggable;
 
         public UnitLoadOutData UnitLoadOutData;

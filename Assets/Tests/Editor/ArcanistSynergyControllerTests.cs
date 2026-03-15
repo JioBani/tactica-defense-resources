@@ -144,7 +144,7 @@ namespace Tests.Editor
             var sec = go.AddComponent<StatusEffectController>();
             var defender = go.AddComponent<StubDefender>();
 
-            var secField = typeof(Defender)
+            var secField = typeof(Unit)
                 .GetField("statusEffectController", BindingFlags.NonPublic | BindingFlags.Instance);
             secField.SetValue(defender, sec);
 
