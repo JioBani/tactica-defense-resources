@@ -30,9 +30,10 @@ namespace Scenes.Battle.Feature.Synergy
         {
             return activation.Definition.Id switch
             {
-                SynergyId.Bruiser => new BruiserSynergyController(activation),
-                SynergyId.Arcanist => new ArcanistSynergyController(
+                SynergyId.Bruiser => new BruiserSynergyController(activation),       // 난동꾼: MaxHealth % 버프
+                SynergyId.Arcanist => new ArcanistSynergyController(               // 비전 마법사: 아군 주문력 버프
                     activation, defenderManager, arcanistSpellPowerDefinition),
+                SynergyId.Freljord => new FreljordSynergyController(activation),   // 프렐요드: 공격 시 대상 둔화
                 // _ => throw new ArgumentException(
                 //     $"시너지 '{activation.Definition.Id}'에 대한 SynergyController가 구현되지 않았습니다.")
                 _ => new BruiserSynergyController(activation)
