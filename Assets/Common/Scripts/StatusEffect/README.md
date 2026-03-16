@@ -101,9 +101,9 @@ statusEffectController.RemoveImmediate(effect);
 |--------|------|------|
 | `Apply(se, context)` | public | SE 부여 |
 | `RemoveImmediate(se)` | public | SE 즉시 제거 |
-| `AddHookProvider(hh)` | protected | HookProvider 등록 |
-| `AddHookProviders(hh...)` | protected | 여러 HookProvider 등록 |
-| `RemoveHookProvider(hh)` | protected | HookProvider 해제 |
+| `AddHookProvider(hh)` | public | HookProvider 등록 |
+| `AddStatusEffectController(hh...)` | public | 여러 HookProvider 등록 |
+| `RemoveHookProvider(hh)` | public | HookProvider 해제 |
 
 ### IStatusEffectHookProvider
 
@@ -175,20 +175,72 @@ public class DamageHookProvider : StatusEffectHookProvider<IOnDamagedHook>
 }
 ```
 
-### 3. SEController 서브클래스에서 등록
+### 3. 바인더 컴포넌트로 등록 (조립식)
+
+HookProvider는 **바인더 컴포넌트**(MonoBehaviour)를 통해 프리팹에 조립한다.
+SEController를 서브클래싱하지 않고, 필요한 훅만 선택적으로 부착할 수 있다.
+
+바인더 파일에는 **Binder(MonoBehaviour) + Provider + Hook 인터페이스**를 한 파일에 선언한다.
+파일명은 MonoBehaviour 기준으로 한다 (Unity 제약).
 
 ```csharp
-public class DefenderStatusEffectController : StatusEffectController
+// DamageHookBinder.cs — 한 파일에 Binder + Provider + Interface
+public class DamageHookBinder : MonoBehaviour
 {
-    private DamageHookProvider _damageHookProvider;
+    [SerializeField] private StatusEffectController statusEffectController;
+    [SerializeField] private Victim victim; // 이벤트 소스
 
     private void Awake()
     {
-        _damageHookProvider = new DamageHookProvider();
-        AddHookProvider(_damageHookProvider);
+        if (statusEffectController != null && victim != null)
+            statusEffectController.AddHookProvider(new DamageHookProvider(victim));
     }
 }
+
+public class DamageHookProvider : StatusEffectHookProvider<IOnDamagedHook>
+{
+    public DamageHookProvider(Victim victim)
+    {
+        victim.OnDamaged += HandleDamaged;
+    }
+
+    private void HandleDamaged(float damage)
+    {
+        foreach (var se in StatusEffects)
+            se.OnDamaged(damage);
+    }
+
+    public override void Dispose() { /* 구독 해제 */ }
+}
+
+public interface IOnDamagedHook : IStatusEffectHook
+{
+    void OnDamaged(float damage);
+}
 ```
+
+#### 프리팹 구조
+
+바인더들은 Unit.prefab의 `StatusEffectController` 자식 오브젝트에 부착한다.
+Variant(Defender, Aggressor)가 자동으로 상속받는다.
+
+```
+Unit
+├── Attacker
+├── Victim
+├── HealthBar
+└── StatusEffectController          ← 빈 GameObject
+    ├── [AttackHitHookBinder]
+    ├── [ActionStateHookBinder]
+    └── [새 바인더 추가 시 여기에 부착]
+```
+
+### 기존 훅 구현 목록
+
+| 파일 | 훅 인터페이스 | 이벤트 소스 | 용도 |
+|------|--------------|------------|------|
+| `AttackHitHookBinder.cs` | `IOnAttackHitHook` | `Attacker.OnAttackHitEvent` | 공격 적중 시 반응 (프렐요드 둔화 등) |
+| `ActionStateHookBinder.cs` | `IOnActionStateChangedHook` | `ActionStateController` (IStateListener) | 상태 전환 시 반응 (전쟁기계 사망 회복 등) |
 
 ## 제거 메커니즘
 

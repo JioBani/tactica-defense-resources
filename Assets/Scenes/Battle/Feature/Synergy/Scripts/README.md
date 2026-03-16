@@ -85,10 +85,15 @@ Synergy/Scripts/
 +-- SynergyControllers/
 |   +-- BruiserSynergyController.cs     # 단순형 예시
 |   +-- ArcanistSynergyController.cs    # 복합형 예시
+|   +-- FreljordSynergyController.cs    # 행동 변경형 예시 (공격 적중 훅)
+|   +-- WarmongerSynergyController.cs   # 행동 변경형 예시 (상태 변경 훅 + 외부 의존성)
 +-- SynergyEffects/
     +-- BruiserSynergyStatusEffect.cs   # SSE 예시
     +-- ArcanistSynergyStatusEffect.cs  # SSE 예시
     +-- ArcanistSpellPowerEffect.cs     # TLSE 예시
+    +-- FreljordSynergyStatusEffect.cs  # IOnAttackHitHook 구현 SSE
+    +-- FreljordFrostEffect.cs          # 피해자에 부여되는 둔화 SE
+    +-- WarmongerSynergyStatusEffect.cs # IOnActionStateChangedHook 구현 SSE
 ```
 
 ---
@@ -290,3 +295,84 @@ SynergyId.NewSynergy => new NewComplexController(
 ```
 
 인스펙터에서 `newSubEffectDefinition`에 SO 에셋을 할당한다.
+
+---
+
+### 행동 변경형 (프렐요드/전쟁기계 패턴 -- HookProvider 훅 활용)
+
+스탯 버프가 아니라 **게임 이벤트에 반응**하는 시너지. SSE가 HookProvider의 훅 인터페이스를 구현한다.
+
+> HookProvider 시스템의 상세는 `Assets/Common/Scripts/StatusEffect/README.md`를 참조한다.
+
+#### 사용 가능한 훅
+
+| 훅 인터페이스 | 바인더 | 반응 시점 |
+|--------------|--------|----------|
+| `IOnAttackHitHook` | `AttackHitHookBinder` | 공격 적중 시 |
+| `IOnActionStateChangedHook` | `ActionStateHookBinder` | 행동 상태 Enter/Exit 시 |
+
+새 훅이 필요하면 `StatusEffect/HookProvider/`에 바인더 파일을 추가하고 프리팹의 StatusEffectController에 부착한다.
+
+#### 1. SSE에 훅 인터페이스 구현
+
+```csharp
+public class NewHookSynergyStatusEffect
+    : SynergyStatusEffect<SynergyStatusEffectContext>, IOnAttackHitHook
+{
+    public NewHookSynergyStatusEffect(StatusEffectDefinitionData definition)
+        : base(definition) { }
+
+    // ── 시너지 생명주기 ──
+
+    protected override void OnSynergyActivated(SynergyTier tier)
+    {
+        // 티어 상수 캐싱
+    }
+
+    protected override void OnSynergyTierChanged(SynergyTier newTier) { }
+    protected override void OnSynergyDeactivated() { }
+    public override void OnRemove() { base.OnRemove(); }
+
+    // ── 훅 구현 ──
+
+    public void OnAttackHit(Victim victim)
+    {
+        // 공격 적중 시 실행할 로직
+        // 예: 피해자에 SE 부여, 추가 데미지, 회복 등
+    }
+}
+```
+
+SSE가 훅 인터페이스를 구현하면, SEController에 등록된 HookProvider가 자동으로 캐싱하고 이벤트 발생 시 호출한다.
+프리팹의 StatusEffectController에 해당 바인더가 부착되어 있어야 한다.
+
+#### 2. 외부 의존성이 필요한 경우
+
+SSE가 DefenderManager 등 외부 참조가 필요하면 Controller에서 주입한다.
+
+```csharp
+// Controller
+public class NewHookController : SynergyController
+{
+    private readonly DefenderManager _defenderManager;
+
+    public NewHookController(SynergyActivation activation, DefenderManager defenderManager)
+        : base(activation)
+    {
+        _defenderManager = defenderManager;
+    }
+
+    protected override SynergyStatusEffect CreateSynergyStatusEffect()
+    {
+        return new NewHookSynergyStatusEffect(
+            Definition.StatusEffectDefinition, _defenderManager);
+    }
+}
+```
+
+#### 실제 구현 예시
+
+| 시너지 | 훅 | 동작 |
+|--------|-----|------|
+| 프렐요드 | `IOnAttackHitHook` | 공격 적중 시 대상에 `FreljordFrostEffect`(둔화 SE) 부여. 재적중 시 리프레시 |
+| 전쟁기계 | `IOnActionStateChangedHook` | Downed 진입 시 `DefenderManager`에서 전쟁기계 아군을 찾아 MaxHealth 5% 회복 |
