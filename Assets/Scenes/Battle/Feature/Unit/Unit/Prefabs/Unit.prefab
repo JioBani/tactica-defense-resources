@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 6465798290088026175}
   - component: {fileID: 1071765619771846872}
   - component: {fileID: 8823161126908754908}
-  - component: {fileID: 2092433516613846753}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -41,6 +40,7 @@ Transform:
   - {fileID: 3456320583479363228}
   - {fileID: 7482733942192943568}
   - {fileID: 5581853005518584723}
+  - {fileID: 969397747188063004}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7228315515101810788
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2705233270346214916}
   actionStateController: {fileID: 1071765619771846872}
-  statusEffectController: {fileID: 2092433516613846753}
+  statusEffectController: {fileID: 1136793850907438746}
   UnitLoadOutData: {fileID: 0}
   fraction: 0
 --- !u!114 &1071765619771846872
@@ -249,19 +249,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31cb197c3823718488337811be842ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2092433516613846753
+--- !u!1 &6265633359773830934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969397747188063004}
+  - component: {fileID: 1136793850907438746}
+  - component: {fileID: 1309106703001505378}
+  - component: {fileID: 6155362243094151683}
+  m_Layer: 0
+  m_Name: StatusEffectController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &969397747188063004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6265633359773830934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6336723785988438599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1136793850907438746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714470639557013153}
+  m_GameObject: {fileID: 6265633359773830934}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7efe8bf2cee4e814cb7da30d7caec1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugActiveEffects: []
+--- !u!114 &1309106703001505378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6265633359773830934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6146e7f574edfd448789b7c39f2d78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusEffectController: {fileID: 1136793850907438746}
+  actionStateController: {fileID: 1071765619771846872}
+--- !u!114 &6155362243094151683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6265633359773830934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b808a40a8f9151488526736670177d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusEffectController: {fileID: 1136793850907438746}
+  attacker: {fileID: 5193920713948900330}
 --- !u!1 &7653174561868628949
 GameObject:
   m_ObjectHideFlags: 0

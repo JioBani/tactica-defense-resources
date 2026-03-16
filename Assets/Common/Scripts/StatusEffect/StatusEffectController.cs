@@ -50,8 +50,8 @@ namespace Common.Scripts.StatusEffect
             statusEffect.Controller = null;
         }
 
-        /// <summary>HookProvider를 등록한다.</summary>
-        protected void AddHookProvider(IStatusEffectHookProvider hookProvider)
+        /// <summary>HookProvider를 등록한다. 바인더 컴포넌트에서 호출한다.</summary>
+        public void AddHookProvider(IStatusEffectHookProvider hookProvider)
         {
             _hookProviders.Add(hookProvider);
         }
