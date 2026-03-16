@@ -34,6 +34,8 @@ namespace Scenes.Battle.Feature.Synergy
                 SynergyId.Arcanist => new ArcanistSynergyController(               // 비전 마법사: 아군 주문력 버프
                     activation, defenderManager, arcanistSpellPowerDefinition),
                 SynergyId.Freljord => new FreljordSynergyController(activation),   // 프렐요드: 공격 시 대상 둔화
+                SynergyId.Warmonger => new WarmongerSynergyController(          // 전쟁기계: 조건부 피해감소 + 사망 시 회복
+                    activation, defenderManager),
                 // _ => throw new ArgumentException(
                 //     $"시너지 '{activation.Definition.Id}'에 대한 SynergyController가 구현되지 않았습니다.")
                 _ => new BruiserSynergyController(activation)
