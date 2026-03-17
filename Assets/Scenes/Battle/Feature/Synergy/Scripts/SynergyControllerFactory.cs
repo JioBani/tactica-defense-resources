@@ -36,6 +36,7 @@ namespace Scenes.Battle.Feature.Synergy
                 SynergyId.Freljord => new FreljordSynergyController(activation),   // 프렐요드: 공격 시 대상 둔화
                 SynergyId.Warmonger => new WarmongerSynergyController(          // 전쟁기계: 조건부 피해감소 + 사망 시 회복
                     activation, defenderManager),
+                SynergyId.Gunslinger => new GunslingerSynergyController(activation), // 총잡이: 공격력 % + 4회 공격 추가 피해
                 // _ => throw new ArgumentException(
                 //     $"시너지 '{activation.Definition.Id}'에 대한 SynergyController가 구현되지 않았습니다.")
                 _ => new BruiserSynergyController(activation)
