@@ -34,7 +34,7 @@ namespace Scenes.Battle.Feature.Unit.Skills.Executables
                 DamageType.Magical
             );
 
-            _victim.Hit(damage);
+            _victim.Hit(new AttackContext(damage, _attacker, _victim));
             EndExecute();
         }
 

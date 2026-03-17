@@ -87,7 +87,7 @@ namespace Tests.Editor
             _activation.Recalculate(2);
             var effect = CreateAndApplyEffect();
 
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             float expected = BaseMoveSpeed * (1f - Tier1SlowPercent);
             Assert.AreEqual(expected, _victimUnit.StatSheet.MoveSpeed.CurrentValue, 0.01f);
@@ -101,8 +101,8 @@ namespace Tests.Editor
             _activation.Recalculate(2);
             var effect = CreateAndApplyEffect();
 
-            effect.OnAttackHit(_victim);
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             float expected = BaseMoveSpeed * (1f - Tier1SlowPercent);
             Assert.AreEqual(expected, _victimUnit.StatSheet.MoveSpeed.CurrentValue, 0.01f);
@@ -115,7 +115,7 @@ namespace Tests.Editor
         {
             _activation.Recalculate(2);
             var effect = CreateAndApplyEffect();
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             _activation.Recalculate(0);
 
@@ -129,7 +129,7 @@ namespace Tests.Editor
         {
             _activation.Recalculate(2);
             var effect = CreateAndApplyEffect();
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             _activation.Recalculate(4);
 
@@ -148,7 +148,7 @@ namespace Tests.Editor
             _activation.Recalculate(4);
 
             // 티어 변경 후 첫 적중
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             float expected = BaseMoveSpeed * (1f - Tier2SlowPercent);
             Assert.AreEqual(expected, _victimUnit.StatSheet.MoveSpeed.CurrentValue, 0.01f);
@@ -161,7 +161,7 @@ namespace Tests.Editor
         {
             _activation.Recalculate(2);
             var effect = CreateAndApplyEffect();
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             effect.OnRemove();
 
@@ -175,7 +175,7 @@ namespace Tests.Editor
         {
             var effect = CreateAndApplyEffect();
 
-            effect.OnAttackHit(_victim);
+            effect.OnAttackHit(new AttackContext(0, null, _victim));
 
             Assert.AreEqual(BaseMoveSpeed, _victimUnit.StatSheet.MoveSpeed.CurrentValue, 0.01f);
         }

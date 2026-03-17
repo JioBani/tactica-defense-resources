@@ -55,8 +55,9 @@ namespace Scenes.Battle.Feature.Synergy.SynergyEffects
         }
 
         /// <summary>공격 적중 시 호출된다. 대상에게 서리 둔화를 부여하거나 리프레시한다.</summary>
-        public void OnAttackHit(Victim victim)
+        public void OnAttackHit(AttackContext context)
         {
+            var victim = context.Victim;
             var victimUnit = victim.Unit;
 
             if (_activeFrostEffects.TryGetValue(victimUnit, out var existing) && !existing.IsExpired)
@@ -66,8 +67,8 @@ namespace Scenes.Battle.Feature.Synergy.SynergyEffects
             }
 
             var frostEffect = new FreljordFrostEffect(Definition.StatusEffectDefinition, _slowPercent, _slowDuration);
-            var context = new FreljordFrostEffectContext(victimUnit.StatSheet.MoveSpeed);
-            victimUnit.StatusEffectController.Apply(frostEffect, context);
+            var frostContext = new FreljordFrostEffectContext(victimUnit.StatSheet.MoveSpeed);
+            victimUnit.StatusEffectController.Apply(frostEffect, frostContext);
             _activeFrostEffects[victimUnit] = frostEffect;
         }
 

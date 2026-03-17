@@ -39,10 +39,10 @@ namespace Common.Scripts.StatusEffect.HookProvider
         }
 
         /// <summary>공격 적중 시 캐싱된 SE들에게 훅을 전달한다.</summary>
-        private void HandleAttackHit(Victim victim)
+        private void HandleAttackHit(AttackContext context)
         {
             foreach (var hook in StatusEffects)
-                hook.OnAttackHit(victim);
+                hook.OnAttackHit(context);
         }
 
         public override void Dispose()
@@ -58,7 +58,7 @@ namespace Common.Scripts.StatusEffect.HookProvider
     public interface IOnAttackHitHook : IStatusEffectHook
     {
         /// <summary>공격이 적중했을 때 호출된다.</summary>
-        /// <param name="victim">피격된 대상.</param>
-        void OnAttackHit(Victim victim);
+        /// <param name="context">공격 컨텍스트. Source가 null이면 일반 공격.</param>
+        void OnAttackHit(AttackContext context);
     }
 }
