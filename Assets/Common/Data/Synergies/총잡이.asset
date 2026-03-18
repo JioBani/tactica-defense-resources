@@ -18,7 +18,7 @@ MonoBehaviour:
     \uC5BB\uC73C\uBA70, \uAE30\uBCF8 \uACF5\uACA9 4\uD68C\uB9C8\uB2E4 @bonusDamage@\uC758
     \uCD94\uAC00 \uBB3C\uB9AC \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
   icon: {fileID: 0}
-  statusEffectDefinition: {fileID: 11400000, guid: 00362209cb3a3c74ba5237bd54261100, type: 2}
+  statusEffectDefinition: {fileID: 11400000, guid: e006e07db2d7ca54c80701ba57ba868a, type: 2}
   synergyType: 0
   tiers:
   - tier: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
     constants:
       keys:
       - attackPercent
-      - bonusDamage
+      - extraDamage
       values:
       - 0.22
       - 100
@@ -35,7 +35,7 @@ MonoBehaviour:
     constants:
       keys:
       - attackPercent
-      - bonusDamage
+      - extraDamage
       values:
       - 0.4
       - 200

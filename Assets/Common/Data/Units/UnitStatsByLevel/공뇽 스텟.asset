@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth:
     baseValuesByStar:
-    - 1
-    - 1
-    - 1
-    - 1
+    - 10000
+    - 10000
+    - 10000
+    - 10000
     additionalPerExtraStar: 0
   physicalAttack:
     baseValuesByStar:
-    - 1
-    - 1
-    - 1
-    - 1
+    - 100
+    - 100
+    - 100
+    - 100
     additionalPerExtraStar: 0
   magicAttack:
     baseValuesByStar: []
@@ -49,9 +49,9 @@ MonoBehaviour:
     additionalPerExtraStar: 0
   moveSpeed:
     baseValuesByStar:
-    - 10
-    - 10
-    - 10
+    - 3
+    - 3
+    - 3
     additionalPerExtraStar: 0
   criticalChance:
     baseValuesByStar: []

@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "\uB09C\uB3D9\uAFBC\uC774 \uCCB4\uB825\uC744 @healthPercent*100@%
     \uC5BB\uC2B5\uB2C8\uB2E4."
   icon: {fileID: 0}
-  statusEffectDefinition: {fileID: 11400000, guid: 41697e67b8830274c86e3b03bc94c83e, type: 2}
+  statusEffectDefinition: {fileID: 11400000, guid: e006e07db2d7ca54c80701ba57ba868a, type: 2}
   synergyType: 0
   tiers:
   - tier: 1

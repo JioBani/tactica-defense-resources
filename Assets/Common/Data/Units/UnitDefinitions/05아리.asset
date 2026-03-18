@@ -19,4 +19,4 @@ MonoBehaviour:
   cost: 5
   icon: {fileID: 21300000, guid: ca4eb9a9aa7ac25458bd6fb08aba9d15, type: 3}
   illustration: {fileID: -6486074957344280471, guid: c5d823cdaae53a74189b4f28a040f6c3, type: 3}
-  summonerEffect: {fileID: 11400000, guid: b3cf3a899b2026849817df5d67e445b0, type: 2}
+  summonerEffect: {fileID: 11400000, guid: 9729aa2bf590a684dabb79e72b2f53e1, type: 2}

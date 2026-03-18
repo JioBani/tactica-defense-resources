@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolable: {fileID: 1830640487562455539}
-  speed: 3
+  speed: 10
   hitRadius: 0.5
   maxLifetime: 10
 --- !u!114 &1830640487562455539

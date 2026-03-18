@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "\uC544\uAD70\uC774 \uC8FC\uBB38\uB825 @spellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4.
     \uBE44\uC804 \uB9C8\uBC95\uC0AC\uB294 @arcanistSpellPower@\uC744 \uC5BB\uC2B5\uB2C8\uB2E4."
   icon: {fileID: 0}
-  statusEffectDefinition: {fileID: 11400000, guid: 9249a9a8d5a207f469e4aabf5b89a9b4, type: 2}
+  statusEffectDefinition: {fileID: 11400000, guid: e006e07db2d7ca54c80701ba57ba868a, type: 2}
   synergyType: 0
   tiers:
   - tier: 1
