@@ -72,6 +72,7 @@ public class Attacker : MonoBehaviour
   - `git log --grep="TACD-XXX" --oneline`으로 해당 티켓의 커밋 목록을 먼저 확인한다.
   - 커밋에서 변경된 파일을 `git show --stat <커밋해시>`로 파악한 뒤, 관련 파일을 읽는다.
   - 이 방법이 키워드 기반 Grep/Glob보다 정확하고 빠르다.
+- **서브에이전트로 코드베이스를 탐색할 때는 `/explore-code` 스킬을 사용한다.** 아키텍처 맵 활용과 Git 기반 탐색이 포함되어 기본 탐색보다 효율적이다.
 
 ## 설계 원칙
 
@@ -98,10 +99,11 @@ public class Attacker : MonoBehaviour
 
 - 새로 추가하는 함수와 변수에는 **한글 주석**을 작성한다.
 - 함수는 `/// <summary>` XML doc 형식을 사용한다.
-  - 어떤 역할을 하는 함수인지
-  - 파라미터가 뭘 의미하는지
-  - 왜 추가된 함수인지 (필요 시)
-  - 간결하게 작성한다 (1~3줄)
+  - **summary는 함수의 역할(정의)** 을 작성한다: 언제, 왜 호출되는지.
+  - **구현 세부사항은 함수 본문 안에 inline 주석** 으로 작성한다.
+  - summary에 함수가 내부적으로 하는 일(구현)을 나열하지 않는다.
+  - 파라미터가 뭘 의미하는지 (필요 시)
+  - 간결하게 작성한다 (1~2줄)
 - 변수/필드는 `/// <summary>` 한 줄 형식을 사용한다.
 - 기존 코드에 주석을 추가하지 않는다 (변경한 코드에만 작성)
 - **파일 상단 역할 주석**: 파일의 역할이나 수정 가이드가 클래스명만으로 전달되지 않는 경우, 파일 최상단(namespace 위)에 파일의 책임과 수정 시 참고사항을 간결히 명시한다.
@@ -121,7 +123,15 @@ public class Attacker : MonoBehaviour
 /// <summary>사거리 내에 있는 적 Victim 목록. 타겟 소실 시 재탐색에 사용한다.</summary>
 private readonly List<Victim> _victimsInRange = new();
 
-// 함수 예시
+// 함수 예시 — summary는 역할, 구현 세부사항은 inline
+/// <summary>유효한 타겟이 없을 때 호출된다.</summary>
+private void TryAcquireTarget()
+{
+    // 순회 중 파괴되었거나 다운된 엔트리는 목록에서 제거한다.
+    ...
+}
+
+// BAD — summary에 구현 세부사항을 나열
 /// <summary>
 /// 사거리 내 적 목록에서 유효한 타겟을 찾아 _victim으로 설정한다.
 /// 순회 중 파괴되었거나 다운된 엔트리는 목록에서 제거한다.
