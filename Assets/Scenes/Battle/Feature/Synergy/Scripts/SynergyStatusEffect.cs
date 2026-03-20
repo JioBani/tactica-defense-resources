@@ -37,9 +37,7 @@ namespace Scenes.Battle.Feature.Synergy
         /// <summary>Apply 시 전달된 Context. 서브클래스가 확장 데이터에 접근할 때 사용.</summary>
         protected TContext SynergyContext { get; private set; }
 
-        /// <summary>
-        /// Context에서 SynergyActivation을 수신하고, ActiveTier를 구독한 뒤 활성화 콜백을 호출한다.
-        /// </summary>
+        /// <summary>SE가 Defender에 부여될 때 호출된다.</summary>
         public override void OnApply(StatusEffectContext context)
         {
             SynergyContext = (TContext)context;
@@ -52,11 +50,16 @@ namespace Scenes.Battle.Feature.Synergy
                 OnSynergyActivated(Activation.ActiveTier.Value.Value);
         }
 
-        /// <summary>
-        /// ActiveTier 구독을 해제한다.
-        /// </summary>
+        /// <summary>SE가 제거될 때 호출된다.</summary>
         public override void OnRemove()
         {
+            // 외부에서 RemoveImmediate로 제거된 경우(시너지가 아직 활성 상태),
+            // 스탯 수정자를 정리한다.
+            if (Activation.ActiveTier.Value.HasValue)
+            {
+                OnSynergyDeactivated();
+            }
+
             Activation.ActiveTier.OnChange -= OnActiveTierChanged;
         }
 
@@ -74,10 +77,10 @@ namespace Scenes.Battle.Feature.Synergy
             }
         }
 
-        /// <summary>시너지가 활성화될 때 호출된다. 현재 티어의 상수로 효과를 적용한다.</summary>
+        /// <summary>시너지가 활성화될 때 호출된다.</summary>
         protected virtual void OnSynergyActivated(SynergyTier tier) { }
 
-        /// <summary>시너지가 비활성화될 때 호출된다. 적용한 효과를 해제한다.</summary>
+        /// <summary>시너지가 비활성화될 때 호출된다.</summary>
         protected virtual void OnSynergyDeactivated() { }
 
         /// <summary>시너지가 활성 상태에서 티어가 변경될 때 호출된다.</summary>

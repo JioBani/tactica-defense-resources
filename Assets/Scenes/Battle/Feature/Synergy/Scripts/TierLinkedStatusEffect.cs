@@ -42,9 +42,18 @@ namespace Scenes.Battle.Feature.Synergy
                 OnTierActivated(Activation.ActiveTier.Value.Value);
         }
 
-        /// <summary>ActiveTier 구독을 해제한다.</summary>
+        /// <summary>
+        /// ActiveTier 구독을 해제한다.
+        /// 외부에서 RemoveImmediate로 제거된 경우(시너지가 아직 활성 상태),
+        /// OnTierDeactivated를 호출하여 스탯 수정자를 정리한다.
+        /// </summary>
         public override void OnRemove()
         {
+            if (Activation.ActiveTier.Value.HasValue)
+            {
+                OnTierDeactivated();
+            }
+
             Activation.ActiveTier.OnChange -= OnActiveTierChanged;
         }
 

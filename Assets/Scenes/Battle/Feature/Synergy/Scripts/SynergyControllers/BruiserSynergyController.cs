@@ -8,7 +8,6 @@ namespace Scenes.Battle.Feature.Synergy.SynergyControllers
 {
     /// <summary>
     /// 난동꾼 시너지 컨트롤러. BruiserSSE를 생성하여 부모가 시너지 보유 유닛에 부여한다.
-    /// 추가 효과가 없으므로 OnAfterActivated 오버라이드 불필요.
     /// </summary>
     public class BruiserSynergyController : SynergyController
     {

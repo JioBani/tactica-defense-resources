@@ -32,7 +32,7 @@ namespace Scenes.Battle.Feature.Synergy
             {
                 SynergyId.Bruiser => new BruiserSynergyController(activation),       // 난동꾼: MaxHealth % 버프
                 SynergyId.Arcanist => new ArcanistSynergyController(               // 비전 마법사: 아군 주문력 버프
-                    activation, defenderManager, arcanistSpellPowerDefinition),
+                    activation, arcanistSpellPowerDefinition),
                 SynergyId.Freljord => new FreljordSynergyController(activation),   // 프렐요드: 공격 시 대상 둔화
                 SynergyId.Warmonger => new WarmongerSynergyController(          // 전쟁기계: 조건부 피해감소 + 사망 시 회복
                     activation, defenderManager),

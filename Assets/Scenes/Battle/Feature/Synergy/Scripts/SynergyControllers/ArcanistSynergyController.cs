@@ -1,10 +1,12 @@
 // ─────────────────────────────────────────────
 // ArcanistSynergyController: 비전 마법사 시너지.
 // 시너지 보유 유닛에는 ArcanistSSE(높은 주문력), 비보유 유닛에는 ArcanistSpellPowerEffect(낮은 주문력)를 부여한다.
+// HandlePlacementChanged/HandleDefenderChanged를 override하여 비시너지 Defender 출입도 처리한다.
 // ─────────────────────────────────────────────
 using System.Collections.Generic;
 using Common.Data.StatusEffects;
 using Common.Scripts.StatusEffect;
+using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Synergy.SynergyEffects;
 using Scenes.Battle.Feature.Unit.Defenders;
 
@@ -16,17 +18,16 @@ namespace Scenes.Battle.Feature.Synergy.SynergyControllers
     /// </summary>
     public class ArcanistSynergyController : SynergyController
     {
-        private readonly DefenderManager _defenderManager;
         private readonly StatusEffectDefinitionData _spellPowerEffectDefinition;
-        private readonly HashSet<Defender> _appliedNonSynergyDefenders = new();
+
+        /// <summary>비시너지 Defender와 부여된 SpellPowerEffect 인스턴스의 매핑.</summary>
+        private readonly Dictionary<Defender, ArcanistSpellPowerEffect> _appliedNonSynergyDefenders = new();
 
         public ArcanistSynergyController(
             SynergyActivation activation,
-            DefenderManager defenderManager,
             StatusEffectDefinitionData spellPowerEffectDefinition)
             : base(activation)
         {
-            _defenderManager = defenderManager;
             _spellPowerEffectDefinition = spellPowerEffectDefinition;
         }
 
@@ -36,35 +37,67 @@ namespace Scenes.Battle.Feature.Synergy.SynergyControllers
             return new ArcanistSynergyStatusEffect(Definition.StatusEffectDefinition);
         }
 
-        /// <summary>
-        /// SSE 부여 후, 비전 마법사가 아닌 전체 아군에게 ArcanistSpellPowerEffect를 부여한다.
-        /// </summary>
-        protected override void OnAfterActivated(List<Defender> synergyDefenders)
+        /// <summary>Defender 배치 변경 시 호출된다. 비시너지 Defender의 SpellPowerEffect도 처리한다.</summary>
+        protected override void HandlePlacementChanged(OnDefenderPlacementChangedEventDto dto)
         {
-            List<Defender> allDefenders = _defenderManager.GetBattleAreaDefenders();
-            HashSet<Defender> synergySet = new HashSet<Defender>(synergyDefenders);
+            base.HandlePlacementChanged(dto);
 
-            foreach (Defender defender in allDefenders)
+            if (!HasSynergy(dto.defender) && Activation.ActiveTier.Value.HasValue)
             {
-                if (synergySet.Contains(defender)) continue;
-                if (!_appliedNonSynergyDefenders.Add(defender)) continue;
+                if (dto.placement == Placement.BattleArea)
+                {
+                    ApplySpellPowerToDefender(dto.defender);
+                }
+                else
+                {
+                    RemoveSpellPowerFromDefender(dto.defender);
+                }
+            }
+        }
 
+        /// <summary>Defender 판매(Despawn) 시 호출된다. 비시너지 Defender의 SpellPowerEffect도 해제한다.</summary>
+        protected override void HandleDefenderChanged(OnDefenderChangedEventDto dto)
+        {
+            base.HandleDefenderChanged(dto);
+
+            if (dto.Change == DefenderChanges.Despawn)
+            {
+                RemoveSpellPowerFromDefender(dto.Defender);
+            }
+        }
+
+        /// <summary>비시너지 Defender 추적 상태를 초기화한다.</summary>
+        protected override void OnAfterDeactivated()
+        {
+            _appliedNonSynergyDefenders.Clear();
+        }
+
+        /// <summary>비시너지 Defender에 ArcanistSpellPowerEffect를 부여한다. 중복 적용을 방지한다.</summary>
+        private void ApplySpellPowerToDefender(Defender defender)
+        {
+            if (!_appliedNonSynergyDefenders.ContainsKey(defender))
+            {
                 StatusEffectController controller = defender.StatusEffectController;
                 if (controller == null)
+                {
                     throw new UnityEngine.MissingComponentException(
                         $"{defender.name}에 StatusEffectController가 없습니다.");
+                }
 
                 var effect = new ArcanistSpellPowerEffect(_spellPowerEffectDefinition);
                 var context = new TierLinkedStatusEffectContext(Activation, Definition, defender);
                 controller.Apply(effect, context);
+                _appliedNonSynergyDefenders[defender] = effect;
             }
         }
 
-        /// <summary>추적 상태를 모두 초기화한다.</summary>
-        public override void OnDeactivated()
+        /// <summary>비시너지 Defender에서 ArcanistSpellPowerEffect를 즉시 제거한다.</summary>
+        private void RemoveSpellPowerFromDefender(Defender defender)
         {
-            base.OnDeactivated();
-            _appliedNonSynergyDefenders.Clear();
+            if (_appliedNonSynergyDefenders.Remove(defender, out ArcanistSpellPowerEffect effect))
+            {
+                defender.StatusEffectController.RemoveImmediate(effect);
+            }
         }
     }
 }

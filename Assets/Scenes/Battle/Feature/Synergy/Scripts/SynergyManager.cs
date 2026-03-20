@@ -1,15 +1,12 @@
 // ─────────────────────────────────────────────
-// SynergyManager: 시너지 갱신 트리거, Defender 그룹핑, SynergyActivation 관리를 담당한다.
-// 티어 변경 감지 시 SynergyController에 위임하여 효과 적용을 수행한다.
+// SynergyManager: SynergyController 생성과 Dispose, 디버그 표시를 담당하는 얇은 레이어.
+// 비즈니스 로직은 SynergyController에서 일원 관리한다.
 // 소환술사 편성 시스템 구현 시 allSynergies 주입 방식을 교체한다.
 // ─────────────────────────────────────────────
 using System.Collections.Generic;
 using Common.Data.Synergies;
-using Common.Scripts.GlobalEventBus;
 using Common.Scripts.SceneSingleton;
 using Common.Scripts.SerializableDictionary;
-using Scenes.Battle.Feature.Events;
-using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
 
 namespace Scenes.Battle.Feature.Synergy
@@ -18,7 +15,6 @@ namespace Scenes.Battle.Feature.Synergy
     {
         // TODO: 소환술사 편성 시스템 구현 후, 편성에서 결정된 시너지 목록으로 교체
         [SerializeField] private List<SynergyDefinitionData> allSynergies;
-        [SerializeField] private DefenderManager defenderManager;
 
         private readonly Dictionary<SynergyDefinitionData, SynergyActivation> _synergyActivations = new();
         private readonly Dictionary<SynergyDefinitionData, SynergyController> _controllers = new();
@@ -35,96 +31,33 @@ namespace Scenes.Battle.Feature.Synergy
             InitializeSynergyActivations();
         }
 
-        private void OnEnable()
-        {
-            GlobalEventBus.Subscribe<OnDefenderPlacementChangedEventDto>(OnDefenderPlacementChanged);
-            GlobalEventBus.Subscribe<OnDefenderChangedEventDto>(OnDefenderChanged);
-        }
-
         private void OnDisable()
         {
-            GlobalEventBus.Unsubscribe<OnDefenderPlacementChangedEventDto>(OnDefenderPlacementChanged);
-            GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(OnDefenderChanged);
+            foreach (SynergyController controller in _controllers.Values)
+            {
+                controller.Dispose();
+            }
         }
 
-        /// <summary>allSynergies 목록으로부터 모든 SynergyActivation과 SynergyController를 미리 생성한다.</summary>
+        /// <summary>
+        /// allSynergies 목록으로부터 모든 SynergyActivation과 SynergyController를 생성한다.
+        /// 디버그 갱신을 위해 ActiveTier.OnChange를 구독한다.
+        /// </summary>
         private void InitializeSynergyActivations()
         {
             foreach (SynergyDefinitionData definition in allSynergies)
             {
-                if (definition == null) continue;
+                if (definition == null)
+                {
+                    continue;
+                }
 
                 var activation = new SynergyActivation(definition);
                 _synergyActivations[definition] = activation;
                 _controllers[definition] = SynergyControllerFactory.Instance.Create(activation);
+
+                activation.ActiveTier.OnChange += _ => UpdateDebugStatus();
             }
-        }
-
-        private void OnDefenderPlacementChanged(OnDefenderPlacementChangedEventDto dto)
-        {
-            Recalculate();
-        }
-
-        private void OnDefenderChanged(OnDefenderChangedEventDto dto)
-        {
-            Recalculate();
-        }
-
-        /// <summary>전장 디펜더를 시너지별로 그룹핑하고, 각 SynergyActivation의 카운트·티어를 갱신한다.</summary>
-        private void Recalculate()
-        {
-            List<Defender> battleAreaDefenders = defenderManager.GetBattleAreaDefenders();
-            Dictionary<SynergyDefinitionData, List<Defender>> grouped = GroupBySynergy(battleAreaDefenders);
-
-            foreach ((SynergyDefinitionData definition, SynergyActivation activation) in _synergyActivations)
-            {
-                int uniqueCount = CountUnique(grouped.GetValueOrDefault(definition));
-                TierChangeResult result = activation.Recalculate(uniqueCount);
-
-                if (!result.Changed) continue;
-
-                SynergyController controller = _controllers[definition];
-
-                if (!result.PreviousTier.HasValue && activation.ActiveTier.Value.HasValue)
-                {
-                    // 비활성→활성 전환
-                    controller.OnActivated(grouped.GetValueOrDefault(definition));
-                }
-                else if (result.PreviousTier.HasValue && !activation.ActiveTier.Value.HasValue)
-                {
-                    // 활성→비활성 전환
-                    controller.OnDeactivated();
-                }
-            }
-
-            UpdateDebugStatus();
-        }
-
-        /// <summary>
-        /// 디펜더를 1회 순회하며 보유 시너지별 그룹을 생성한다.
-        /// 시너지 종류(소환술사 효과, 소환수 특성 등)를 구분하지 않는다.
-        /// </summary>
-        private Dictionary<SynergyDefinitionData, List<Defender>> GroupBySynergy(List<Defender> defenders)
-        {
-            Dictionary<SynergyDefinitionData, List<Defender>> grouped = new Dictionary<SynergyDefinitionData, List<Defender>>();
-
-            foreach (Defender defender in defenders)
-            {
-                IReadOnlyList<SynergyDefinitionData> synergies = defender.UnitLoadOutData.Unit.Synergies;
-
-                foreach (SynergyDefinitionData synergy in synergies)
-                {
-                    if (!grouped.TryGetValue(synergy, out List<Defender> list))
-                    {
-                        list = new List<Defender>();
-                        grouped[synergy] = list;
-                    }
-
-                    list.Add(defender);
-                }
-            }
-
-            return grouped;
         }
 
         /// <summary>디버그용: 인스펙터에 시너지 상태를 표시한다.</summary>
@@ -139,23 +72,6 @@ namespace Scenes.Battle.Feature.Synergy
                     : "비활성";
                 debugSynergyStatus[definition.DisplayName] = $"{activation.Count}명 → {tierText}";
             }
-        }
-
-        /// <summary>
-        /// UnitDefinitionData.ID 기준으로 중복을 제거한 유니크 유닛 수를 반환한다.
-        /// </summary>
-        private int CountUnique(List<Defender> defenders)
-        {
-            if (defenders == null || defenders.Count == 0) return 0;
-
-            HashSet<int> uniqueIds = new HashSet<int>();
-
-            foreach (Defender defender in defenders)
-            {
-                uniqueIds.Add(defender.UnitLoadOutData.Unit.ID);
-            }
-
-            return uniqueIds.Count;
         }
     }
 }

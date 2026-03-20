@@ -1,28 +1,13 @@
+using System;
 using System.Collections.Generic;
 using Common.Data.Synergies;
 using Common.Scripts.Rxs;
 
 namespace Scenes.Battle.Feature.Synergy
 {
-    /// <summary>티어 변경 결과. 변경 여부와 이전 티어를 담는다.</summary>
-    public readonly struct TierChangeResult
-    {
-        /// <summary>티어가 변경되었는지 여부.</summary>
-        public readonly bool Changed;
-
-        /// <summary>변경 전 티어. 이전에 비활성이었으면 null.</summary>
-        public readonly SynergyTier? PreviousTier;
-
-        public TierChangeResult(bool changed, SynergyTier? previousTier)
-        {
-            Changed = changed;
-            PreviousTier = previousTier;
-        }
-    }
-
     /// <summary>
     /// 시너지 1개의 카운트·티어 상태를 관리한다.
-    /// SynergyManager가 산출한 유니크 카운트를 받아 임계치를 판정한다.
+    /// Recalculate 호출 시 티어 변경을 감지하여 활성화/변경/비활성화 이벤트를 발행한다.
     /// </summary>
     public class SynergyActivation
     {
@@ -39,6 +24,15 @@ namespace Scenes.Battle.Feature.Synergy
         /// <summary>현재 활성 티어. RxValue로 OnChange 구독이 가능하다. 임계치 미달 시 Value가 null.</summary>
         public RxValue<SynergyTier?> ActiveTier => _activeTier;
 
+        /// <summary>시너지가 비활성에서 활성으로 전환될 때 발행된다. null → tier</summary>
+        public event Action<SynergyTier> OnTierActivated;
+
+        /// <summary>시너지가 활성 상태에서 티어만 변경될 때 발행된다. tier → 다른 tier</summary>
+        public event Action<SynergyTier> OnTierChanged;
+
+        /// <summary>시너지가 활성에서 비활성으로 전환될 때 발행된다. tier → null</summary>
+        public event Action OnTierDeactivated;
+
         public SynergyActivation(SynergyDefinitionData definition)
         {
             _definition = definition;
@@ -46,18 +40,31 @@ namespace Scenes.Battle.Feature.Synergy
 
         /// <summary>
         /// 유니크 카운트를 받아 임계치를 갱신한다.
-        /// 이전 티어와 새 티어가 다르면 변경된 이전 티어를 반환하고, 동일하면 null을 반환한다.
+        /// RxValue.OnChange로 SSE에 알린 뒤, 티어 변경 이벤트를 발행한다.
         /// </summary>
         /// <param name="uniqueCount">UnitDefinitionData.ID 기준 중복 제거된 유닛 수.</param>
-        /// <returns>티어가 변경되었으면 이전 티어(비활성→활성 시 null 포함), 변경 없으면 null.</returns>
-        public TierChangeResult Recalculate(int uniqueCount)
+        public void Recalculate(int uniqueCount)
         {
             _count = uniqueCount;
             SynergyTier? previousTier = _activeTier.Value;
             _activeTier.Value = FindActiveTier(_count);
 
-            bool changed = previousTier?.Tier != _activeTier.Value?.Tier;
-            return new TierChangeResult(changed, previousTier);
+            bool tierChanged = previousTier?.Tier != _activeTier.Value?.Tier;
+            if (tierChanged)
+            {
+                if (!previousTier.HasValue && _activeTier.Value.HasValue)
+                {
+                    OnTierActivated?.Invoke(_activeTier.Value.Value);
+                }
+                else if (previousTier.HasValue && !_activeTier.Value.HasValue)
+                {
+                    OnTierDeactivated?.Invoke();
+                }
+                else if (previousTier.HasValue && _activeTier.Value.HasValue)
+                {
+                    OnTierChanged?.Invoke(_activeTier.Value.Value);
+                }
+            }
         }
 
         /// <summary>
