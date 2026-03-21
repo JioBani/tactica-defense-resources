@@ -132,26 +132,33 @@ namespace Scenes.Battle.Feature.Units.UnitStats.UnitStatSheets
             SetCurrentHealth(MaxHealth.CurrentValue);
         }
 
-        /// <summary>
-        /// 성급을 1 올리고 스탯을 재초기화한다. 기본 합성(승급) 시 사용한다.
-        /// 강화 단계는 0으로 리셋된다.
-        /// </summary>
+        /// <summary>성급을 1 올리고 기본 스탯을 갱신한다. 기본 합성(승급) 시 사용한다.</summary>
         public void UpgradeStar()
         {
             Star++;
-            Init(_data, Star, 0);
+            Reinforcement = 0;
+            RefreshBaseStats();
             OnGradeChanged?.Invoke(new GradeChangedInfo(Star, Reinforcement));
         }
 
-        /// <summary>
-        /// 강화 단계를 올리고 스탯을 재초기화한다. 강화 합성 시 사용한다.
-        /// 2성 재료는 +1, 3성 재료는 +2 강화를 적용한다.
-        /// </summary>
+        /// <summary>강화 단계를 올리고 기본 스탯을 갱신한다. 강화 합성 시 사용한다.</summary>
         public void Reinforce(int amount = 1)
         {
             Reinforcement += amount;
-            Init(_data, Star, Reinforcement);
+            RefreshBaseStats();
             OnGradeChanged?.Invoke(new GradeChangedInfo(Star, Reinforcement));
+        }
+
+        /// <summary>기존 수정자를 보존한 채 기본값만 새 성급 기준으로 갱신한다.</summary>
+        private void RefreshBaseStats()
+        {
+            int effectiveStar = Star + Reinforcement;
+            foreach (var (kind, stat) in Enumerate())
+            {
+                stat.SetBaseValue(_data.GetStat(kind, effectiveStar));
+            }
+
+            SetCurrentHealth(MaxHealth.CurrentValue);
         }
     }
 }

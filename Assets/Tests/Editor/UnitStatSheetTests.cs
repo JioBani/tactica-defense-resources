@@ -250,6 +250,49 @@ namespace Tests.Editor
             Assert.IsFalse(fired);
         }
 
+        // ── 수정자 보존 검증 ──
+
+        [Test]
+        public void UpgradeStar_PreservesExistingModifiers()
+        {
+            var so = new SerializedObject(_data);
+            var list = so.FindProperty("maxHealth").FindPropertyRelative("baseValuesByStar");
+            list.arraySize = 2;
+            list.GetArrayElementAtIndex(0).floatValue = 100f;
+            list.GetArrayElementAtIndex(1).floatValue = 200f;
+            so.ApplyModifiedProperties();
+
+            _sheet.Init(_data, star: 1);
+            _sheet.MaxHealth.AddModifier(new StatModifier("synergy", StatModifierType.Percent, 0.5f));
+
+            // star1: 100 * (1 + 0.5) = 150
+            Assert.AreEqual(150f, _sheet.MaxHealth.CurrentValue, 0.01f);
+
+            _sheet.UpgradeStar();
+
+            // star2: 200 * (1 + 0.5) = 300
+            Assert.AreEqual(300f, _sheet.MaxHealth.CurrentValue, 0.01f);
+        }
+
+        [Test]
+        public void Reinforce_PreservesExistingModifiers()
+        {
+            var so = new SerializedObject(_data);
+            so.FindProperty("maxHealth").FindPropertyRelative("additionalPerExtraStar").floatValue = 10f;
+            so.ApplyModifiedProperties();
+
+            _sheet.Init(_data, star: 1);
+            _sheet.MaxHealth.AddModifier(new StatModifier("synergy", StatModifierType.Percent, 0.5f));
+
+            // star1: 100 * (1 + 0.5) = 150
+            Assert.AreEqual(150f, _sheet.MaxHealth.CurrentValue, 0.01f);
+
+            _sheet.Reinforce();
+
+            // star1 + reinforcement1: 110 * (1 + 0.5) = 165
+            Assert.AreEqual(165f, _sheet.MaxHealth.CurrentValue, 0.01f);
+        }
+
         // ── 이벤트 중복 등록 검증 ──
 
         [Test]
