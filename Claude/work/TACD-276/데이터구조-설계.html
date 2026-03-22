@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TACD-276 소환술사 데이터 스키마 ERD</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 24px; }
+  h1 { text-align: center; color: #a8d8ea; margin-bottom: 8px; font-size: 1.4em; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 32px; font-size: 0.9em; }
+
+  .erd-container {
+    display: flex; flex-direction: column; align-items: center; gap: 40px;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .row { display: flex; gap: 40px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
+
+  .entity {
+    border: 2px solid #444; border-radius: 8px; min-width: 280px; max-width: 340px;
+    background: #16213e; overflow: hidden;
+  }
+  .entity.new { border-color: #4ecca3; }
+  .entity.existing { border-color: #666; }
+
+  .entity-header {
+    padding: 10px 14px; font-weight: bold; font-size: 0.95em;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .entity.new .entity-header { background: #1a3a2a; color: #4ecca3; }
+  .entity.existing .entity-header { background: #2a2a3e; color: #aaa; }
+
+  .badge {
+    font-size: 0.7em; padding: 2px 8px; border-radius: 10px; font-weight: normal;
+  }
+  .badge.new-badge { background: #4ecca322; color: #4ecca3; border: 1px solid #4ecca355; }
+  .badge.existing-badge { background: #66666622; color: #888; border: 1px solid #66666655; }
+  .badge.inherit-badge { background: #e2a93b22; color: #e2a93b; border: 1px solid #e2a93b55; }
+
+  .entity-body { padding: 10px 14px; }
+
+  .section-label {
+    font-size: 0.7em; color: #888; text-transform: uppercase; letter-spacing: 0.5px;
+    margin: 8px 0 4px 0; padding-top: 6px; border-top: 1px solid #333;
+  }
+  .section-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+
+  .field {
+    display: flex; justify-content: space-between; padding: 3px 0;
+    font-size: 0.85em; align-items: center;
+  }
+  .field-name { color: #e0e0e0; }
+  .field-type { color: #7b8794; font-family: 'Consolas', monospace; font-size: 0.85em; }
+  .field-name.fk { color: #e2a93b; }
+  .field-name.inherited { color: #777; }
+  .field-name.unused { color: #555; text-decoration: line-through; }
+  .field-note { font-size: 0.7em; color: #666; margin-left: 4px; }
+
+  /* Relationship lines */
+  .relations {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 20px; background: #16213e; border-radius: 8px; border: 1px solid #333;
+    max-width: 700px; width: 100%;
+  }
+  .relations h3 { color: #a8d8ea; font-size: 0.9em; margin-bottom: 8px; }
+  .rel {
+    font-size: 0.85em; padding: 6px 10px; background: #1a1a2e; border-radius: 4px;
+    border-left: 3px solid #4ecca3;
+  }
+  .rel.inherit { border-left-color: #e2a93b; }
+  .rel-label { color: #888; font-size: 0.75em; }
+
+  .legend {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    margin-top: 16px; font-size: 0.8em;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-color { width: 12px; height: 12px; border-radius: 2px; border: 2px solid; }
+
+  .todo-section {
+    max-width: 700px; width: 100%; padding: 16px 20px;
+    background: #2a1a1a; border-radius: 8px; border: 1px solid #663333;
+    font-size: 0.85em;
+  }
+  .todo-section h3 { color: #e25555; font-size: 0.9em; margin-bottom: 8px; }
+  .todo-section li { margin: 4px 0; color: #caa; }
+</style>
+</head>
+<body>
+
+<h1>TACD-276: 소환술사 데이터 스키마</h1>
+<p class="subtitle">소환술사 정의 + 전장 유닛 데이터 구조</p>
+
+<div class="erd-container">
+
+  <!-- Row 1: Definition Layer -->
+  <div class="row">
+    <div class="entity new">
+      <div class="entity-header">
+        SummonerDefinitionData
+        <span class="badge new-badge">신규</span>
+      </div>
+      <div class="entity-body">
+        <div class="section-label">identity</div>
+        <div class="field"><span class="field-name">id</span><span class="field-type">int</span></div>
+        <div class="field"><span class="field-name">displayName</span><span class="field-type">string</span></div>
+        <div class="field"><span class="field-name">description</span><span class="field-type">string</span></div>
+        <div class="field"><span class="field-name">icon</span><span class="field-type">Sprite</span></div>
+        <div class="field"><span class="field-name">illustration</span><span class="field-type">Sprite</span></div>
+        <div class="section-label">synergy</div>
+        <div class="field"><span class="field-name fk">summonerEffect</span><span class="field-type">SynergyDefinitionData</span></div>
+        <div class="section-label">summon pool</div>
+        <div class="field"><span class="field-name fk">summonPool</span><span class="field-type">UnitLoadOutData[]</span></div>
+      </div>
+    </div>
+
+    <div class="entity existing">
+      <div class="entity-header">
+        UnitDefinitionData
+        <span class="badge existing-badge">기존</span>
+      </div>
+      <div class="entity-body">
+        <div class="section-label">identity</div>
+        <div class="field"><span class="field-name">id</span><span class="field-type">int</span></div>
+        <div class="field"><span class="field-name">displayName</span><span class="field-type">string</span></div>
+        <div class="field"><span class="field-name">description</span><span class="field-type">string</span></div>
+        <div class="field"><span class="field-name">cost</span><span class="field-type">int</span></div>
+        <div class="field"><span class="field-name">icon</span><span class="field-type">Sprite</span></div>
+        <div class="field"><span class="field-name">illustration</span><span class="field-type">Sprite</span></div>
+        <div class="section-label">synergy (TODO: 제거 예정)</div>
+        <div class="field"><span class="field-name unused">summonerEffect</span><span class="field-type">SynergyDefinitionData</span></div>
+        <div class="field"><span class="field-name unused">Synergies</span><span class="field-type">IReadOnlyList</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Summoner Unit (empty inherit) -->
+  <div class="row">
+    <div class="entity new" style="min-width: 320px;">
+      <div class="entity-header">
+        SummonerUnitDefinitionData
+        <span class="badge inherit-badge">: UnitDefinitionData</span>
+      </div>
+      <div class="entity-body">
+        <div class="section-label">상속 필드</div>
+        <div class="field"><span class="field-name inherited">id, displayName, description, cost, icon, illustration</span></div>
+        <div class="section-label">추가 필드</div>
+        <div class="field"><span class="field-name" style="color:#555; font-style:italic;">없음 (타입 판별 전용)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: LoadOut Layer -->
+  <div class="row">
+    <div class="entity new">
+      <div class="entity-header">
+        SummonerLoadOutData
+        <span class="badge inherit-badge">: UnitLoadOutData</span>
+      </div>
+      <div class="entity-body">
+        <div class="section-label">상속 필드</div>
+        <div class="field"><span class="field-name inherited">id</span><span class="field-type">int</span></div>
+        <div class="field"><span class="field-name inherited fk">unit</span><span class="field-type">= SummonerUnitDef...</span></div>
+        <div class="field"><span class="field-name inherited fk">skill</span><span class="field-type">SkillDefinitionData</span></div>
+        <div class="field"><span class="field-name inherited fk">stats</span><span class="field-type">UnitStatsByLevelData</span></div>
+        <div class="field"><span class="field-name unused">costByStar</span><span class="field-type">int[]</span></div>
+        <div class="field"><span class="field-name unused">refundByStar</span><span class="field-type">int[]</span></div>
+        <div class="section-label">추가 필드</div>
+        <div class="field"><span class="field-name fk">summoner</span><span class="field-type">SummonerDefinitionData</span></div>
+      </div>
+    </div>
+
+    <div class="entity existing">
+      <div class="entity-header">
+        UnitLoadOutData
+        <span class="badge existing-badge">기존</span>
+      </div>
+      <div class="entity-body">
+        <div class="section-label">fields</div>
+        <div class="field"><span class="field-name">id</span><span class="field-type">int</span></div>
+        <div class="field"><span class="field-name fk">unit</span><span class="field-type">UnitDefinitionData</span></div>
+        <div class="field"><span class="field-name fk">skill</span><span class="field-type">SkillDefinitionData</span></div>
+        <div class="field"><span class="field-name fk">stats</span><span class="field-type">UnitStatsByLevelData</span></div>
+        <div class="field"><span class="field-name">costByStar</span><span class="field-type">int[]</span></div>
+        <div class="field"><span class="field-name">refundByStar</span><span class="field-type">int[]</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Relationships -->
+  <div class="relations">
+    <h3>관계 (Relationships)</h3>
+    <div class="rel inherit">
+      <strong>SummonerUnitDefinitionData</strong> ──상속──▶ <strong>UnitDefinitionData</strong>
+      <div class="rel-label">빈 상속. 런타임에서 is 키워드로 소환술사 유닛 타입 판별</div>
+    </div>
+    <div class="rel inherit">
+      <strong>SummonerLoadOutData</strong> ──상속──▶ <strong>UnitLoadOutData</strong>
+      <div class="rel-label">summoner 필드 추가. unit에는 SummonerUnitDefinitionData를 할당</div>
+    </div>
+    <div class="rel">
+      <strong>SummonerLoadOutData.summoner</strong> ──참조──▶ <strong>SummonerDefinitionData</strong>
+      <div class="rel-label">로드아웃이 소환술사 정의와 유닛 정의를 연결하는 유일한 지점</div>
+    </div>
+    <div class="rel">
+      <strong>SummonerDefinitionData.summonPool</strong> ──참조──▶ <strong>UnitLoadOutData[]</strong>
+      <div class="rel-label">이 소환술사가 소환할 수 있는 소환수 8체</div>
+    </div>
+    <div class="rel">
+      <strong>SummonerDefinitionData.summonerEffect</strong> ──참조──▶ <strong>SynergyDefinitionData</strong>
+      <div class="rel-label">이 소환술사가 소유하는 시너지</div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color" style="border-color: #4ecca3; background: #1a3a2a;"></div>
+      신규 엔티티
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="border-color: #666; background: #2a2a3e;"></div>
+      기존 엔티티
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="border-color: #e2a93b; background: #2a2a1a;"></div>
+      상속 관계
+    </div>
+    <div class="legend-item">
+      <span style="color: #e2a93b;">FK 참조</span>
+    </div>
+    <div class="legend-item">
+      <span style="color: #555; text-decoration: line-through;">미사용/제거 예정</span>
+    </div>
+  </div>
+
+  <!-- TODO -->
+  <div class="todo-section">
+    <h3>TODO (후속 리팩토링)</h3>
+    <ul>
+      <li>UnitDefinitionData에서 summonerEffect, Synergies 제거 — 전장 입장 시 소환수 시너지 부여 작업에서 진행</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

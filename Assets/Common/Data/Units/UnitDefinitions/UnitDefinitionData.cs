@@ -22,11 +22,6 @@ namespace Common.Data.Units.UnitDefinitions
         [SerializeField] private string description;
         public string Description => description;
         
-        //TODO: enum 으로 변경
-        [Tooltip("소속")]
-        [SerializeField] private string organization;
-        public string Organization => organization;
-        
         [Tooltip("비용")]
         [SerializeField] private int cost;
         public int Cost => cost;
