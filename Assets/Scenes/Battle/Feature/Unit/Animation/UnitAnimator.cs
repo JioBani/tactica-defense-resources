@@ -11,6 +11,8 @@ namespace Scenes.Battle.Feature.Units
         [SerializeField] private ActionStateController actionStateController;
         [SerializeField] private Unit unit;
 
+        private bool _initialized;
+
         private void Awake()
         {
             actionStateController.RegisterListener(this);
@@ -21,13 +23,26 @@ namespace Scenes.Battle.Feature.Units
         private void OnSpawn(Unit spawnedUnit)
         {
             // 데이터에서 해당 성급의 OverrideController를 Animator에 할당한다.
-            animator.runtimeAnimatorController =
-                spawnedUnit.UnitLoadOutData.Unit.GetAnimatorByStar(spawnedUnit.StatSheet.Star);
+            var controller = spawnedUnit.UnitLoadOutData.Unit.GetAnimatorByStar(spawnedUnit.StatSheet.Star);
+            if (controller != null)
+            {
+                animator.runtimeAnimatorController = controller;
+                _initialized = true;
+                // 초기 OnStateEnter는 이미 호출된 뒤이므로, 현재 상태의 애니메이션을 즉시 재생한다.
+                animator.Play(actionStateController.CurrentState.ToString());
+            }
+            else
+            {
+                _initialized = false;
+            }
         }
 
         void IStateListener<ActionStateType>.OnStateEnter(ActionStateType stateType)
         {
-            animator.Play(stateType.ToString());
+            if (_initialized)
+            {
+                animator.Play(stateType.ToString());
+            }
         }
 
         void IStateListener<ActionStateType>.OnStateRun(ActionStateType stateType)

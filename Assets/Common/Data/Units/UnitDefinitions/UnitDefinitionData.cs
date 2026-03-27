@@ -45,9 +45,13 @@ namespace Common.Data.Units.UnitDefinitions
         [Tooltip("성급별 AnimatorOverrideController. 인덱스 = 성급 (0은 미사용)")]
         [SerializeField] private AnimatorOverrideController[] animatorByStars;
 
-        /// <summary>해당 성급의 AnimatorOverrideController를 반환한다. 범위 밖이면 1성을 반환한다.</summary>
+        /// <summary>해당 성급의 AnimatorOverrideController를 반환한다. 미설정이면 null을 반환한다.</summary>
         public AnimatorOverrideController GetAnimatorByStar(int star)
         {
+            if (animatorByStars == null || animatorByStars.Length == 0)
+            {
+                return null;
+            }
             if (star < 0 || star >= animatorByStars.Length)
             {
                 return animatorByStars[1];

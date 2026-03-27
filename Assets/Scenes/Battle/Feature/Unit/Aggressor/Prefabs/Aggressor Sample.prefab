@@ -79,7 +79,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1049736631
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3846620691701126594
@@ -188,6 +188,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aggressor Sample
       objectReference: {fileID: 0}
+    - target: {fileID: 1189263344121059964, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
+      propertyPath: actionStateController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490678209556788173, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
+      propertyPath: actionStateController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4259065505431623686, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -231,6 +239,14 @@ PrefabInstance:
     - target: {fileID: 6150630233295662681, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6325235794784867869, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
+      propertyPath: attacker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561986962922681377, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
+      propertyPath: actionStateController
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6905028679572935155, guid: d9b00ffe4e2ee9d47aa3a0f084112b07, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target

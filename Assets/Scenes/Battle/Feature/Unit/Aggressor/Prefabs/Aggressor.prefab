@@ -192,6 +192,14 @@ PrefabInstance:
       propertyPath: canMove
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2018105766495571407, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322546287581751251, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: actionStateController
+      value: 
+      objectReference: {fileID: 897430250021741766}
     - target: {fileID: 4157034298238127128, guid: 55f271110f86e19488c6665236798e12, type: 3}
       propertyPath: m_IsTrigger
       value: 1

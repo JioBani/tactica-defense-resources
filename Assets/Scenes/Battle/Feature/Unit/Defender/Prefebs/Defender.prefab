@@ -20,6 +20,14 @@ PrefabInstance:
       propertyPath: unit
       value: 
       objectReference: {fileID: 4865092755452814107}
+    - target: {fileID: 2018105766495571407, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322546287581751251, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 4865092755452814107}
     - target: {fileID: 5193920713948900330, guid: 55f271110f86e19488c6665236798e12, type: 3}
       propertyPath: unit
       value: 
