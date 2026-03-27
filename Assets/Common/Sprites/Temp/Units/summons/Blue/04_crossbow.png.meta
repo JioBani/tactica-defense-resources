@@ -1,0 +1,3614 @@
+fileFormatVersion: 2
+guid: 38e87c7841beffd47968c4f3a3d953d0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3319481802515890474
+    second: 04_crossbow_0
+  - first:
+      213: -3550538668826297875
+    second: 04_crossbow_1
+  - first:
+      213: -7582776566112244396
+    second: 04_crossbow_2
+  - first:
+      213: 575836523528289506
+    second: 04_crossbow_3
+  - first:
+      213: 7536707171603190809
+    second: 04_crossbow_4
+  - first:
+      213: -1870257313372789259
+    second: 04_crossbow_5
+  - first:
+      213: 3367981561399817739
+    second: 04_crossbow_6
+  - first:
+      213: 8304727434783085245
+    second: 04_crossbow_7
+  - first:
+      213: -7667544492968715688
+    second: 04_crossbow_8
+  - first:
+      213: -3642908323083612615
+    second: 04_crossbow_9
+  - first:
+      213: -7412961658582488232
+    second: 04_crossbow_10
+  - first:
+      213: -17139559361154534
+    second: 04_crossbow_11
+  - first:
+      213: 4702946068182099385
+    second: 04_crossbow_12
+  - first:
+      213: -4260818733745341428
+    second: 04_crossbow_13
+  - first:
+      213: 4591512772287492773
+    second: 04_crossbow_14
+  - first:
+      213: -1995372803661707739
+    second: 04_crossbow_15
+  - first:
+      213: -8330855500925249698
+    second: 04_crossbow_16
+  - first:
+      213: -6982666968175726128
+    second: 04_crossbow_17
+  - first:
+      213: -3377681088183136093
+    second: 04_crossbow_18
+  - first:
+      213: 11973262804608343
+    second: 04_crossbow_19
+  - first:
+      213: -1210062981306841678
+    second: 04_crossbow_20
+  - first:
+      213: -6118140062549581674
+    second: 04_crossbow_21
+  - first:
+      213: 6338051183672155908
+    second: 04_crossbow_22
+  - first:
+      213: -809744338843121070
+    second: 04_crossbow_23
+  - first:
+      213: -5613730186487719224
+    second: 04_crossbow_24
+  - first:
+      213: 6675191713890916244
+    second: 04_crossbow_25
+  - first:
+      213: 4878153698116534966
+    second: 04_crossbow_26
+  - first:
+      213: -7147745648781822681
+    second: 04_crossbow_27
+  - first:
+      213: 6299095788473566787
+    second: 04_crossbow_28
+  - first:
+      213: -5634763042968561013
+    second: 04_crossbow_29
+  - first:
+      213: 4459657964712173760
+    second: 04_crossbow_30
+  - first:
+      213: -1684251894772769835
+    second: 04_crossbow_31
+  - first:
+      213: -6694578080042714748
+    second: 04_crossbow_32
+  - first:
+      213: 842674556530319645
+    second: 04_crossbow_33
+  - first:
+      213: -6840064063457014347
+    second: 04_crossbow_34
+  - first:
+      213: 8735644828636571741
+    second: 04_crossbow_35
+  - first:
+      213: -6035277128032420716
+    second: 04_crossbow_36
+  - first:
+      213: -7320063499768187662
+    second: 04_crossbow_37
+  - first:
+      213: -8134276693875705738
+    second: 04_crossbow_38
+  - first:
+      213: -4863753260960220083
+    second: 04_crossbow_39
+  - first:
+      213: 3697825109948904635
+    second: 04_crossbow_40
+  - first:
+      213: 5858934260687833249
+    second: 04_crossbow_41
+  - first:
+      213: -8346334726903074578
+    second: 04_crossbow_42
+  - first:
+      213: -4861999852880666870
+    second: 04_crossbow_43
+  - first:
+      213: 4542964264887682200
+    second: 04_crossbow_44
+  - first:
+      213: 6186658938636940151
+    second: 04_crossbow_45
+  - first:
+      213: 7386370745807029817
+    second: 04_crossbow_46
+  - first:
+      213: 3216279430237073696
+    second: 04_crossbow_47
+  - first:
+      213: -9032082062650231999
+    second: 04_crossbow_48
+  - first:
+      213: 7791863669754369325
+    second: 04_crossbow_49
+  - first:
+      213: 4337413962494615505
+    second: 04_crossbow_50
+  - first:
+      213: 3132535745948448444
+    second: 04_crossbow_51
+  - first:
+      213: -697038459882582508
+    second: 04_crossbow_52
+  - first:
+      213: -8508961458932613917
+    second: 04_crossbow_53
+  - first:
+      213: -5525330521416094669
+    second: 04_crossbow_54
+  - first:
+      213: -8441245097002980489
+    second: 04_crossbow_55
+  - first:
+      213: -4668289112920625671
+    second: 04_crossbow_56
+  - first:
+      213: -3907609933495093763
+    second: 04_crossbow_57
+  - first:
+      213: 4425902444448860072
+    second: 04_crossbow_58
+  - first:
+      213: 8755831044155085007
+    second: 04_crossbow_59
+  - first:
+      213: -2845740021463669416
+    second: 04_crossbow_60
+  - first:
+      213: 595032376526463514
+    second: 04_crossbow_61
+  - first:
+      213: -251668629919638946
+    second: 04_crossbow_62
+  - first:
+      213: -6556475702729262584
+    second: 04_crossbow_63
+  - first:
+      213: -826103091143050948
+    second: 04_crossbow_64
+  - first:
+      213: -285674834791225174
+    second: 04_crossbow_65
+  - first:
+      213: 6572340624904731737
+    second: 04_crossbow_66
+  - first:
+      213: 9177533475659938151
+    second: 04_crossbow_67
+  - first:
+      213: 2795296732204459265
+    second: 04_crossbow_68
+  - first:
+      213: -9129054975688975565
+    second: 04_crossbow_69
+  - first:
+      213: -3691551741489461518
+    second: 04_crossbow_70
+  - first:
+      213: 2413178064681685670
+    second: 04_crossbow_71
+  - first:
+      213: -4818123603170215438
+    second: 04_crossbow_72
+  - first:
+      213: -1607604377183503655
+    second: 04_crossbow_73
+  - first:
+      213: -1809459594563970233
+    second: 04_crossbow_74
+  - first:
+      213: 2806962506934370730
+    second: 04_crossbow_75
+  - first:
+      213: -2839819784306879928
+    second: 04_crossbow_76
+  - first:
+      213: 7274492540472427495
+    second: 04_crossbow_77
+  - first:
+      213: -1392761983117735402
+    second: 04_crossbow_78
+  - first:
+      213: 642580808702833172
+    second: 04_crossbow_79
+  - first:
+      213: -6345411301521284349
+    second: 04_crossbow_80
+  - first:
+      213: 1720000742981804207
+    second: 04_crossbow_81
+  - first:
+      213: -4710303797881663461
+    second: 04_crossbow_82
+  - first:
+      213: -7692264935506865406
+    second: 04_crossbow_83
+  - first:
+      213: -3206638253128307584
+    second: 04_crossbow_84
+  - first:
+      213: -1981412454006076645
+    second: 04_crossbow_85
+  - first:
+      213: -7215386816370065715
+    second: 04_crossbow_86
+  - first:
+      213: 488230744918982476
+    second: 04_crossbow_87
+  - first:
+      213: -9155244863878357825
+    second: 04_crossbow_88
+  - first:
+      213: -2142582549544059572
+    second: 04_crossbow_89
+  - first:
+      213: 1435804882824269017
+    second: 04_crossbow_90
+  - first:
+      213: 4043662105489424061
+    second: 04_crossbow_91
+  - first:
+      213: -5014515746245716457
+    second: 04_crossbow_92
+  - first:
+      213: 2088427416772419062
+    second: 04_crossbow_93
+  - first:
+      213: -4914931882338995062
+    second: 04_crossbow_94
+  - first:
+      213: -5257290113884613631
+    second: 04_crossbow_95
+  - first:
+      213: 6221708350791928817
+    second: 04_crossbow_96
+  - first:
+      213: 2923535277217124005
+    second: 04_crossbow_97
+  - first:
+      213: -696820022633066560
+    second: 04_crossbow_98
+  - first:
+      213: 1809000010354156620
+    second: 04_crossbow_99
+  - first:
+      213: -8493796169874449581
+    second: 04_crossbow_100
+  - first:
+      213: -5570126793415146811
+    second: 04_crossbow_101
+  - first:
+      213: 4648461493295743498
+    second: 04_crossbow_102
+  - first:
+      213: -9109588295817353045
+    second: 04_crossbow_103
+  - first:
+      213: 9154615935642361767
+    second: 04_crossbow_104
+  - first:
+      213: -1389475575596525736
+    second: 04_crossbow_105
+  - first:
+      213: 950947138239596773
+    second: 04_crossbow_106
+  - first:
+      213: -6903053264608122130
+    second: 04_crossbow_107
+  - first:
+      213: 5325522013911313276
+    second: 04_crossbow_108
+  - first:
+      213: -2375727615108400936
+    second: 04_crossbow_109
+  - first:
+      213: 2725965586784232180
+    second: 04_crossbow_110
+  - first:
+      213: 4386775419584950764
+    second: 04_crossbow_111
+  - first:
+      213: 3046276246155365630
+    second: 04_crossbow_112
+  - first:
+      213: 3758379824153411698
+    second: 04_crossbow_113
+  - first:
+      213: 4189340388173978167
+    second: 04_crossbow_114
+  - first:
+      213: -7937601432918830462
+    second: 04_crossbow_115
+  - first:
+      213: -1359697937216396756
+    second: 04_crossbow_116
+  - first:
+      213: 6296591336353429096
+    second: 04_crossbow_117
+  - first:
+      213: 3755636631698799943
+    second: 04_crossbow_118
+  - first:
+      213: 5869262283525362037
+    second: 04_crossbow_119
+  - first:
+      213: -8333862042445819981
+    second: 04_crossbow_120
+  - first:
+      213: -3024225218937490651
+    second: 04_crossbow_121
+  - first:
+      213: -4038489031312647046
+    second: 04_crossbow_122
+  - first:
+      213: -6986623373542278140
+    second: 04_crossbow_123
+  - first:
+      213: -8390948062801374592
+    second: 04_crossbow_124
+  - first:
+      213: -4539206341694549276
+    second: 04_crossbow_125
+  - first:
+      213: -8913578642512980933
+    second: 04_crossbow_126
+  - first:
+      213: 661016090189193460
+    second: 04_crossbow_127
+  - first:
+      213: -8658842480195993932
+    second: 04_crossbow_128
+  - first:
+      213: -6046996075255003501
+    second: 04_crossbow_129
+  - first:
+      213: -5859120691601622912
+    second: 04_crossbow_130
+  - first:
+      213: 2760145037472326938
+    second: 04_crossbow_131
+  - first:
+      213: -1299949178762332238
+    second: 04_crossbow_132
+  - first:
+      213: 1536543500445435202
+    second: 04_crossbow_133
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 04_crossbow_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 1025
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6debaa253e4dee1d0800000000000000
+      internalID: -3319481802515890474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_1
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 1023
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de9f15b64e3f9bec0800000000000000
+      internalID: -3550538668826297875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 1023
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45d29bd63e094c690800000000000000
+      internalID: -7582776566112244396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_3
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 1023
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec79996448cdf700800000000000000
+      internalID: 575836523528289506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_4
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 1023
+        width: 31
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9141c8bcd33c79860800000000000000
+      internalID: 7536707171603190809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_5
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 1023
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f5a6dde1e28b06e0800000000000000
+      internalID: -1870257313372789259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_6
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 1023
+        width: 30
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b063d41c2697dbe20800000000000000
+      internalID: 3367981561399817739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_7
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 1023
+        width: 31
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2dfa20a91504370800000000000000
+      internalID: 8304727434783085245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_8
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 1023
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85ad81578e8679590800000000000000
+      internalID: -7667544492968715688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_9
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 1023
+        width: 31
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e894d5e2ac17dc0800000000000000
+      internalID: -3642908323083612615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_10
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 1023
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85ba996a5aedf1990800000000000000
+      internalID: -7412961658582488232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_11
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 1023
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a12fbac59ab13cff0800000000000000
+      internalID: -17139559361154534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_12
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 1023
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b560df1888344140800000000000000
+      internalID: 4702946068182099385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_13
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 961
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c77cabfe78ed4c0800000000000000
+      internalID: -4260818733745341428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_14
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 961
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a27ddd1a8458bf30800000000000000
+      internalID: 4591512772287492773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_15
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 961
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 526c44bc1030f44e0800000000000000
+      internalID: -1995372803661707739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_16
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 961
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e57dd388f0bd26c80800000000000000
+      internalID: -8330855500925249698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_17
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 961
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d138016365981f90800000000000000
+      internalID: -6982666968175726128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_18
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 961
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a01a4e22f01021d0800000000000000
+      internalID: -3377681088183136093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_19
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 961
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 755654c7e998a2000800000000000000
+      internalID: 11973262804608343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_20
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 961
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b50b53312ef43fe0800000000000000
+      internalID: -1210062981306841678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_21
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 961
+        width: 40
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69065a54700081ba0800000000000000
+      internalID: -6118140062549581674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_22
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 961
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40fd50b98f745f750800000000000000
+      internalID: 6338051183672155908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_23
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 961
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25a4f5460d533c4f0800000000000000
+      internalID: -809744338843121070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_24
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 961
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ca138163260812b0800000000000000
+      internalID: -5613730186487719224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_25
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 961
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49759124f7b03ac50800000000000000
+      internalID: 6675191713890916244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_26
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 897
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b28eff51fea2b340800000000000000
+      internalID: 4878153698116534966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_27
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 898
+        width: 29
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 725f38be33b1ecc90800000000000000
+      internalID: -7147745648781822681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_28
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 898
+        width: 29
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 346402ede32ea6750800000000000000
+      internalID: 6299095788473566787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_29
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8a1c5edddc4dc1b0800000000000000
+      internalID: -5634763042968561013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_30
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c029666a43e3ed30800000000000000
+      internalID: 4459657964712173760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_31
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5db5ac343d550a8e0800000000000000
+      internalID: -1684251894772769835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_32
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 489ffe1a4b41813a0800000000000000
+      internalID: -6694578080042714748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_33
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d11ef336b08c1bb00800000000000000
+      internalID: 842674556530319645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_34
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bdcab879f53311a0800000000000000
+      internalID: -6840064063457014347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_35
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d586cde20be3b3970800000000000000
+      internalID: 8735644828636571741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_36
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49c7696ad636e3ca0800000000000000
+      internalID: -6035277128032420716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_37
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f4b303c709e96a90800000000000000
+      internalID: -7320063499768187662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_38
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 897
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 678bcc4b17e3d1f80800000000000000
+      internalID: -8134276693875705738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_39
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 833
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c715dad2a708cb0800000000000000
+      internalID: -4863753260960220083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_40
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 833
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb436087850515330800000000000000
+      internalID: 3697825109948904635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_41
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 833
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a80aaa0bad1f4150800000000000000
+      internalID: 5858934260687833249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_42
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 833
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee07f6269ccdb2c80800000000000000
+      internalID: -8346334726903074578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_43
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 833
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0fdb0fc4e4b68cb0800000000000000
+      internalID: -4861999852880666870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_44
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 833
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8948ce3ede9db0f30800000000000000
+      internalID: 4542964264887682200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_45
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 833
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77333ffb68d6bd550800000000000000
+      internalID: 6186658938636940151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_46
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 833
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9364a230f09a18660800000000000000
+      internalID: 7386370745807029817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_47
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 833
+        width: 40
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0213da9e91582ac20800000000000000
+      internalID: 3216279430237073696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_48
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 833
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1433e81d73997a280800000000000000
+      internalID: -9032082062650231999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_49
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 833
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d251bfd79b2422c60800000000000000
+      internalID: 7791863669754369325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_50
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 833
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df9f4ea407913c30800000000000000
+      internalID: 4337413962494615505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_51
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 833
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb6787ff9a0097b20800000000000000
+      internalID: 3132535745948448444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_52
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 769
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ec9ebb63f9356f0800000000000000
+      internalID: -697038459882582508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_53
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 767
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ecf4d0b2a81ae980800000000000000
+      internalID: -8508961458932613917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_54
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 767
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33cae5c4a251253b0800000000000000
+      internalID: -5525330521416094669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_55
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 767
+        width: 33
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77b2123de4caada80800000000000000
+      internalID: -8441245097002980489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_56
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 767
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fdea8319c7e63fb0800000000000000
+      internalID: -4668289112920625671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_57
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 767
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df5bc39087165c9c0800000000000000
+      internalID: -3907609933495093763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_58
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 767
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a748e3e2d6fb6d30800000000000000
+      internalID: 4425902444448860072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_59
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 767
+        width: 34
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0933cb1f5f28970800000000000000
+      internalID: 8755831044155085007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_60
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 704
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 855ab812786e188d0800000000000000
+      internalID: -2845740021463669416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_61
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 705
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1267b83bcaf14800800000000000000
+      internalID: 595032376526463514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_62
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 705
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ad788e6b4e18cf0800000000000000
+      internalID: -251668629919638946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_63
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 705
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80ab7580618b205a0800000000000000
+      internalID: -6556475702729262584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_64
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 705
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c39f0909d971984f0800000000000000
+      internalID: -826103091143050948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_65
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 705
+        width: 44
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa820075044190cf0800000000000000
+      internalID: -285674834791225174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_66
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 705
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95cb0520af4a53b50800000000000000
+      internalID: 6572340624904731737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_67
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 705
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76977fa42162d5f70800000000000000
+      internalID: 9177533475659938151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_68
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 639
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1056bdc5193eac620800000000000000
+      internalID: 2795296732204459265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_69
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 642
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33bdb0f0ed41f4180800000000000000
+      internalID: -9129054975688975565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_70
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 642
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f6cb82ff39f4ccc0800000000000000
+      internalID: -3691551741489461518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_71
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 642
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a2dd1d0aa45d7120800000000000000
+      internalID: 2413178064681685670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_72
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 640
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f93d154c16922db0800000000000000
+      internalID: -4818123603170215438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_73
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 639
+        width: 30
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9da3d9e1654a0b9e0800000000000000
+      internalID: -1607604377183503655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_74
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 642
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b979ee51283e6e0800000000000000
+      internalID: -1809459594563970233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_75
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 642
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa1c9a3378554f620800000000000000
+      internalID: 2806962506934370730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_76
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 576
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8421342c3fee698d0800000000000000
+      internalID: -2839819784306879928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_77
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 577
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e386147c6034f460800000000000000
+      internalID: 7274492540472427495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_78
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 577
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61a49930b5aebace0800000000000000
+      internalID: -1392761983117735402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_79
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 577
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 412373a47d7eae800800000000000000
+      internalID: 642580808702833172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_80
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 577
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 303231b6a0290f7a0800000000000000
+      internalID: -6345411301521284349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_81
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 577
+        width: 44
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa0a6d2109baed710800000000000000
+      internalID: 1720000742981804207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_82
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 577
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b10171fe6a3a1aeb0800000000000000
+      internalID: -4710303797881663461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_83
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 577
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2039be8ebc59f3590800000000000000
+      internalID: -7692264935506865406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_84
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 513
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08cab1f8f7bbf73d0800000000000000
+      internalID: -3206638253128307584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_85
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 514
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1bce6dfedb9084e0800000000000000
+      internalID: -1981412454006076645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_86
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 513
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dceb9355bebcddb90800000000000000
+      internalID: -7215386816370065715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_87
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 512
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4ff157964b86c600800000000000000
+      internalID: 488230744918982476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_88
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 513
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbc9fc88d4902f080800000000000000
+      internalID: -9155244863878357825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_89
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 514
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4db978e5840442e0800000000000000
+      internalID: -2142582549544059572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_90
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 513
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dc03870fe00de310800000000000000
+      internalID: 1435804882824269017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_91
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 512
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbeb76db249fd1830800000000000000
+      internalID: 4043662105489424061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_92
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 513
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 716db603f7cd86ab0800000000000000
+      internalID: -5014515746245716457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_93
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 448
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fd18ebaba59bfc10800000000000000
+      internalID: 2088427416772419062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_94
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 449
+        width: 31
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8431f15e77aacbb0800000000000000
+      internalID: -4914931882338995062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_95
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 450
+        width: 29
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1041cb8ee7a5a07b0800000000000000
+      internalID: -5257290113884613631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_96
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 450
+        width: 29
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fbc801f7c2f75650800000000000000
+      internalID: 6221708350791928817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_97
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 449
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ae89d658db729820800000000000000
+      internalID: 2923535277217124005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_98
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 448
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cf839e91e56456f0800000000000000
+      internalID: -696820022633066560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_99
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 449
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4466d7ccebda1910800000000000000
+      internalID: 1809000010354156620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_100
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 449
+        width: 29
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35b5f04b269ff1a80800000000000000
+      internalID: -8493796169874449581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_101
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 449
+        width: 29
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c2ca94713fe2b2b0800000000000000
+      internalID: -5570126793415146811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_102
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 383
+        width: 34
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0289fb7917a28040800000000000000
+      internalID: 4648461493295743498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_103
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 385
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba820c9a5bd349180800000000000000
+      internalID: -9109588295817353045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_104
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 384
+        width: 36
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7afd713b0babb0f70800000000000000
+      internalID: 9154615935642361767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_105
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 384
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 857dc74635797bce0800000000000000
+      internalID: -1389475575596525736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_106
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 384
+        width: 36
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e802f64261723d00800000000000000
+      internalID: 950947138239596773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_107
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 385
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeaae6931ad6330a0800000000000000
+      internalID: -6903053264608122130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_108
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 384
+        width: 34
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7be4ba4e0e08e940800000000000000
+      internalID: 5325522013911313276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_109
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 384
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d8b06a3258b70fd0800000000000000
+      internalID: -2375727615108400936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_110
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 384
+        width: 34
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f2a636224394d520800000000000000
+      internalID: 2725965586784232180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_111
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 320
+        width: 26
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce1b6c18005f0ec30800000000000000
+      internalID: 4386775419584950764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_112
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 321
+        width: 31
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efc0dc32b1c864a20800000000000000
+      internalID: 3046276246155365630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_113
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 322
+        width: 29
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 270c8ad8982782430800000000000000
+      internalID: 3758379824153411698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_114
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 322
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73a9e4013e6832a30800000000000000
+      internalID: 4189340388173978167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_115
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 321
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 282dd3e4d89f7d190800000000000000
+      internalID: -7937601432918830462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_116
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 320
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c22a26a1ee1612de0800000000000000
+      internalID: -1359697937216396756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_117
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 321
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 866f52ba57cf16750800000000000000
+      internalID: 6296591336353429096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_118
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 321
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74df9d94e93be1430800000000000000
+      internalID: 3755636631698799943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_119
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 321
+        width: 29
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 571902f33fec37150800000000000000
+      internalID: 5869262283525362037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_120
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 256
+        width: 36
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bfc7e880ac285c80800000000000000
+      internalID: -8333862042445819981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_121
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 257
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 523f378bf2bc706d0800000000000000
+      internalID: -3024225218937490651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_122
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 256
+        width: 35
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7c5c437f9764f7c0800000000000000
+      internalID: -4038489031312647046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_123
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 255
+        width: 35
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c3298fe078a0f90800000000000000
+      internalID: -6986623373542278140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_124
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 256
+        width: 41
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082d8fba13d5d8b80800000000000000
+      internalID: -8390948062801374592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_125
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 256
+        width: 46
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e29819c1ef7101c0800000000000000
+      internalID: -4539206341694549276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_126
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 193
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b345187637b9c4480800000000000000
+      internalID: -8913578642512980933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_127
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 193
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f06b8eb1a66c2900800000000000000
+      internalID: 661016090189193460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_128
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 129
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4befad904ac95d780800000000000000
+      internalID: -8658842480195993932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_129
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 129
+        width: 25
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3968e30ab11c41ca0800000000000000
+      internalID: -6046996075255003501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_130
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 65
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 088b1f026c830bea0800000000000000
+      internalID: -5859120691601622912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_131
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 65
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a156817a9410e4620800000000000000
+      internalID: 2760145037472326938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_132
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b77fcdfb17a5fde0800000000000000
+      internalID: -1299949178762332238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_crossbow_133
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1
+        width: 25
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2454cf53c26e25510800000000000000
+      internalID: 1536543500445435202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      04_crossbow_0: -3319481802515890474
+      04_crossbow_1: -3550538668826297875
+      04_crossbow_10: -7412961658582488232
+      04_crossbow_100: -8493796169874449581
+      04_crossbow_101: -5570126793415146811
+      04_crossbow_102: 4648461493295743498
+      04_crossbow_103: -9109588295817353045
+      04_crossbow_104: 9154615935642361767
+      04_crossbow_105: -1389475575596525736
+      04_crossbow_106: 950947138239596773
+      04_crossbow_107: -6903053264608122130
+      04_crossbow_108: 5325522013911313276
+      04_crossbow_109: -2375727615108400936
+      04_crossbow_11: -17139559361154534
+      04_crossbow_110: 2725965586784232180
+      04_crossbow_111: 4386775419584950764
+      04_crossbow_112: 3046276246155365630
+      04_crossbow_113: 3758379824153411698
+      04_crossbow_114: 4189340388173978167
+      04_crossbow_115: -7937601432918830462
+      04_crossbow_116: -1359697937216396756
+      04_crossbow_117: 6296591336353429096
+      04_crossbow_118: 3755636631698799943
+      04_crossbow_119: 5869262283525362037
+      04_crossbow_12: 4702946068182099385
+      04_crossbow_120: -8333862042445819981
+      04_crossbow_121: -3024225218937490651
+      04_crossbow_122: -4038489031312647046
+      04_crossbow_123: -6986623373542278140
+      04_crossbow_124: -8390948062801374592
+      04_crossbow_125: -4539206341694549276
+      04_crossbow_126: -8913578642512980933
+      04_crossbow_127: 661016090189193460
+      04_crossbow_128: -8658842480195993932
+      04_crossbow_129: -6046996075255003501
+      04_crossbow_13: -4260818733745341428
+      04_crossbow_130: -5859120691601622912
+      04_crossbow_131: 2760145037472326938
+      04_crossbow_132: -1299949178762332238
+      04_crossbow_133: 1536543500445435202
+      04_crossbow_14: 4591512772287492773
+      04_crossbow_15: -1995372803661707739
+      04_crossbow_16: -8330855500925249698
+      04_crossbow_17: -6982666968175726128
+      04_crossbow_18: -3377681088183136093
+      04_crossbow_19: 11973262804608343
+      04_crossbow_2: -7582776566112244396
+      04_crossbow_20: -1210062981306841678
+      04_crossbow_21: -6118140062549581674
+      04_crossbow_22: 6338051183672155908
+      04_crossbow_23: -809744338843121070
+      04_crossbow_24: -5613730186487719224
+      04_crossbow_25: 6675191713890916244
+      04_crossbow_26: 4878153698116534966
+      04_crossbow_27: -7147745648781822681
+      04_crossbow_28: 6299095788473566787
+      04_crossbow_29: -5634763042968561013
+      04_crossbow_3: 575836523528289506
+      04_crossbow_30: 4459657964712173760
+      04_crossbow_31: -1684251894772769835
+      04_crossbow_32: -6694578080042714748
+      04_crossbow_33: 842674556530319645
+      04_crossbow_34: -6840064063457014347
+      04_crossbow_35: 8735644828636571741
+      04_crossbow_36: -6035277128032420716
+      04_crossbow_37: -7320063499768187662
+      04_crossbow_38: -8134276693875705738
+      04_crossbow_39: -4863753260960220083
+      04_crossbow_4: 7536707171603190809
+      04_crossbow_40: 3697825109948904635
+      04_crossbow_41: 5858934260687833249
+      04_crossbow_42: -8346334726903074578
+      04_crossbow_43: -4861999852880666870
+      04_crossbow_44: 4542964264887682200
+      04_crossbow_45: 6186658938636940151
+      04_crossbow_46: 7386370745807029817
+      04_crossbow_47: 3216279430237073696
+      04_crossbow_48: -9032082062650231999
+      04_crossbow_49: 7791863669754369325
+      04_crossbow_5: -1870257313372789259
+      04_crossbow_50: 4337413962494615505
+      04_crossbow_51: 3132535745948448444
+      04_crossbow_52: -697038459882582508
+      04_crossbow_53: -8508961458932613917
+      04_crossbow_54: -5525330521416094669
+      04_crossbow_55: -8441245097002980489
+      04_crossbow_56: -4668289112920625671
+      04_crossbow_57: -3907609933495093763
+      04_crossbow_58: 4425902444448860072
+      04_crossbow_59: 8755831044155085007
+      04_crossbow_6: 3367981561399817739
+      04_crossbow_60: -2845740021463669416
+      04_crossbow_61: 595032376526463514
+      04_crossbow_62: -251668629919638946
+      04_crossbow_63: -6556475702729262584
+      04_crossbow_64: -826103091143050948
+      04_crossbow_65: -285674834791225174
+      04_crossbow_66: 6572340624904731737
+      04_crossbow_67: 9177533475659938151
+      04_crossbow_68: 2795296732204459265
+      04_crossbow_69: -9129054975688975565
+      04_crossbow_7: 8304727434783085245
+      04_crossbow_70: -3691551741489461518
+      04_crossbow_71: 2413178064681685670
+      04_crossbow_72: -4818123603170215438
+      04_crossbow_73: -1607604377183503655
+      04_crossbow_74: -1809459594563970233
+      04_crossbow_75: 2806962506934370730
+      04_crossbow_76: -2839819784306879928
+      04_crossbow_77: 7274492540472427495
+      04_crossbow_78: -1392761983117735402
+      04_crossbow_79: 642580808702833172
+      04_crossbow_8: -7667544492968715688
+      04_crossbow_80: -6345411301521284349
+      04_crossbow_81: 1720000742981804207
+      04_crossbow_82: -4710303797881663461
+      04_crossbow_83: -7692264935506865406
+      04_crossbow_84: -3206638253128307584
+      04_crossbow_85: -1981412454006076645
+      04_crossbow_86: -7215386816370065715
+      04_crossbow_87: 488230744918982476
+      04_crossbow_88: -9155244863878357825
+      04_crossbow_89: -2142582549544059572
+      04_crossbow_9: -3642908323083612615
+      04_crossbow_90: 1435804882824269017
+      04_crossbow_91: 4043662105489424061
+      04_crossbow_92: -5014515746245716457
+      04_crossbow_93: 2088427416772419062
+      04_crossbow_94: -4914931882338995062
+      04_crossbow_95: -5257290113884613631
+      04_crossbow_96: 6221708350791928817
+      04_crossbow_97: 2923535277217124005
+      04_crossbow_98: -696820022633066560
+      04_crossbow_99: 1809000010354156620
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

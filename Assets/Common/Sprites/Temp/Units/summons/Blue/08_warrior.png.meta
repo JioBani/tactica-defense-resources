@@ -1,0 +1,2054 @@
+fileFormatVersion: 2
+guid: 1fb720016d0ecf042a2e9bcaf99f5a28
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7247398010475635251
+    second: 08_warrior_0
+  - first:
+      213: -8684554936586301667
+    second: 08_warrior_1
+  - first:
+      213: -3914983995807477064
+    second: 08_warrior_2
+  - first:
+      213: 879421201363490626
+    second: 08_warrior_3
+  - first:
+      213: 8205012262939945332
+    second: 08_warrior_4
+  - first:
+      213: -6119079711662095215
+    second: 08_warrior_5
+  - first:
+      213: -590506089250595887
+    second: 08_warrior_6
+  - first:
+      213: 6264323035050161350
+    second: 08_warrior_7
+  - first:
+      213: -5592623768166531727
+    second: 08_warrior_8
+  - first:
+      213: 2859272213430875008
+    second: 08_warrior_9
+  - first:
+      213: -524039572519827207
+    second: 08_warrior_10
+  - first:
+      213: 2598691759944833925
+    second: 08_warrior_11
+  - first:
+      213: -3242870677138496561
+    second: 08_warrior_12
+  - first:
+      213: 5382029596211703796
+    second: 08_warrior_13
+  - first:
+      213: 6132616820527683024
+    second: 08_warrior_14
+  - first:
+      213: 7499206794085848375
+    second: 08_warrior_15
+  - first:
+      213: -477913429644404535
+    second: 08_warrior_16
+  - first:
+      213: 2302274210033235998
+    second: 08_warrior_17
+  - first:
+      213: -2025812002047018494
+    second: 08_warrior_18
+  - first:
+      213: -8462979538677008338
+    second: 08_warrior_19
+  - first:
+      213: 1309543591749539782
+    second: 08_warrior_20
+  - first:
+      213: 4210016651925126273
+    second: 08_warrior_21
+  - first:
+      213: -566029927553590385
+    second: 08_warrior_22
+  - first:
+      213: -4317148317264240414
+    second: 08_warrior_23
+  - first:
+      213: -7493745836876344612
+    second: 08_warrior_24
+  - first:
+      213: -85885138018339966
+    second: 08_warrior_25
+  - first:
+      213: 5573397215123467767
+    second: 08_warrior_26
+  - first:
+      213: 4919943248124762009
+    second: 08_warrior_27
+  - first:
+      213: 8989819659845301610
+    second: 08_warrior_28
+  - first:
+      213: -8884146104944678054
+    second: 08_warrior_29
+  - first:
+      213: 8920802631445500640
+    second: 08_warrior_30
+  - first:
+      213: -2620635012458284648
+    second: 08_warrior_31
+  - first:
+      213: 7698065523707291601
+    second: 08_warrior_32
+  - first:
+      213: -8244335737062553183
+    second: 08_warrior_33
+  - first:
+      213: -8621555311003273183
+    second: 08_warrior_34
+  - first:
+      213: -403841253867145653
+    second: 08_warrior_35
+  - first:
+      213: -339777009610590740
+    second: 08_warrior_36
+  - first:
+      213: -2789994916484096861
+    second: 08_warrior_37
+  - first:
+      213: -497390480093954884
+    second: 08_warrior_38
+  - first:
+      213: 2516087701246529105
+    second: 08_warrior_39
+  - first:
+      213: -2931399112615232243
+    second: 08_warrior_40
+  - first:
+      213: 6391179528897992439
+    second: 08_warrior_41
+  - first:
+      213: 4576451232737313283
+    second: 08_warrior_42
+  - first:
+      213: 3006583727211829778
+    second: 08_warrior_43
+  - first:
+      213: 4481989247142210806
+    second: 08_warrior_44
+  - first:
+      213: -4023932193748763038
+    second: 08_warrior_45
+  - first:
+      213: -912380821177531170
+    second: 08_warrior_46
+  - first:
+      213: 1945283686706545465
+    second: 08_warrior_47
+  - first:
+      213: -4392249403577485876
+    second: 08_warrior_48
+  - first:
+      213: 4596679428598672926
+    second: 08_warrior_49
+  - first:
+      213: 575439034389831296
+    second: 08_warrior_50
+  - first:
+      213: -6021187566265673371
+    second: 08_warrior_51
+  - first:
+      213: 5654831600419415275
+    second: 08_warrior_52
+  - first:
+      213: -1581843103694765663
+    second: 08_warrior_53
+  - first:
+      213: -6914715334163032388
+    second: 08_warrior_54
+  - first:
+      213: 3113411291999535564
+    second: 08_warrior_55
+  - first:
+      213: 2711262472383518397
+    second: 08_warrior_56
+  - first:
+      213: -7069239405944813797
+    second: 08_warrior_57
+  - first:
+      213: -2503594299251141763
+    second: 08_warrior_58
+  - first:
+      213: -5021993596103197333
+    second: 08_warrior_59
+  - first:
+      213: -1964831895136943760
+    second: 08_warrior_60
+  - first:
+      213: -6746173487101457826
+    second: 08_warrior_61
+  - first:
+      213: -8702593407643828957
+    second: 08_warrior_62
+  - first:
+      213: 1373626546892107273
+    second: 08_warrior_63
+  - first:
+      213: 6030272224657364844
+    second: 08_warrior_64
+  - first:
+      213: -7466230743521362194
+    second: 08_warrior_65
+  - first:
+      213: 7688274647007129742
+    second: 08_warrior_66
+  - first:
+      213: 2597922208137144159
+    second: 08_warrior_67
+  - first:
+      213: 8243259545031609466
+    second: 08_warrior_68
+  - first:
+      213: -1803865129860186725
+    second: 08_warrior_69
+  - first:
+      213: 4668591615393363320
+    second: 08_warrior_70
+  - first:
+      213: -4533860746256835882
+    second: 08_warrior_71
+  - first:
+      213: 2543740743037556189
+    second: 08_warrior_72
+  - first:
+      213: -3274812464282280239
+    second: 08_warrior_73
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 08_warrior_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 769
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 332e548971ee39460800000000000000
+      internalID: 7247398010475635251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 768
+        width: 28
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1f88644c434a7780800000000000000
+      internalID: -8684554936586301667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_2
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 768
+        width: 39
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b25e8c5cce2ba9c0800000000000000
+      internalID: -3914983995807477064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 768
+        width: 29
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 247d73b5ce4543c00800000000000000
+      internalID: 879421201363490626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_4
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 768
+        width: 45
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 479624e5e2f0ed170800000000000000
+      internalID: 8205012262939945332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_5
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 768
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 194c41a2c69a41ba0800000000000000
+      internalID: -6119079711662095215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 705
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1db538827d91ec7f0800000000000000
+      internalID: -590506089250595887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_7
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 705
+        width: 28
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c4367e4c985fe650800000000000000
+      internalID: 6264323035050161350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_8
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 705
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17df60850520362b0800000000000000
+      internalID: -5592623768166531727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_9
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 705
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08331b5ddec2ea720800000000000000
+      internalID: 2859272213430875008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_10
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 705
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f845b709cc3ab8f0800000000000000
+      internalID: -524039572519827207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_11
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 705
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58b1f302368601420800000000000000
+      internalID: 2598691759944833925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_12
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 641
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc321a4fc420ff2d0800000000000000
+      internalID: -3242870677138496561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_13
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 641
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ff66dc076fc0ba40800000000000000
+      internalID: 5382029596211703796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_14
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 641
+        width: 39
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d5532b918e6b1550800000000000000
+      internalID: 6132616820527683024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_15
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 641
+        width: 35
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 735dea2c8d8821860800000000000000
+      internalID: 7499206794085848375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_16
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 639
+        width: 45
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c818a0944c1e59f0800000000000000
+      internalID: -477913429644404535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_17
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 641
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e18f290323253ff10800000000000000
+      internalID: 2302274210033235998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_18
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 577
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20ab344a7bed2e3e0800000000000000
+      internalID: -2025812002047018494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_19
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 577
+        width: 28
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e28f1c7c2f47d8a80800000000000000
+      internalID: -8462979538677008338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_20
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 577
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c7de1c55fe6c2210800000000000000
+      internalID: 1309543591749539782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_21
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 577
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18cf97cd6dbfc6a30800000000000000
+      internalID: 4210016651925126273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_22
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 577
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8b9de3a7ce0528f0800000000000000
+      internalID: -566029927553590385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_23
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 577
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e02aca8a786614c0800000000000000
+      internalID: -4317148317264240414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_24
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 513
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd25ceb6dddd00890800000000000000
+      internalID: -7493745836876344612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_25
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 513
+        width: 30
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2837ee80cefdecef0800000000000000
+      internalID: -85885138018339966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_26
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 512
+        width: 28
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fde59fec3fa85d40800000000000000
+      internalID: 5573397215123467767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_27
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 511
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 997de833156274440800000000000000
+      internalID: 4919943248124762009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_28
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 512
+        width: 30
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a65f6ebb95142cc70800000000000000
+      internalID: 8989819659845301610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_29
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 513
+        width: 30
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5b2a12103c25b480800000000000000
+      internalID: -8884146104944678054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_30
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 512
+        width: 29
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e2dda69abe0dcb70800000000000000
+      internalID: 8920802631445500640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_31
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 511
+        width: 29
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 899f8744752a1abd0800000000000000
+      internalID: -2620635012458284648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_32
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 512
+        width: 30
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d72146cec505da60800000000000000
+      internalID: 7698065523707291601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_33
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 449
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a90457d35c369d80800000000000000
+      internalID: -8244335737062553183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_34
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 449
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1287444af151a5880800000000000000
+      internalID: -8621555311003273183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_35
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 450
+        width: 39
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b46b99de484456af0800000000000000
+      internalID: -403841253867145653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_36
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 450
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce5f0572c9ed84bf0800000000000000
+      internalID: -339777009610590740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_37
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 449
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3acd1ddc762f749d0800000000000000
+      internalID: -2789994916484096861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_38
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 449
+        width: 34
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbcb65f5ef9e819f0800000000000000
+      internalID: -497390480093954884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_39
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 449
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15e4788fe60fae220800000000000000
+      internalID: 2516087701246529105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_40
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 449
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0d7cadc9049157d0800000000000000
+      internalID: -2931399112615232243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_41
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 449
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f696bb6be702b850800000000000000
+      internalID: 6391179528897992439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_42
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 385
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 302c43b2622d28f30800000000000000
+      internalID: 4576451232737313283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_43
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 385
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21a5ee768f789b920800000000000000
+      internalID: 3006583727211829778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_44
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 384
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fc28034979333e30800000000000000
+      internalID: 4481989247142210806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_45
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 383
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26eb85f4dfe1828c0800000000000000
+      internalID: -4023932193748763038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_46
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 384
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed485d52a729653f0800000000000000
+      internalID: -912380821177531170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_47
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 385
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 933818dd4390ffa10800000000000000
+      internalID: 1945283686706545465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_48
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 384
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc5b7d640789b03c0800000000000000
+      internalID: -4392249403577485876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_49
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 384
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1e28f7069faacf30800000000000000
+      internalID: 4596679428598672926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_50
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 384
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e13b2c0ce5cf700800000000000000
+      internalID: 575439034389831296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_51
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 321
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5695cb26fc1707ca0800000000000000
+      internalID: -6021187566265673371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_52
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 321
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be427a7416ff97e40800000000000000
+      internalID: 5654831600419415275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_53
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 322
+        width: 39
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a14fd1041a2c0ae0800000000000000
+      internalID: -1581843103694765663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_54
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 322
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb614401a0ff900a0800000000000000
+      internalID: -6914715334163032388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_55
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 321
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc18253131f053b20800000000000000
+      internalID: 3113411291999535564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_56
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 321
+        width: 34
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db6544f8ad650a520800000000000000
+      internalID: 2711262472383518397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_57
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 321
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b174778f63405ed90800000000000000
+      internalID: -7069239405944813797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_58
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 321
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d73517bdf32714dd0800000000000000
+      internalID: -2503594299251141763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_59
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 321
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6d7bf79e6b4e4ab0800000000000000
+      internalID: -5021993596103197333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_60
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 257
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 071410f2dc38bb4e0800000000000000
+      internalID: -1964831895136943760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_61
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 257
+        width: 31
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ac82cc4f6c062a0800000000000000
+      internalID: -6746173487101457826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_62
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 257
+        width: 30
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32dbbb0776d2a3780800000000000000
+      internalID: -8702593407643828957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_63
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 257
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90eec8d011a101310800000000000000
+      internalID: 1373626546892107273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_64
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 256
+        width: 37
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c675b9973a4dfa350800000000000000
+      internalID: 6030272224657364844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_65
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 256
+        width: 47
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeefe4152be926890800000000000000
+      internalID: -7466230743521362194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_66
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 193
+        width: 30
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e807086ae0d32ba60800000000000000
+      internalID: 7688274647007129742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_67
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 193
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f57ec12eb7cad0420800000000000000
+      internalID: 2597922208137144159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_68
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 129
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7c05fca1e0f56270800000000000000
+      internalID: 8243259545031609466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_69
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 129
+        width: 25
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9d38ffb83267f6e0800000000000000
+      internalID: -1803865129860186725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_70
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 65
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87573e4c65b2ac040800000000000000
+      internalID: 4668591615393363320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_71
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 65
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da16463cad7411c0800000000000000
+      internalID: -4533860746256835882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_72
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5117d7abe2d4320800000000000000
+      internalID: 2543740743037556189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08_warrior_73
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1
+        width: 25
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dede681a678d82d0800000000000000
+      internalID: -3274812464282280239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      08_warrior_0: 7247398010475635251
+      08_warrior_1: -8684554936586301667
+      08_warrior_10: -524039572519827207
+      08_warrior_11: 2598691759944833925
+      08_warrior_12: -3242870677138496561
+      08_warrior_13: 5382029596211703796
+      08_warrior_14: 6132616820527683024
+      08_warrior_15: 7499206794085848375
+      08_warrior_16: -477913429644404535
+      08_warrior_17: 2302274210033235998
+      08_warrior_18: -2025812002047018494
+      08_warrior_19: -8462979538677008338
+      08_warrior_2: -3914983995807477064
+      08_warrior_20: 1309543591749539782
+      08_warrior_21: 4210016651925126273
+      08_warrior_22: -566029927553590385
+      08_warrior_23: -4317148317264240414
+      08_warrior_24: -7493745836876344612
+      08_warrior_25: -85885138018339966
+      08_warrior_26: 5573397215123467767
+      08_warrior_27: 4919943248124762009
+      08_warrior_28: 8989819659845301610
+      08_warrior_29: -8884146104944678054
+      08_warrior_3: 879421201363490626
+      08_warrior_30: 8920802631445500640
+      08_warrior_31: -2620635012458284648
+      08_warrior_32: 7698065523707291601
+      08_warrior_33: -8244335737062553183
+      08_warrior_34: -8621555311003273183
+      08_warrior_35: -403841253867145653
+      08_warrior_36: -339777009610590740
+      08_warrior_37: -2789994916484096861
+      08_warrior_38: -497390480093954884
+      08_warrior_39: 2516087701246529105
+      08_warrior_4: 8205012262939945332
+      08_warrior_40: -2931399112615232243
+      08_warrior_41: 6391179528897992439
+      08_warrior_42: 4576451232737313283
+      08_warrior_43: 3006583727211829778
+      08_warrior_44: 4481989247142210806
+      08_warrior_45: -4023932193748763038
+      08_warrior_46: -912380821177531170
+      08_warrior_47: 1945283686706545465
+      08_warrior_48: -4392249403577485876
+      08_warrior_49: 4596679428598672926
+      08_warrior_5: -6119079711662095215
+      08_warrior_50: 575439034389831296
+      08_warrior_51: -6021187566265673371
+      08_warrior_52: 5654831600419415275
+      08_warrior_53: -1581843103694765663
+      08_warrior_54: -6914715334163032388
+      08_warrior_55: 3113411291999535564
+      08_warrior_56: 2711262472383518397
+      08_warrior_57: -7069239405944813797
+      08_warrior_58: -2503594299251141763
+      08_warrior_59: -5021993596103197333
+      08_warrior_6: -590506089250595887
+      08_warrior_60: -1964831895136943760
+      08_warrior_61: -6746173487101457826
+      08_warrior_62: -8702593407643828957
+      08_warrior_63: 1373626546892107273
+      08_warrior_64: 6030272224657364844
+      08_warrior_65: -7466230743521362194
+      08_warrior_66: 7688274647007129742
+      08_warrior_67: 2597922208137144159
+      08_warrior_68: 8243259545031609466
+      08_warrior_69: -1803865129860186725
+      08_warrior_7: 6264323035050161350
+      08_warrior_70: 4668591615393363320
+      08_warrior_71: -4533860746256835882
+      08_warrior_72: 2543740743037556189
+      08_warrior_73: -3274812464282280239
+      08_warrior_8: -5592623768166531727
+      08_warrior_9: 2859272213430875008
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

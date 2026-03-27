@@ -1,0 +1,2158 @@
+fileFormatVersion: 2
+guid: 5505272e3a52f3544a84c22396a23e62
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3084440676570397099
+    second: 06_young_mage_0
+  - first:
+      213: 2322463360521940640
+    second: 06_young_mage_1
+  - first:
+      213: -7331037424250653058
+    second: 06_young_mage_2
+  - first:
+      213: 6536487024694293577
+    second: 06_young_mage_3
+  - first:
+      213: 8507320927346127867
+    second: 06_young_mage_4
+  - first:
+      213: -8147029280591537504
+    second: 06_young_mage_5
+  - first:
+      213: -5957311057718995912
+    second: 06_young_mage_6
+  - first:
+      213: -7770259925173406955
+    second: 06_young_mage_7
+  - first:
+      213: -4280445849616434923
+    second: 06_young_mage_8
+  - first:
+      213: 7428637394571711837
+    second: 06_young_mage_9
+  - first:
+      213: 6684118740764573633
+    second: 06_young_mage_10
+  - first:
+      213: 5168620219165823251
+    second: 06_young_mage_11
+  - first:
+      213: 9024627304796512192
+    second: 06_young_mage_12
+  - first:
+      213: -5158580984267253299
+    second: 06_young_mage_13
+  - first:
+      213: 4629024603188387573
+    second: 06_young_mage_14
+  - first:
+      213: 8432874268352707151
+    second: 06_young_mage_15
+  - first:
+      213: 8298974348392371991
+    second: 06_young_mage_16
+  - first:
+      213: 592549664992771405
+    second: 06_young_mage_17
+  - first:
+      213: 2304485989664548265
+    second: 06_young_mage_18
+  - first:
+      213: -6516464925926070039
+    second: 06_young_mage_19
+  - first:
+      213: 5755237390589543343
+    second: 06_young_mage_20
+  - first:
+      213: 264861621006386497
+    second: 06_young_mage_21
+  - first:
+      213: 1703791810784130820
+    second: 06_young_mage_22
+  - first:
+      213: -6480609130659171615
+    second: 06_young_mage_23
+  - first:
+      213: -3155412462986010671
+    second: 06_young_mage_24
+  - first:
+      213: 7767157710205475023
+    second: 06_young_mage_25
+  - first:
+      213: 8522034459754919640
+    second: 06_young_mage_26
+  - first:
+      213: 1380436911023857263
+    second: 06_young_mage_27
+  - first:
+      213: -7169848214925322699
+    second: 06_young_mage_28
+  - first:
+      213: -6477946204846622279
+    second: 06_young_mage_29
+  - first:
+      213: 9035252014889331752
+    second: 06_young_mage_30
+  - first:
+      213: 2620339831049586633
+    second: 06_young_mage_31
+  - first:
+      213: 7107229707632348373
+    second: 06_young_mage_32
+  - first:
+      213: -4715464175655405192
+    second: 06_young_mage_33
+  - first:
+      213: 1301325838916941646
+    second: 06_young_mage_34
+  - first:
+      213: 4157484462455538030
+    second: 06_young_mage_35
+  - first:
+      213: 4677761328290131052
+    second: 06_young_mage_36
+  - first:
+      213: -5176461841848734774
+    second: 06_young_mage_37
+  - first:
+      213: -1818004744188779916
+    second: 06_young_mage_38
+  - first:
+      213: -5846825619060286791
+    second: 06_young_mage_39
+  - first:
+      213: -582919386673482683
+    second: 06_young_mage_40
+  - first:
+      213: -1268748855398101058
+    second: 06_young_mage_41
+  - first:
+      213: -3557685354823062496
+    second: 06_young_mage_42
+  - first:
+      213: -6074649263988062976
+    second: 06_young_mage_43
+  - first:
+      213: 8710816949070458586
+    second: 06_young_mage_44
+  - first:
+      213: -8115124972606626191
+    second: 06_young_mage_45
+  - first:
+      213: 6973412842898190268
+    second: 06_young_mage_46
+  - first:
+      213: -5315531224121491080
+    second: 06_young_mage_47
+  - first:
+      213: -444667633748267375
+    second: 06_young_mage_48
+  - first:
+      213: 755235912052522054
+    second: 06_young_mage_49
+  - first:
+      213: 5591658783127097320
+    second: 06_young_mage_50
+  - first:
+      213: 1050753482714144984
+    second: 06_young_mage_51
+  - first:
+      213: -435972815134765285
+    second: 06_young_mage_52
+  - first:
+      213: 4361730439385297266
+    second: 06_young_mage_53
+  - first:
+      213: -8873667381715443807
+    second: 06_young_mage_54
+  - first:
+      213: -8698156727593785143
+    second: 06_young_mage_55
+  - first:
+      213: -6756444870817222886
+    second: 06_young_mage_56
+  - first:
+      213: 1493685349303990558
+    second: 06_young_mage_57
+  - first:
+      213: 6811462792420007164
+    second: 06_young_mage_58
+  - first:
+      213: -1387187299026995632
+    second: 06_young_mage_59
+  - first:
+      213: 4465138512741805916
+    second: 06_young_mage_60
+  - first:
+      213: -309099221735141397
+    second: 06_young_mage_61
+  - first:
+      213: -1685892356302389040
+    second: 06_young_mage_62
+  - first:
+      213: 3619545227210510367
+    second: 06_young_mage_63
+  - first:
+      213: 5618434156959088011
+    second: 06_young_mage_64
+  - first:
+      213: -3862592965345671942
+    second: 06_young_mage_65
+  - first:
+      213: -4520000644462549213
+    second: 06_young_mage_66
+  - first:
+      213: -4828336152391028811
+    second: 06_young_mage_67
+  - first:
+      213: 40488118380493781
+    second: 06_young_mage_68
+  - first:
+      213: -8990670088644871335
+    second: 06_young_mage_69
+  - first:
+      213: 1106397518178451513
+    second: 06_young_mage_70
+  - first:
+      213: -330585197016048122
+    second: 06_young_mage_71
+  - first:
+      213: -5911371799867760744
+    second: 06_young_mage_72
+  - first:
+      213: 9111760028507844308
+    second: 06_young_mage_73
+  - first:
+      213: -6593779450510561448
+    second: 06_young_mage_74
+  - first:
+      213: 1681587950146163727
+    second: 06_young_mage_75
+  - first:
+      213: 4096640804804797183
+    second: 06_young_mage_76
+  - first:
+      213: 8806785551414640550
+    second: 06_young_mage_77
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 06_young_mage_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 769
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5568146fb8dd135d0800000000000000
+      internalID: -3084440676570397099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 769
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ae25c71f1c0b3020800000000000000
+      internalID: 2322463360521940640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 769
+        width: 30
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e76f17cdd4ce24a90800000000000000
+      internalID: -7331037424250653058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_3
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 769
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9447ad1315446ba50800000000000000
+      internalID: 6536487024694293577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_4
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 769
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf376b84f43101670800000000000000
+      internalID: 8507320927346127867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_5
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 769
+        width: 46
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aa92abb800ffee80800000000000000
+      internalID: -8147029280591537504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_6
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 769
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 834172cf721635da0800000000000000
+      internalID: -5957311057718995912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_7
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 705
+        width: 26
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 513f59344cd7a2490800000000000000
+      internalID: -7770259925173406955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_8
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 705
+        width: 26
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5193155bd2dc894c0800000000000000
+      internalID: -4280445849616434923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_9
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 705
+        width: 26
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5551ac0a52d71760800000000000000
+      internalID: 7428637394571711837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_10
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 705
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cfbdcba492c2cc50800000000000000
+      internalID: 6684118740764573633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_11
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 705
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 311d74e64b0aab740800000000000000
+      internalID: 5168620219165823251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_12
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 705
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cfdfac18baed3d70800000000000000
+      internalID: 9024627304796512192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_13
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 705
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc95aa71de90968b0800000000000000
+      internalID: -5158580984267253299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_14
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 641
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fe5699d9599d3040800000000000000
+      internalID: 4629024603188387573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_15
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 641
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4af1b0c776970570800000000000000
+      internalID: 8432874268352707151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_16
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 641
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71791043331eb2370800000000000000
+      internalID: 8298974348392371991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_17
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 641
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4dbba5e7c8293800800000000000000
+      internalID: 592549664992771405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_18
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 641
+        width: 46
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a5e1d34ccd2bff10800000000000000
+      internalID: 2304485989664548265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_19
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 641
+        width: 46
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e862e2fcadd095a0800000000000000
+      internalID: -6516464925926070039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_20
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 641
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa3c2280ae5bedf40800000000000000
+      internalID: 5755237390589543343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_21
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 577
+        width: 26
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14548b2bd3afca300800000000000000
+      internalID: 264861621006386497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_22
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 577
+        width: 26
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407f105ff9515a710800000000000000
+      internalID: 1703791810784130820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_23
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 577
+        width: 26
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e238e6d4504016a0800000000000000
+      internalID: -6480609130659171615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_24
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 577
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dfd0ef3519b534d0800000000000000
+      internalID: -3155412462986010671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_25
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 577
+        width: 34
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc8db3709cc7acb60800000000000000
+      internalID: 7767157710205475023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_26
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 577
+        width: 34
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d674518039544670800000000000000
+      internalID: 8522034459754919640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_27
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 577
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6e1a648e0c482310800000000000000
+      internalID: 1380436911023857263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_28
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 511
+        width: 37
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53658e739059f7c90800000000000000
+      internalID: -7169848214925322699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_29
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 511
+        width: 36
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b9f6029f36b916a0800000000000000
+      internalID: -6477946204846622279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_30
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 512
+        width: 36
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82c6c9336d9a36d70800000000000000
+      internalID: 9035252014889331752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_31
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 511
+        width: 36
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7848471315d5420800000000000000
+      internalID: 2620339831049586633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_32
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 512
+        width: 36
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dc878c63c3f1a260800000000000000
+      internalID: 7107229707632348373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_33
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 511
+        width: 36
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 879bafad05e4f8eb0800000000000000
+      internalID: -4715464175655405192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_34
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 512
+        width: 35
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e477eada4fc3f0210800000000000000
+      internalID: 1301325838916941646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_35
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 511
+        width: 34
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e614edf571a52b930800000000000000
+      internalID: 4157484462455538030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_36
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 512
+        width: 36
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6ceacce42fbae040800000000000000
+      internalID: 4677761328290131052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_37
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 447
+        width: 32
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acbed3381638928b0800000000000000
+      internalID: -5176461841848734774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_38
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 449
+        width: 61
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47227ae315625c6e0800000000000000
+      internalID: -1818004744188779916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_39
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 450
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ba1248c317ebdea0800000000000000
+      internalID: -5846825619060286791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_40
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 447
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54473a008ed09e7f0800000000000000
+      internalID: -582919386673482683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_41
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 447
+        width: 43
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebf00dc53af746ee0800000000000000
+      internalID: -1268748855398101058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_42
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 447
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c692be40090aec0800000000000000
+      internalID: -3557685354823062496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_43
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 447
+        width: 43
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00547e4eda282bba0800000000000000
+      internalID: -6074649263988062976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_44
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 447
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adeebc00dd903e870800000000000000
+      internalID: 8710816949070458586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_45
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 449
+        width: 52
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17661eb45d8416f80800000000000000
+      internalID: -8115124972606626191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_46
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 383
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbfe71da80a86c060800000000000000
+      internalID: 6973412842898190268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_47
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 382
+        width: 35
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 871cdb9b3807b36b0800000000000000
+      internalID: -5315531224121491080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_48
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 384
+        width: 34
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19e225f942934d9f0800000000000000
+      internalID: -444667633748267375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_49
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 384
+        width: 34
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64c32838f032b7a00800000000000000
+      internalID: 755235912052522054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_50
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 384
+        width: 35
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8efcb719900999d40800000000000000
+      internalID: 5591658783127097320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_51
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 383
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d06ea3b9b6059e00800000000000000
+      internalID: 1050753482714144984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_52
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 384
+        width: 34
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1f4a26d80d13f9f0800000000000000
+      internalID: -435972815134765285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_53
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 384
+        width: 32
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 271b195a9baf78c30800000000000000
+      internalID: 4361730439385297266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_54
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 384
+        width: 35
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1af51e1f7866ad480800000000000000
+      internalID: -8873667381715443807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_55
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 319
+        width: 33
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c829138a80f94780800000000000000
+      internalID: -8698156727593785143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_56
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 321
+        width: 61
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1fed6aef294c32a0800000000000000
+      internalID: -6756444870817222886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_57
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 322
+        width: 52
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e19387b49e2aab410800000000000000
+      internalID: 1493685349303990558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_58
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 319
+        width: 45
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfc1cfe225d278e50800000000000000
+      internalID: 6811462792420007164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_59
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 319
+        width: 43
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 056ff8c4088bfbce0800000000000000
+      internalID: -1387187299026995632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_60
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 319
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5f24ece1db57fd30800000000000000
+      internalID: 4465138512741805916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_61
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 319
+        width: 43
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bef802045ebd5bbf0800000000000000
+      internalID: -309099221735141397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_62
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 319
+        width: 45
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d0cc0d85d18a98e0800000000000000
+      internalID: -1685892356302389040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_63
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 321
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f10d75cf4353b3230800000000000000
+      internalID: 3619545227210510367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_64
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 255
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8db7771910b8fd40800000000000000
+      internalID: 5618434156959088011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_65
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 255
+        width: 34
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af406a4b920556ac0800000000000000
+      internalID: -3862592965345671942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_66
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 255
+        width: 44
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 327e542ac5bb541c0800000000000000
+      internalID: -4520000644462549213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_67
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 257
+        width: 52
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf6e8cd9dd4efcb0800000000000000
+      internalID: -4828336152391028811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_68
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 256
+        width: 61
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5db71b9aab7df8000800000000000000
+      internalID: 40488118380493781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_69
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 256
+        width: 61
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95bb7916039ba3380800000000000000
+      internalID: -8990670088644871335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_70
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 193
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 930866b4ea6ba5f00800000000000000
+      internalID: 1106397518178451513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_71
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 193
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60e1bdbc386896bf0800000000000000
+      internalID: -330585197016048122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_72
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 129
+        width: 26
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89fde95faa696fda0800000000000000
+      internalID: -5911371799867760744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_73
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 129
+        width: 26
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4de20d14879737e70800000000000000
+      internalID: 9111760028507844308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_74
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 65
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85f2c0d66803e74a0800000000000000
+      internalID: -6593779450510561448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_75
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 65
+        width: 30
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f041a0bc453365710800000000000000
+      internalID: 1681587950146163727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_76
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 1
+        width: 26
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff2a2c66b113ad830800000000000000
+      internalID: 4096640804804797183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06_young_mage_77
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 1
+        width: 26
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6afbc157cccf73a70800000000000000
+      internalID: 8806785551414640550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      06_young_mage_0: -3084440676570397099
+      06_young_mage_1: 2322463360521940640
+      06_young_mage_10: 6684118740764573633
+      06_young_mage_11: 5168620219165823251
+      06_young_mage_12: 9024627304796512192
+      06_young_mage_13: -5158580984267253299
+      06_young_mage_14: 4629024603188387573
+      06_young_mage_15: 8432874268352707151
+      06_young_mage_16: 8298974348392371991
+      06_young_mage_17: 592549664992771405
+      06_young_mage_18: 2304485989664548265
+      06_young_mage_19: -6516464925926070039
+      06_young_mage_2: -7331037424250653058
+      06_young_mage_20: 5755237390589543343
+      06_young_mage_21: 264861621006386497
+      06_young_mage_22: 1703791810784130820
+      06_young_mage_23: -6480609130659171615
+      06_young_mage_24: -3155412462986010671
+      06_young_mage_25: 7767157710205475023
+      06_young_mage_26: 8522034459754919640
+      06_young_mage_27: 1380436911023857263
+      06_young_mage_28: -7169848214925322699
+      06_young_mage_29: -6477946204846622279
+      06_young_mage_3: 6536487024694293577
+      06_young_mage_30: 9035252014889331752
+      06_young_mage_31: 2620339831049586633
+      06_young_mage_32: 7107229707632348373
+      06_young_mage_33: -4715464175655405192
+      06_young_mage_34: 1301325838916941646
+      06_young_mage_35: 4157484462455538030
+      06_young_mage_36: 4677761328290131052
+      06_young_mage_37: -5176461841848734774
+      06_young_mage_38: -1818004744188779916
+      06_young_mage_39: -5846825619060286791
+      06_young_mage_4: 8507320927346127867
+      06_young_mage_40: -582919386673482683
+      06_young_mage_41: -1268748855398101058
+      06_young_mage_42: -3557685354823062496
+      06_young_mage_43: -6074649263988062976
+      06_young_mage_44: 8710816949070458586
+      06_young_mage_45: -8115124972606626191
+      06_young_mage_46: 6973412842898190268
+      06_young_mage_47: -5315531224121491080
+      06_young_mage_48: -444667633748267375
+      06_young_mage_49: 755235912052522054
+      06_young_mage_5: -8147029280591537504
+      06_young_mage_50: 5591658783127097320
+      06_young_mage_51: 1050753482714144984
+      06_young_mage_52: -435972815134765285
+      06_young_mage_53: 4361730439385297266
+      06_young_mage_54: -8873667381715443807
+      06_young_mage_55: -8698156727593785143
+      06_young_mage_56: -6756444870817222886
+      06_young_mage_57: 1493685349303990558
+      06_young_mage_58: 6811462792420007164
+      06_young_mage_59: -1387187299026995632
+      06_young_mage_6: -5957311057718995912
+      06_young_mage_60: 4465138512741805916
+      06_young_mage_61: -309099221735141397
+      06_young_mage_62: -1685892356302389040
+      06_young_mage_63: 3619545227210510367
+      06_young_mage_64: 5618434156959088011
+      06_young_mage_65: -3862592965345671942
+      06_young_mage_66: -4520000644462549213
+      06_young_mage_67: -4828336152391028811
+      06_young_mage_68: 40488118380493781
+      06_young_mage_69: -8990670088644871335
+      06_young_mage_7: -7770259925173406955
+      06_young_mage_70: 1106397518178451513
+      06_young_mage_71: -330585197016048122
+      06_young_mage_72: -5911371799867760744
+      06_young_mage_73: 9111760028507844308
+      06_young_mage_74: -6593779450510561448
+      06_young_mage_75: 1681587950146163727
+      06_young_mage_76: 4096640804804797183
+      06_young_mage_77: 8806785551414640550
+      06_young_mage_8: -4280445849616434923
+      06_young_mage_9: 7428637394571711837
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
