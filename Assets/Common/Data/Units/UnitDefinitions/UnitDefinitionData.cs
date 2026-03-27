@@ -41,6 +41,20 @@ namespace Common.Data.Units.UnitDefinitions
         [SerializeField] private Sprite illustration;
         public Sprite Illustration => illustration;
 
+        [Header("애니메이션")]
+        [Tooltip("성급별 AnimatorOverrideController. 인덱스 = 성급 (0은 미사용)")]
+        [SerializeField] private AnimatorOverrideController[] animatorByStars;
+
+        /// <summary>해당 성급의 AnimatorOverrideController를 반환한다. 범위 밖이면 1성을 반환한다.</summary>
+        public AnimatorOverrideController GetAnimatorByStar(int star)
+        {
+            if (star < 0 || star >= animatorByStars.Length)
+            {
+                return animatorByStars[1];
+            }
+            return animatorByStars[star];
+        }
+
         [Header("시너지")]
         [Tooltip("이 유닛이 보유한 소환술사 효과")]
         [SerializeField] private SynergyDefinitionData summonerEffect;
