@@ -1,12 +1,24 @@
 # 유닛 애니메이션 프레임워크
 
 ActionStateController의 상태 변경에 연동하여 유닛별 셀 애니메이션을 자동 재생하는 프레임워크.
+특정 상태의 애니메이션을 지정된 시간에 맞추는 속도 조절 메커니즘을 포함한다.
 
 ---
 
 ## 구조
 
 ```
+StateAnimator<T> (제네릭 베이스, Common/Scripts/StateBase/)
+├── StateBaseController<T> 구독 (IStateListener<T>)
+├── OnStateEnter → animator.Play(state.ToString())
+├── targetDurations: 상태별 목표 시간 등록 → 자동 속도 계산
+└── clipLengthCache: Initialize 시 전체 클립 길이 캐싱
+
+UnitAnimator : StateAnimator<ActionStateType> (유닛 특화)
+├── Unit.OnSpawnEvent 구독 → OverrideController 할당
+├── AttackSpeed.OnChange 구독
+└── Attack의 targetDuration = 1/attackSpeed 로 자동 갱신
+
 UnitBase.controller (Base AnimatorController, 1개)
 ├── State: Idle, Move, Attack, Downed, Freeze, Waiting
 ├── 각 State에 placeholder 클립
@@ -18,11 +30,22 @@ UnitBase.controller (Base AnimatorController, 1개)
 
 UnitDefinitionData (SO)
 └── animatorByStars[] → 성급별 OverrideController 참조
-
-UnitAnimator (런타임 컴포넌트)
-├── Unit.OnSpawnEvent 구독 → OverrideController를 Animator에 할당
-└── IStateListener<ActionStateType> → 상태 변경 시 animator.Play()
 ```
+
+---
+
+## 속도 조절 메커니즘
+
+특정 상태의 애니메이션 1루프를 지정된 시간에 정확히 맞춘다.
+
+```
+animator.speed = clipLength / targetDuration
+```
+
+- Attack 상태: targetDuration = 1/attackSpeed → 공격 사이클과 애니메이션이 정확히 일치
+- 미등록 상태: animator.speed = 1.0f (기본 속도)
+
+속도 조절이 필요한 상태가 추가되면 `SetTargetDuration(state, duration)`으로 등록한다.
 
 ---
 
@@ -83,7 +106,8 @@ UnitAnimator (런타임 컴포넌트)
 
 | 파일 | 역할 |
 |------|------|
+| `StateAnimator.cs` | 제네릭 베이스 클래스 (Common/Scripts/StateBase/) |
+| `UnitAnimator.cs` | Unit 특화 애니메이터 (StateAnimator 상속, AttackSpeed 연동) |
 | `UnitBase.controller` | Base AnimatorController (OverrideController의 원본 템플릿) |
 | `placeholder_*.anim` | 각 상태의 placeholder 클립 (OverrideController 교체 목록용) |
-| `UnitAnimator.cs` | 런타임 컴포넌트 (OnSpawnEvent 구독, IStateListener 구현) |
 | `AnimationFrameworkSetup.cs` | Base Controller 자동 생성 에디터 스크립트 (Assets/Editor/) |
