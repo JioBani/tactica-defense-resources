@@ -3438,7 +3438,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cce5bc8015652f54b87fb4088552140c, type: 2}
   - {fileID: 11400000, guid: 12da7955bd4161a4fb9d7289245b6c57, type: 2}
   - {fileID: 11400000, guid: 9729aa2bf590a684dabb79e72b2f53e1, type: 2}
-  defenderManager: {fileID: 1890914476}
   debugSynergyStatus:
     keys: []
     values: []
