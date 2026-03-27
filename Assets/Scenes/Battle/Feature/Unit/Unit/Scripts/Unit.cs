@@ -88,9 +88,6 @@ namespace Scenes.Battle.Feature.Units
             StatSheet.Init(unitLoadOutData.Stats, star);
             healthBar.SetStarGrade(StatSheet.Star);
 
-            //TEMP
-            GetComponent<SpriteRenderer>().sprite = unitLoadOutData.Unit.Icon;
-
             OnSpawn(unitLoadOutData);
             OnSpawnEvent?.Invoke(this);
         }

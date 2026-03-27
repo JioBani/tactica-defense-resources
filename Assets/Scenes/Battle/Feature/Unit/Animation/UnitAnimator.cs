@@ -1,4 +1,3 @@
-using Common.Data.Units.UnitDefinitions;
 using Common.Scripts.StateBase;
 using Scenes.Battle.Feature.Units.ActionStates;
 using UnityEngine;
@@ -10,16 +9,20 @@ namespace Scenes.Battle.Feature.Units
     {
         [SerializeField] private Animator animator;
         [SerializeField] private ActionStateController actionStateController;
+        [SerializeField] private Unit unit;
 
         private void Awake()
         {
             actionStateController.RegisterListener(this);
+            unit.OnSpawnEvent += OnSpawn;
         }
 
-        /// <summary>유닛 소환 시 호출된다. 데이터에서 해당 성급의 OverrideController를 Animator에 할당한다.</summary>
-        public void Init(UnitDefinitionData data, int star)
+        /// <summary>유닛 소환 시 호출된다.</summary>
+        private void OnSpawn(Unit spawnedUnit)
         {
-            animator.runtimeAnimatorController = data.GetAnimatorByStar(star);
+            // 데이터에서 해당 성급의 OverrideController를 Animator에 할당한다.
+            animator.runtimeAnimatorController =
+                spawnedUnit.UnitLoadOutData.Unit.GetAnimatorByStar(spawnedUnit.StatSheet.Star);
         }
 
         void IStateListener<ActionStateType>.OnStateEnter(ActionStateType stateType)
@@ -38,6 +41,7 @@ namespace Scenes.Battle.Feature.Units
         private void OnDestroy()
         {
             actionStateController.UnregisterListener(this);
+            unit.OnSpawnEvent -= OnSpawn;
         }
     }
 }
