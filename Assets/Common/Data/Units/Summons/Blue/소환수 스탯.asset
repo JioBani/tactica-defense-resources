@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4372d9410aee42e3a2f8898423dee77f, type: 3}
+  m_Name: "\uC18C\uD658\uC218 \uC2A4\uD0EF"
+  m_EditorClassIdentifier: 
+  maxHealth:
+    baseValuesByStar:
+    - 10000
+    - 10000
+    - 10000
+    - 10000
+    additionalPerExtraStar: 0
+  physicalAttack:
+    baseValuesByStar:
+    - 100
+    - 200
+    - 400
+    - 800
+    additionalPerExtraStar: 0
+  magicAttack:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  physicalDefense:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  magicDefense:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  attackSpeed:
+    baseValuesByStar:
+    - 1
+    - 2
+    - 4
+    additionalPerExtraStar: 0
+  attackRange:
+    baseValuesByStar:
+    - 5
+    - 5
+    - 5
+    additionalPerExtraStar: 0
+  moveSpeed:
+    baseValuesByStar:
+    - 1
+    - 1
+    - 1
+    additionalPerExtraStar: 0
+  criticalChance:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  criticalDamageMultiplier:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  cooldownReduction:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  statusResistance:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  damageDealtIncrease:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
+  damageReduction:
+    baseValuesByStar: []
+    additionalPerExtraStar: 0
