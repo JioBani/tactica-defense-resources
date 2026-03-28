@@ -310,7 +310,9 @@ public static class AnimationFrameworkSetup
                 AnimatorOverrideController overrideController = new AnimatorOverrideController(baseController);
                 overrideController.name = baseName;
 
-                // placeholder 클립을 실제 클립으로 교체
+                // placeholder 클립을 실제 클립으로 교체. 실제 클립이 없는 상태는 Idle 클립으로 채운다.
+                createdClips.TryGetValue("placeholder_idle", out AnimationClip idleClip);
+
                 var overrides = new List<KeyValuePair<AnimationClip, AnimationClip>>(overrideController.overridesCount);
                 overrideController.GetOverrides(overrides);
 
@@ -321,6 +323,12 @@ public static class AnimationFrameworkSetup
                     {
                         overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(
                             overrides[i].Key, replacement);
+                    }
+                    else if (idleClip != null)
+                    {
+                        // 실제 클립이 없는 상태(Move, Freeze, Waiting 등)는 Idle 클립으로 대체
+                        overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(
+                            overrides[i].Key, idleClip);
                     }
                 }
 
