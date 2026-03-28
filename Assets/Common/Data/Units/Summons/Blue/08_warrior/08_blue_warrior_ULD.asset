@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fe19da2e4b4d05a6ee3194e7bf8c8b, type: 3}
   m_Name: 08_blue_warrior_ULD
   m_EditorClassIdentifier: 
-  id: 1
-  unit: {fileID: 11400000, guid: 24243a836d4cdd9479dac8e6deeed6a0, type: 2}
+  id: 108
+  unit: {fileID: 11400000, guid: eb8e99a57f7d1c946baf8d4c04c77ad2, type: 2}
   skill: {fileID: 11400000, guid: fe77c4cf241c97646a93f81ff353165b, type: 2}
   stats: {fileID: 11400000, guid: 1ec2092ffbdfd914292f8011b5e8e536, type: 2}
   costByStar: 00000000010000000300000009000000

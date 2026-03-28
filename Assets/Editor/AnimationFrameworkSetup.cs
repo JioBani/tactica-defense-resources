@@ -81,7 +81,27 @@ public static class AnimationFrameworkSetup
     [MenuItem("Tools/Animation Framework/Slice All Sprite Sheets (64x64)")]
     public static void SliceAllSpriteSheets()
     {
-        string spriteFolder = "Assets/Common/Sprites/Temp/Units/summons/Blue";
+        string[] spriteFolders =
+        {
+            "Assets/Common/Sprites/Temp/Units/summons/Blue",
+            "Assets/Common/Sprites/Temp/Units/summons/Red",
+            "Assets/Common/Sprites/Temp/Units/summons/Green",
+            "Assets/Common/Sprites/Temp/Units/summons/Yellow"
+        };
+
+        foreach (string spriteFolder in spriteFolders)
+        {
+            if (!AssetDatabase.IsValidFolder(spriteFolder))
+            {
+                continue;
+            }
+
+            SliceSpriteFolder(spriteFolder);
+        }
+    }
+
+    private static void SliceSpriteFolder(string spriteFolder)
+    {
         string[] pngGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { spriteFolder });
 
         int processedCount = 0;
@@ -90,8 +110,13 @@ public static class AnimationFrameworkSetup
         {
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);
 
-            // .png 파일만 처리
+            // .png 파일만 처리, Profiles 폴더는 제외
             if (Path.GetExtension(assetPath).ToLower() != ".png")
+            {
+                continue;
+            }
+
+            if (assetPath.Contains("/Profiles/"))
             {
                 continue;
             }
@@ -156,7 +181,27 @@ public static class AnimationFrameworkSetup
     [MenuItem("Tools/Animation Framework/Generate All Unit Animations")]
     public static void GenerateAllUnitAnimations()
     {
-        string spriteFolder = "Assets/Common/Sprites/Temp/Units/summons/Blue";
+        string[] spriteFolders =
+        {
+            "Assets/Common/Sprites/Temp/Units/summons/Blue",
+            "Assets/Common/Sprites/Temp/Units/summons/Red",
+            "Assets/Common/Sprites/Temp/Units/summons/Green",
+            "Assets/Common/Sprites/Temp/Units/summons/Yellow"
+        };
+
+        foreach (string spriteFolder in spriteFolders)
+        {
+            if (!AssetDatabase.IsValidFolder(spriteFolder))
+            {
+                continue;
+            }
+
+            GenerateAnimationsForFolder(spriteFolder);
+        }
+    }
+
+    private static void GenerateAnimationsForFolder(string spriteFolder)
+    {
         string[] pngGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { spriteFolder });
 
         AnimatorController baseController =
@@ -175,6 +220,11 @@ public static class AnimationFrameworkSetup
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);
 
             if (Path.GetExtension(assetPath).ToLower() != ".png")
+            {
+                continue;
+            }
+
+            if (assetPath.Contains("/Profiles/"))
             {
                 continue;
             }

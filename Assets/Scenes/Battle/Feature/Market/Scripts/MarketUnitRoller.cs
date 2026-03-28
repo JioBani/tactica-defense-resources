@@ -16,13 +16,10 @@ namespace Scenes.Battle.Feature.Markets
         private readonly StarProbabilityConfig _starProbabilityConfig;
 
         // n / 100
+        //TODO: 코스트별 유닛이 추가되면 확률 분배 복원
         private Dictionary<int, float> _probabilityByCost = new Dictionary<int, float>()
         {
-            {1 , 40},
-            {2 , 30},
-            {3 , 15},
-            {4 , 10},
-            {5 , 5},
+            {1 , 100},
         };
 
         public Dictionary<int, float> ProbabilityByCost => _probabilityByCost;
