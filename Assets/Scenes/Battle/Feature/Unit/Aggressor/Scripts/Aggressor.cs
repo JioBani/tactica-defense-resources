@@ -54,12 +54,5 @@ namespace Scenes.Battle.Feature.Aggressors
             poolable.DeSpawn();
         }
 
-        /// <summary>
-        /// 방어선에 도달한 경우
-        /// </summary>
-        public void OnEnterDefenseLine()
-        {
-            poolable.DeSpawn();
-        }
     }
 }
