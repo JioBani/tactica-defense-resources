@@ -1,3 +1,4 @@
+using Common.Data.Summoners.SummonerLoadOuts;
 using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.ObjectPool;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Scenes.Battle.Feature.Units
         [SerializeField] private GameObject defenderPrefab;
         [SerializeField] private GameObject aggressorPrefab;
         [SerializeField] private GameObject aggressorSamplePrefab;
+        [SerializeField] private GameObject summonerPrefab;
         
         [SerializeField] private Transform enemyField;
         
@@ -51,6 +53,12 @@ namespace Scenes.Battle.Feature.Units
         public Unit GenerateAggressor(UnitLoadOutData data, int star = 1)
         {
             return Generate(data, aggressorPrefab, star);
+        }
+
+        /// <summary>소환술사 프리팹을 스폰하고 초기화한다.</summary>
+        public Unit GenerateSummoner(SummonerLoadOutData data)
+        {
+            return Generate(data, summonerPrefab);
         }
 
         public Unit GenerateAggressorSample(UnitLoadOutData data)
