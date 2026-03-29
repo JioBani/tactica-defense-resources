@@ -98,7 +98,7 @@ namespace Scenes.Battle.Feature.Unit.Castables
 
         private void Update()
         {
-            if (_isSkillReady && _skill.CanCast())
+            if (_skill != null && _isSkillReady && _skill.CanCast())
             {
                 Cast();
             }
@@ -112,30 +112,37 @@ namespace Scenes.Battle.Feature.Unit.Castables
 
         private void Initialize()
         {
-            // 스킬 데이터와 인스턴스 초기화, 타이머 생성
             _skillData = unit.UnitLoadOutData.Skill;
-            _coolTime = _skillData.CoolTime * (1f - Mathf.Clamp01(unit.StatSheet.CooldownReduction.CurrentValue));
 
-            _skillTimer = TimerManager.Instance.Make(_coolTime, SetSkillReady);
+            // 스킬 데이터가 없으면 초기화를 건너뛴다 (스킬 미사용 유닛).
+            if (_skillData != null)
+            {
+                _coolTime = _skillData.CoolTime * (1f - Mathf.Clamp01(unit.StatSheet.CooldownReduction.CurrentValue));
 
-            unit.StatSheet.CooldownReduction.OnChange += OnCooldownReductionChanged;
-            
-            _skill = SkillFactory.Instance.CreateSkill(new SkillCreateContext(
-                data : unit.UnitLoadOutData.Skill,
-                caster: this,
-                attacker: attacker
-            ));
+                _skillTimer = TimerManager.Instance.Make(_coolTime, SetSkillReady);
 
-            _skill.OnCastEvent += OnCast;
-            _skill.OnExecuteEndEvent += OnExecuteEnd;
+                unit.StatSheet.CooldownReduction.OnChange += OnCooldownReductionChanged;
+
+                _skill = SkillFactory.Instance.CreateSkill(new SkillCreateContext(
+                    data: unit.UnitLoadOutData.Skill,
+                    caster: this,
+                    attacker: attacker
+                ));
+
+                _skill.OnCastEvent += OnCast;
+                _skill.OnExecuteEndEvent += OnExecuteEnd;
+            }
         }
 
         private void OnEnterCombat()
         {
-            // Start()가 OnTimeOutChange 콜백을 발사하여 _isSkillReady를 false로 설정하므로,
-            // Start() 호출 후 _isSkillReady를 true로 오버라이드하여 즉시 사용 가능하게 한다.
-            _skillTimer.Start();
-            _isSkillReady = true;
+            if (_skillTimer != null)
+            {
+                // Start()가 OnTimeOutChange 콜백을 발사하여 _isSkillReady를 false로 설정하므로,
+                // Start() 호출 후 _isSkillReady를 true로 오버라이드하여 즉시 사용 가능하게 한다.
+                _skillTimer.Start();
+                _isSkillReady = true;
+            }
         }
 
         private void OnExitCombat()
@@ -149,10 +156,13 @@ namespace Scenes.Battle.Feature.Unit.Castables
         /// </summary>
         public void ResetCooldown()
         {
-            // Stop()이 OnTimeOutChange 콜백을 발사하여 _isSkillReady를 false로 설정하므로,
-            // Stop() 호출 후 _isSkillReady를 true로 오버라이드한다.
-            _skillTimer.Stop();
-            _isSkillReady = true;
+            if (_skillTimer != null)
+            {
+                // Stop()이 OnTimeOutChange 콜백을 발사하여 _isSkillReady를 false로 설정하므로,
+                // Stop() 호출 후 _isSkillReady를 true로 오버라이드한다.
+                _skillTimer.Stop();
+                _isSkillReady = true;
+            }
         }
 
         /// <summary>
