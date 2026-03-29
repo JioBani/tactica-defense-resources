@@ -21,10 +21,10 @@ MonoBehaviour:
     additionalPerExtraStar: 0
   physicalAttack:
     baseValuesByStar:
-    - 1
-    - 1
-    - 1
-    - 1
+    - 100
+    - 200
+    - 400
+    - 800
     additionalPerExtraStar: 0
   magicAttack:
     baseValuesByStar: []
@@ -38,8 +38,8 @@ MonoBehaviour:
   attackSpeed:
     baseValuesByStar:
     - 1
-    - 1
-    - 1
+    - 2
+    - 4
     additionalPerExtraStar: 0
   attackRange:
     baseValuesByStar:

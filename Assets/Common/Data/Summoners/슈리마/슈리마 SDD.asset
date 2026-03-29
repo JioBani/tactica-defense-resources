@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efcb3cd6a840c2b488d40a2d9655124d, type: 3}
+  m_Name: "\uC288\uB9AC\uB9C8 SDD"
+  m_EditorClassIdentifier: 
+  id: 0
+  displayName: "\uC774\uC288\uD0C0\uB974"
+  description: 
+  icon: {fileID: 21300000, guid: 944622c245541444db1c9f77285e8152, type: 3}
+  illustration: {fileID: -5950506994306376124, guid: 2ec015a2b0159d94c94eabffde99767c, type: 3}
+  summonerEffect: {fileID: 11400000, guid: cc5b0319e53374c47845b9608ef03002, type: 2}
+  summonPool:
+  - {fileID: 11400000, guid: 90593f3c9e088ae44b6df8bf374affb2, type: 2}
+  - {fileID: 11400000, guid: b1140a34106db0a4991fb2ff648f341b, type: 2}
+  - {fileID: 11400000, guid: fcc5a7d2b4ec64040b1b367e1573c447, type: 2}
+  - {fileID: 11400000, guid: edab9e6ac3178de40b2807b7bc1d206e, type: 2}
+  - {fileID: 11400000, guid: d127f14c1f8496845b89fbeef5b6556a, type: 2}
+  - {fileID: 11400000, guid: 8bbae6690e094f144bf7d3b428356ec1, type: 2}
+  - {fileID: 11400000, guid: 2b5aef75443a7b940b7813c4b0126cd4, type: 2}
+  - {fileID: 11400000, guid: 0dea8112af42da146b50698f3410a2e7, type: 2}

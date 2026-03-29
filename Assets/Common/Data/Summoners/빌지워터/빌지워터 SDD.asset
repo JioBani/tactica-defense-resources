@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efcb3cd6a840c2b488d40a2d9655124d, type: 3}
+  m_Name: "\uBE4C\uC9C0\uC6CC\uD130 SDD"
+  m_EditorClassIdentifier: 
+  id: 0
+  displayName: "\uD0C0\uB9C8\uBAA8 \uCEA3"
+  description: 
+  icon: {fileID: 21300000, guid: a1e6521a4b28f854fb67d27aa3576dc0, type: 3}
+  illustration: {fileID: -6099309254232046776, guid: 02b7563011353c14fab9de9fdd62576a, type: 3}
+  summonerEffect: {fileID: 11400000, guid: 9729aa2bf590a684dabb79e72b2f53e1, type: 2}
+  summonPool:
+  - {fileID: 11400000, guid: 83c0a2716adde2f4d991db704c457184, type: 2}
+  - {fileID: 11400000, guid: 95067aa946afe6b4ea4211d82c4b2bd0, type: 2}
+  - {fileID: 11400000, guid: fa032faf2fbe2a248b0c70d44b993907, type: 2}
+  - {fileID: 11400000, guid: cadc21680cd646d49950b604132de321, type: 2}
+  - {fileID: 11400000, guid: bf7bdf9bcf4ceeb48b656c4a0beb262f, type: 2}
+  - {fileID: 11400000, guid: fcebbdaead9bf304098503b8645a0b16, type: 2}
+  - {fileID: 11400000, guid: 50d5ea97a7860bb49994309bad3a23bb, type: 2}
+  - {fileID: 11400000, guid: 88b58d7c07e1c55449a01f14530ec13a, type: 2}

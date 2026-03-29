@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac00dc1d355b79f439c95845b8491963, type: 3}
+  m_Name: "\uB370\uB9C8\uC2DC\uC544 SUDD"
+  m_EditorClassIdentifier: 
+  id: 0
+  displayName: "\uC544\uB974\uD1A0\uB9AC\uC544"
+  description: 
+  cost: 0
+  icon: {fileID: 21300000, guid: 0522e38478c02e54bb63f90afe002ed1, type: 3}
+  illustration: {fileID: 4698216061740371249, guid: bf05ff845de8c214296c1deaf07fc482, type: 3}
+  animatorByStars:
+  - {fileID: 22100000, guid: f7557f4adeced8d4e832934db7bb7adb, type: 2}
+  - {fileID: 22100000, guid: f7557f4adeced8d4e832934db7bb7adb, type: 2}
+  - {fileID: 22100000, guid: f7557f4adeced8d4e832934db7bb7adb, type: 2}
+  - {fileID: 22100000, guid: f7557f4adeced8d4e832934db7bb7adb, type: 2}
+  summonerEffect: {fileID: 0}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c29c91313e8f5a4e86f14181742ce24, type: 3}
+  m_Name: "\uC288\uB9AC\uB9C8 SLD"
+  m_EditorClassIdentifier: 
+  id: 0
+  unit: {fileID: 11400000, guid: 99fc06bab7653e246b190534f62ba3da, type: 2}
+  skill: {fileID: 0}
+  stats: {fileID: 11400000, guid: a89da4d03198a174fb0c9a549f876346, type: 2}
+  costByStar: 00000000010000000300000009000000
+  refundByStar: 00000000010000000200000008000000
+  summoner: {fileID: 11400000, guid: 63812d1a33be87a42a232cc25b593f8c, type: 2}
