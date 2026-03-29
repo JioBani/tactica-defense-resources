@@ -40,12 +40,16 @@ namespace Scenes.Battle.Feature.Unit.Summoners
 
         // ── IStateListener<ActionStateType> ──
 
-        /// <summary>소환술사가 다운되면 호출된다.</summary>
+        /// <summary>소환술사의 ActionState가 변경될 때 호출된다.</summary>
         void IStateListener<ActionStateType>.OnStateEnter(ActionStateType stateType)
         {
             if (stateType == ActionStateType.Downed)
             {
                 GlobalEventBus.Publish(new OnRoundLoseEventDto());
+            }
+            else if (stateType == ActionStateType.Waiting)
+            {
+                StatSheet.RecoverFullHealth();
             }
         }
 
