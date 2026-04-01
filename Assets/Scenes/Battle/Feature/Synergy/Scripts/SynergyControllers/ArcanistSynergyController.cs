@@ -42,7 +42,7 @@ namespace Scenes.Battle.Feature.Synergy.SynergyControllers
         {
             base.HandlePlacementChanged(dto);
 
-            if (!HasSynergy(dto.defender) && Activation.ActiveTier.Value.HasValue)
+            if (!dto.defender.HasSynergy(Definition) && Activation.ActiveTier.Value.HasValue)
             {
                 if (dto.placement == Placement.BattleArea)
                 {

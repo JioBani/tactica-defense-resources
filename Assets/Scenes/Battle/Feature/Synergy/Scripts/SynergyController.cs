@@ -6,7 +6,6 @@
 // ─────────────────────────────────────────────
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common.Data.Synergies;
 using Common.Scripts.GlobalEventBus;
 using Common.Scripts.StatusEffect;
@@ -76,7 +75,7 @@ namespace Scenes.Battle.Feature.Synergy
         /// <summary>Defender 배치 변경 시 호출된다.</summary>
         protected virtual void HandlePlacementChanged(OnDefenderPlacementChangedEventDto dto)
         {
-            if (HasSynergy(dto.defender))
+            if (dto.defender.HasSynergy(Definition))
             {
                 if (dto.placement == Placement.BattleArea)
                 {
@@ -147,12 +146,6 @@ namespace Scenes.Battle.Feature.Synergy
         protected virtual void OnAfterDeactivated() { }
 
         // ── 유틸리티 ──
-
-        /// <summary>Defender가 이 시너지를 보유하고 있는지 확인한다.</summary>
-        protected bool HasSynergy(Defender defender)
-        {
-            return defender.UnitLoadOutData.Unit.Synergies.Contains(Definition);
-        }
 
         /// <summary>UnitDefinitionData.ID 기준으로 중복을 제거한 유니크 유닛 수를 반환한다.</summary>
         private int CountUnique(List<Defender> defenders)

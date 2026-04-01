@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Common.Data.Synergies;
 using Common.Data.Units.UnitLoadOuts;
 using Common.Scripts.Draggable;
 using Common.Scripts.DynamicRepeater;
@@ -14,6 +16,26 @@ namespace Scenes.Battle.Feature.Unit.Defenders
     {
         [SerializeField] private Draggable2D draggable;
         public Placement Placement { get; private set; }
+
+        private readonly List<SynergyDefinitionData> _synergies = new();
+
+        /// <summary>런타임에 부여된 시너지 목록. 시너지 시스템이 조회한다.</summary>
+        public IReadOnlyList<SynergyDefinitionData> Synergies => _synergies;
+
+        /// <summary>시너지를 추가한다. 소환수 스폰 시 SynergyManager가 호출한다.</summary>
+        public void AddSynergy(SynergyDefinitionData synergy)
+        {
+            if (synergy != null && !_synergies.Contains(synergy))
+            {
+                _synergies.Add(synergy);
+            }
+        }
+
+        /// <summary>지정한 시너지를 보유하고 있는지 확인한다.</summary>
+        public bool HasSynergy(SynergyDefinitionData definition)
+        {
+            return _synergies.Contains(definition);
+        }
 
         private void OnEnable()
         {
