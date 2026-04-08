@@ -81,6 +81,7 @@ namespace Scenes.Battle.Feature.Synergy
                 {
                     _synergyDefenders.Add(dto.defender);
                     Activation.Recalculate(CountUnique(_synergyDefenders));
+                    GlobalEventBus.Publish(new OnSynergyRecalculatedEventDto(Activation));
                     ApplySSEToDefender(dto.defender);
                 }
                 else
@@ -88,6 +89,7 @@ namespace Scenes.Battle.Feature.Synergy
                     _synergyDefenders.Remove(dto.defender);
                     RemoveSSEFromDefender(dto.defender);
                     Activation.Recalculate(CountUnique(_synergyDefenders));
+                    GlobalEventBus.Publish(new OnSynergyRecalculatedEventDto(Activation));
                 }
             }
         }
@@ -99,6 +101,7 @@ namespace Scenes.Battle.Feature.Synergy
             {
                 RemoveSSEFromDefender(dto.Defender);
                 Activation.Recalculate(CountUnique(_synergyDefenders));
+                GlobalEventBus.Publish(new OnSynergyRecalculatedEventDto(Activation));
             }
         }
 
