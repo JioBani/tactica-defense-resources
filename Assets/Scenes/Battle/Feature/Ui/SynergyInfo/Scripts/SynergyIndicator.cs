@@ -28,6 +28,9 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
 
         private SynergyActivation _activation;
 
+        /// <summary>비율 계산 서비스.</summary>
+        private readonly SynergyIndicatorService _service = new();
+
         /// <summary>클릭 시 바인딩된 SynergyActivation을 전달한다.</summary>
         public event Action<SynergyActivation> OnClicked;
 
@@ -64,30 +67,12 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
         private void RefreshDisplay()
         {
             IReadOnlyList<SynergyTier> tiers = _activation.Definition.Tiers;
-            int count = _activation.Count;
+            float[] ratios = _service.CalculateRatios(tiers, _activation.Count, _innerRects.Length);
 
-            int dotCount = Math.Min(tiers.Count, _innerRects.Length);
-            for (int i = 0; i < dotCount; i++)
+            for (int i = 0; i < ratios.Length; i++)
             {
-                int rangeStart = i == 0 ? 0 : tiers[i - 1].RequiredCount;
-                int rangeEnd = tiers[i].RequiredCount;
-
-                float ratio;
-                if (count >= rangeEnd)
-                {
-                    ratio = 1f;
-                }
-                else if (count <= rangeStart)
-                {
-                    ratio = 0f;
-                }
-                else
-                {
-                    ratio = (float)(count - rangeStart) / (rangeEnd - rangeStart);
-                }
-
                 // inner의 anchorMax.x를 비율로 설정하여 너비를 조정한다
-                _innerRects[i].anchorMax = new Vector2(ratio, _innerRects[i].anchorMax.y);
+                _innerRects[i].anchorMax = new Vector2(ratios[i], _innerRects[i].anchorMax.y);
             }
         }
 
