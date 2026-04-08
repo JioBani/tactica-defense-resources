@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
-  m_Name: "\uC804\uC7C1\uAE30\uACC4"
+  m_Name: "\uB179\uC11C\uC2A4"
   m_EditorClassIdentifier: 
   id: 4
   displayName: "\uC804\uC7C1\uAE30\uACC4"
   description: "\uC804\uC7C1\uAE30\uACC4\uAC00 \uB0B4\uAD6C\uB825\uC744 \uC5BB\uC2B5\uB2C8\uB2E4.
     \uCCB4\uB825 50% \uC774\uC0C1\uC77C \uACBD\uC6B0 @highDamageReduction*100@%,
     \uBBF8\uB9CC\uC77C \uACBD\uC6B0 @lowDamageReduction*100@%."
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a2ff0dbb94f7f214ca0e5dc668f539b2, type: 3}
   statusEffectDefinition: {fileID: 11400000, guid: e006e07db2d7ca54c80701ba57ba868a, type: 2}
   synergyType: 0
   tiers:

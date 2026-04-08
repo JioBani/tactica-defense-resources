@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   icon: {fileID: 21300000, guid: 0522e38478c02e54bb63f90afe002ed1, type: 3}
   illustration: {fileID: 4698216061740371249, guid: bf05ff845de8c214296c1deaf07fc482, type: 3}
-  summonerEffect: {fileID: 11400000, guid: cc5b0319e53374c47845b9608ef03002, type: 2}
+  summonerEffect: {fileID: 11400000, guid: cce5bc8015652f54b87fb4088552140c, type: 2}
   summonPool:
   - {fileID: 11400000, guid: fd8b2d2954adecb42aa02bd0de0d8ce0, type: 2}
   - {fileID: 11400000, guid: 1ee05083858a38c4ba4dddc58f6876df, type: 2}
