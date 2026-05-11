@@ -13,3 +13,44 @@
     align-self: flex-end;
     min-width: 24px;
 }
+
+.synergy-detail-panel__name {
+    -unity-font-style: bold;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.synergy-detail-panel__description {
+    white-space: normal;
+    margin-bottom: 8px;
+}
+
+.synergy-detail-panel__tier-list {
+    margin-bottom: 8px;
+}
+
+.tier-item {
+    padding: 4px 6px;
+    margin-bottom: 2px;
+    background-color: rgba(50, 50, 50, 0.6);
+}
+
+.tier-item--active {
+    background-color: rgba(80, 160, 80, 0.7);
+}
+
+.tier-item__stage {
+    -unity-font-style: bold;
+}
+
+.tier-item__threshold {
+    margin-left: 4px;
+}
+
+.tier-item__constants {
+    margin-left: 12px;
+}
+
+.tier-item__constant {
+    font-size: 12px;
+}

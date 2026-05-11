@@ -3,7 +3,11 @@
     <Style src="SynergyDetailPanel.uss" />
     <ui:VisualElement name="synergy-detail-root" class="synergy-detail-panel synergy-detail-panel--hidden">
         <ui:Button name="close-button" text="X" class="synergy-detail-panel__close" />
-        <ui:VisualElement name="effect-section" class="synergy-detail-panel__effect-section" />
+        <ui:VisualElement name="effect-section" class="synergy-detail-panel__effect-section">
+            <ui:Label name="synergy-name" class="synergy-detail-panel__name" />
+            <ui:Label name="synergy-description" class="synergy-detail-panel__description" />
+            <ui:VisualElement name="tier-list" class="synergy-detail-panel__tier-list" />
+        </ui:VisualElement>
         <ui:VisualElement name="member-section" class="synergy-detail-panel__member-section" />
     </ui:VisualElement>
 </ui:UXML>
