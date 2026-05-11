@@ -1,0 +1,15 @@
+/* 프로토타입 레이아웃 — 후속 사이클에서 시각 조정 */
+.synergy-detail-panel {
+    background-color: rgba(20, 20, 20, 0.92);
+    padding: 12px;
+    min-width: 280px;
+}
+
+.synergy-detail-panel--hidden {
+    display: none;
+}
+
+.synergy-detail-panel__close {
+    align-self: flex-end;
+    min-width: 24px;
+}
