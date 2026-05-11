@@ -1,4 +1,5 @@
 using Scenes.Battle.Feature.Synergy;
+using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,6 +22,7 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
         private const string MemberSectionName = "member-section";
 
         [SerializeField] private UIDocument document;
+        [SerializeField] private DefenderManager defenderManager;
 
         private VisualElement _root;
         private Button _closeButton;
@@ -73,7 +75,7 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
             VisualElement memberRoot = docRoot.Q<VisualElement>(MemberSectionName);
 
             _effectSection = new SynergyDetailEffectSection(effectRoot);
-            _memberList = new SynergyDetailMemberList(memberRoot);
+            _memberList = new SynergyDetailMemberList(memberRoot, defenderManager);
 
             if (_closeButton != null)
             {

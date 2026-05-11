@@ -8,6 +8,8 @@
             <ui:Label name="synergy-description" class="synergy-detail-panel__description" />
             <ui:VisualElement name="tier-list" class="synergy-detail-panel__tier-list" />
         </ui:VisualElement>
-        <ui:VisualElement name="member-section" class="synergy-detail-panel__member-section" />
+        <ui:VisualElement name="member-section" class="synergy-detail-panel__member-section">
+            <ui:VisualElement name="member-list" class="synergy-detail-panel__member-list" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

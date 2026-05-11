@@ -1,36 +1,219 @@
+using System.Collections.Generic;
+using Common.Data.Units.UnitLoadOuts;
+using Common.Scripts.GlobalEventBus;
+using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Synergy;
+using Scenes.Battle.Feature.Unit.Defenders;
 using UnityEngine.UIElements;
 
 namespace Scenes.Battle.Feature.Ui.SynergyInfo
 {
     /// <summary>
     /// 시너지 상세 패널의 보유 소환수 목록 섹션 뷰.
-    /// 시너지 매니저의 시너지→보유 소환수 역참조 통로에서 목록을 조회하여 항목을 생성하고,
-    /// 각 소환수의 전장 배치 여부를 시각 상태로 적용하며, 배치/제거 변경 알림을 구독한다.
-    /// 본체는 member-list 구현 단위에서 채워지며, 현재는 lifecycle 단위의 컴파일 의존을 위한 시그니처 stub.
+    /// SynergyManager 가 노출하는 시너지 → 보유 소환수 역참조 통로에서 목록을 조회하여 항목을 생성하고,
+    /// 각 소환수의 전장(BattleArea) 배치 여부를 시각 상태로 적용한다.
+    /// 표시 상태 동안 DefenderManager 가 발행하는 배치/제거 변경 알림(GlobalEventBus)을 구독하여
+    /// 영향받는 항목 1개의 시각만 재판정한다.
+    /// 시너지 종류(소환술사 효과 / 소환수 특성) 무관 일반 책임 — 역참조에 보유 정보가 누적되지 않은 시너지는
+    /// 자연스럽게 빈 목록으로 표시된다 (분기 / 배제 로직 없음).
     /// </summary>
     public class SynergyDetailMemberList
     {
-        private readonly VisualElement _sectionRoot;
+        private const string MemberItemClass = "member-item";
+        private const string MemberItemActiveClass = "member-item--active";
+        private const string MemberItemIconClass = "member-item__icon";
+        private const string MemberItemNameClass = "member-item__name";
 
-        public SynergyDetailMemberList(VisualElement sectionRoot)
+        private readonly VisualElement _sectionRoot;
+        private readonly VisualElement _listContainer;
+        private readonly DefenderManager _defenderManager;
+        private readonly Dictionary<UnitLoadOutData, VisualElement> _itemsByUnit = new();
+
+        private SynergyActivation _activation;
+
+        public SynergyDetailMemberList(VisualElement sectionRoot, DefenderManager defenderManager = null)
         {
             _sectionRoot = sectionRoot;
+            _listContainer = sectionRoot?.Q<VisualElement>("member-list");
+            _defenderManager = defenderManager;
         }
 
         /// <summary>표시 대상 설정 + 항목 생성 + 배치 상태 시각 적용 + 알림 구독 개시.</summary>
         public void Bind(SynergyActivation activation)
         {
+            if (activation == null)
+            {
+                return;
+            }
+
+            _activation = activation;
+            CreateItems();
+            RefreshAllPlacementStates();
+            SubscribeDefenderEvents();
         }
 
         /// <summary>표시 상태 유지 교체 — 이전 구독 해제 + 항목 재생성·구독.</summary>
         public void Rebind(SynergyActivation activation)
         {
+            Unbind();
+            Bind(activation);
         }
 
-        /// <summary>알림 구독 해제.</summary>
+        /// <summary>알림 구독 해제 + 항목 정리.</summary>
         public void Unbind()
         {
+            UnsubscribeDefenderEvents();
+            ClearItems();
+            _activation = null;
+        }
+
+        // ── 항목 생성 ──
+
+        private void CreateItems()
+        {
+            if (_listContainer == null)
+            {
+                return;
+            }
+
+            SynergyManager manager = SynergyManager.Instance;
+            if (manager == null)
+            {
+                return;
+            }
+
+            // 키 부재 시 자연스럽게 빈 목록 — 시너지 종류 분기 없음.
+            if (!manager.SynergyMembers.TryGetValue(_activation.Definition, out IReadOnlyList<UnitLoadOutData> units))
+            {
+                return;
+            }
+
+            foreach (UnitLoadOutData unit in units)
+            {
+                if (unit == null)
+                {
+                    continue;
+                }
+
+                VisualElement item = CreateItem(unit);
+                _listContainer.Add(item);
+                _itemsByUnit[unit] = item;
+            }
+        }
+
+        private VisualElement CreateItem(UnitLoadOutData unit)
+        {
+            var item = new VisualElement();
+            item.AddToClassList(MemberItemClass);
+
+            var icon = new VisualElement();
+            icon.AddToClassList(MemberItemIconClass);
+            if (unit.Unit != null && unit.Unit.Icon != null)
+            {
+                icon.style.backgroundImage = new StyleBackground(unit.Unit.Icon);
+            }
+            item.Add(icon);
+
+            string displayName = unit.Unit != null ? unit.Unit.DisplayName : string.Empty;
+            var nameLabel = new Label(displayName ?? string.Empty);
+            nameLabel.AddToClassList(MemberItemNameClass);
+            item.Add(nameLabel);
+
+            return item;
+        }
+
+        // ── 배치 상태 시각 ──
+
+        private void RefreshAllPlacementStates()
+        {
+            foreach (KeyValuePair<UnitLoadOutData, VisualElement> kv in _itemsByUnit)
+            {
+                RefreshItemPlacement(kv.Key, kv.Value);
+            }
+        }
+
+        private void RefreshItemPlacement(UnitLoadOutData unit, VisualElement item)
+        {
+            bool active = IsUnitPlacedInBattleArea(unit);
+            if (active)
+            {
+                item.AddToClassList(MemberItemActiveClass);
+            }
+            else
+            {
+                item.RemoveFromClassList(MemberItemActiveClass);
+            }
+        }
+
+        /// <summary>
+        /// 동일 UnitLoadOutData 의 디펜더가 하나라도 BattleArea 에 배치되어 있으면 활성으로 판정.
+        /// 다운 여부(ActionStateController.CurrentState == Downed)는 본 판정에 영향을 주지 않는다 (DoD-S13).
+        /// </summary>
+        private bool IsUnitPlacedInBattleArea(UnitLoadOutData unit)
+        {
+            if (_defenderManager == null)
+            {
+                return false;
+            }
+
+            foreach (Defender defender in _defenderManager.Defenders)
+            {
+                if (defender != null
+                    && defender.UnitLoadOutData == unit
+                    && defender.Placement == Placement.BattleArea)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // ── 알림 구독 ──
+
+        private void SubscribeDefenderEvents()
+        {
+            GlobalEventBus.Subscribe<OnDefenderChangedEventDto>(HandleDefenderChanged);
+            GlobalEventBus.Subscribe<OnDefenderPlacementChangedEventDto>(HandlePlacementChanged);
+        }
+
+        private void UnsubscribeDefenderEvents()
+        {
+            GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(HandleDefenderChanged);
+            GlobalEventBus.Unsubscribe<OnDefenderPlacementChangedEventDto>(HandlePlacementChanged);
+        }
+
+        private void HandleDefenderChanged(OnDefenderChangedEventDto dto)
+        {
+            if (dto.Defender == null)
+            {
+                return;
+            }
+            UnitLoadOutData unit = dto.Defender.UnitLoadOutData;
+            if (unit != null && _itemsByUnit.TryGetValue(unit, out VisualElement item))
+            {
+                RefreshItemPlacement(unit, item);
+            }
+        }
+
+        private void HandlePlacementChanged(OnDefenderPlacementChangedEventDto dto)
+        {
+            if (dto.defender == null)
+            {
+                return;
+            }
+            UnitLoadOutData unit = dto.defender.UnitLoadOutData;
+            if (unit != null && _itemsByUnit.TryGetValue(unit, out VisualElement item))
+            {
+                RefreshItemPlacement(unit, item);
+            }
+        }
+
+        // ── 정리 ──
+
+        private void ClearItems()
+        {
+            _listContainer?.Clear();
+            _itemsByUnit.Clear();
         }
     }
 }

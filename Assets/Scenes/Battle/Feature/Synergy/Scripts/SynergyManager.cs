@@ -26,8 +26,22 @@ namespace Scenes.Battle.Feature.Synergy
         /// <summary>소환수 → 소환술사 효과 역방향 매핑.</summary>
         private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSynergyMap = new();
 
+        /// <summary>시너지 → 보유 소환수 역참조 인덱스 (내부).</summary>
+        private readonly Dictionary<SynergyDefinitionData, List<UnitLoadOutData>> _synergyMembers = new();
+
+        /// <summary>외부 노출용 readonly 뷰 — _synergyMembers 의 값 컬렉션을 IReadOnlyList 로 노출.</summary>
+        private Dictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>> _synergyMembersPublic = new();
+
         /// <summary>모든 시너지 상태 목록. UI 표시 등 외부 조회용.</summary>
         public IReadOnlyDictionary<SynergyDefinitionData, SynergyActivation> SynergyActivations => _synergyActivations;
+
+        /// <summary>
+        /// 시너지 → 보유 소환수 목록 역참조 통로. UI(시너지 상세 패널 등) 외부 조회용.
+        /// 키 부재 시 사용자 측이 빈 목록으로 해석. 본 인덱스는 Start() 시점에 한 번 구축되며 이후 변경되지 않는다.
+        /// 시너지 종류(소환술사 효과 / 소환수 특성) 무관 일반 책임 — 현재는 소환술사 효과 시너지에 한해 누적되며,
+        /// 향후 소환수 특성 분배 도메인 로직이 추가되면 동일 인덱스에 자연 합산된다.
+        /// </summary>
+        public IReadOnlyDictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>> SynergyMembers => _synergyMembersPublic;
 
         // TODO: 디버그용. 시너지 UI 구현 후 제거한다.
         [Header("디버그 (런타임 확인용)")]
@@ -41,6 +55,9 @@ namespace Scenes.Battle.Feature.Synergy
 
             // 소환수 → 시너지 역방향 맵 구축 (Defender 스폰 시 시너지 주입에 사용)
             BuildUnitSynergyMap(summoners);
+
+            // 시너지 → 보유 소환수 역참조 인덱스 구축 (UI 외부 조회용)
+            BuildSynergyMembersMap(summoners);
 
             // 유니크 소환술사 효과 추출 → SynergyController 생성
             var uniqueEffects = new HashSet<SynergyDefinitionData>();
@@ -93,6 +110,48 @@ namespace Scenes.Battle.Feature.Synergy
 
                     _unitSynergyMap[unit] = effect;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 시너지 → 보유 소환수 목록 역참조 인덱스를 구축한다.
+        /// 각 소환술사 로드아웃의 SummonerEffect 시너지 아래에 그 소환술사의 SummonPool 소환수를 누적하며,
+        /// 동일 소환수가 여러 풀에 등장하더라도 중복은 자연스럽게 제거된다.
+        /// 시너지 종류 분기 없음 — SummonerEffect 가 본 이슈 시점의 표시 활성화 범위(소환술사 효과 시너지)를
+        /// 자연 표현하며, 향후 소환수 특성 분배 도메인 로직이 추가되어 동일 인덱스에 누적되면 자동 합산된다.
+        /// </summary>
+        private void BuildSynergyMembersMap(IReadOnlyList<SummonerLoadOutData> summoners)
+        {
+            _synergyMembers.Clear();
+
+            foreach (SummonerLoadOutData summoner in summoners)
+            {
+                SynergyDefinitionData effect = summoner.Summoner.SummonerEffect;
+                if (effect == null)
+                {
+                    continue;
+                }
+
+                if (!_synergyMembers.TryGetValue(effect, out List<UnitLoadOutData> list))
+                {
+                    list = new List<UnitLoadOutData>();
+                    _synergyMembers[effect] = list;
+                }
+
+                foreach (UnitLoadOutData unit in summoner.Summoner.SummonPool)
+                {
+                    if (unit != null && !list.Contains(unit))
+                    {
+                        list.Add(unit);
+                    }
+                }
+            }
+
+            // 외부 노출 readonly 뷰 재구성
+            _synergyMembersPublic = new Dictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>>(_synergyMembers.Count);
+            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in _synergyMembers)
+            {
+                _synergyMembersPublic[kv.Key] = kv.Value;
             }
         }
 

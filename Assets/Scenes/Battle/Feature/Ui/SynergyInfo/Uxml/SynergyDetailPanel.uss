@@ -54,3 +54,31 @@
 .tier-item__constant {
     font-size: 12px;
 }
+
+.synergy-detail-panel__member-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.member-item {
+    flex-direction: column;
+    align-items: center;
+    margin: 4px;
+    padding: 4px;
+    opacity: 0.4;
+}
+
+.member-item--active {
+    opacity: 1.0;
+}
+
+.member-item__icon {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(60, 60, 60, 0.6);
+}
+
+.member-item__name {
+    font-size: 11px;
+    margin-top: 2px;
+}
