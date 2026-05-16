@@ -16,6 +16,27 @@ MonoBehaviour:
   displayName: "\uC9D1\uC911"
   description: 
   icon: {fileID: 0}
-  statusEffectDefinition: {fileID: 0}
+  statusEffectDefinition: {fileID: 11400000, guid: 641a7da693fd68c49b8971531ca87d08, type: 2}
   synergyType: 1
-  tiers: []
+  tiers:
+  - tier: 1
+    requiredCount: 2
+    constants:
+      keys:
+      - cooldownReduction
+      values:
+      - 0.1
+  - tier: 2
+    requiredCount: 3
+    constants:
+      keys:
+      - cooldownReduction
+      values:
+      - 0.2
+  - tier: 3
+    requiredCount: 4
+    constants:
+      keys:
+      - cooldownReduction
+      values:
+      - 0.3
