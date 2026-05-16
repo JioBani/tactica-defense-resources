@@ -73,6 +73,8 @@ namespace Scenes.Battle.Feature.Rounds
 
         private void Start()
         {
+            // TODO: 전장 초기화 로직(편성 주입·씬 데이터 로드 등)이 추가될 경우 발행 시점을 해당 초기화 완료 이후로 이동 필요
+            GlobalEventBus.Publish(new OnBattleStartEventDto());
             StartRound();
         }
 
