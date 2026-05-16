@@ -4,6 +4,7 @@ using Common.Scripts.GlobalEventBus;
 using Scenes.Battle.Feature.Events;
 using Scenes.Battle.Feature.Synergy;
 using Scenes.Battle.Feature.Unit.Defenders;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Scenes.Battle.Feature.Ui.SynergyInfo
@@ -19,10 +20,10 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
     /// </summary>
     public class SynergyDetailMemberList
     {
-        private const string MemberItemClass = "member-item";
-        private const string MemberItemActiveClass = "member-item--active";
-        private const string MemberItemIconClass = "member-item__icon";
-        private const string MemberItemNameClass = "member-item__name";
+        private const string UnitClass = "unit";
+        private const string UnitPlacedClass = "unit--placed";
+        private const string UnitBenchClass = "unit--bench";
+        private const string UnitPortraitClass = "unit__portrait";
 
         private readonly VisualElement _sectionRoot;
         private readonly VisualElement _listContainer;
@@ -30,6 +31,9 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
         private readonly Dictionary<UnitLoadOutData, VisualElement> _itemsByUnit = new();
 
         private SynergyActivation _activation;
+        private bool _loggedListContainerMissing;
+        private bool _loggedSynergyManagerMissing;
+        private bool _loggedDefenderManagerMissing;
 
         public SynergyDetailMemberList(VisualElement sectionRoot, DefenderManager defenderManager = null)
         {
@@ -73,16 +77,27 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
         {
             if (_listContainer == null)
             {
+                if (!_loggedListContainerMissing)
+                {
+                    Debug.LogError("[SynergyDetailMemberList] UXML 의 'member-list' 컨테이너를 찾을 수 없습니다. SynergyDetailPanel.uxml 의 member-section 자식 구조를 확인하세요.");
+                    _loggedListContainerMissing = true;
+                }
                 return;
             }
 
             SynergyManager manager = SynergyManager.Instance;
             if (manager == null)
             {
+                if (!_loggedSynergyManagerMissing)
+                {
+                    Debug.LogError("[SynergyDetailMemberList] SynergyManager 인스턴스를 찾을 수 없습니다. 씬에 SynergyManager 가 배치되어 있는지 확인하세요.");
+                    _loggedSynergyManagerMissing = true;
+                }
                 return;
             }
 
             // 키 부재 시 자연스럽게 빈 목록 — 시너지 종류 분기 없음.
+            // 이 분기는 *정상 흐름* (소환수 특성 시너지의 자연 상태) 이므로 로그 없음.
             if (!manager.SynergyMembers.TryGetValue(_activation.Definition, out IReadOnlyList<UnitLoadOutData> units))
             {
                 return;
@@ -103,21 +118,17 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
 
         private VisualElement CreateItem(UnitLoadOutData unit)
         {
+            // 시안 구조: unit 박스(32x32) 안에 portrait 색면(18x18). 이름 라벨은 표시하지 않는다.
             var item = new VisualElement();
-            item.AddToClassList(MemberItemClass);
+            item.AddToClassList(UnitClass);
 
-            var icon = new VisualElement();
-            icon.AddToClassList(MemberItemIconClass);
+            var portrait = new VisualElement();
+            portrait.AddToClassList(UnitPortraitClass);
             if (unit.Unit != null && unit.Unit.Icon != null)
             {
-                icon.style.backgroundImage = new StyleBackground(unit.Unit.Icon);
+                portrait.style.backgroundImage = new StyleBackground(unit.Unit.Icon);
             }
-            item.Add(icon);
-
-            string displayName = unit.Unit != null ? unit.Unit.DisplayName : string.Empty;
-            var nameLabel = new Label(displayName ?? string.Empty);
-            nameLabel.AddToClassList(MemberItemNameClass);
-            item.Add(nameLabel);
+            item.Add(portrait);
 
             return item;
         }
@@ -134,14 +145,17 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
 
         private void RefreshItemPlacement(UnitLoadOutData unit, VisualElement item)
         {
-            bool active = IsUnitPlacedInBattleArea(unit);
-            if (active)
+            // placed / bench 클래스는 상호 배타적으로 유지한다 — 변경 시 양쪽 다 정리한 뒤 하나만 부여.
+            item.RemoveFromClassList(UnitPlacedClass);
+            item.RemoveFromClassList(UnitBenchClass);
+
+            if (IsUnitPlacedInBattleArea(unit))
             {
-                item.AddToClassList(MemberItemActiveClass);
+                item.AddToClassList(UnitPlacedClass);
             }
             else
             {
-                item.RemoveFromClassList(MemberItemActiveClass);
+                item.AddToClassList(UnitBenchClass);
             }
         }
 
@@ -153,6 +167,11 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
         {
             if (_defenderManager == null)
             {
+                if (!_loggedDefenderManagerMissing)
+                {
+                    Debug.LogError("[SynergyDetailMemberList] DefenderManager 가 주입되지 않았습니다 — 모든 항목이 비활성으로 표시됩니다. SynergyDetailPanel Inspector 의 'Defender Manager' [SerializeField] 를 연결하세요.");
+                    _loggedDefenderManagerMissing = true;
+                }
                 return false;
             }
 

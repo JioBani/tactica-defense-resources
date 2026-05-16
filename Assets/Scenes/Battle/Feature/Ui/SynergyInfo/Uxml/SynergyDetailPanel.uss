@@ -1,84 +1,328 @@
-/* 프로토타입 레이아웃 — 후속 사이클에서 시각 조정 */
-.synergy-detail-panel {
-    background-color: rgba(20, 20, 20, 0.92);
-    padding: 12px;
-    min-width: 280px;
+/* ─────────────────────────────────────────────
+ * 시너지 상세 패널 — Claude Design 시안 기반 (스카이 블루 톤)
+ * 색: 표면 #f3f8fd / 카드 #ffffff / 보더 #c7dcef / 텍스트 #2b4f78
+ * 액센트: #4a90d4 (current node, placed) / #bcd6ee (passed)
+ * 시너지 카테고리: spirit / machine / shadow / elem (Sprite Icon 대체 placeholder)
+ * ───────────────────────────────────────────── */
+
+/* ── overlay (전체 화면, dimming 없음) ── */
+.synergy-detail-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    justify-content: center;
+    align-items: center;
 }
 
-.synergy-detail-panel--hidden {
+.synergy-detail-overlay--hidden {
     display: none;
 }
 
-.synergy-detail-panel__close {
-    align-self: flex-end;
-    min-width: 24px;
+/* ── panel (중앙 카드) ── */
+.synergy-detail-panel {
+    width: 520px;
+    max-width: 95%;
+    background-color: rgb(243, 248, 253);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(199, 220, 239);
+    border-right-color: rgb(199, 220, 239);
+    border-top-color: rgb(199, 220, 239);
+    border-bottom-color: rgb(199, 220, 239);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    padding-top: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
 }
 
-.synergy-detail-panel__name {
-    -unity-font-style: bold;
-    font-size: 18px;
-    margin-bottom: 4px;
-}
-
-.synergy-detail-panel__description {
-    white-space: normal;
-    margin-bottom: 8px;
-}
-
-.synergy-detail-panel__tier-list {
-    margin-bottom: 8px;
-}
-
-.tier-item {
-    padding: 4px 6px;
-    margin-bottom: 2px;
-    background-color: rgba(50, 50, 50, 0.6);
-}
-
-.tier-item--active {
-    background-color: rgba(80, 160, 80, 0.7);
-}
-
-.tier-item__stage {
-    -unity-font-style: bold;
-}
-
-.tier-item__threshold {
-    margin-left: 4px;
-}
-
-.tier-item__constants {
-    margin-left: 12px;
-}
-
-.tier-item__constant {
-    font-size: 12px;
-}
-
-.synergy-detail-panel__member-list {
+/* ── header ── */
+.synergy-detail-panel__head {
     flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.member-item {
-    flex-direction: column;
     align-items: center;
-    margin: 4px;
-    padding: 4px;
-    opacity: 0.4;
+    justify-content: space-between;
+    padding-top: 4px;
+    padding-right: 6px;
+    padding-bottom: 14px;
+    padding-left: 6px;
 }
 
-.member-item--active {
-    opacity: 1.0;
+.synergy-detail-panel__title {
+    flex-grow: 1;
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: rgb(43, 79, 120);
+    -unity-text-align: middle-center;
+    /* 시각 균형: 우측 닫기 버튼 폭만큼 좌측에 dummy margin */
+    margin-left: 36px;
 }
 
-.member-item__icon {
-    width: 48px;
-    height: 48px;
-    background-color: rgba(60, 60, 60, 0.6);
+.synergy-detail-panel__close {
+    width: 32px;
+    height: 32px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(90, 122, 155);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(207, 223, 238);
+    border-right-color: rgb(207, 223, 238);
+    border-top-color: rgb(207, 223, 238);
+    border-bottom-color: rgb(207, 223, 238);
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin: 0;
 }
 
-.member-item__name {
-    font-size: 11px;
-    margin-top: 2px;
+.synergy-detail-panel__close:hover {
+    background-color: rgb(234, 243, 251);
+}
+
+/* ── card ── */
+.synergy-card {
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: rgb(255, 255, 255);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(217, 231, 243);
+    border-right-color: rgb(217, 231, 243);
+    border-top-color: rgb(217, 231, 243);
+    border-bottom-color: rgb(217, 231, 243);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+}
+
+/* 시너지 아이콘 (56x56 단색 박스, Sprite 없을 때 placeholder) */
+.synergy-card__icon {
+    width: 56px;
+    height: 56px;
+    margin-right: 14px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: rgb(74, 144, 212);
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* 내부 다이아몬드 글리프 (시안 placeholder — Sprite 들어오면 숨김) */
+.synergy-card__glyph {
+    width: 22px;
+    height: 22px;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.95;
+    rotate: 45deg;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.synergy-card__icon--has-sprite .synergy-card__glyph {
+    display: none;
+}
+
+/* 카드 우측 body */
+.synergy-card__body {
+    flex-grow: 1;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* effect 섹션 (top row + description) */
+.synergy-card__effect {
+    flex-direction: column;
+}
+
+/* row-top: 이름 + 진행 노드 */
+.synergy-card__row-top {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.synergy-card__name {
+    font-size: 16px;
+    -unity-font-style: bold;
+    color: rgb(43, 79, 120);
+    flex-shrink: 0;
+}
+
+/* 진행 노드 컨테이너 */
+.synergy-card__progress {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* 진행 노드 — 공통 */
+.progress-node {
+    height: 22px;
+    min-width: 32px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+}
+
+/* 통과한 단계 — muted blue fill */
+.progress-node--passed {
+    background-color: rgb(188, 214, 238);
+    border-left-color: rgb(188, 214, 238);
+    border-right-color: rgb(188, 214, 238);
+    border-top-color: rgb(188, 214, 238);
+    border-bottom-color: rgb(188, 214, 238);
+    color: rgb(255, 255, 255);
+}
+
+/* 현재 활성 단계 — bright accent */
+.progress-node--active {
+    background-color: rgb(74, 144, 212);
+    border-left-color: rgb(74, 144, 212);
+    border-right-color: rgb(74, 144, 212);
+    border-top-color: rgb(74, 144, 212);
+    border-bottom-color: rgb(74, 144, 212);
+    color: rgb(255, 255, 255);
+}
+
+/* 미도달 단계 — outlined */
+.progress-node--next {
+    background-color: rgb(255, 255, 255);
+    border-left-color: rgb(200, 220, 239);
+    border-right-color: rgb(200, 220, 239);
+    border-top-color: rgb(200, 220, 239);
+    border-bottom-color: rgb(200, 220, 239);
+    color: rgb(106, 138, 168);
+}
+
+/* 노드 사이 연결선 */
+.progress-connector {
+    width: 12px;
+    height: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    background-color: rgb(214, 228, 241);
+}
+
+.progress-connector--lit {
+    background-color: rgb(74, 144, 212);
+}
+
+.progress-connector--dim-lit {
+    background-color: rgb(188, 214, 238);
+}
+
+/* description */
+.synergy-card__desc {
+    font-size: 13px;
+    color: rgb(74, 102, 133);
+    white-space: normal;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+/* members section */
+.synergy-card__members {
+    flex-direction: row;
+}
+
+.synergy-card__units {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+/* unit (32x32) */
+.unit {
+    width: 32px;
+    height: 32px;
+    margin-right: 4px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: rgb(238, 245, 252);
+    border-left-color: rgb(211, 227, 242);
+    border-right-color: rgb(211, 227, 242);
+    border-top-color: rgb(211, 227, 242);
+    border-bottom-color: rgb(211, 227, 242);
+}
+
+/* 배치된 유닛 */
+.unit--placed {
+    background-color: rgb(219, 234, 253);
+    border-left-color: rgb(184, 211, 238);
+    border-right-color: rgb(184, 211, 238);
+    border-top-color: rgb(184, 211, 238);
+    border-bottom-color: rgb(184, 211, 238);
+}
+
+/* 보유했으나 미배치 (대기) */
+.unit--bench {
+    background-color: rgb(238, 245, 252);
+    border-left-color: rgb(211, 227, 242);
+    border-right-color: rgb(211, 227, 242);
+    border-top-color: rgb(211, 227, 242);
+    border-bottom-color: rgb(211, 227, 242);
+}
+
+/* 유닛 portrait (18x18 작은 색면) */
+.unit__portrait {
+    width: 18px;
+    height: 18px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: rgb(106, 166, 216);
+}
+
+.unit--bench .unit__portrait {
+    opacity: 0.55;
 }

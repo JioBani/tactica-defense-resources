@@ -15,16 +15,19 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
     [DefaultExecutionOrder(100)]
     public class SynergyDetailPanel : MonoBehaviour
     {
-        private const string HiddenUssClass = "synergy-detail-panel--hidden";
+        private const string HiddenUssClass = "synergy-detail-overlay--hidden";
+        private const string IconHasSpriteClass = "synergy-card__icon--has-sprite";
         private const string RootName = "synergy-detail-root";
         private const string CloseButtonName = "close-button";
         private const string EffectSectionName = "effect-section";
         private const string MemberSectionName = "member-section";
+        private const string SynergyIconName = "synergy-icon";
 
         [SerializeField] private UIDocument document;
         [SerializeField] private DefenderManager defenderManager;
 
         private VisualElement _root;
+        private VisualElement _synergyIcon;
         private Button _closeButton;
         private SynergyDetailEffectSection _effectSection;
         private SynergyDetailMemberList _memberList;
@@ -38,6 +41,9 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
         public SynergyActivation Current => _current;
 
         private bool _initialized;
+        private bool _loggedDocumentMissing;
+        private bool _loggedVisualTreeMissing;
+        private bool _loggedRootMissing;
 
         private void OnEnable()
         {
@@ -57,22 +63,38 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
             }
             if (document == null)
             {
+                if (!_loggedDocumentMissing)
+                {
+                    Debug.LogError($"[SynergyDetailPanel] UIDocument 컴포넌트가 부착되지 않았고 [SerializeField] document 도 비어 있습니다. 같은 GameObject 에 UIDocument 컴포넌트를 추가하거나 Inspector 에서 document 필드를 연결하세요. (GameObject: {gameObject.name})", this);
+                    _loggedDocumentMissing = true;
+                }
                 return;
             }
 
             VisualElement docRoot = document.rootVisualElement;
             if (docRoot == null)
             {
-                // UIDocument 의 visualTree 가 아직 빌드되지 않은 시점.
-                // [DefaultExecutionOrder(100)] 로 UIDocument 보다 늦게 OnEnable 되도록 보장하지만,
-                // 안전망으로 null 가드 후 다음 OnEnable / Show 호출 시 재시도한다.
+                // UIDocument 의 visualTree 가 아직 빌드되지 않은 시점일 수 있음 — 다음 호출에서 재시도.
+                // 다만 sourceAsset / panelSettings 가 미연결이면 영원히 null 이므로 진단 로그를 1회 남긴다.
+                if (!_loggedVisualTreeMissing)
+                {
+                    Debug.LogWarning($"[SynergyDetailPanel] UIDocument.rootVisualElement 가 null 입니다. UIDocument 의 Source Asset 과 Panel Settings 가 연결되어 있는지 확인하세요. (GameObject: {gameObject.name})", this);
+                    _loggedVisualTreeMissing = true;
+                }
                 return;
             }
 
             _root = docRoot.Q<VisualElement>(RootName);
             _closeButton = docRoot.Q<Button>(CloseButtonName);
+            _synergyIcon = docRoot.Q<VisualElement>(SynergyIconName);
             VisualElement effectRoot = docRoot.Q<VisualElement>(EffectSectionName);
             VisualElement memberRoot = docRoot.Q<VisualElement>(MemberSectionName);
+
+            if (_root == null)
+            {
+                Debug.LogError($"[SynergyDetailPanel] UXML 트리에서 루트 노드 '{RootName}' 를 찾을 수 없습니다. UIDocument.Source Asset 이 올바른 SynergyDetailPanel.uxml 인지 확인하세요. (GameObject: {gameObject.name})", this);
+                return;
+            }
 
             _effectSection = new SynergyDetailEffectSection(effectRoot);
             _memberList = new SynergyDetailMemberList(memberRoot, defenderManager);
@@ -95,6 +117,17 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
 
             UnregisterOutsideClickCallback();
             _current = null;
+
+            // UIDocument 는 OnDisable 시 visualTree 를 panel 에서 detach 하고, 다음 OnEnable 시
+            // visualTreeAsset 을 새로 clone 하여 attach 한다. 캐시한 _root / _closeButton /
+            // _synergyIcon 은 stale 상태가 되므로 _initialized 가드를 풀어 다음 OnEnable 의
+            // EnsureInitialized 가 새 visualTree 에서 다시 Q 하도록 한다.
+            _initialized = false;
+            _root = null;
+            _closeButton = null;
+            _synergyIcon = null;
+            _effectSection = null;
+            _memberList = null;
         }
 
         /// <summary>
@@ -135,8 +168,8 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
 
         private void EnterVisible(SynergyActivation activation)
         {
-            // prefab 셋업이 Detail Panel GameObject 를 비활성으로 두는 경우, SetActive(true) 가
-            // 동기적으로 OnEnable 을 호출하여 _effectSection / _memberList / _root 를 초기화한다.
+            // SetActive(true) 는 동기적으로 OnEnable → EnsureInitialized 를 호출하여
+            // UIDocument 의 새 visualTree 에서 _root / _closeButton / _synergyIcon 등을 재조회한다.
             if (!gameObject.activeSelf)
             {
                 gameObject.SetActive(true);
@@ -145,15 +178,43 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
             EnsureInitialized();
             if (_root == null)
             {
-                // 초기화가 아직 가능하지 않은 시점 — 표시 진입을 포기 (다음 Show 호출에서 재시도).
+                // 초기화가 아직 가능하지 않은 시점 — 표시 진입 포기 + 진단 단서 (멱등 로그).
+                // 진단 상세는 EnsureInitialized 안에서 컴포넌트/자산/UXML 단위로 1회 출력되므로
+                // 여기서는 표시 시도가 실패했다는 사실만 한 번 더 남긴다 (호출 라인 추적용).
+                if (!_loggedRootMissing)
+                {
+                    Debug.LogError($"[SynergyDetailPanel] Show 호출 시 UXML 루트가 초기화되지 않은 상태입니다 — 상세 패널이 표시되지 않습니다. 위의 진단 로그를 확인하세요. (GameObject: {gameObject.name})", this);
+                    _loggedRootMissing = true;
+                }
                 return;
             }
 
             _current = activation;
             _effectSection.Bind(activation);
             _memberList.Bind(activation);
+            ApplySynergyIcon(activation);
             ApplyVisibleStyle();
             RegisterOutsideClickCallback();
+        }
+
+        /// <summary>시너지 아이콘 표시 — Sprite 있으면 backgroundImage, 없으면 placeholder 글리프 유지.</summary>
+        private void ApplySynergyIcon(SynergyActivation activation)
+        {
+            if (_synergyIcon == null)
+            {
+                return;
+            }
+
+            // 아이콘 표시 전 항상 has-sprite 마커를 정리한 뒤 재판정한다 — Rebind 시점에도 일관 동작.
+            _synergyIcon.RemoveFromClassList(IconHasSpriteClass);
+            _synergyIcon.style.backgroundImage = StyleKeyword.Null;
+
+            Sprite icon = activation.Definition != null ? activation.Definition.Icon : null;
+            if (icon != null)
+            {
+                _synergyIcon.style.backgroundImage = new StyleBackground(icon);
+                _synergyIcon.AddToClassList(IconHasSpriteClass);
+            }
         }
 
         private void ExitVisible()
@@ -171,6 +232,7 @@ namespace Scenes.Battle.Feature.Ui.SynergyInfo
             _current = activation;
             _effectSection.Rebind(activation);
             _memberList.Rebind(activation);
+            ApplySynergyIcon(activation);
         }
 
         private void HandleCloseButton()

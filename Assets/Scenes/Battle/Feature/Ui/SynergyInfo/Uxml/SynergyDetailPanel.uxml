@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <Style src="SynergyDetailPanel.uss" />
-    <ui:VisualElement name="synergy-detail-root" class="synergy-detail-panel synergy-detail-panel--hidden">
-        <ui:Button name="close-button" text="X" class="synergy-detail-panel__close" />
-        <ui:VisualElement name="effect-section" class="synergy-detail-panel__effect-section">
-            <ui:Label name="synergy-name" class="synergy-detail-panel__name" />
-            <ui:Label name="synergy-description" class="synergy-detail-panel__description" />
-            <ui:VisualElement name="tier-list" class="synergy-detail-panel__tier-list" />
-        </ui:VisualElement>
-        <ui:VisualElement name="member-section" class="synergy-detail-panel__member-section">
-            <ui:VisualElement name="member-list" class="synergy-detail-panel__member-list" />
+    <ui:VisualElement name="synergy-detail-root" class="synergy-detail-overlay synergy-detail-overlay--hidden">
+        <ui:VisualElement class="synergy-detail-panel" picking-mode="Position">
+            <ui:VisualElement class="synergy-detail-panel__head">
+                <ui:Label text="시너지 상세" class="synergy-detail-panel__title" />
+                <ui:Button name="close-button" text="×" class="synergy-detail-panel__close" />
+            </ui:VisualElement>
+            <ui:VisualElement class="synergy-card">
+                <ui:VisualElement name="synergy-icon" class="synergy-card__icon">
+                    <ui:VisualElement class="synergy-card__glyph" />
+                </ui:VisualElement>
+                <ui:VisualElement class="synergy-card__body">
+                    <ui:VisualElement name="effect-section" class="synergy-card__effect">
+                        <ui:VisualElement class="synergy-card__row-top">
+                            <ui:Label name="synergy-name" class="synergy-card__name" />
+                            <ui:VisualElement name="tier-list" class="synergy-card__progress" />
+                        </ui:VisualElement>
+                        <ui:Label name="synergy-description" class="synergy-card__desc" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="member-section" class="synergy-card__members">
+                        <ui:VisualElement name="member-list" class="synergy-card__units" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
