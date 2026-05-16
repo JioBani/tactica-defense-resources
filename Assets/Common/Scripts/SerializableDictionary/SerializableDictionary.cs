@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,10 @@ namespace Common.Scripts.SerializableDictionary
     /// ISerializationCallbackReceiver를 통해 키-값 리스트를 Dictionary로 변환한다.
     /// </summary>
     [Serializable]
-    public class SerializableDictionary<TKey, TValue> : SerializableDictionaryBase, ISerializationCallbackReceiver
+    public class SerializableDictionary<TKey, TValue>
+        : SerializableDictionaryBase,
+          ISerializationCallbackReceiver,
+          IEnumerable<KeyValuePair<TKey, TValue>>
     {
         [SerializeField] private TKey[] keys = Array.Empty<TKey>();
         [SerializeField] private TValue[] values = Array.Empty<TValue>();
@@ -37,6 +41,11 @@ namespace Common.Scripts.SerializableDictionary
 
         /// <summary>모든 항목을 제거한다.</summary>
         public void Clear() => _dict.Clear();
+
+        /// <summary>키-값 쌍을 순회한다.</summary>
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _dict.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => _dict.GetEnumerator();
 
         public void OnBeforeSerialize()
         {
