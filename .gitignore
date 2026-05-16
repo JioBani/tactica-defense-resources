@@ -101,5 +101,10 @@ InitTestScene*.unity*
 # Claude settings
 .claude/settings.local.json
 
+# Claude Party workspace
+.claude-party/
+.agent-party/
+.agentparty/
+
 # MCP config (contains API tokens)
 .mcp.json
