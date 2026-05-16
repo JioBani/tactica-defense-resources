@@ -9,5 +9,13 @@ namespace Common.Data.Synergies
         Freljord = 3,
         Warmonger = 4,
         Gunslinger = 5,
+        TestFortitude = 6,
+        TestStrike = 7,
+        TestArcane = 8,
+        TestSwift = 9,
+        TestEndurance = 10,
+        TestFocus = 11,
+        TestBreach = 12,
+        TestVenom = 13,
     }
 }
