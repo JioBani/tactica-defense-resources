@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
+  m_Name: "\uC2E0\uC18D"
+  m_EditorClassIdentifier: Assembly-CSharp::Common.Data.Synergies.SynergyDefinitionData
+  id: 9
+  displayName: "\uC2E0\uC18D"
+  description: 
+  icon: {fileID: 0}
+  statusEffectDefinition: {fileID: 11400000, guid: 440f1a0e384aac34ca70a7b880b0e3c3, type: 2}
+  synergyType: 1
+  tiers:
+  - tier: 1
+    requiredCount: 2
+    constants:
+      keys:
+      - attackSpeedBonus
+      - moveSpeedBonus
+      values:
+      - 0.1
+      - 0.05
+  - tier: 2
+    requiredCount: 3
+    constants:
+      keys:
+      - attackSpeedBonus
+      - moveSpeedBonus
+      values:
+      - 0.2
+      - 0.1
+  - tier: 3
+    requiredCount: 4
+    constants:
+      keys:
+      - attackSpeedBonus
+      - moveSpeedBonus
+      values:
+      - 0.35
+      - 0.2

@@ -4791,6 +4791,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
+  summonTraitMap:
+    keys: []
+    values: []
+  summonTraitRegistry: {fileID: 11400000, guid: cf4924cae6d3a534e8677f6e66311714, type: 2}
   debugSynergyStatus:
     keys: []
     values: []

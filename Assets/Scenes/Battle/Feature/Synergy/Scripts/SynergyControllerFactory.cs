@@ -28,6 +28,13 @@ namespace Scenes.Battle.Feature.Synergy
         /// </summary>
         public SynergyController Create(SynergyActivation activation)
         {
+            // 테스트용 통합 라우팅 — 실제 효과 SummonTrait이 추가되면 SummonerEffect와 동일하게
+            // 아래 SynergyId switch에 시너지별 케이스로 옮긴다 (SummonTraitSynergyController 폐기 또는 축소).
+            if (activation.Definition.SynergyType == SynergyType.SummonTrait)
+            {
+                return new SummonTraitSynergyController(activation);
+            }
+
             return activation.Definition.Id switch
             {
                 SynergyId.Bruiser => new BruiserSynergyController(activation),       // 난동꾼: MaxHealth % 버프

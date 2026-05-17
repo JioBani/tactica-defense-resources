@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfff47fe2eb6499479a15eac2f531dd4, type: 3}
+  m_Name: "\uD30C\uC1C4"
+  m_EditorClassIdentifier: Assembly-CSharp::Common.Data.Synergies.SynergyDefinitionData
+  id: 12
+  displayName: "\uD30C\uC07C"
+  description: 
+  icon: {fileID: 0}
+  statusEffectDefinition: {fileID: 11400000, guid: e82461d62d3e55549acffa13c02d9681, type: 2}
+  synergyType: 1
+  tiers:
+  - tier: 1
+    requiredCount: 2
+    constants:
+      keys:
+      - damageBonus
+      values:
+      - 0.1
+  - tier: 2
+    requiredCount: 3
+    constants:
+      keys:
+      - damageBonus
+      values:
+      - 0.2
+  - tier: 3
+    requiredCount: 4
+    constants:
+      keys:
+      - damageBonus
+      values:
+      - 0.35
