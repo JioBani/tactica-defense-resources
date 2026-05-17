@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940003a4cf8efcc44b826b5cdd57f76e, type: 3}
+  m_Name: SummonTraitRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::Common.Data.Synergies.SummonTraitRegistry
+  traits:
+  - {fileID: 11400000, guid: 3ece8668a144b00418073ea1116d90fb, type: 2}
+  - {fileID: 11400000, guid: 35dea0b6b8422424b8062bd344ab8019, type: 2}
+  - {fileID: 11400000, guid: 8783cd6ec832ca64f953bf067ad5e964, type: 2}
+  - {fileID: 11400000, guid: 017496d6f579ace40b33ab64fa0c5129, type: 2}
+  - {fileID: 11400000, guid: da8252e4193fcff4fbf83f15fc800d62, type: 2}
+  - {fileID: 11400000, guid: fca67399546d83545a64b7551d9018d2, type: 2}
+  - {fileID: 11400000, guid: 2e6afe0eb87636d44b3e455404bfd414, type: 2}
+  - {fileID: 11400000, guid: 94830cbfe9f15f144a071e97da5b1ad6, type: 2}

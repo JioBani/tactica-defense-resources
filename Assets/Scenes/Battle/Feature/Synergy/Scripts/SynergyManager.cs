@@ -12,6 +12,8 @@ using Common.Scripts.GlobalEventBus;
 using Common.Scripts.SceneSingleton;
 using Common.Scripts.SerializableDictionary;
 using Scenes.Battle.Feature.Events;
+using Scenes.Battle.Feature.Events.RoundEvents;
+using Scenes.Battle.Feature.SummonTrait;
 using Scenes.Battle.Feature.Unit.Defenders;
 using Scenes.Battle.Feature.Unit.Summoners;
 using UnityEngine;
@@ -25,6 +27,9 @@ namespace Scenes.Battle.Feature.Synergy
 
         /// <summary>소환수 → 소환술사 효과 역방향 매핑.</summary>
         private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSynergyMap = new();
+
+        /// <summary>소환수 → SummonTrait 시너지 역방향 매핑. OnSummonTraitsDistributedEventDto 수신 시 채워진다.</summary>
+        private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSummonTraitMap = new();
 
         /// <summary>시너지 → 보유 소환수 역참조 인덱스 (내부).</summary>
         private readonly Dictionary<SynergyDefinitionData, List<UnitLoadOutData>> _synergyMembers = new();
@@ -67,6 +72,16 @@ namespace Scenes.Battle.Feature.Synergy
             }
 
             InitializeSynergyActivations(uniqueEffects);
+
+            // SummonTrait 분배 완료 이벤트 구독 (SummonerEffect 초기화 이후로 위치).
+            // OQ-9: Unity Start() 객체 간 순서가 미보장이므로 구독 직후 SummonTraitStore 상태를 동기 검사하여
+            // 이벤트가 본 메서드 진입 전에 이미 발행된 케이스의 누락을 보정한다.
+            GlobalEventBus.Subscribe<OnSummonTraitsDistributedEventDto>(HandleSummonTraitsDistributed);
+
+            if (SummonTraitStore.Instance != null && SummonTraitStore.Instance.All.Count > 0)
+            {
+                HandleSummonTraitsDistributed(new OnSummonTraitsDistributedEventDto());
+            }
         }
 
         private void OnEnable()
@@ -77,6 +92,7 @@ namespace Scenes.Battle.Feature.Synergy
         private void OnDisable()
         {
             GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(HandleDefenderChanged);
+            GlobalEventBus.Unsubscribe<OnSummonTraitsDistributedEventDto>(HandleSummonTraitsDistributed);
 
             foreach (SynergyController controller in _controllers.Values)
             {
@@ -170,14 +186,97 @@ namespace Scenes.Battle.Feature.Synergy
 
         // ── Defender Spawn 처리 ──
 
-        /// <summary>Defender 스폰 시 역방향 맵에서 소환술사 효과를 조회하여 주입한다.</summary>
+        /// <summary>Defender 스폰 시 역방향 맵에서 소환술사 효과와 SummonTrait를 조회하여 둘 다 주입한다.</summary>
         private void HandleDefenderChanged(OnDefenderChangedEventDto dto)
         {
             if (dto.Change == DefenderChanges.Spawn)
             {
-                if (_unitSynergyMap.TryGetValue(dto.Defender.UnitLoadOutData, out SynergyDefinitionData synergy))
+                UnitLoadOutData unit = dto.Defender.UnitLoadOutData;
+
+                if (_unitSynergyMap.TryGetValue(unit, out SynergyDefinitionData summonerEffect))
                 {
-                    dto.Defender.AddSynergy(synergy);
+                    dto.Defender.AddSynergy(summonerEffect);
+                }
+
+                if (_unitSummonTraitMap.TryGetValue(unit, out SynergyDefinitionData summonTrait))
+                {
+                    dto.Defender.AddSynergy(summonTrait);
+                }
+            }
+        }
+
+        /// <summary>
+        /// SummonTrait 분배 완료 시 SummonTraitStore에서 결과를 읽어 활성화·역참조 인덱스에 합산하고
+        /// 각 SummonTrait별 SynergyController를 생성한다.
+        /// </summary>
+        private void HandleSummonTraitsDistributed(OnSummonTraitsDistributedEventDto _)
+        {
+            if (SummonTraitStore.Instance == null)
+            {
+                Debug.LogError("[SynergyManager] SummonTraitStore 미존재 — SummonTrait 통합 스킵");
+                return;
+            }
+
+            SerializableDictionary<UnitLoadOutData, SynergyDefinitionData> traitMap = SummonTraitStore.Instance.All;
+
+            // SummonTrait 역방향 맵 구축 (Defender 스폰 시 시너지 주입에 사용)
+            _unitSummonTraitMap.Clear();
+            foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in traitMap)
+            {
+                _unitSummonTraitMap[kv.Key] = kv.Value;
+            }
+
+            // 시너지 → 보유 소환수 목록 재구성 (SummonTrait 역참조 인덱스)
+            var traitToUnits = new Dictionary<SynergyDefinitionData, List<UnitLoadOutData>>();
+            foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in traitMap)
+            {
+                if (!traitToUnits.TryGetValue(kv.Value, out List<UnitLoadOutData> list))
+                {
+                    list = new List<UnitLoadOutData>();
+                    traitToUnits[kv.Value] = list;
+                }
+                list.Add(kv.Key);
+            }
+
+            // 각 SummonTrait에 대해 활성화·컨트롤러·역참조 인덱스를 등록
+            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in traitToUnits)
+            {
+                SynergyDefinitionData trait = kv.Key;
+                List<UnitLoadOutData> units = kv.Value;
+
+                if (_synergyActivations.ContainsKey(trait))
+                {
+                    Debug.LogWarning($"[SynergyManager] SummonTrait '{trait.DisplayName}'이 이미 등록됨 — 기존 항목 유지 (전장 1회 분배 전제)");
+                    continue;
+                }
+
+                var activation = new SynergyActivation(trait);
+                _synergyActivations[trait] = activation;
+
+                SynergyController controller = SynergyControllerFactory.Instance.Create(activation);
+                if (controller == null)
+                {
+                    Debug.LogError($"[SynergyManager] SummonTraitSynergyController 생성 실패: {trait.DisplayName}");
+                    continue;
+                }
+                _controllers[trait] = controller;
+
+                _synergyMembers[trait] = units;
+            }
+
+            // 외부 노출 readonly 뷰 재구성 — SummonerEffect 항목과 SummonTrait 항목을 합산하여 새 사전 생성
+            _synergyMembersPublic = new Dictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>>(_synergyMembers.Count);
+            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in _synergyMembers)
+            {
+                _synergyMembersPublic[kv.Key] = kv.Value;
+            }
+
+            // 신규 등록된 SummonTrait 활성화에 대해 재계산 이벤트 발행 — SynergyListPanel이 인디케이터 가시성 갱신
+            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in traitToUnits)
+            {
+                if (_synergyActivations.TryGetValue(kv.Key, out SynergyActivation activation))
+                {
+                    GlobalEventBus.Publish(new OnSynergyRecalculatedEventDto(activation));
                 }
             }
         }

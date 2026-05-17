@@ -51,6 +51,9 @@ namespace Scenes.Battle.Feature.SummonTrait
             }
 
             SummonTraitStore.Instance.Initialize(traitMap);
+
+            // 분배 완료 신호 발행 — SynergyManager가 구독하여 SummonTrait 활성화·역참조 통합
+            GlobalEventBus.Publish(new OnSummonTraitsDistributedEventDto());
         }
     }
 }
