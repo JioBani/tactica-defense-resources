@@ -25,8 +25,8 @@ namespace Scenes.Battle.Feature.Synergy
         private readonly Dictionary<SynergyDefinitionData, SynergyActivation> _synergyActivations = new();
         private readonly Dictionary<SynergyDefinitionData, SynergyController> _controllers = new();
 
-        /// <summary>소환수 → 소환술사 효과 역방향 매핑.</summary>
-        private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSynergyMap = new();
+        /// <summary>소환수 → SummonerEffect 시너지 매핑. 편성 데이터에서 Start 시점에 결정적으로 구축.</summary>
+        private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSummonerEffectMap = new();
 
         /// <summary>
         /// SummonTrait 배정 결과 (소환수 → SummonTrait 매핑). 전장 시작 시 채워지고 종료 시 초기화된다.
@@ -78,30 +78,13 @@ namespace Scenes.Battle.Feature.Synergy
         {
             IReadOnlyList<SummonerLoadOutData> summoners = SummonerManager.Instance.Summoners;
 
-            // === SummonerEffect 초기화 ===
-
-            // 소환수 → 시너지 역방향 맵 구축 (Defender 스폰 시 시너지 주입에 사용)
-            BuildUnitSynergyMap(summoners);
-
-            // 시너지 → 보유 소환수 역참조 인덱스 구축 (UI 외부 조회용)
-            BuildSynergyMembersMap(summoners);
-
-            // 유니크 소환술사 효과 추출 → SynergyController 생성
-            var uniqueEffects = new HashSet<SynergyDefinitionData>();
-            foreach (SummonerLoadOutData summoner in summoners)
-            {
-                uniqueEffects.Add(summoner.Summoner.SummonerEffect);
-            }
-
-            InitializeSynergyActivations(uniqueEffects);
-
-            // === SummonTrait 분배 + 통합 (SummonerEffect 와 동일 시점 처리) ===
+            // 시너지 시스템 일괄 초기화. SummonerEffect·SummonTrait 두 종류를 동일 흐름으로 처리한다.
             //
             // TODO: 전장 초기화 로직(편성 주입·씬 데이터 로드 등)이 본 호출보다 늦게 완료되어야 하는
             //       라이프사이클 의존성이 추가되면, RoundManager 같은 전장 라이프사이클 주관 클래스에서
-            //       적절한 시점에 이벤트(OnBattleStartEventDto 류)를 발행하고 본 분배·통합 호출을
+            //       적절한 시점에 이벤트(OnBattleStartEventDto 류)를 발행하고 본 초기화 호출을
             //       해당 이벤트 구독 핸들러로 이동하여 명시적 라이프사이클 결합으로 전환한다.
-            DistributeAndIntegrateSummonTraits(summoners);
+            InitializeAllSynergies(summoners);
         }
 
         private void OnEnable()
@@ -143,11 +126,24 @@ namespace Scenes.Battle.Feature.Synergy
 
         // ── 초기화 ──
 
-        /// <summary>Formation의 SummonPool을 순회하여 역방향 맵을 구축한다.</summary>
-        private void BuildUnitSynergyMap(IReadOnlyList<SummonerLoadOutData> summoners)
+        /// <summary>
+        /// 시너지 시스템 일괄 초기화. SummonerEffect·SummonTrait 두 종류 시너지의 데이터 결정과 시스템 구축을
+        /// 단일 메서드 내에서 순차 처리한다. 분리된 헬퍼 메서드를 두지 않는 이유는 멤버 변수를 통한
+        /// 암묵적 의존성을 메서드 시그니처 밖으로 새지 않도록 하기 위함.
+        ///
+        /// 흐름:
+        ///   Phase 1. 데이터 결정 — SummonerEffect 는 편성에서 결정적으로, SummonTrait 는 균등 랜덤 분배로
+        ///            unit → synergy 매핑을 구축한다.
+        ///   Phase 2. 시너지 → unit 역참조 인덱스 구축 — 두 종류 매핑을 합산한다.
+        ///   Phase 3. 유니크 시너지마다 SynergyActivation 및 SynergyController 생성.
+        ///   Phase 4. 외부 노출용 readonly 뷰 재구성.
+        /// </summary>
+        private void InitializeAllSynergies(IReadOnlyList<SummonerLoadOutData> summoners)
         {
-            _unitSynergyMap.Clear();
+            // ── Phase 1: 데이터 결정 ──
 
+            // SummonerEffect: 편성에서 결정적으로 unit → effect 매핑 구축
+            _unitSummonerEffectMap.Clear();
             foreach (SummonerLoadOutData summoner in summoners)
             {
                 SynergyDefinitionData effect = summoner.Summoner.SummonerEffect;
@@ -164,47 +160,52 @@ namespace Scenes.Battle.Feature.Synergy
                         throw new InvalidOperationException(
                             $"[SynergyManager] {summoner.name}의 SummonPool에 null 항목이 있습니다.");
                     }
-
-                    _unitSynergyMap[unit] = effect;
+                    _unitSummonerEffectMap[unit] = effect;
                 }
             }
-        }
 
-        /// <summary>
-        /// 시너지 → 보유 소환수 목록 역참조 인덱스를 구축한다.
-        /// 각 소환술사 로드아웃의 SummonerEffect 시너지 아래에 그 소환술사의 SummonPool 소환수를 누적하며,
-        /// 동일 소환수가 여러 풀에 등장하더라도 중복은 자연스럽게 제거된다.
-        /// 시너지 종류 분기 없음 — SummonerEffect 가 본 이슈 시점의 표시 활성화 범위(소환술사 효과 시너지)를
-        /// 자연 표현하며, 향후 소환수 특성 분배 도메인 로직이 추가되어 동일 인덱스에 누적되면 자동 합산된다.
-        /// </summary>
-        private void BuildSynergyMembersMap(IReadOnlyList<SummonerLoadOutData> summoners)
-        {
-            _synergyMembers.Clear();
-
-            foreach (SummonerLoadOutData summoner in summoners)
+            // SummonTrait: 균등 랜덤 분배로 unit → trait 매핑 구축
+            summonTraitMap.Clear();
+            if (summonTraitRegistry == null)
             {
-                SynergyDefinitionData effect = summoner.Summoner.SummonerEffect;
-                if (effect == null)
+                Debug.LogError("[SynergyManager] summonTraitRegistry 미연결 — SummonTrait 분배 스킵");
+            }
+            else
+            {
+                Dictionary<UnitLoadOutData, SynergyDefinitionData> traitMap =
+                    _summonTraitService.Distribute(summoners, summonTraitRegistry.Traits);
+                foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in traitMap)
+                {
+                    summonTraitMap[kv.Key] = kv.Value;
+                }
+            }
+
+            // ── Phase 2: 시너지 → unit 역참조 인덱스 구축 (두 종류 합산) ──
+            _synergyMembers.Clear();
+            foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in _unitSummonerEffectMap)
+            {
+                AddSynergyMember(kv.Value, kv.Key);
+            }
+            foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in summonTraitMap)
+            {
+                AddSynergyMember(kv.Value, kv.Key);
+            }
+
+            // ── Phase 3: 유니크 시너지마다 Activation + Controller 생성 ──
+            foreach (SynergyDefinitionData synergy in _synergyMembers.Keys)
+            {
+                if (_synergyActivations.ContainsKey(synergy))
                 {
                     continue;
                 }
 
-                if (!_synergyMembers.TryGetValue(effect, out List<UnitLoadOutData> list))
-                {
-                    list = new List<UnitLoadOutData>();
-                    _synergyMembers[effect] = list;
-                }
-
-                foreach (UnitLoadOutData unit in summoner.Summoner.SummonPool)
-                {
-                    if (unit != null && !list.Contains(unit))
-                    {
-                        list.Add(unit);
-                    }
-                }
+                var activation = new SynergyActivation(synergy);
+                _synergyActivations[synergy] = activation;
+                _controllers[synergy] = SynergyControllerFactory.Instance.Create(activation);
+                activation.ActiveTier.OnChange += _ => UpdateDebugStatus();
             }
 
-            // 외부 노출 readonly 뷰 재구성
+            // ── Phase 4: 외부 노출 readonly 뷰 재구성 ──
             _synergyMembersPublic = new Dictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>>(_synergyMembers.Count);
             foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in _synergyMembers)
             {
@@ -212,16 +213,23 @@ namespace Scenes.Battle.Feature.Synergy
             }
         }
 
-        /// <summary>시너지 목록으로부터 SynergyActivation과 SynergyController를 생성한다.</summary>
-        private void InitializeSynergyActivations(HashSet<SynergyDefinitionData> synergies)
+        /// <summary>시너지 → 보유 unit 역참조 인덱스에 한 항목을 추가한다. 동일 unit 중복은 자연 제거.</summary>
+        private void AddSynergyMember(SynergyDefinitionData synergy, UnitLoadOutData unit)
         {
-            foreach (SynergyDefinitionData definition in synergies)
+            if (synergy == null || unit == null)
             {
-                var activation = new SynergyActivation(definition);
-                _synergyActivations[definition] = activation;
-                _controllers[definition] = SynergyControllerFactory.Instance.Create(activation);
+                return;
+            }
 
-                activation.ActiveTier.OnChange += _ => UpdateDebugStatus();
+            if (!_synergyMembers.TryGetValue(synergy, out List<UnitLoadOutData> list))
+            {
+                list = new List<UnitLoadOutData>();
+                _synergyMembers[synergy] = list;
+            }
+
+            if (!list.Contains(unit))
+            {
+                list.Add(unit);
             }
         }
 
@@ -234,7 +242,7 @@ namespace Scenes.Battle.Feature.Synergy
             {
                 UnitLoadOutData unit = dto.Defender.UnitLoadOutData;
 
-                if (_unitSynergyMap.TryGetValue(unit, out SynergyDefinitionData summonerEffect))
+                if (_unitSummonerEffectMap.TryGetValue(unit, out SynergyDefinitionData summonerEffect))
                 {
                     dto.Defender.AddSynergy(summonerEffect);
                 }
@@ -243,75 +251,6 @@ namespace Scenes.Battle.Feature.Synergy
                 {
                     dto.Defender.AddSynergy(summonTrait);
                 }
-            }
-        }
-
-        /// <summary>
-        /// SummonTrait 분배를 실행하고 결과를 런타임 저장소·활성화·역참조 인덱스에 통합한다.
-        /// SummonerEffect 초기화와 동일 시점에 호출되어 트리거 대칭을 유지한다.
-        /// </summary>
-        private void DistributeAndIntegrateSummonTraits(IReadOnlyList<SummonerLoadOutData> summoners)
-        {
-            if (summonTraitRegistry == null)
-            {
-                Debug.LogError("[SynergyManager] summonTraitRegistry 미연결 — SummonTrait 분배 스킵");
-                return;
-            }
-
-            // 분배 실행
-            Dictionary<UnitLoadOutData, SynergyDefinitionData> traitMap =
-                _summonTraitService.Distribute(summoners, summonTraitRegistry.Traits);
-
-            // 런타임 상태에 저장 (전장 종료 이벤트로 OnBattleWin/Lose 핸들러가 초기화)
-            summonTraitMap.Clear();
-            foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in traitMap)
-            {
-                summonTraitMap[kv.Key] = kv.Value;
-            }
-
-            // 시너지 → 보유 소환수 목록 재구성 (SummonTrait 역참조 인덱스)
-            var traitToUnits = new Dictionary<SynergyDefinitionData, List<UnitLoadOutData>>();
-            foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in traitMap)
-            {
-                if (!traitToUnits.TryGetValue(kv.Value, out List<UnitLoadOutData> list))
-                {
-                    list = new List<UnitLoadOutData>();
-                    traitToUnits[kv.Value] = list;
-                }
-                list.Add(kv.Key);
-            }
-
-            // 각 SummonTrait에 대해 활성화·컨트롤러·역참조 인덱스를 등록
-            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in traitToUnits)
-            {
-                SynergyDefinitionData trait = kv.Key;
-                List<UnitLoadOutData> units = kv.Value;
-
-                if (_synergyActivations.ContainsKey(trait))
-                {
-                    Debug.LogWarning($"[SynergyManager] SummonTrait '{trait.DisplayName}'이 이미 등록됨 — 기존 항목 유지 (전장 1회 분배 전제)");
-                    continue;
-                }
-
-                var activation = new SynergyActivation(trait);
-                _synergyActivations[trait] = activation;
-
-                SynergyController controller = SynergyControllerFactory.Instance.Create(activation);
-                if (controller == null)
-                {
-                    Debug.LogError($"[SynergyManager] SummonTraitSynergyController 생성 실패: {trait.DisplayName}");
-                    continue;
-                }
-                _controllers[trait] = controller;
-
-                _synergyMembers[trait] = units;
-            }
-
-            // 외부 노출 readonly 뷰 재구성 — SummonerEffect 항목과 SummonTrait 항목을 합산하여 새 사전 생성
-            _synergyMembersPublic = new Dictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>>(_synergyMembers.Count);
-            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in _synergyMembers)
-            {
-                _synergyMembersPublic[kv.Key] = kv.Value;
             }
         }
 
