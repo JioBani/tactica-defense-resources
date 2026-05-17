@@ -447,8 +447,8 @@ namespace Tests.Editor
             Dictionary<UnitLoadOutData, SynergyDefinitionData> summonTraitMap)
         {
             var manager = CreateSynergyManagerInScene();
-            var unitSynergyMap = GetPrivateField<Dictionary<UnitLoadOutData, SynergyDefinitionData>>(manager, "_unitSynergyMap");
-            foreach (var kv in summonerEffectMap) unitSynergyMap[kv.Key] = kv.Value;
+            var unitSummonerEffectMap = GetPrivateField<Dictionary<UnitLoadOutData, SynergyDefinitionData>>(manager, "_unitSummonerEffectMap");
+            foreach (var kv in summonerEffectMap) unitSummonerEffectMap[kv.Key] = kv.Value;
             var traitMap = GetTraitMap(manager);
             foreach (var kv in summonTraitMap) traitMap[kv.Key] = kv.Value;
             return manager;
