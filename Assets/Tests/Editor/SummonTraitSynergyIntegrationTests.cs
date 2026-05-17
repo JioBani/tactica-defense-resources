@@ -439,37 +439,9 @@ namespace Tests.Editor
             Assert.That(manager.SynergyMembers[traitB].Count, Is.EqualTo(1));
         }
 
-        [Test]
-        public void Test_TC303_HandleDistributed_Publishes_Recalculated_Event_Per_Trait()
-        {
-            CreateFactoryInScene();
-            var traitA = CreateTrait("TraitA");
-            var traitB = CreateTrait("TraitB");
-            var unit1 = CreateUnit(1);
-            var unit2 = CreateUnit(2);
-            CreateStoreInScene(new Dictionary<UnitLoadOutData, SynergyDefinitionData>
-            {
-                { unit1, traitA }, { unit2, traitB }
-            });
-            var manager = CreateSynergyManagerInScene();
-
-            var recalculated = new HashSet<SynergyDefinitionData>();
-            void Handler(OnSynergyRecalculatedEventDto evt) => recalculated.Add(evt.Activation.Definition);
-            GlobalEventBus.Subscribe<OnSynergyRecalculatedEventDto>(Handler);
-
-            try
-            {
-                InvokeNonPublic(manager, "HandleSummonTraitsDistributed", new OnSummonTraitsDistributedEventDto());
-            }
-            finally
-            {
-                GlobalEventBus.Unsubscribe<OnSynergyRecalculatedEventDto>(Handler);
-            }
-
-            Assert.That(recalculated, Has.Member(traitA));
-            Assert.That(recalculated, Has.Member(traitB));
-            Assert.That(recalculated.Count, Is.EqualTo(2));
-        }
+        // TC-303 제거 (재진입 — 핫픽스 2e5eb39 후): "trait 별 OnSynergyRecalculatedEventDto 발행" 은
+        // UR/SR DoD 가 아니라 과거 구현 메커니즘이었음. UI 갱신 보장은 SynergyListPanel.Start 의
+        // _synergyActivations 자체 폴링으로 충족 — 불일치 보고서 MIS-R1 참조.
 
         [Test]
         public void Test_TC304_HandleDistributed_Coexists_SummonerEffect_And_SummonTrait_Activations()
