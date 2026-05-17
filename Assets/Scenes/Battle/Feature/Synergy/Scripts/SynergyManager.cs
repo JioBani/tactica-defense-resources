@@ -28,8 +28,21 @@ namespace Scenes.Battle.Feature.Synergy
         /// <summary>소환수 → 소환술사 효과 역방향 매핑.</summary>
         private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSynergyMap = new();
 
-        /// <summary>소환수 → SummonTrait 시너지 역방향 매핑. OnSummonTraitsDistributedEventDto 수신 시 채워진다.</summary>
-        private readonly Dictionary<UnitLoadOutData, SynergyDefinitionData> _unitSummonTraitMap = new();
+        /// <summary>
+        /// SummonTrait 배정 결과 (소환수 → SummonTrait 매핑). 전장 시작 시 채워지고 종료 시 초기화된다.
+        /// 인스펙터에서 런타임 상태 확인 가능, 외부에서는 GetSummonTrait 로 조회.
+        /// </summary>
+        /// <remarks>
+        /// TODO: SummonTrait 관련 동작(분배·통합·조회·라이프사이클 정리)과 데이터의 응집도가 높아지면
+        ///       (예: SummonTrait 전용 로직이 늘어나 SynergyManager 의 본 책임과 분리되기 시작하면)
+        ///       본 필드와 관련 메서드(DistributeAndIntegrateSummonTraits, GetSummonTrait,
+        ///       OnBattleWin/Lose 핸들러의 SummonTrait 정리 부분, summonTraitMap 사용처)를
+        ///       묶어 SummonTrait 전담 클래스로 분리한다. 분리 시 *데이터와 동작을 함께 묶어* 응집도를
+        ///       유지한다 — 단순 데이터 홀더(Store)와 외부 서비스로 갈라놓는 패턴은 회피
+        ///       (이전 SummonTraitStore + SummonTraitDistributor 분리 시 발생했던 스파게티 결합 회귀 방지).
+        /// </remarks>
+        [Header("SummonTrait 런타임 상태")]
+        [SerializeField] private SerializableDictionary<UnitLoadOutData, SynergyDefinitionData> summonTraitMap = new();
 
         /// <summary>시너지 → 보유 소환수 역참조 인덱스 (내부).</summary>
         private readonly Dictionary<SynergyDefinitionData, List<UnitLoadOutData>> _synergyMembers = new();
@@ -48,6 +61,13 @@ namespace Scenes.Battle.Feature.Synergy
         /// </summary>
         public IReadOnlyDictionary<SynergyDefinitionData, IReadOnlyList<UnitLoadOutData>> SynergyMembers => _synergyMembersPublic;
 
+        /// <summary>SummonTrait 자산 목록 보관 SO. 인스펙터에서 연결.</summary>
+        [Header("SummonTrait")]
+        [SerializeField] private SummonTraitRegistry summonTraitRegistry;
+
+        /// <summary>SummonTrait 균등 랜덤 분배 로직 서비스.</summary>
+        private readonly SummonTraitService _summonTraitService = new();
+
         // TODO: 디버그용. 시너지 UI 구현 후 제거한다.
         [Header("디버그 (런타임 확인용)")]
         [SerializeField] private SerializableDictionary<string, string> debugSynergyStatus = new();
@@ -57,6 +77,8 @@ namespace Scenes.Battle.Feature.Synergy
         private void Start()
         {
             IReadOnlyList<SummonerLoadOutData> summoners = SummonerManager.Instance.Summoners;
+
+            // === SummonerEffect 초기화 ===
 
             // 소환수 → 시너지 역방향 맵 구축 (Defender 스폰 시 시너지 주입에 사용)
             BuildUnitSynergyMap(summoners);
@@ -73,31 +95,50 @@ namespace Scenes.Battle.Feature.Synergy
 
             InitializeSynergyActivations(uniqueEffects);
 
-            // SummonTrait 분배 완료 이벤트 구독 (SummonerEffect 초기화 이후로 위치).
-            // OQ-9: Unity Start() 객체 간 순서가 미보장이므로 구독 직후 SummonTraitStore 상태를 동기 검사하여
-            // 이벤트가 본 메서드 진입 전에 이미 발행된 케이스의 누락을 보정한다.
-            GlobalEventBus.Subscribe<OnSummonTraitsDistributedEventDto>(HandleSummonTraitsDistributed);
-
-            if (SummonTraitStore.Instance != null && SummonTraitStore.Instance.All.Count > 0)
-            {
-                HandleSummonTraitsDistributed(new OnSummonTraitsDistributedEventDto());
-            }
+            // === SummonTrait 분배 + 통합 (SummonerEffect 와 동일 시점 처리) ===
+            //
+            // TODO: 전장 초기화 로직(편성 주입·씬 데이터 로드 등)이 본 호출보다 늦게 완료되어야 하는
+            //       라이프사이클 의존성이 추가되면, RoundManager 같은 전장 라이프사이클 주관 클래스에서
+            //       적절한 시점에 이벤트(OnBattleStartEventDto 류)를 발행하고 본 분배·통합 호출을
+            //       해당 이벤트 구독 핸들러로 이동하여 명시적 라이프사이클 결합으로 전환한다.
+            DistributeAndIntegrateSummonTraits(summoners);
         }
 
         private void OnEnable()
         {
             GlobalEventBus.Subscribe<OnDefenderChangedEventDto>(HandleDefenderChanged);
+            GlobalEventBus.Subscribe<OnBattleWinEventDto>(OnBattleWin);
+            GlobalEventBus.Subscribe<OnBattleLoseEventDto>(OnBattleLose);
         }
 
         private void OnDisable()
         {
             GlobalEventBus.Unsubscribe<OnDefenderChangedEventDto>(HandleDefenderChanged);
-            GlobalEventBus.Unsubscribe<OnSummonTraitsDistributedEventDto>(HandleSummonTraitsDistributed);
+            GlobalEventBus.Unsubscribe<OnBattleWinEventDto>(OnBattleWin);
+            GlobalEventBus.Unsubscribe<OnBattleLoseEventDto>(OnBattleLose);
 
             foreach (SynergyController controller in _controllers.Values)
             {
                 controller.Dispose();
             }
+        }
+
+        /// <summary>전장 승리 시 SummonTrait 런타임 상태를 초기화한다.</summary>
+        private void OnBattleWin(OnBattleWinEventDto _) => summonTraitMap.Clear();
+
+        /// <summary>전장 패배 시 SummonTrait 런타임 상태를 초기화한다.</summary>
+        private void OnBattleLose(OnBattleLoseEventDto _) => summonTraitMap.Clear();
+
+        /// <summary>지정 소환수의 SummonTrait 배정 결과를 반환한다. 미배정 시 null.</summary>
+        public SynergyDefinitionData GetSummonTrait(UnitLoadOutData unit)
+        {
+            if (unit == null)
+            {
+                Debug.LogError("[SynergyManager] GetSummonTrait: unit이 null입니다.");
+                return null;
+            }
+
+            return summonTraitMap.TryGetValue(unit, out SynergyDefinitionData trait) ? trait : null;
         }
 
         // ── 초기화 ──
@@ -198,7 +239,7 @@ namespace Scenes.Battle.Feature.Synergy
                     dto.Defender.AddSynergy(summonerEffect);
                 }
 
-                if (_unitSummonTraitMap.TryGetValue(unit, out SynergyDefinitionData summonTrait))
+                if (summonTraitMap.TryGetValue(unit, out SynergyDefinitionData summonTrait))
                 {
                     dto.Defender.AddSynergy(summonTrait);
                 }
@@ -206,24 +247,26 @@ namespace Scenes.Battle.Feature.Synergy
         }
 
         /// <summary>
-        /// SummonTrait 분배 완료 시 SummonTraitStore에서 결과를 읽어 활성화·역참조 인덱스에 합산하고
-        /// 각 SummonTrait별 SynergyController를 생성한다.
+        /// SummonTrait 분배를 실행하고 결과를 런타임 저장소·활성화·역참조 인덱스에 통합한다.
+        /// SummonerEffect 초기화와 동일 시점에 호출되어 트리거 대칭을 유지한다.
         /// </summary>
-        private void HandleSummonTraitsDistributed(OnSummonTraitsDistributedEventDto _)
+        private void DistributeAndIntegrateSummonTraits(IReadOnlyList<SummonerLoadOutData> summoners)
         {
-            if (SummonTraitStore.Instance == null)
+            if (summonTraitRegistry == null)
             {
-                Debug.LogError("[SynergyManager] SummonTraitStore 미존재 — SummonTrait 통합 스킵");
+                Debug.LogError("[SynergyManager] summonTraitRegistry 미연결 — SummonTrait 분배 스킵");
                 return;
             }
 
-            SerializableDictionary<UnitLoadOutData, SynergyDefinitionData> traitMap = SummonTraitStore.Instance.All;
+            // 분배 실행
+            Dictionary<UnitLoadOutData, SynergyDefinitionData> traitMap =
+                _summonTraitService.Distribute(summoners, summonTraitRegistry.Traits);
 
-            // SummonTrait 역방향 맵 구축 (Defender 스폰 시 시너지 주입에 사용)
-            _unitSummonTraitMap.Clear();
+            // 런타임 상태에 저장 (전장 종료 이벤트로 OnBattleWin/Lose 핸들러가 초기화)
+            summonTraitMap.Clear();
             foreach (KeyValuePair<UnitLoadOutData, SynergyDefinitionData> kv in traitMap)
             {
-                _unitSummonTraitMap[kv.Key] = kv.Value;
+                summonTraitMap[kv.Key] = kv.Value;
             }
 
             // 시너지 → 보유 소환수 목록 재구성 (SummonTrait 역참조 인덱스)
@@ -270,12 +313,6 @@ namespace Scenes.Battle.Feature.Synergy
             {
                 _synergyMembersPublic[kv.Key] = kv.Value;
             }
-
-            // OnSynergyRecalculatedEventDto 발행 안 함 — 본 메서드는 Start 시점에 동기 호출되며,
-            // SynergyListPanel.Start(executionOrder 100) 가 이후 _synergyActivations 를 자체 조회하여
-            // SummonTrait 활성화를 바인딩한다. 초기 통합 시점에 이벤트를 발행하면 SynergyListPanel 의
-            // 인디케이터가 아직 바인딩되지 않은 상태에서 SortIndicators 가 BoundActivation 에 접근하여
-            // NRE 발생. 신규 분배 결과의 카운트는 0 이므로 가시성 갱신도 필요 없음.
         }
 
         /// <summary>디버그용: 인스펙터에 시너지 상태를 표시한다.</summary>
