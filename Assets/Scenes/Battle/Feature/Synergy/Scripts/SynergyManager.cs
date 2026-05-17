@@ -271,14 +271,11 @@ namespace Scenes.Battle.Feature.Synergy
                 _synergyMembersPublic[kv.Key] = kv.Value;
             }
 
-            // 신규 등록된 SummonTrait 활성화에 대해 재계산 이벤트 발행 — SynergyListPanel이 인디케이터 가시성 갱신
-            foreach (KeyValuePair<SynergyDefinitionData, List<UnitLoadOutData>> kv in traitToUnits)
-            {
-                if (_synergyActivations.TryGetValue(kv.Key, out SynergyActivation activation))
-                {
-                    GlobalEventBus.Publish(new OnSynergyRecalculatedEventDto(activation));
-                }
-            }
+            // OnSynergyRecalculatedEventDto 발행 안 함 — 본 메서드는 Start 시점에 동기 호출되며,
+            // SynergyListPanel.Start(executionOrder 100) 가 이후 _synergyActivations 를 자체 조회하여
+            // SummonTrait 활성화를 바인딩한다. 초기 통합 시점에 이벤트를 발행하면 SynergyListPanel 의
+            // 인디케이터가 아직 바인딩되지 않은 상태에서 SortIndicators 가 BoundActivation 에 접근하여
+            // NRE 발생. 신규 분배 결과의 카운트는 0 이므로 가시성 갱신도 필요 없음.
         }
 
         /// <summary>디버그용: 인스펙터에 시너지 상태를 표시한다.</summary>
