@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>택티카 디펜스 — 구성 요소 다이어그램</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, 'Segoe UI', sans-serif;
+    background: #fef7f0;
+    color: #4a3f5e;
+    padding: 24px;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(circle at 15% 15%, rgba(255, 200, 220, 0.25) 0, transparent 40%),
+      radial-gradient(circle at 85% 25%, rgba(220, 235, 255, 0.25) 0, transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(255, 240, 190, 0.20) 0, transparent 45%);
+  }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #3a2e2a;
+  }
+  header h1 .em { font-size: 22px; }
+  header .sub {
+    font-size: 13px;
+    color: #7a6b65;
+    margin-top: 4px;
+  }
+
+  /* Diagram main flow */
+  .flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1.6fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: 20px;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .col-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #b5a89f;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .group {
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(80, 60, 40, 0.06);
+    border: 1.5px solid #f0e4dc;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .group.pink   { border-color: #ffcfdd; background: linear-gradient(180deg, #fff4f8 0%, #fff 80%); }
+  .group.lav    { border-color: #e0d0ff; background: linear-gradient(180deg, #faf6ff 0%, #fff 80%); }
+  .group.sky    { border-color: #c9def8; background: linear-gradient(180deg, #f3f8ff 0%, #fff 80%); }
+  .group.mint   { border-color: #b9e9cf; background: linear-gradient(180deg, #f1fbf5 0%, #fff 80%); }
+  .group.yel    { border-color: #ffe48a; background: linear-gradient(180deg, #fffae3 0%, #fff 80%); }
+  .group.peach  { border-color: #ffd0ad; background: linear-gradient(180deg, #fff5eb 0%, #fff 80%); }
+
+  .item {
+    background: white;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3a2e2a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #f0e4dc;
+  }
+  .item .em { font-size: 16px; }
+  .item .desc {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 400;
+    color: #a299b8;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    color: #d4a59a;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  /* Inside-battle box */
+  .battle {
+    background: linear-gradient(135deg, #fff9f0 0%, #fff5eb 100%);
+    border-radius: 16px;
+    padding: 14px 12px;
+    border: 2px dashed #ffb38d;
+  }
+  .battle .b-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #b25b2c;
+    margin-bottom: 8px;
+  }
+  .battle .phase-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .phase {
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+  }
+  .phase.prep { background: #6fd4be; }
+  .phase.combat { background: #ff8fb1; }
+  .phase .sub {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 400;
+    margin-top: 2px;
+    opacity: 0.95;
+  }
+  .battle .groups {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .battle .sysgroup {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 7px 9px 8px;
+    border: 1px solid #ffd0ad;
+  }
+  .battle .sysgroup .label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #b25b2c;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .battle .sysgroup .label .lem { font-size: 12px; }
+  .battle .sysgroup .items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .battle .sys {
+    background: white;
+    border-radius: 7px;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: #3a2e2a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #f0e4dc;
+    font-weight: 500;
+  }
+  .battle .sys .em { font-size: 14px; }
+  .battle .sys.full { grid-column: 1 / -1; }
+
+  /* group color variants */
+  .sysgroup.g-ops    { border-color: #c9def8; background: rgba(243, 248, 255, 0.7); }
+  .sysgroup.g-ops    .label { color: #305fa8; }
+  .sysgroup.g-syn    { border-color: #e0d0ff; background: rgba(250, 246, 255, 0.7); }
+  .sysgroup.g-syn    .label { color: #6e4dcc; }
+  .sysgroup.g-boost  { border-color: #ffe48a; background: rgba(255, 250, 227, 0.7); }
+  .sysgroup.g-boost  .label { color: #a07814; }
+  .sysgroup.g-enemy  { border-color: #ffcfdd; background: rgba(255, 244, 248, 0.7); }
+  .sysgroup.g-enemy  .label { color: #b04465; }
+  .battle .stages {
+    margin-top: 8px;
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 11.5px;
+    border: 1px solid #ffd0ad;
+  }
+  .battle .stages .s {
+    flex: 1;
+    padding: 6px 8px;
+    text-align: center;
+    background: white;
+  }
+  .battle .stages .s.main { background: #e1f1fb; color: #305fa8; font-weight: 600; }
+  .battle .stages .s.inf  { background: #ece4f9; color: #6e4dcc; font-weight: 600; }
+  .battle .stages .s b { display: block; font-size: 12.5px; }
+  .battle .stages .s span { font-size: 10.5px; font-weight: 400; opacity: 0.85; }
+
+  /* Bottom row — 재화 / 세계관 */
+  .bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .bottom .card {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: 1.5px solid #f0e4dc;
+    box-shadow: 0 4px 12px rgba(80, 60, 40, 0.04);
+  }
+  .bottom .card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #b5a89f;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .bottom .card .row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .bottom .card .chip {
+    background: #fff5ee;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #4a3f5e;
+    font-weight: 500;
+  }
+  .bottom .card .chip.pink { background: #ffe1ec; color: #b04465; }
+  .bottom .card .chip.mint { background: #d5f3e2; color: #3a8a5e; }
+  .bottom .card .chip.lav  { background: #ece0ff; color: #6e4dcc; }
+
+  .bottom .card p {
+    font-size: 12.5px;
+    color: #6e6383;
+    line-height: 1.55;
+  }
+  .bottom .card p + p { margin-top: 4px; }
+
+  .loop-back {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 11px;
+    color: #b5a89f;
+    letter-spacing: 1.5px;
+  }
+  .loop-back .a { color: #ff8fb1; font-weight: bold; }
+
+  /* Legend at bottom */
+  .legend {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 11px;
+    color: #a299b8;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1><span class="em">🐾</span> 택티카 디펜스 — 게임 구성 요소 한 장 다이어그램 <span class="em">🐾</span></h1>
+    <div class="sub">싱글 PvE · 오토배틀러 + 타워디펜스 + 가챠 · 고양이 소환수</div>
+  </header>
+
+  <!-- Main flow -->
+  <div class="flow">
+
+    <!-- 1. 메타 (메인 메뉴) -->
+    <div class="col">
+      <div class="col-title">메타 · 메인 메뉴</div>
+      <div class="group lav">
+        <div class="item"><span class="em">🎟️</span> 모집 (가챠) <span class="desc">술사 / 전술 지원</span></div>
+        <div class="item"><span class="em">📖</span> 소환술사 · 도감 <span class="desc">레벨업 · 승급</span></div>
+        <div class="item"><span class="em">🔬</span> 전술 지원 연구소 <span class="desc">해금 · 강화</span></div>
+        <div class="item"><span class="em">🚀</span> 출격 모듈 <span class="desc">해금 · 강화</span></div>
+        <div class="item"><span class="em">⚔️</span> 전장 출격 <span class="desc">캠페인 진입</span></div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- 2. 출전 편성 -->
+    <div class="col">
+      <div class="col-title">전장 진입 전</div>
+      <div class="group mint" style="flex: 1; justify-content: center;">
+        <div class="item" style="background: #d5f3e2; border-color: #9fdebb; justify-content: center; font-weight: 700;">
+          <span class="em">👥</span> 출전 편성
+        </div>
+        <div style="font-size: 12px; color: #3a8a5e; text-align: center; padding: 4px 6px; line-height: 1.5;">
+          소환술사 <b>4명 선택</b><br>
+          (서로 다른 심상)<br>
+          <span style="font-size: 11px; color: #7a6b65;">→ 풀 20체 (5체 × 4명)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- 3. 전장 인게임 -->
+    <div class="col">
+      <div class="col-title">전장 (인게임)</div>
+      <div class="battle">
+        <div class="b-title">⚔️ 라운드 루프</div>
+        <div class="phase-row">
+          <div class="phase prep">정비 페이즈<span class="sub">소환·배치·전술 지원</span></div>
+          <div class="phase combat">전투 페이즈<span class="sub">자동 전투 · 웨이브</span></div>
+        </div>
+        <div class="groups">
+
+          <div class="sysgroup g-ops">
+            <div class="label"><span class="lem">⚙️</span> 운영 — 마나로 유닛 빌딩</div>
+            <div class="items">
+              <div class="sys"><span class="em">🪄</span> 소환 터미널</div>
+              <div class="sys"><span class="em">🐱</span> 소환수 합성·배치</div>
+            </div>
+          </div>
+
+          <div class="sysgroup g-syn">
+            <div class="label"><span class="lem">🔗</span> 시너지 — 2차원 구조</div>
+            <div class="items">
+              <div class="sys"><span class="em">🌙</span> 심상 효과 <span style="font-size:10.5px; color:#a299b8;">(술사 고정)</span></div>
+              <div class="sys"><span class="em">🎲</span> 소환수 효과 <span style="font-size:10.5px; color:#a299b8;">(전장 랜덤)</span></div>
+            </div>
+          </div>
+
+          <div class="sysgroup g-boost">
+            <div class="label"><span class="lem">✨</span> 추가 강화 축</div>
+            <div class="items">
+              <div class="sys"><span class="em">🎁</span> 전술 지원 <span style="font-size:10.5px; color:#a299b8;">(3택1)</span></div>
+              <div class="sys"><span class="em">🚀</span> 출격 모듈 <span style="font-size:10.5px; color:#a299b8;">(자동)</span></div>
+            </div>
+          </div>
+
+          <div class="sysgroup g-enemy">
+            <div class="label"><span class="lem">⚠️</span> 대응 대상</div>
+            <div class="items">
+              <div class="sys full"><span class="em">👹</span> 침략자 웨이브 (라인 진군 · 보스)</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="stages">
+          <div class="s main"><b>본편</b><span>약 20분 · 패배 3회</span></div>
+          <div class="s inf"><b>무한 모드 (자율)</b><span>평균 10분 · 패배 1회</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- 4. 보상 정산 -->
+    <div class="col">
+      <div class="col-title">보상 정산</div>
+      <div class="group yel" style="flex: 1; justify-content: center;">
+        <div class="item" style="background: #fff2bd; border-color: #ffdf6a; justify-content: center; font-weight: 700;">
+          <span class="em">💰</span> 보상 정산
+        </div>
+        <div style="font-size: 12px; color: #a07814; text-align: center; padding: 4px 6px; line-height: 1.6;">
+          본편 보상 × 무한 배수<br>
+          <span style="font-size: 11px;">무한 1라운드당 +0.1</span><br>
+          <span style="font-size: 11px; color: #7a6b65;">→ 가챠 / 강화 재화</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loop back -->
+  <div class="loop-back">
+    <span class="a">↺</span> &nbsp; 획득 재화로 메타 강화 → 다시 출격 &nbsp; <span class="a">↺</span>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="bottom">
+    <div class="card">
+      <h3>💎 재화 체계 (2종)</h3>
+      <div class="row">
+        <span class="chip pink">가챠 재화</span>
+        <span class="chip mint">강화 재화</span>
+      </div>
+      <p style="margin-top:8px;"><b style="color:#b04465;">가챠 재화</b> · 술사·전술 지원 모집</p>
+      <p><b style="color:#3a8a5e;">강화 재화</b> · 전술 지원·출격 모듈 강화</p>
+    </div>
+
+    <div class="card">
+      <h3>🎭 역할군 (5종)</h3>
+      <div class="row">
+        <span class="chip">🛡️ 탱커</span>
+        <span class="chip">⚔️ 근거리 딜러</span>
+        <span class="chip">🏹 원거리 딜러</span>
+        <span class="chip">✨ 마법사</span>
+        <span class="chip">💚 힐러</span>
+      </div>
+      <p style="margin-top:8px;">술사당 소환수 5체가 5개 역할군에 ±1 바리에이션 분포</p>
+    </div>
+
+    <div class="card">
+      <h3>🌍 세계관 · 톤</h3>
+      <p><b style="color:#4a3f5e;">205X년</b> · 외계체 침공 · 근미래 SF</p>
+      <p>인류는 <b>심상</b>을 무기화 — 본 게임 술사는 모두 <b>고양이 학교</b> 출신</p>
+      <p>모든 소환수 = 다양한 <b>고양이 품종</b></p>
+      <p style="color:#b04465;">📌 위기감 위의 갭모에 톤</p>
+    </div>
+  </div>
+
+  <div class="legend">
+    TATICA DEFENCE · 한 장 구성 요소 다이어그램
+  </div>
+
+</div>
+</body>
+</html>

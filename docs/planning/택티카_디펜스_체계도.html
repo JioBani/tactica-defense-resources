@@ -1,0 +1,1738 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>택티카 디펜스 — 게임 체계도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Quicksand:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  /* ───────── Tokens ───────── */
+  :root {
+    --bg: #fdfaf2;
+    --bg-2: #fff8ec;
+    --ink: #3a2e2a;
+    --ink-soft: #7a6b65;
+    --ink-faint: #b5a89f;
+    --line: #ead9c4;
+
+    --pink:    #ffe1ec;  --pink-2:    #ffc1d6;  --pink-ink:    #b04465;
+    --mint:    #d5f3e2;  --mint-2:    #9fdebb;  --mint-ink:    #3a8a5e;
+    --lav:     #ece0ff;  --lav-2:     #c4adff;  --lav-ink:     #6e4dcc;
+    --yel:     #fff2bd;  --yel-2:     #ffdf6a;  --yel-ink:     #a07814;
+    --sky:     #d9ebff;  --sky-2:     #9ec7f5;  --sky-ink:     #305fa8;
+    --peach:   #ffdfc7;  --peach-2:   #ffb38d;  --peach-ink:   #b25b2c;
+
+    --shadow: 0 4px 12px rgba(80, 60, 40, 0.06), 0 1px 2px rgba(80, 60, 40, 0.04);
+    --shadow-hover: 0 10px 22px rgba(80, 60, 40, 0.10), 0 2px 4px rgba(80, 60, 40, 0.06);
+    --radius: 18px;
+    --radius-lg: 24px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans KR", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-width: 1380px;
+    font-weight: 400;
+    background-image:
+      radial-gradient(circle at 14% 6%, rgba(255, 200, 220, 0.25) 0, transparent 38%),
+      radial-gradient(circle at 92% 12%, rgba(220, 235, 255, 0.30) 0, transparent 40%),
+      radial-gradient(circle at 50% 95%, rgba(255, 240, 190, 0.22) 0, transparent 45%);
+  }
+  .heading-font { font-family: "Jua", "Noto Sans KR", sans-serif; letter-spacing: -0.01em; }
+  .mono { font-family: "JetBrains Mono", "Noto Sans KR", ui-monospace, monospace; }
+
+  /* ───────── Page frame ───────── */
+  .page {
+    width: min(1640px, 100%);
+    min-width: 1380px;
+    margin: 0 auto;
+    padding: 26px 36px 36px;
+  }
+
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brand .logo {
+    width: 52px; height: 52px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--lav) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    box-shadow: var(--shadow);
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: "Jua", "Noto Sans KR", sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .brand h1 small {
+    display: block;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-top: 3px;
+    letter-spacing: 0;
+  }
+  .top-meta { display: flex; gap: 8px; }
+  .top-pill {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-weight: 500;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .top-pill:hover { transform: translateY(-1px); box-shadow: var(--shadow); background: var(--bg-2); }
+  .top-pill .dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mint-2); margin-right: 6px; vertical-align: middle;
+  }
+
+  /* ───────── Flow grid ───────── */
+  .flow {
+    display: grid;
+    grid-template-columns: 250px 28px 210px 28px 1fr 28px 184px;
+    gap: 0;
+    align-items: stretch;
+  }
+  .lane {
+    display: flex; flex-direction: column;
+    min-height: 0;
+  }
+  .lane-title {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin: 0 0 10px 4px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .lane-title .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--line);
+    color: white;
+    font-size: 11px; font-weight: 700;
+    font-family: "Quicksand", sans-serif;
+  }
+  .arrow {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-faint);
+    padding-top: 70px;
+  }
+  .arrow svg { width: 26px; height: 40px; }
+
+  /* ───────── Card ───────── */
+  .card {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 15px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    position: relative;
+    box-shadow: var(--shadow);
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .card:focus-visible { outline: 3px solid var(--lav-2); outline-offset: 2px; }
+  .card .head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 5px;
+  }
+  .card .icon {
+    width: 34px; height: 34px;
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card .name {
+    font-weight: 700;
+    font-size: 15.5px;
+    letter-spacing: -0.01em;
+  }
+  .card .sub {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* card tints */
+  .tint-lav    { background: linear-gradient(180deg, #faf6ff 0%, #ffffff 80%); border-color: #e0d0ff; }
+  .tint-lav    .icon { background: var(--lav); color: var(--lav-ink); }
+  .tint-peach  { background: linear-gradient(180deg, #fff5eb 0%, #ffffff 80%); border-color: #ffd0ad; }
+  .tint-peach  .icon { background: var(--peach); color: var(--peach-ink); }
+  .tint-sky    { background: linear-gradient(180deg, #f3f8ff 0%, #ffffff 80%); border-color: #c9def8; }
+  .tint-sky    .icon { background: var(--sky); color: var(--sky-ink); }
+  .tint-mint   { background: linear-gradient(180deg, #f1fbf5 0%, #ffffff 80%); border-color: #b9e9cf; }
+  .tint-mint   .icon { background: var(--mint); color: var(--mint-ink); }
+  .tint-pink   { background: linear-gradient(180deg, #fff4f8 0%, #ffffff 80%); border-color: #ffcfdd; }
+  .tint-pink   .icon { background: var(--pink); color: var(--pink-ink); }
+  .tint-yel    { background: linear-gradient(180deg, #fffae3 0%, #ffffff 80%); border-color: #ffe48a; }
+  .tint-yel    .icon { background: var(--yel); color: var(--yel-ink); }
+
+  .lane.stack { gap: 8px; }
+
+  /* ───────── In-battle inner panel ───────── */
+  .battle-panel {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1.5px dashed #c9def8;
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 12px;
+    height: 100%;
+  }
+  .battle-top {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .battle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .battle-grid .card { padding: 12px 13px; }
+  .battle-grid .card .head { margin-bottom: 3px; }
+  .battle-grid .card .icon { width: 30px; height: 30px; font-size: 16px; border-radius: 10px; }
+  .battle-grid .card .name { font-size: 14.5px; }
+  .battle-grid .card .sub { font-size: 12px; line-height: 1.45; }
+
+  /* large/wide cards */
+  .card.wide-top .head { margin-bottom: 4px; }
+
+  /* ───────── Bottom strip ───────── */
+  .bottom-strip {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* ───────── Decorative cat paw ─────────*/
+  .paw {
+    position: absolute; opacity: 0.10; pointer-events: none;
+    font-size: 28px;
+  }
+
+  /* ───────── Modal ───────── */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(60, 40, 30, 0.42);
+    backdrop-filter: blur(3px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 30px 20px;
+    animation: fadeIn .18s ease;
+  }
+  .modal-backdrop.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+  .modal {
+    background: var(--bg);
+    border-radius: 22px;
+    width: min(880px, 100%);
+    max-height: 86vh;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(60, 40, 30, 0.30), 0 4px 12px rgba(60, 40, 30, 0.15);
+    display: flex; flex-direction: column;
+    animation: popIn .22s ease;
+    border: 1.5px solid white;
+  }
+  .modal-head {
+    padding: 22px 26px 16px;
+    display: flex; align-items: flex-start; gap: 16px;
+    border-bottom: 1.5px solid var(--line);
+    background: white;
+  }
+  .modal-head .icon-lg {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .modal-head h2 {
+    font-family: "Jua", "Noto Sans KR", sans-serif;
+    margin: 0;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .modal-head .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-bottom: 7px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .modal-head .summary {
+    font-size: 14px; color: var(--ink-soft);
+    margin-top: 5px;
+    line-height: 1.55;
+  }
+  .close-btn {
+    margin-left: auto;
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: background .15s, color .15s;
+    flex-shrink: 0;
+  }
+  .close-btn:hover { background: var(--pink); color: var(--pink-ink); border-color: var(--pink-2); }
+
+  .modal-body {
+    padding: 22px 28px 28px;
+    overflow-y: auto;
+    background: var(--bg);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .modal-body h3 {
+    font-family: "Jua", "Noto Sans KR", sans-serif;
+    font-size: 17px;
+    margin: 20px 0 9px;
+    color: var(--ink);
+    font-weight: 400;
+    display: flex; align-items: center; gap: 8px;
+    letter-spacing: -0.01em;
+  }
+  .modal-body h3:first-child { margin-top: 0; }
+  .modal-body h3::before {
+    content: ''; width: 6px; height: 16px; border-radius: 3px;
+    background: var(--lav-2);
+    display: inline-block;
+  }
+  .modal-body p { margin: 6px 0; color: var(--ink); }
+  .modal-body ul { margin: 6px 0; padding-left: 20px; }
+  .modal-body li { margin: 3px 0; }
+  .modal-body strong { color: var(--ink); font-weight: 700; }
+  .modal-body em { font-style: normal; color: var(--peach-ink); font-weight: 600; background: var(--peach); padding: 1px 6px; border-radius: 4px; }
+  .modal-body code { background: white; border: 1px solid var(--line); padding: 1px 6px; border-radius: 4px; font-size: 12px; color: var(--ink); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+
+  .chip {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .chip .chip-h { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 3px; font-weight: 500; }
+  .chip .chip-v { font-weight: 700; font-size: 16px; }
+  .chip.lav  { background: var(--lav);   border-color: var(--lav-2);   }
+  .chip.pink { background: var(--pink);  border-color: var(--pink-2);  }
+  .chip.mint { background: var(--mint);  border-color: var(--mint-2);  }
+  .chip.yel  { background: var(--yel);   border-color: var(--yel-2);   }
+  .chip.sky  { background: var(--sky);   border-color: var(--sky-2);   }
+  .chip.peach{ background: var(--peach); border-color: var(--peach-2); }
+
+  table.mini {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 4px;
+    font-size: 13.5px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid var(--line);
+  }
+  table.mini th, table.mini td {
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  table.mini th { background: var(--bg-2); font-weight: 700; font-size: 12.5px; color: var(--ink-soft); }
+  table.mini tr:last-child td { border-bottom: none; }
+
+  .link-card {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 13px 6px 6px;
+    font-size: 12.5px;
+    cursor: pointer;
+    margin: 3px 5px 3px 0;
+    transition: all .15s;
+    color: var(--ink);
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .link-card:hover {
+    border-color: var(--lav-2);
+    background: var(--lav);
+    color: var(--lav-ink);
+    transform: translateY(-1px);
+  }
+  .link-card .ic {
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    background: var(--bg);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px;
+  }
+  .link-card .arrow-r { color: var(--ink-faint); font-size: 14px; }
+
+  .links-row { margin: 10px 0 2px; display: flex; flex-wrap: wrap; }
+  .related-label {
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-right: 8px;
+    align-self: center;
+  }
+
+  .callout {
+    background: white;
+    border-left: 4px solid var(--mint-2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .callout.pink  { border-left-color: var(--pink-2); }
+  .callout.yel   { border-left-color: var(--yel-2); }
+  .callout.lav   { border-left-color: var(--lav-2); }
+
+  /* phase loop diagram */
+  .phase-loop {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: stretch;
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    margin: 10px 0;
+  }
+  .phase-block {
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .phase-block.prep  { background: var(--sky); }
+  .phase-block.fight { background: var(--pink); }
+  .phase-block .ph-name { font-weight: 700; font-size: 15px; }
+  .phase-block .ph-sub  { font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+  .phase-arrows { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ink-faint); font-size: 18px; line-height: 1; gap: 4px; }
+
+  /* synergy 2D mini */
+  .syn2d {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin: 8px 0;
+  }
+  .syn-card { border-radius: 12px; padding: 12px 14px; background: white; border: 1.5px solid var(--line); }
+  .syn-card .syn-h { font-weight: 700; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .syn-card.lav  { background: linear-gradient(180deg, #f5edff 0%, white 100%); border-color: var(--lav-2); }
+  .syn-card.mint { background: linear-gradient(180deg, #e9faf0 0%, white 100%); border-color: var(--mint-2); }
+  .thresholds { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .th-pill {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 13px;
+    font-family: "Quicksand", "Noto Sans KR", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* Role icons grid */
+  .roles {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    margin: 6px 0;
+  }
+  .role {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+  }
+  .role .r-icon { font-size: 28px; }
+  .role .r-name { font-weight: 700; font-size: 13.5px; margin-top: 4px; }
+  .role .r-sub  { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; line-height: 1.4; }
+
+  /* legend */
+  .legend {
+    margin-top: 16px;
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 11px 18px;
+    display: flex; align-items: center; gap: 16px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    flex-wrap: wrap;
+  }
+  .legend .item { display: flex; align-items: center; gap: 6px; }
+  .legend .sw { width: 14px; height: 14px; border-radius: 5px; border: 1.5px solid var(--line); }
+
+  /* small helper */
+  .pulse {
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: var(--shadow); }
+    50% { box-shadow: 0 0 0 4px rgba(176, 156, 255, 0.18), var(--shadow); }
+  }
+
+  .formula {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-family: "JetBrains Mono", "Noto Sans KR", ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    margin: 10px 0;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+
+  /* ───────── Responsive ───────── */
+
+  /* Tablet / small desktop — stack lanes vertically */
+  @media (max-width: 1279px) {
+    body { min-width: 0; }
+    .page {
+      width: 100%;
+      min-width: 0;
+      padding: 20px 18px 28px;
+    }
+
+    .flow {
+      grid-template-columns: 1fr;
+    }
+    .lane { width: 100%; }
+    .lane-title { margin-top: 6px; }
+
+    /* Arrows: rotate to point down, full row */
+    .arrow {
+      padding: 6px 0;
+      width: 100%;
+      min-height: 36px;
+    }
+    .arrow svg {
+      transform: rotate(90deg);
+      width: 22px; height: 32px;
+    }
+
+    /* Meta menu: 5 cards into a responsive grid */
+    .lane.stack:first-of-type {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .lane.stack:first-of-type .lane-title {
+      grid-column: 1 / -1;
+    }
+
+    /* Lineup & Reward single-card lanes — don't try to fill */
+    .lane.stack:nth-of-type(2) .card,
+    .lane.stack:last-of-type .card {
+      flex: 0 0 auto !important;
+    }
+
+    /* Battle subgrid more compact */
+    .battle-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .bottom-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .legend { font-size: 12px; padding: 10px 14px; }
+  }
+
+  /* Phone */
+  @media (max-width: 720px) {
+    body { font-size: 14px; }
+    .page { padding: 14px 12px 22px; }
+
+    /* Header — title shrinks, top-meta wraps */
+    header.top {
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .brand .logo { width: 44px; height: 44px; font-size: 22px; }
+    .brand h1 { font-size: 20px; }
+    .brand h1 small { font-size: 11.5px; }
+    .top-meta {
+      width: 100%;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .top-pill { font-size: 12px; padding: 6px 12px; flex: 1 1 auto; text-align: center; }
+
+    /* Single column for everything */
+    .lane.stack:first-of-type {
+      grid-template-columns: 1fr;
+    }
+    .battle-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .battle-top {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .battle-panel { padding: 10px; gap: 10px; }
+
+    .battle-grid .card {
+      padding: 10px 11px;
+    }
+    .battle-grid .card .name { font-size: 13.5px; }
+    .battle-grid .card .sub { font-size: 11.5px; }
+
+    .card .name { font-size: 14.5px; }
+    .card .sub { font-size: 12px; }
+
+    .legend {
+      gap: 8px;
+      font-size: 11.5px;
+      padding: 10px 12px;
+    }
+    .legend .item { font-size: 11.5px; }
+
+    /* Modal → bottom-sheet style */
+    .modal-backdrop {
+      align-items: flex-end;
+      padding: 0;
+    }
+    .modal {
+      width: 100%;
+      max-height: 92vh;
+      border-radius: 22px 22px 0 0;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+    .modal-head {
+      padding: 18px 18px 14px;
+      gap: 12px;
+      position: relative;
+    }
+    /* Drag handle */
+    .modal-head::before {
+      content: '';
+      position: absolute;
+      top: 8px; left: 50%;
+      transform: translateX(-50%);
+      width: 40px; height: 4px;
+      border-radius: 2px;
+      background: var(--line);
+    }
+    .modal-head .icon-lg { width: 46px; height: 46px; font-size: 22px; border-radius: 13px; }
+    .modal-head h2 { font-size: 21px; }
+    .modal-head .tag { font-size: 11px; }
+    .modal-head .summary { font-size: 13px; }
+    .close-btn { width: 32px; height: 32px; font-size: 16px; }
+    .modal-body {
+      padding: 18px 20px 24px;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .modal-body h3 { font-size: 16px; margin: 16px 0 7px; }
+
+    .grid-2, .grid-3 { grid-template-columns: 1fr !important; gap: 8px; }
+    .syn2d { grid-template-columns: 1fr; }
+    .roles { grid-template-columns: repeat(3, 1fr); }
+    .roles .role { padding: 8px 6px; }
+
+    table.mini { font-size: 12px; }
+    table.mini th, table.mini td { padding: 7px 8px; }
+
+    .phase-loop {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .phase-arrows { transform: rotate(90deg); padding: 4px 0; }
+    .formula { font-size: 12px; padding: 12px 14px; }
+
+    .arrow { padding: 4px 0; min-height: 28px; }
+    .arrow svg { width: 18px; height: 26px; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- ───────── Header ───────── -->
+  <header class="top">
+    <div class="brand">
+      <div class="logo">🐾</div>
+      <h1>
+        택티카 디펜스 · 게임 체계도
+        <small>오토배틀러 + 타워디펜스 + 가챠 · 싱글 PvE · 고양이 소환수</small>
+      </h1>
+    </div>
+    <div class="top-meta">
+      <button class="top-pill" data-open="worldview"><span class="dot"></span> 세계관 — 205X · 고양이 학교</button>
+      <button class="top-pill" data-open="style">🎨 비주얼 톤 · 갭모에</button>
+      <button class="top-pill" data-open="loop">🔁 핵심 루프 한눈에</button>
+    </div>
+  </header>
+
+  <!-- ───────── Main flow ───────── -->
+  <section class="flow">
+
+    <!-- LANE 1 : META MENU -->
+    <div class="lane stack">
+      <div class="lane-title"><span class="num">1</span>메인 메뉴 (메타)</div>
+
+      <button class="card tint-lav" data-open="sortie">
+        <div class="head"><div class="icon">🚀</div><div class="name">전장 출격</div></div>
+        <div class="sub">캠페인 전역·전장 선택 → 진입</div>
+      </button>
+      <button class="card tint-lav" data-open="gacha">
+        <div class="head"><div class="icon">🪄</div><div class="name">모집 (가챠)</div></div>
+        <div class="sub">소환술사 · 전술 지원 (분리 배너)</div>
+      </button>
+      <button class="card tint-lav" data-open="summoner-dex">
+        <div class="head"><div class="icon">🐱</div><div class="name">소환술사 (도감·육성)</div></div>
+        <div class="sub">레벨 · 승급 · 심상 효과 강화</div>
+      </button>
+      <button class="card tint-lav" data-open="tac-lab">
+        <div class="head"><div class="icon">🧪</div><div class="name">전술 지원 연구소</div></div>
+        <div class="sub">해금 · 강화 · 등장 풀 관리</div>
+      </button>
+      <button class="card tint-lav" data-open="module-meta">
+        <div class="head"><div class="icon">⚙️</div><div class="name">출격 모듈</div></div>
+        <div class="sub">패시브 / 액티브 · 자동 적용</div>
+      </button>
+    </div>
+
+    <!-- ARROW 1 -->
+    <div class="arrow" aria-hidden="true">
+      <svg viewBox="0 0 22 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M 3 18 L 19 18" /><path d="M 13 12 L 19 18 L 13 24" />
+      </svg>
+    </div>
+
+    <!-- LANE 2 : PRE-BATTLE -->
+    <div class="lane stack">
+      <div class="lane-title"><span class="num">2</span>전장 진입 직전</div>
+      <button class="card tint-peach pulse" data-open="lineup" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="head"><div class="icon">📋</div><div class="name">출전 편성</div></div>
+        <div class="sub">소환술사 4명 선택<br/>(서로 다른 심상)<br/>등장 소환수 풀 = 4×5 = <strong>20체</strong></div>
+        <div style="margin-top: 12px; display: flex; gap: 5px;">
+          <span style="flex:1;height:38px;border-radius:9px;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:18px">🐱</span>
+          <span style="flex:1;height:38px;border-radius:9px;background:var(--mint);display:flex;align-items:center;justify-content:center;font-size:18px">🐱</span>
+          <span style="flex:1;height:38px;border-radius:9px;background:var(--lav);display:flex;align-items:center;justify-content:center;font-size:18px">🐱</span>
+          <span style="flex:1;height:38px;border-radius:9px;background:var(--yel);display:flex;align-items:center;justify-content:center;font-size:18px">🐱</span>
+        </div>
+        <div style="font-size:11.5px;color:var(--ink-faint);margin-top:8px;text-align:center;letter-spacing:0.06em">서로 다른 심상 (품종)</div>
+      </button>
+    </div>
+
+    <!-- ARROW 2 -->
+    <div class="arrow" aria-hidden="true">
+      <svg viewBox="0 0 22 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M 3 18 L 19 18" /><path d="M 13 12 L 19 18 L 13 24" />
+      </svg>
+    </div>
+
+    <!-- LANE 3 : IN-BATTLE PANEL (the big one) -->
+    <div class="lane">
+      <div class="lane-title"><span class="num">3</span>전장 인게임</div>
+      <div class="battle-panel">
+        <div class="battle-top">
+          <button class="card tint-sky wide-top" data-open="rounds">
+            <div class="head"><div class="icon">🎯</div><div class="name">라운드 구조</div></div>
+            <div class="sub">본편 (≈20분, 패배 3회 허용) → 선택적 자율 무한 모드 (1패 즉시 종료, 배수 +0.1/R)</div>
+          </button>
+          <button class="card tint-sky wide-top" data-open="phases">
+            <div class="head"><div class="icon">🔄</div><div class="name">페이즈 구조</div></div>
+            <div class="sub">정비 페이즈 (준비) ↔ 전투 페이즈 (자동 웨이브) 교차</div>
+          </button>
+        </div>
+
+        <div class="battle-grid">
+          <button class="card tint-mint" data-open="terminal">
+            <div class="head"><div class="icon">📡</div><div class="name">소환 터미널</div></div>
+            <div class="sub">소환 · 스캔 · 잠금 · 환원 · 배치 상한 · 마나</div>
+          </button>
+          <button class="card tint-mint" data-open="cats">
+            <div class="head"><div class="icon">🐈</div><div class="name">소환수</div></div>
+            <div class="sub">고양이 · 동일 3개 합성 · 그리드 고정 배치</div>
+          </button>
+          <button class="card tint-mint" data-open="unit">
+            <div class="head"><div class="icon">⚔️</div><div class="name">유닛 시스템</div></div>
+            <div class="sub">스탯 · 데미지 공식 · 5 역할군 · 스킬</div>
+          </button>
+          <button class="card tint-mint" data-open="invader">
+            <div class="head"><div class="icon">👾</div><div class="name">침략자 · 웨이브</div></div>
+            <div class="sub">라인 진군 · 균등 스폰 · 보스 등장</div>
+          </button>
+
+          <button class="card tint-pink" data-open="synergy">
+            <div class="head"><div class="icon">✨</div><div class="name">시너지 (2차원)</div></div>
+            <div class="sub">심상 효과 + 소환수 효과 · 빌드 방향</div>
+          </button>
+          <button class="card tint-pink" data-open="tac-support">
+            <div class="head"><div class="icon">🎁</div><div class="name">전술 지원</div></div>
+            <div class="sub">3라운드마다 3택1 · 빌드 출력 결정 핵심</div>
+          </button>
+          <button class="card tint-pink" data-open="module-ingame">
+            <div class="head"><div class="icon">🔧</div><div class="name">출격 모듈 적용</div></div>
+            <div class="sub">전장 시작 시 모두 자동 적용 (장착 단계 없음)</div>
+          </button>
+          <button class="card tint-pink" data-open="mana">
+            <div class="head"><div class="icon">💧</div><div class="name">마나</div></div>
+            <div class="sub">소환·스캔·배치 상한·새로고침 자원</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARROW 3 -->
+    <div class="arrow" aria-hidden="true">
+      <svg viewBox="0 0 22 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M 3 18 L 19 18" /><path d="M 13 12 L 19 18 L 13 24" />
+      </svg>
+    </div>
+
+    <!-- LANE 4 : REWARDS / END -->
+    <div class="lane stack">
+      <div class="lane-title"><span class="num">4</span>종료 · 정산</div>
+      <button class="card tint-yel" data-open="reward" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="head"><div class="icon">🏆</div><div class="name">보상 정산</div></div>
+        <div class="sub">본편 클리어 보상<br/><strong>× 무한 모드 배수</strong></div>
+        <div style="margin-top: 12px; background: white; border-radius: 11px; padding: 10px 12px; border: 1px solid var(--line); font-size: 12.5px; line-height: 1.75">
+          <div>본편만 = <strong class="mono">×1.0</strong></div>
+          <div>무한 5R = <strong class="mono">×1.5</strong></div>
+          <div>무한 10R = <strong class="mono">×2.0</strong></div>
+        </div>
+        <div style="margin-top:10px;font-size:11.5px;color:var(--ink-faint);text-align:center;letter-spacing:0.06em">⤴ 다시 메타로</div>
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ───────── Bottom strip ───────── -->
+  <section class="bottom-strip">
+    <button class="card tint-mint" data-open="worldview">
+      <div class="head"><div class="icon">🌏</div><div class="name">세계관 · 톤</div></div>
+      <div class="sub">205X 외계체 침공 · 인류는 심상(인지)을 무기로 변환 · 고양이를 다루는 학교 출신 술사 · 갭모에 톤</div>
+    </button>
+    <button class="card tint-pink" data-open="currency">
+      <div class="head"><div class="icon">💎</div><div class="name">재화 체계 (2종 원칙)</div></div>
+      <div class="sub"><strong>가챠 재화</strong> · 소환술사/전술 지원 모집 &nbsp;|&nbsp; <strong>강화 재화</strong> · 출격 모듈/그 외 강화</div>
+    </button>
+    <button class="card tint-yel" data-open="design-value">
+      <div class="head"><div class="icon">💡</div><div class="name">디자인 가치 · 핵심 루프</div></div>
+      <div class="sub">V-1 빌드 카타르시스 &nbsp;×&nbsp; V-2 한 게임 적정 길이 → <strong>본편 + 자율 무한</strong> 2단 구조로 해결</div>
+    </button>
+  </section>
+
+  <!-- legend -->
+  <div class="legend">
+    <span><strong>📖 사용법</strong> · 카드를 클릭하면 세부 규칙·수치가 펼쳐져요</span>
+    <span style="margin-left:auto">·</span>
+    <div class="item"><span class="sw" style="background:var(--lav)"></span>메타 (게임 외부)</div>
+    <div class="item"><span class="sw" style="background:var(--peach)"></span>출전 편성</div>
+    <div class="item"><span class="sw" style="background:var(--sky)"></span>전장 구조</div>
+    <div class="item"><span class="sw" style="background:var(--mint)"></span>인게임 코어</div>
+    <div class="item"><span class="sw" style="background:var(--pink)"></span>강화 축</div>
+    <div class="item"><span class="sw" style="background:var(--yel)"></span>보상 · 가치</div>
+    <span style="margin-left:auto"><kbd style="background:white;border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-family:inherit;font-size:11px">ESC</kbd> 닫기</span>
+  </div>
+
+</div>
+
+<!-- ───────── Modal ───────── -->
+<div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <div class="icon-lg" id="m-icon">🐾</div>
+      <div style="flex:1; min-width: 0">
+        <span class="tag" id="m-tag">시스템</span>
+        <h2 id="modal-title">제목</h2>
+        <div class="summary" id="m-summary"></div>
+      </div>
+      <button class="close-btn" id="m-close" aria-label="닫기">✕</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+  </div>
+</div>
+
+<script>
+/* ──────────────────────────────────────────────────────────────────
+ * Data : 각 시스템 카드의 모달 내용
+ * ────────────────────────────────────────────────────────────────── */
+const link = (key, label) => `<a class="link-card" data-open="${key}"><span class="ic">↗</span>${label}<span class="arrow-r">›</span></a>`;
+
+const DATA = {
+  /* ── 메타 ────────────────────────────────────── */
+  sortie: {
+    icon: '🚀', tint: 'tint-lav', tag: '메인 메뉴 · 메타',
+    title: '전장 출격',
+    summary: '캠페인 전역과 전장을 골라 인게임으로 진입한다. (※ 방어전 모드 제외)',
+    body: `
+      <h3>흐름</h3>
+      <ol>
+        <li>메인 메뉴 → <strong>전장 출격</strong></li>
+        <li>캠페인 전역 선택 (예: 블라디보스토크 전역, 한반도 전역…)</li>
+        <li>전장 선택 → <strong>출전 편성</strong> 단계로 이동</li>
+        <li>출격 → 인게임 진입</li>
+      </ol>
+      <h3>캠페인 구조</h3>
+      <ul>
+        <li><strong>전역</strong> — 여러 전장으로 구성된 큰 줄기. 전역 클리어 시 다음 전역 해금.</li>
+        <li><strong>전장</strong> — 인게임 한 판. 일반 / 중간 보스 / 보스 3종.</li>
+        <li>보스 전장은 일반적으로 <em>무한 모드 비활성화</em>.</li>
+      </ul>
+      <div class="callout lav">한 전장 = 본편 (약 20분, 패배 허용 3회) + 선택적 자율 무한 모드 (1패 즉시 종료).</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('lineup','출전 편성')} ${link('rounds','라운드 구조')} ${link('reward','보상 정산')}
+      </div>
+    `
+  },
+
+  gacha: {
+    icon: '🪄', tint: 'tint-lav', tag: '메인 메뉴 · 메타',
+    title: '모집 (가챠)',
+    summary: '가챠 재화로 소환술사·전술 지원을 모집한다. 잠정 분리 배너.',
+    body: `
+      <h3>두 종류의 모집</h3>
+      <div class="grid-2">
+        <div class="chip pink"><div class="chip-h">소환술사 가챠</div><div class="chip-v">캐릭터 + 심상 효과 풀 확장</div></div>
+        <div class="chip lav"><div class="chip-h">전술 지원 가챠</div><div class="chip-v">인게임 등장 풀 + 강화 자원</div></div>
+      </div>
+      <h3>소환술사 모집 결과</h3>
+      <ul>
+        <li><strong>신규</strong> — 캐릭터 해금, 심상 효과 사용 가능, 편성 목록에 추가.</li>
+        <li><strong>중복</strong> — 심상조각 획득 (육성 재화 체계와 연동, 일부 미결).</li>
+      </ul>
+      <h3>모집 단위</h3>
+      <p>1회 / 10회 모집. 가챠 재화 사용.</p>
+      <div class="callout yel">미결: 가챠 풀 분리 정책, 1명 단위 모집 여부, 확률·천장은 콘텐츠 디자인 단계에서 확정.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('summoner-dex','소환술사 육성')} ${link('tac-lab','전술 지원 연구소')} ${link('currency','재화 체계')}
+      </div>
+    `
+  },
+
+  'summoner-dex': {
+    icon: '🐱', tint: 'tint-lav', tag: '메인 메뉴 · 메타',
+    title: '소환술사 (도감 · 육성)',
+    summary: '보유한 소환술사의 심상 효과를 영구 강화한다.',
+    body: `
+      <h3>레벨 업</h3>
+      <ul>
+        <li>레벨업 시 <strong>심상 효과 수치</strong>가 상승. (예: 같은 심상 소환수의 공격력 20 → 22)</li>
+        <li>레벨 상한은 <strong>승급 단계</strong>에 의해 결정됨.</li>
+      </ul>
+      <h3>승급</h3>
+      <ul>
+        <li>레벨 상한 도달 시 가능.</li>
+        <li>해당 술사의 <strong>심상조각</strong> 필요.</li>
+        <li>효과: 심상 효과 최대치 ↑, 레벨 상한 ↑, <strong>시너지 임계치 단계 확장</strong> (예: 2/3/4 → 2/3/4/5).</li>
+      </ul>
+      <h3>출전 편성과의 연결</h3>
+      <p>각 술사는 5체의 고유 소환수를 보유. 4명 출전 = 20체 소환수 풀.<br/>각 술사의 5체는 5개 역할군에 <strong>대체로 균형</strong> 분포 (±1 바리에이션, 일부 0체 허용).</p>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('synergy','시너지 (심상 효과)')} ${link('lineup','출전 편성')} ${link('unit','역할군')}
+      </div>
+    `
+  },
+
+  'tac-lab': {
+    icon: '🧪', tint: 'tint-lav', tag: '메인 메뉴 · 메타',
+    title: '전술 지원 연구소',
+    summary: '해금된 전술 지원을 강화한다. 강화 정도는 인게임 등장 시 자동 반영.',
+    body: `
+      <h3>해금 경로</h3>
+      <ul>
+        <li>전술 지원 가챠</li>
+        <li>캠페인 진행 조건부 해금 — 예: 특정 임무 클리어, 특정 심상 술사 N명 보유 등</li>
+      </ul>
+      <h3>강화</h3>
+      <ul>
+        <li><strong>강화 재화</strong> 사용.</li>
+        <li>강화된 효과는 인게임에서 등장 후보 풀에 자동 반영. 별도 장착 단계 없음.</li>
+      </ul>
+      <div class="callout lav">전술 지원은 본 게임 <strong>팀 출력의 핵심 강화 축</strong>. TFT의 아이템 역할까지 흡수한다.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('tac-support','전술 지원 (인게임)')} ${link('gacha','모집 (가챠)')}
+      </div>
+    `
+  },
+
+  'module-meta': {
+    icon: '⚙️', tint: 'tint-lav', tag: '메인 메뉴 · 메타',
+    title: '출격 모듈 (메타)',
+    summary: '인게임 시작과 진행 전반에 영구적으로 영향을 주는 강화. 보유 모듈 전체가 자동 적용된다.',
+    body: `
+      <h3>해금 경로</h3>
+      <ul>
+        <li>캠페인 진행 보상 등 조건부 해금.</li>
+      </ul>
+      <h3>강화</h3>
+      <ul>
+        <li><strong>강화 재화</strong>로 모듈 강도 상승.</li>
+        <li>한 전장 시작 시 <strong>보유한 모든 모듈</strong>이 자동 적용. <em>장착 단계 없음</em>.</li>
+      </ul>
+      <h3>왜 자동 적용인가</h3>
+      <p>빌드 결정의 부담은 <strong>시너지(출전 편성) + 전술 지원(인게임)</strong>에 집중시키고, 출격 모듈은 메타 진행감의 축으로만 사용한다.</p>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('module-ingame','출격 모듈 적용 (인게임)')} ${link('design-value','디자인 가치')}
+      </div>
+    `
+  },
+
+  /* ── 전장 진입 전 ────────────────────────────────────── */
+  lineup: {
+    icon: '📋', tint: 'tint-peach', tag: '전장 진입 직전',
+    title: '출전 편성',
+    summary: '소환술사 4명을 선택해 한 전장에 데려간다. (메인 메뉴 항목 아님 · 전장 진입 직전 단계)',
+    body: `
+      <h3>편성 규칙</h3>
+      <ul>
+        <li>보유 소환술사 중 <strong>4명 선택</strong>.</li>
+        <li>같은 심상(고양이 품종)은 <strong>중복 편성 불가</strong> — 동일 심상 소환수의 터미널 중복 등장 방지.</li>
+      </ul>
+      <h3>등장 소환수 풀</h3>
+      <p>술사 1명당 고유 소환수 5체 → 4명 출전 시 총 <strong>20체</strong>가 소환 터미널 풀이 된다.</p>
+      <h3>역할군 분포 — 빌딩 결정의 첫 단계</h3>
+      <p>각 술사의 5체는 5개 역할군에 0~2체씩 분포 (균형 ±1 바리에이션, 극단 분포 금지).</p>
+      <table class="mini">
+        <thead><tr><th>술사</th><th>탱커</th><th>근딜</th><th>원딜</th><th>마법사</th><th>힐러</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>1</td><td>2</td><td>1</td><td>1</td><td>0</td></tr>
+          <tr><td>B</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+          <tr><td>C</td><td>2</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <div class="callout pink">4명의 분포 합산이 균형 잡히도록 고려하는 것이 출전 편성의 핵심 결정.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('unit','역할군 5종')} ${link('synergy','심상 효과')} ${link('terminal','소환 터미널 풀')}
+      </div>
+    `
+  },
+
+  /* ── 인게임 ────────────────────────────────────── */
+  rounds: {
+    icon: '🎯', tint: 'tint-sky', tag: '전장 인게임 · 구조',
+    title: '라운드 구조',
+    summary: '본편 (약 20분, 패배 3회 허용) + 선택적 자율 무한 모드 (1패 즉시 종료).',
+    body: `
+      <h3>2단 구조</h3>
+      <table class="mini">
+        <thead><tr><th>구간</th><th>목표 시간 (잠정)</th><th>패배 허용</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td><strong>본편</strong></td><td>≈ 20분 (10~14R)</td><td>누적 3회</td><td>V-2 충족 · 명확한 컷</td></tr>
+          <tr><td><strong>무한 모드</strong></td><td>평균 ≈ 10분</td><td>1회 (잔여 패배 0 리셋)</td><td>V-1 자율 충족 · 카타르시스</td></tr>
+        </tbody>
+      </table>
+      <h3>본편 종료 → 분기</h3>
+      <ul>
+        <li><strong>전장 종료</strong> — 본편 클리어 보상 × 1.0 받고 로비 복귀.</li>
+        <li><strong>무한 모드 진입</strong> — 난이도 가파르게 상승, 1패 즉시 종료. 1라운드당 보상 배수 <strong>+0.1</strong>.</li>
+      </ul>
+      <h3>무한 모드 디자인 원칙</h3>
+      <ul>
+        <li><strong>가파른 난이도</strong> — 본편 후반보다 명백히 어려운 수준에서 시작. ×1.5 배수도 도달 어렵게.</li>
+        <li><strong>예측 가능한 곡선</strong> — 매끄럽게 가파른 상승. 갑작스러운 비약 금지.</li>
+        <li><strong>비례 관계</strong> — 빌드를 강화한 만큼 더 오래 버틴다.</li>
+      </ul>
+      <div class="callout">평균 도달은 무한 1~3R (≈ ×1.1~1.3 배수) 예상. "본편만 하면 손해" 분위기 방지.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('phases','페이즈 구조')} ${link('reward','보상 정산')} ${link('design-value','디자인 가치')}
+      </div>
+    `
+  },
+
+  phases: {
+    icon: '🔄', tint: 'tint-sky', tag: '전장 인게임 · 구조',
+    title: '페이즈 구조',
+    summary: '한 라운드 = 정비 페이즈 (준비) → 전투 페이즈 (자동 웨이브). 교차 반복.',
+    body: `
+      <div class="phase-loop">
+        <div class="phase-block prep">
+          <div class="ph-name">🛠️ 정비 페이즈</div>
+          <div class="ph-sub">소환 · 합성 · 배치 · 전술 지원 선택 · 웨이브 프리뷰</div>
+        </div>
+        <div class="phase-arrows">↻</div>
+        <div class="phase-block fight">
+          <div class="ph-name">⚔️ 전투 페이즈</div>
+          <div class="ph-sub">자동 전투 · 적 진군 · 배치 변경 불가</div>
+        </div>
+      </div>
+      <h3>정비 페이즈에서 할 수 있는 것</h3>
+      <ul>
+        <li>${link('terminal','소환 터미널')} 이용 (소환·스캔·잠금·환원·배치 상한)</li>
+        <li>전장 배치 / 교체 / 합성 (3개 모이면 자동 합성)</li>
+        <li>${link('tac-support','전술 지원')} 선택 (등장 라운드일 경우)</li>
+        <li>다음 웨이브 프리뷰 확인</li>
+        <li>전투 시작 버튼 터치 → 전투 페이즈 진입</li>
+      </ul>
+      <h3>전투 페이즈 규칙</h3>
+      <ul>
+        <li>배치 변경 불가, 소환수는 자동으로 공격/스킬 사용.</li>
+        <li>소환 / 리롤 / 배치 상한 증가는 전투 중에도 가능 (단 신규 소환수의 전장 배치는 불가).</li>
+        <li><strong>전투 승리</strong> — 모든 적 처치.<br/><strong>전투 패배</strong> — 소환술사 중 1명이라도 다운.</li>
+      </ul>
+      <h3>라운드 종료 시</h3>
+      <ul>
+        <li>모든 소환수 <strong>HP 전부 회복</strong>, 다운된 소환수도 복귀.</li>
+        <li>스킬 쿨다운 <strong>초기화</strong>.</li>
+        <li>상태이상은 종류에 따라 해제 여부가 다름.</li>
+      </ul>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('rounds','라운드 구조')} ${link('invader','침략자 · 웨이브')}
+      </div>
+    `
+  },
+
+  terminal: {
+    icon: '📡', tint: 'tint-mint', tag: '인게임 코어',
+    title: '소환 터미널',
+    summary: '마나로 소환수를 소환하는 인터페이스. 매 라운드 시작 시 4개 후보가 등장.',
+    body: `
+      <h3>구성 요소</h3>
+      <ul>
+        <li>소환 슬롯 (4개 후보), 현재 마나, 다음 마나 수입</li>
+        <li>재스캔 / 스캔 잠금 / 배치 상한 증가 / 열기·닫기 버튼</li>
+      </ul>
+
+      <h3>소환 비용</h3>
+      <div class="grid-3">
+        <div class="chip mint"><div class="chip-h">1성</div><div class="chip-v">1 마나</div></div>
+        <div class="chip mint"><div class="chip-h">2성</div><div class="chip-v">3 마나</div></div>
+        <div class="chip mint"><div class="chip-h">3성</div><div class="chip-v">9 마나</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:6px">코스트(레어도) 분리는 없음. 모든 소환수 동일 비용. 배치 상한이 증가할수록 2성·3성으로 직접 등장할 확률이 생긴다.</p>
+
+      <h3>스캔 (리롤)</h3>
+      <ul>
+        <li>매 라운드 시작 시 터미널이 자동 재스캔. <strong>스캔 잠금</strong>으로 1회 방지 가능 (자동 해제).</li>
+        <li>재스캔 버튼은 마나로 추가 스캔.</li>
+      </ul>
+
+      <h3>환원 (판매)</h3>
+      <div class="grid-2">
+        <div class="chip"><div class="chip-h">1성</div><div class="chip-v">1 마나</div></div>
+        <div class="chip"><div class="chip-h">2성 (= 9-1)</div><div class="chip-v">2 마나</div></div>
+        <div class="chip"><div class="chip-h">3성</div><div class="chip-v">8 마나</div></div>
+        <div class="chip"><div class="chip-h">3성+N강</div><div class="chip-v">(8 + N) 마나</div></div>
+      </div>
+
+      <h3>배치 상한 증가</h3>
+      <p>초기 상한 <strong>3</strong>. 증가 비용:</p>
+      <table class="mini">
+        <thead><tr><th>상한</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
+        <tbody><tr><td>비용</td><td>4</td><td>6</td><td>10</td><td>15</td><td>20</td><td>30</td><td>45</td><td>70</td><td>100</td></tr></tbody>
+      </table>
+
+      <h3>마나 수입</h3>
+      <p>매 라운드 시작 시 자동 지급. <code>기본 (1~10, 라운드별) + 이자 (0~3)</code></p>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('mana','마나')} ${link('cats','소환수 합성')} ${link('lineup','등장 소환수 풀')}
+      </div>
+    `
+  },
+
+  cats: {
+    icon: '🐈', tint: 'tint-mint', tag: '인게임 코어',
+    title: '소환수',
+    summary: '본 게임의 소환수는 모두 고양이. 동일 3개 합성으로 승급한다.',
+    body: `
+      <h3>풀 구성</h3>
+      <ul>
+        <li>술사 1명당 고유 소환수 <strong>5체</strong> · 4명 출전 = <strong>20체</strong> 풀.</li>
+        <li>코스트(레어도) 분리 없음. 강도 차이는 <strong>합성 성급</strong>으로.</li>
+      </ul>
+
+      <h3>합성 (승급)</h3>
+      <ul>
+        <li>동일 소환수 + 같은 성급 <strong>3개</strong> → 다음 성급 자동 승급. (1성×3 → 2성, 2성×3 → 3성)</li>
+        <li>3성 이후는 <strong>2성 1개씩 추가</strong>로 강화 (3성+1강 → 3성+2강 …).</li>
+        <li>대기석/전장 모두 포함. 정비 페이즈에서만. 연쇄 합성 자동.</li>
+      </ul>
+
+      <h3>배치</h3>
+      <ul>
+        <li>아군 소환수는 <strong>그리드 칸 고정 배치</strong>. 전투 중 이동 없음.</li>
+        <li>1칸 = 1소환수. 배치 가능 수 = ${link('terminal','배치 상한')}.</li>
+        <li>대기 슬롯(벤치) 보관 가능. 이동·스왑·합성은 정비 페이즈 자유.</li>
+      </ul>
+
+      <h3>라이프 사이클</h3>
+      <ul>
+        <li>라운드 종료 시 모든 소환수 <strong>HP 전부 회복</strong>, 다운 복귀.</li>
+        <li>스킬 쿨다운 초기화. 상태이상은 종류별.</li>
+      </ul>
+
+      <h3>역할군 분포 (술사별)</h3>
+      <p>각 술사의 5체는 5개 역할군에 0~2체 범위로 분포. ${link('lineup','출전 편성에서 균형 고려')}.</p>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('unit','유닛 시스템')} ${link('synergy','시너지')} ${link('terminal','소환 터미널')}
+      </div>
+    `
+  },
+
+  unit: {
+    icon: '⚔️', tint: 'tint-mint', tag: '인게임 코어',
+    title: '유닛 시스템',
+    summary: '능력치 · 데미지 공식 · 5 역할군 · 스킬. 물리/마법 구분 없음 (단일 공격력).',
+    body: `
+      <h3>역할군 5종</h3>
+      <div class="roles">
+        <div class="role"><div class="r-icon">🛡️</div><div class="r-name">탱커</div><div class="r-sub">전열 유지<br/>피격 분담</div></div>
+        <div class="role"><div class="r-icon">🗡️</div><div class="r-name">근거리 딜러</div><div class="r-sub">짧은 사거리<br/>높은 DPS</div></div>
+        <div class="role"><div class="r-icon">🏹</div><div class="r-name">원거리 딜러</div><div class="r-sub">긴 사거리<br/>안전 딜링</div></div>
+        <div class="role"><div class="r-icon">✨</div><div class="r-name">마법사</div><div class="r-sub">평타 약, 스킬<br/>강한 변수</div></div>
+        <div class="role"><div class="r-icon">💚</div><div class="r-name">힐러</div><div class="r-sub">체력 회복<br/>유지</div></div>
+      </div>
+
+      <h3>능력치</h3>
+      <table class="mini">
+        <thead><tr><th>분류</th><th>능력치</th></tr></thead>
+        <tbody>
+          <tr><td>공격</td><td>공격력 · 공격 속도 · 사거리 · 치명타 확률 · 치명타 배율 · 피해 증가</td></tr>
+          <tr><td>방어</td><td>최대 체력 · 방어력 · 상태저항력 · 피해 감소</td></tr>
+          <tr><td>기타</td><td>이동 속도 · 쿨타임 감소</td></tr>
+        </tbody>
+      </table>
+
+      <h3>스탯 구조</h3>
+      <p><strong>기본 스탯</strong>(성급에 따라 결정) + <strong>추가 스탯</strong>(시너지·전술 지원·버프 수정자) = <strong>최종 스탯</strong>. 수정자는 출처별로 관리되어, 해제 시 해당 출처분만 사라진다.</p>
+
+      <h3>데미지 공식</h3>
+      <div class="formula">최종 데미지 = max(0, ⌊
+   공격력
+   × 치명타 배율 (발생 시)
+   × 방어력 곱연산 계수
+   × (1 + 피해 증가)
+   × (1 − 피해 감소)
+⌋)</div>
+      <ul>
+        <li>방어력은 % 감소율에 직접 대응 (30 → 30% 감소).</li>
+        <li>증감 분리 곱연산 — 증가끼리, 감소끼리 각각 누적 후 차감.</li>
+        <li>스킬 데미지 = 공격력 × 스킬 계수. <strong>물리/마법 분리 없음.</strong></li>
+      </ul>
+
+      <h3>스킬 원칙</h3>
+      <ul>
+        <li>쿨타임 기반. 한 줄로 설명되는 단순 효과 (범위 공격, 쉴드 등).</li>
+        <li>자동 트리거 / 조건부 자동 위주, 수동 발동도 가능.</li>
+        <li>가챠로 술사가 교체되어도 학습 부담을 최소화하기 위함.</li>
+      </ul>
+
+      <div class="callout">타겟팅 · 사거리 · 상태이상 카탈로그는 콘텐츠 디자인 단계에서 정의.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('cats','소환수 합성·승급')} ${link('synergy','시너지')} ${link('tac-support','전술 지원')}
+      </div>
+    `
+  },
+
+  invader: {
+    icon: '👾', tint: 'tint-mint', tag: '인게임 코어',
+    title: '침략자 · 웨이브',
+    summary: 'PvsZ 형 라인 진군. 라인 무작위 + 균등 등장. 보스 등장 가능.',
+    body: `
+      <h3>등장 규칙</h3>
+      <ul>
+        <li>침략자는 <strong>라인 오른쪽 끝</strong>에 무작위 출현.</li>
+        <li>등장 라인은 무작위지만 <strong>균일하게</strong> 분산 — 한 곳에 몰리지 않음.</li>
+        <li>한 번에 등장하지 않고 라운드 규칙에 따라 <strong>순차 등장</strong>.</li>
+        <li>특별 전장·라운드에서 <strong>보스</strong> 등장.</li>
+      </ul>
+
+      <h3>승리 / 패배</h3>
+      <ul>
+        <li><strong>전투 승리</strong> — 모든 적 처치.</li>
+        <li><strong>전투 패배</strong> — 침략자가 라인 끝까지 도착 → 소환술사와 직접 교전 → 술사 1명이라도 HP 0 시 패배.</li>
+        <li>본편: 누적 3회 패배 시 임무 실패. 무한: 1회 패배 즉시 종료.</li>
+      </ul>
+
+      <h3>웨이브 정보 UI</h3>
+      <ul>
+        <li>정비 페이즈에 다음 라운드의 침략자 종류·숫자를 미리 확인 가능.</li>
+        <li>전투 페이즈에는 남은 침략자 수 표시.</li>
+      </ul>
+
+      <h3>세계관</h3>
+      <p>외계체는 <strong>하이브(Hive)</strong>를 통해 침략. 하이브 내부 블랙홀의 질량을 페이즈 입자로 변환해 실체화한 개체들이 본 게임의 침략자다. 톤 통일을 위해 일부 카주얼화 가능성.</p>
+      <div class="callout yel">침략자 종류·능력치 곡선·진군 패턴·보스 메커닉은 콘텐츠 디자인 단계에서 정의.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('phases','전투 페이즈')} ${link('worldview','세계관')}
+      </div>
+    `
+  },
+
+  synergy: {
+    icon: '✨', tint: 'tint-pink', tag: '강화 축 · 빌드 방향',
+    title: '시너지 (2차원 구조)',
+    summary: '심상 효과 (출전 편성에서 결정) × 소환수 효과 (전장마다 랜덤). 각 소환수는 두 효과를 함께 가진다.',
+    body: `
+      <div class="syn2d">
+        <div class="syn-card lav">
+          <div class="syn-h">🐱 심상 효과 <span style="font-size:11px;color:var(--ink-soft);font-weight:500">· 술사 귀속 · 편성 시 고정</span></div>
+          <div style="font-size:12.5px;line-height:1.6">
+            <strong>이중 컴포넌트:</strong><br/>
+            · <em>메인 효과</em> — 같은 심상의 소환수에게<br/>
+            · <em>글로벌 버프</em> — 전체 소환수에게 약하게
+          </div>
+          <div class="thresholds">
+            임계치 <span class="th-pill">2</span><span class="th-pill">4</span><span class="th-pill">6</span><span class="th-pill">8</span>
+          </div>
+        </div>
+        <div class="syn-card mint">
+          <div class="syn-h">🎲 소환수 효과 <span style="font-size:11px;color:var(--ink-soft);font-weight:500">· 전장 시작 시 랜덤 분배</span></div>
+          <div style="font-size:12.5px;line-height:1.6">
+            매 전장 시작 시 풀에서 <strong>5개 효과</strong>가 등장.<br/>
+            20체 소환수에 역할군 기반 확률로 분배.<br/>
+            동일 소환수도 전장마다 다른 효과.
+          </div>
+          <div class="thresholds">
+            임계치 <span class="th-pill">2</span><span class="th-pill">3</span><span class="th-pill">4</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>왜 이중 컴포넌트인가</h3>
+      <p>한 전장에서 주로 활용되는 심상은 2개로 수렴하기 쉽지만, 나머지 2 술사도 <strong>글로벌 버프</strong>로 팀에 기여. 출전 편성한 4명 모두에게 의미가 부여되어 "버림패 술사" 가 발생하지 않는다.</p>
+
+      <h3>카운트 규칙</h3>
+      <ul>
+        <li>카운트 대상 = 전장에 배치된 <strong>서로 다른 종류</strong>의 소환수.</li>
+        <li>다운되어도 시너지 카운트는 유지.</li>
+        <li>배치·제거 시 즉시 재계산.</li>
+      </ul>
+
+      <h3>왜 랜덤 부여인가 (소환수 효과)</h3>
+      <p>매 전장 다양성 + 학습 부담 완화. 어느 소환수가 어떤 효과를 가지는지까지 고정하면 술사 교체 시 학습량이 폭증한다.</p>
+
+      <div class="callout pink">시너지가 팀의 <strong>방향</strong>을 결정한다면, ${link('tac-support','전술 지원')}은 그 방향의 <strong>출력 배율</strong>을 결정.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('summoner-dex','심상 효과 강화 (육성)')} ${link('unit','역할군')} ${link('lineup','출전 편성')}
+      </div>
+    `
+  },
+
+  'tac-support': {
+    icon: '🎁', tint: 'tint-pink', tag: '강화 축 · 빌드 출력',
+    title: '전술 지원',
+    summary: '일정 라운드마다 3택1 강화 선택지. 본 게임 팀 출력의 핵심 강화 축.',
+    body: `
+      <h3>등장 타이밍</h3>
+      <ul>
+        <li>본편 진행 중 <strong>약 3라운드마다 1회</strong> 등장 (잠정 빈도).</li>
+        <li>등장 시 <strong>3개의 선택지</strong>가 제시되며 <strong>1개 선택</strong>.</li>
+      </ul>
+
+      <h3>새로고침</h3>
+      <ul>
+        <li>마음에 들지 않으면 마나로 새로고침.</li>
+        <li>한 번 새로고침할 때마다 비용이 <strong>2배씩 증가</strong> (무한 새로고침 방지).</li>
+      </ul>
+
+      <h3>알고리즘 보정</h3>
+      <p>등장 후보는 다음 인자에 따라 가중치 보정 → 빌드에 어울리는 선택지가 등장하기 쉽다.</p>
+      <ul>
+        <li>현재 맞추고 있는 ${link('synergy','시너지')} (심상 효과 / 소환수 효과)</li>
+        <li>이전에 선택한 전술 지원</li>
+      </ul>
+
+      <h3>효과 카테고리</h3>
+      <div class="grid-2">
+        <div class="chip">소환수 전체 능력치 강화</div>
+        <div class="chip">특정 심상 효과 추가 강화</div>
+        <div class="chip">특정 소환수 효과 추가 강화</div>
+        <div class="chip">자원 운용 (마나·재스캔·처치 보상)</div>
+      </div>
+
+      <h3>누적 · 종료</h3>
+      <ul>
+        <li>선택한 전술 지원은 <strong>해당 전장이 끝날 때까지 누적</strong>.</li>
+        <li>전장 종료 시 사라진다 — 인게임 한정.</li>
+      </ul>
+
+      <div class="callout pink"><strong>TFT의 아이템 시스템을 두지 않는 대신</strong> 전술 지원이 그 역할까지 흡수. 선택 축을 줄이고 시너지·전술 지원에 결정의 깊이를 집중.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('tac-lab','전술 지원 연구소 (메타 강화)')} ${link('synergy','시너지')} ${link('mana','마나')}
+      </div>
+    `
+  },
+
+  'module-ingame': {
+    icon: '🔧', tint: 'tint-pink', tag: '강화 축 · 영구',
+    title: '출격 모듈 적용 (인게임)',
+    summary: '전장 시작 시 보유한 모든 모듈이 자동 적용된다. 별도 장착 단계 없음.',
+    body: `
+      <h3>작동</h3>
+      <ul>
+        <li><strong>패시브형</strong> — 상시 효과.</li>
+        <li><strong>단발성 액티브형</strong> — 특정 조건/타이밍에 발동 (자동 트리거 · 조건부 자동 · 수동 발동 등 모듈마다 다름).</li>
+      </ul>
+
+      <h3>효과 카테고리 예</h3>
+      <ul>
+        <li>시작 시 마나 추가 지급</li>
+        <li>시작 시 재스캔 횟수 추가</li>
+        <li>적 처치 시 일정 확률로 추가 마나 획득</li>
+        <li>그 외 인게임 시스템 전반에 영향</li>
+      </ul>
+
+      <h3>왜 자동 적용인가</h3>
+      <p>출격 모듈은 빌드 결정의 축에는 포함되지 않는다. 결정 깊이는 ${link('synergy','시너지')} (출전 편성) + ${link('tac-support','전술 지원')} (인게임 중) 두 축에 집중.</p>
+
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('module-meta','출격 모듈 메타 강화')} ${link('mana','마나')}
+      </div>
+    `
+  },
+
+  mana: {
+    icon: '💧', tint: 'tint-pink', tag: '인게임 자원',
+    title: '마나',
+    summary: '인게임의 유일한 자원. 소환·재스캔·배치 상한·전술 지원 새로고침에 사용.',
+    body: `
+      <h3>충전</h3>
+      <p>매 라운드 시작 시 자동 지급. <code>기본 지급 (1~10, 라운드별) + 이자 (0~3)</code></p>
+
+      <h3>주요 소비처</h3>
+      <ul>
+        <li>${link('terminal','소환')} — 1성 1 / 2성 3 / 3성 9</li>
+        <li>${link('terminal','재스캔')} — 잠정 수치</li>
+        <li>${link('terminal','배치 상한 증가')} — 4 → 6 → 10 → 15 → 20 → 30 → 45 → 70 → 100</li>
+        <li>${link('tac-support','전술 지원 새로고침')} — 누를수록 2배 증가</li>
+      </ul>
+
+      <h3>회수</h3>
+      <ul>
+        <li>환원 (판매) — 1성 1 / 2성 2 / 3성 8 / 3성+N강 (8+N)</li>
+      </ul>
+
+      <h3>관련 영구 강화</h3>
+      <p>${link('module-ingame','출격 모듈')}로 시작 마나 증가, 처치 시 추가 마나 획득 등 영구 강화 가능.</p>
+    `
+  },
+
+  /* ── 보상 / 가치 ────────────────────────────────────── */
+  reward: {
+    icon: '🏆', tint: 'tint-yel', tag: '종료 · 정산',
+    title: '보상 정산',
+    summary: '최종 보상 = 본편 클리어 보상 × 무한 모드 배수. 무한 1라운드 = +0.1 배수.',
+    body: `
+      <h3>배수 공식</h3>
+      <div class="formula">최종 보상 = 본편 클리어 보상 × (1.0 + 무한 라운드 × 0.1)</div>
+      <div class="grid-3">
+        <div class="chip yel"><div class="chip-h">본편만 클리어</div><div class="chip-v">× 1.0</div></div>
+        <div class="chip yel"><div class="chip-h">무한 5R</div><div class="chip-v">× 1.5</div></div>
+        <div class="chip yel"><div class="chip-h">무한 10R</div><div class="chip-v">× 2.0</div></div>
+      </div>
+
+      <h3>패배 시 처리</h3>
+      <ul>
+        <li><strong>본편 패배 누적 3회</strong> — 임무 실패. 재도전 또는 로비.</li>
+        <li><strong>무한 모드 패배 (1회)</strong> — "실패"가 아니라 그 시점 배수의 <em>정산</em>으로 종료. (본편은 이미 클리어 상태)</li>
+      </ul>
+
+      <h3>받는 보상</h3>
+      <ul>
+        <li>소환술사 육성 재료</li>
+        <li>가챠 재화</li>
+        <li>강화 재화</li>
+        <li>(스토리 진행 — 캠페인의 경우)</li>
+      </ul>
+
+      <h3>강제 무한 분위기 방지 안전장치</h3>
+      <ul>
+        <li>무한 모드의 가파른 난이도 — ×1.5 도달조차 어렵게.</li>
+        <li>패배 0 리셋 — 빌드가 약하면 빠르게 종료 → 구조적으로 길게 끌 수 없음.</li>
+      </ul>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('rounds','라운드 구조')} ${link('currency','재화 체계')} ${link('design-value','디자인 가치')}
+      </div>
+    `
+  },
+
+  /* ── 하단 strip ────────────────────────────────────── */
+  worldview: {
+    icon: '🌏', tint: 'tint-mint', tag: '배경 설정',
+    title: '세계관 · 톤',
+    summary: '205X · 외계체 침공 · 인류는 심상(인지)을 무기로 변환 · 본 게임 술사는 모두 고양이 학교 출신.',
+    body: `
+      <h3>시대 / 장르</h3>
+      <ul>
+        <li>205X년, 학원도시물 · 근미래 SF.</li>
+        <li>외계체가 지구 침공. 인류의 절반 사망. 북반구 절반 점령 후 남하 중.</li>
+      </ul>
+
+      <h3>실체화 기술</h3>
+      <ul>
+        <li>외계체는 <strong>하이브(Hive)</strong>의 블랙홀 질량을 페이즈 입자로 변환해 개체를 실체화.</li>
+        <li>인류는 이 기술을 역설계 → 인간의 <strong>인지(심상)</strong>를 기반으로 무기/개체를 실체화하는 기술 개발.</li>
+        <li>실체화의 매개자 = <strong>소환술사 (Summoner)</strong>.</li>
+      </ul>
+
+      <h3>왜 청소년 술사인가</h3>
+      <p>술사에게 가장 중요한 자질은 <strong>상상력·공상력</strong>. 사회화 경험이 많은 성인은 "현실"에 묶여 심상 몰입이 어렵다. 따라서 술사는 주로 <strong>청소년 ~ 20대 초반</strong>.</p>
+
+      <h3>바스티온 · 학교</h3>
+      <p>거점 도시 = 바스티온. 비슷한 테마(심상)를 가진 학생들이 모여 학교 생활 → 심상 강화. 본 게임 등장 술사는 모두 <strong>고양이를 다루는 학교들</strong> 출신.</p>
+
+      <h3>본 게임의 운용</h3>
+      <ul>
+        <li>한 학교 안에서도 학생마다 구체적인 심상은 다름 (스코티시폴드 · 스핑크스 · 코리안숏헤어 등 품종 단위).</li>
+        <li>같은 심상의 술사는 한 전장에 <strong>중복 편성 불가</strong>.</li>
+      </ul>
+
+      <h3>장비</h3>
+      <p>술사는 완드 (PLGU, Phase-Lock Guidance Unit)를 사용. 본부로부터 마나를 유도받고, 실체화 정보를 안정화.</p>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('style','비주얼 톤')} ${link('synergy','심상 효과')} ${link('invader','침략자 (외계체)')}
+      </div>
+    `
+  },
+
+  style: {
+    icon: '🎨', tint: 'tint-pink', tag: '비주얼 · 톤',
+    title: '비주얼 톤 · 갭모에',
+    summary: '진지한 SF 위에서 귀여운 고양이 소환수가 전투하는 갭모에. 본 디자인의 톤도 이를 따른다.',
+    body: `
+      <h3>비주얼 컨셉</h3>
+      <ul>
+        <li><strong>소환수</strong> — 모두 고양이. 심상은 품종으로 (스코티시폴드 · 스핑크스 · 코리안숏헤어 등). 전투에 적합한 형태로 변형된 귀여운 톤 (참고: 냥코대전쟁).</li>
+        <li><strong>소환술사</strong> — 청소년~20대 인간 캐릭터. 매력적인 서브컬쳐 일러스트 톤.</li>
+        <li><strong>침략자(외계체)</strong> — 톤 통일을 위해 일부 카주얼화 가능성. 세부 톤은 진행 중.</li>
+      </ul>
+      <h3>톤 의도</h3>
+      <p>외계체 침공의 위기감 위에서, 귀여운 고양이가 전투를 수행하는 <strong>갭모에</strong>가 본 게임의 기본 정서.</p>
+    `
+  },
+
+  currency: {
+    icon: '💎', tint: 'tint-pink', tag: '메타 시스템 공통',
+    title: '재화 체계 (2종 분리 원칙)',
+    summary: '"뽑기"는 같은 재화끼리, "강화"는 같은 재화끼리.',
+    body: `
+      <h3>두 카테고리</h3>
+      <div class="grid-2">
+        <div class="chip lav">
+          <div class="chip-h">🪄 가챠 재화 (수집형)</div>
+          <div class="chip-v" style="font-size:13px;font-weight:600">소환술사 모집<br/>전술 지원 모집</div>
+        </div>
+        <div class="chip mint">
+          <div class="chip-h">⚙️ 강화 재화</div>
+          <div class="chip-v" style="font-size:13px;font-weight:600">출격 모듈 강화<br/>그 외 강화형 시스템</div>
+        </div>
+      </div>
+
+      <h3>4가지 메타 강화 축</h3>
+      <table class="mini">
+        <thead><tr><th>강화 축</th><th>단위</th><th>적용</th></tr></thead>
+        <tbody>
+          <tr><td>가챠 (소환술사)</td><td>캐릭터 + 심상 효과 풀</td><td>영구</td></tr>
+          <tr><td>소환술사 육성</td><td>캐릭터 심상 효과 강화</td><td>영구</td></tr>
+          <tr><td>전술 지원</td><td>등장 풀 + 효과 강도</td><td>영구 (인게임 자동)</td></tr>
+          <tr><td>출격 모듈</td><td>인게임 시스템 자체</td><td>영구 (전장마다 자동)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout yel">미결: 소환술사 육성 재화 (강화 재화 통합 vs 심상조각 별도 vs 혼합)는 콘텐츠 디자인 단계에서 확정.</div>
+      <div class="links-row"><span class="related-label">관련</span>
+        ${link('gacha','모집')} ${link('summoner-dex','소환술사 육성')} ${link('tac-lab','전술 지원 연구소')} ${link('module-meta','출격 모듈')}
+      </div>
+    `
+  },
+
+  'design-value': {
+    icon: '💡', tint: 'tint-yel', tag: '디자인 가치',
+    title: '디자인 가치 · 핵심 루프',
+    summary: 'V-1 (빌드 카타르시스) × V-2 (한 게임 적정 길이) → 본편 + 자율 무한 모드로 동시에 만족.',
+    body: `
+      <h3>두 가치의 충돌과 해결</h3>
+      <div class="grid-2">
+        <div class="chip pink">
+          <div class="chip-h">V-1. 팀 빌딩 카타르시스</div>
+          <div style="font-size:12.5px;margin-top:4px">빌드가 작동하는 순간이 충분히 길게 이어져야 함.</div>
+        </div>
+        <div class="chip sky">
+          <div class="chip-h">V-2. 한 게임 길이 적정성</div>
+          <div style="font-size:12.5px;margin-top:4px">"머리 쓰는 게임"이라 다른 액션 게임보다 더 엄격한 길이 제약.</div>
+        </div>
+      </div>
+      <p style="margin-top:8px">두 가치는 본질적으로 충돌. → <strong>본편 (V-2 충족, 약 20분) + 자율 무한 모드 (V-1 자율 충족)</strong>의 2단 구조로 해결.</p>
+
+      <h3>핵심 루프</h3>
+      <ol>
+        <li>${link('gacha','메타 모집')} · ${link('summoner-dex','육성')} · ${link('tac-lab','전술 지원 연구')} · ${link('module-meta','출격 모듈 강화')}</li>
+        <li>${link('sortie','전장 출격')} · 전역/전장 선택</li>
+        <li>${link('lineup','출전 편성')} — 술사 4명</li>
+        <li>${link('phases','전장 인게임')} — 정비 ↔ 전투 페이즈 교차</li>
+        <li>${link('reward','보상')} 정산 → 다시 메타로</li>
+      </ol>
+
+      <h3>차용 레퍼런스 (참고)</h3>
+      <ul>
+        <li><strong>TFT</strong> — 상점·합성·시너지 (단, 코스트별 등장 확률 → 배치 상한 해금으로 변주, 시너지 랜덤 → 사전 덱 빌딩 기반).</li>
+        <li><strong>PvsZ</strong> — 고정 배치 + 라인 진군 웨이브.</li>
+      </ul>
+    `
+  },
+
+  loop: {
+    icon: '🔁', tint: 'tint-yel', tag: '핵심 루프',
+    title: '핵심 루프 한눈에',
+    summary: '메타 → 출전 편성 → 전장 → 보상 → 다시 메타.',
+    body: `
+      <ol>
+        <li><strong>메타</strong> · 가챠로 ${link('summoner-dex','소환술사')} 모집·육성, ${link('tac-lab','전술 지원')}/${link('module-meta','출격 모듈')} 강화</li>
+        <li><strong>${link('sortie','전장 출격')}</strong> · 캠페인에서 전역·전장 선택</li>
+        <li><strong>${link('lineup','출전 편성')}</strong> · 서로 다른 심상의 술사 4명 선택 → 20체 풀 구성</li>
+        <li><strong>${link('phases','전장 인게임')}</strong> · 정비 ↔ 전투 페이즈 교차, ${link('synergy','시너지')}와 ${link('tac-support','전술 지원')}으로 빌드 완성</li>
+        <li><strong>본편 클리어</strong> · 종료 or ${link('rounds','무한 모드')} 선택 진입</li>
+        <li><strong>${link('reward','보상 정산')}</strong> · 본편 보상 × 무한 모드 배수 → 다시 메타로</li>
+      </ol>
+    `
+  }
+};
+
+/* ──────────────────────────────────────────────────────────────────
+ * Modal control
+ * ────────────────────────────────────────────────────────────────── */
+const backdrop = document.getElementById('backdrop');
+const modal = document.getElementById('modal');
+const mIcon = document.getElementById('m-icon');
+const mTitle = document.getElementById('modal-title');
+const mTag = document.getElementById('m-tag');
+const mSummary = document.getElementById('m-summary');
+const mBody = document.getElementById('m-body');
+let history = [];
+let prevFocus = null;
+
+function tintToBg(tint) {
+  const map = {
+    'tint-lav': 'var(--lav)',
+    'tint-pink': 'var(--pink)',
+    'tint-mint': 'var(--mint)',
+    'tint-yel': 'var(--yel)',
+    'tint-sky': 'var(--sky)',
+    'tint-peach': 'var(--peach)'
+  };
+  return map[tint] || 'var(--bg-2)';
+}
+function tintToInk(tint) {
+  const map = {
+    'tint-lav': 'var(--lav-ink)',
+    'tint-pink': 'var(--pink-ink)',
+    'tint-mint': 'var(--mint-ink)',
+    'tint-yel': 'var(--yel-ink)',
+    'tint-sky': 'var(--sky-ink)',
+    'tint-peach': 'var(--peach-ink)'
+  };
+  return map[tint] || 'var(--ink)';
+}
+
+function openModal(key, addToHistory = true) {
+  const d = DATA[key];
+  if (!d) return;
+  if (addToHistory) {
+    if (!backdrop.classList.contains('open')) prevFocus = document.activeElement;
+    history.push(key);
+  }
+  mIcon.textContent = d.icon;
+  mIcon.style.background = tintToBg(d.tint);
+  mIcon.style.color = tintToInk(d.tint);
+  mTitle.textContent = d.title;
+  mTag.textContent = d.tag;
+  mSummary.textContent = d.summary;
+  mBody.innerHTML = d.body;
+  // re-animate
+  modal.style.animation = 'none';
+  modal.offsetHeight; /* reflow */
+  modal.style.animation = '';
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('m-close').focus(), 30);
+}
+
+function closeModal() {
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+  history = [];
+  if (prevFocus) prevFocus.focus();
+}
+
+document.getElementById('m-close').addEventListener('click', closeModal);
+backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
+});
+
+/* Delegated open click — works on cards and on .link-card inside modal */
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-open]');
+  if (!t) return;
+  const key = t.dataset.open;
+  if (!DATA[key]) return;
+  e.preventDefault();
+  openModal(key);
+});
+
+/* Make all cards keyboard-activatable */
+document.querySelectorAll('.card[data-open], .top-pill[data-open]').forEach(el => {
+  if (el.tagName !== 'BUTTON') el.setAttribute('tabindex', '0');
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openModal(el.dataset.open);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

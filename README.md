@@ -7,15 +7,13 @@
 ```
 tactica-defense-resources/
 ├── docs/                 # 문서
-│   ├── design/           # 게임 설계 / 세계관 문서
-│   ├── planning/         # 기획 문서
+│   ├── planning/         # 기획 문서 (기획서, 세계관, 시스템, 레벨디자인 등)
 │   └── meeting-notes/    # 회의록
-├── assets/               # 게임 리소스
-│   ├── images/           # 이미지 (스프라이트, UI, 컨셉 아트 등)
-│   ├── audio/            # 사운드 (BGM, 효과음)
-│   └── models/           # 3D 모델
-└── references/           # 외부 참고 자료
+└── assets/               # 게임 리소스
 ```
+
+> 기획 문서의 첨부 이미지는 각 문서와 짝지어진 `*.assets/` 폴더에 보관됩니다
+> (예: `00 기획서.md` ↔ `00 기획서.assets/`). 문서 이동 시 함께 옮겨야 이미지가 유지됩니다.
 
 ## 관련 프로젝트
 
