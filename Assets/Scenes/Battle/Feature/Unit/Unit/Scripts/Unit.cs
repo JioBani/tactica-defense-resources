@@ -88,6 +88,10 @@ namespace Scenes.Battle.Feature.Units
             StatSheet.Init(unitLoadOutData.Stats, star);
             healthBar.SetStarGrade(StatSheet.Star);
 
+            // 역할군 아이콘을 체력바에 세팅한다. 역할군이 없는 유닛(소환술사·침략자)은 아이콘이 비워진다.
+            var roleGroup = unitLoadOutData.Unit.RoleGroup;
+            healthBar.SetRoleGroupIcon(roleGroup != null ? roleGroup.Icon : null);
+
             OnSpawn(unitLoadOutData);
             OnSpawnEvent?.Invoke(this);
         }
