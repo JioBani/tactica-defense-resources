@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Data.Synergies;
+using Common.Data.Units.RoleGroups;
 using Common.Scripts.SpritePreview;
 using UnityEngine;
 
@@ -74,5 +75,12 @@ namespace Common.Data.Units.UnitDefinitions
                 return list;
             }
         }
+
+        [Header("역할군")]
+        [Tooltip("이 소환수가 속한 역할군. 소환수 종류 단위로 고정된다. 소환술사·침략자에는 설정하지 않는다.")]
+        [SerializeField] private RoleGroupDefinitionData roleGroup;
+
+        /// <summary>이 소환수가 속한 역할군. 종류 단위로 고정되어 합성·성급 상승·추가 소환에도 바뀌지 않는다. 소환수에만 설정되며 미설정이면 null이다.</summary>
+        public RoleGroupDefinitionData RoleGroup => roleGroup;
     }
 }
