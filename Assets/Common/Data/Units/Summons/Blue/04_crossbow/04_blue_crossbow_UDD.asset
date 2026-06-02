@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 04_blue_crossbow_UDD
   m_EditorClassIdentifier: 
   id: 104
-  displayName: 석궁병
+  displayName: "\uC11D\uAD81\uBCD1"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: 5c72b20dd85ad804991699b2dc861152, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 1e8abf1190f49174193b9925149219ac, type: 2}
   - {fileID: 22100000, guid: 1e8abf1190f49174193b9925149219ac, type: 2}
   summonerEffect: {fileID: 11400000, guid: 9729aa2bf590a684dabb79e72b2f53e1, type: 2}
+  roleGroup: {fileID: 11400000, guid: 2f155de1db357f64aba46d8a86cea79f, type: 2}

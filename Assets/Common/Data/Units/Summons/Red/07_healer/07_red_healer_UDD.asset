@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 07_red_healer_UDD
   m_EditorClassIdentifier: 
   id: 207
-  displayName: 치료사
+  displayName: "\uCE58\uB8CC\uC0AC"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: 64f24ab23c139ef47b237f8d94c0a34a, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 61d7947219b3ba14f83e263bc2339f3e, type: 2}
   - {fileID: 22100000, guid: 61d7947219b3ba14f83e263bc2339f3e, type: 2}
   summonerEffect: {fileID: 11400000, guid: 61d7947219b3ba14f83e263bc2339f3e, type: 2}
+  roleGroup: {fileID: 11400000, guid: 289a6378bd33dae41ae5997410ba4e37, type: 2}

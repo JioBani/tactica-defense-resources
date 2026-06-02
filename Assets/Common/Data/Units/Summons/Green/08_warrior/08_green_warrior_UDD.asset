@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 08_green_warrior_UDD
   m_EditorClassIdentifier: 
   id: 308
-  displayName: 결투가
+  displayName: "\uACB0\uD22C\uAC00"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: aa2db6592f930fa44a14502d3e05962a, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: fc51e756c4c05a74bbf58bad46d1839c, type: 2}
   - {fileID: 22100000, guid: fc51e756c4c05a74bbf58bad46d1839c, type: 2}
   summonerEffect: {fileID: 11400000, guid: fc51e756c4c05a74bbf58bad46d1839c, type: 2}
+  roleGroup: {fileID: 11400000, guid: 2f155de1db357f64aba46d8a86cea79f, type: 2}

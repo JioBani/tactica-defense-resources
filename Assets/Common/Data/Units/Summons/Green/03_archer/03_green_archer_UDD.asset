@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 03_green_archer_UDD
   m_EditorClassIdentifier: 
   id: 303
-  displayName: 궁수
+  displayName: "\uAD81\uC218"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: 82f65f06e288ff5449b600d1bd636852, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 4127adee25a610f4da34abfbafe5fddf, type: 2}
   - {fileID: 22100000, guid: 4127adee25a610f4da34abfbafe5fddf, type: 2}
   summonerEffect: {fileID: 11400000, guid: 4127adee25a610f4da34abfbafe5fddf, type: 2}
+  roleGroup: {fileID: 11400000, guid: 2f155de1db357f64aba46d8a86cea79f, type: 2}

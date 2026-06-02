@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Common.Data.Units.RoleGroups.RoleGroupDefinitionData
   roleGroup: 1
   displayName: "\uD0F1\uCEE4"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9bb35a7f278808945a8bd4e04a374af8, type: 3}

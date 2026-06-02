@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 02_blue_light_tank_UDD
   m_EditorClassIdentifier: 
   id: 102
-  displayName: 창술사
+  displayName: "\uCC3D\uC220\uC0AC"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: f8df1049ad006e54398e96e1bb04f0ab, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 1e8abf1190f49174193b9925149219ac, type: 2}
   - {fileID: 22100000, guid: 1e8abf1190f49174193b9925149219ac, type: 2}
   summonerEffect: {fileID: 11400000, guid: 9729aa2bf590a684dabb79e72b2f53e1, type: 2}
+  roleGroup: {fileID: 11400000, guid: fec9d818fbf047841bd62fe0751592ea, type: 2}

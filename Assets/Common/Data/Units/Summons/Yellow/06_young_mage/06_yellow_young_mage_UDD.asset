@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 06_yellow_young_mage_UDD
   m_EditorClassIdentifier: 
   id: 406
-  displayName: 원소술사
+  displayName: "\uC6D0\uC18C\uC220\uC0AC"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: 6cd3399c635caaa4397e4e5fb4937771, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 29f286b4a992c014a82545ff4fc5945d, type: 2}
   - {fileID: 22100000, guid: 29f286b4a992c014a82545ff4fc5945d, type: 2}
   summonerEffect: {fileID: 11400000, guid: 29f286b4a992c014a82545ff4fc5945d, type: 2}
+  roleGroup: {fileID: 11400000, guid: dcc3e0726c7e10746a7191efac2dc988, type: 2}

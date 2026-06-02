@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 05_yellow_archmage_UDD
   m_EditorClassIdentifier: 
   id: 405
-  displayName: 대마법사
+  displayName: "\uB300\uB9C8\uBC95\uC0AC"
   description: 
-  organization: 
   cost: 1
   icon: {fileID: 21300000, guid: 52151cbc97142654f8b269e69bbddfd2, type: 3}
   illustration: {fileID: 21300000, guid: 7863c100d81d86d48a39cd584792996c, type: 3}
@@ -25,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 2b34cceacc61ef84bb671232584424f7, type: 2}
   - {fileID: 22100000, guid: 2b34cceacc61ef84bb671232584424f7, type: 2}
   summonerEffect: {fileID: 11400000, guid: 2b34cceacc61ef84bb671232584424f7, type: 2}
+  roleGroup: {fileID: 11400000, guid: dcc3e0726c7e10746a7191efac2dc988, type: 2}
