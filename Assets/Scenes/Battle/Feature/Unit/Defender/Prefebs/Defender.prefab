@@ -72,6 +72,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8091884678723668262, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091884678723668262, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091884678723668262, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091884678723668262, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589131534575377990, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 317630f054dda024b98f27b00dcb0c32, type: 3}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_DrawMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1049736631
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092794418974628175, guid: 55f271110f86e19488c6665236798e12, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6465798290088026175, guid: 55f271110f86e19488c6665236798e12, type: 3}
     - {fileID: 2639577754113328182, guid: 55f271110f86e19488c6665236798e12, type: 3}
