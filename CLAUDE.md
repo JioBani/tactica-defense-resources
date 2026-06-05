@@ -2,6 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 컨텍스트 문서 — 코드 탐색·수정 전 먼저 참고 (필수)
+
+이 저장소에는 AI 에이전트가 **코드를 빠르게 탐색·이해**하도록 만든 레이어별 컨텍스트 문서가 있다. 코드를 찾거나 수정하기 전에 **먼저 인덱스를 열어 해당 기능/인프라 문서로 점프**하면 전체 코드를 헤매지 않고 관련 위치·헬퍼·의도에 바로 도달할 수 있다.
+
+> **읽기 원칙 (필수) — 필요할 때만 읽는다.** 아래 문서 목록은 "무엇이 어디에 있는지"를 알려주는 지도일 뿐, 미리 다 읽으라는 뜻이 아니다. 세션 시작 시나 작업 착수 시 문서들을 일괄로 읽지 마라 — 컨텍스트 낭비다. **각 문서는 그 문서가 다루는 영역을 실제로 건드릴 때에만** 그 시점에 읽어라. 진입점은 항상 인덱스(`index.md`)이고, 거기서 지금 작업에 필요한 문서 하나로 점프해 그것만 읽는다.
+
+- **진입점(인덱스)**: [`Claude/docs/index.md`](Claude/docs/index.md) — 기능 시스템 문서 표 · 시스템 인프라 표 · **헬퍼 인덱스**("이 기능이 필요할 때 여기"). *작업과 무관해도 길 찾기용으로 먼저 본다.*
+- **사용자 기능 계층(UR)**: [`Claude/docs/ur/game-system.md`](Claude/docs/ur/game-system.md) — 기획서를 사용자 관점 기능 트리로 정리. 각 노드 → 기획서(도메인 정의)·시스템 문서로 라우팅. *요구사항·기능 범위를 따질 때만 읽는다.*
+- **시스템 관점 문서**: *해당 기능/인프라를 실제로 탐색·수정할 때만 그 문서를 읽는다.*
+  - 기능: `Claude/docs/system/<기능>.md` (UR 잎 매핑)
+  - 인프라: `Claude/docs/system/infra/<이름>.md` (StatusEffect·GlobalEventBus·StateBase·ObjectPool·Rx 등 횡단 기반)
+
+문서 성격: **"인덱스 + α"** 다. 코드 재설명이 아니라 ① 도메인↔코드 매핑(파일 경로) ② 구조 맵(어디에 무엇이) ③ 제공 헬퍼 ④ 코드만 봐선 모르는 의도(+α) 를 담는다. **코드가 단일 진실**이므로, 구체 동작은 문서가 가리키는 코드를 직접 확인한다. 문서와 코드가 어긋나면 코드를 신뢰하고 문서를 갱신 대상으로 본다.
+
+> 문서화·유지는 modular-workflow 스킬을 사용한다:
+> - 시스템 문서 신규: `/tatica-context-doc new <코드경로>`
+> - 시스템 문서 최신화(커밋 변경점 반영): `/tatica-context-doc update <기준커밋>` — `기준커밋..HEAD` diff로 영향 문서를 동일 컨벤션으로 갱신
+> - UR 계층: `/tatica-ur-hierarchy`
+
 ## Project Overview
 
 Tatica Defence is a Unity-based 2D tower defense game built with Unity 6 (6000.0) using C#. The project uses UniTask for async operations, Unity's new Input System, and URP for rendering.
