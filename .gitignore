@@ -12,3 +12,8 @@ desktop.ini
 # Temp
 *.tmp
 *.bak
+
+# Local MCP config (contains API tokens — must never be committed)
+.mcp.json
+.agentparty/
+.codex/
